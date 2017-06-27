@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>登陆</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+				<link rel="stylesheet" href="../../css/header.css">
+
+		<style>
+			body {
+			}
+			.weui-grid__icon {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				color: #000;
+				position: relative;
+				font-size: 12px;
+			}
+			.weui-grid{border-color:#fff!important;}
+			.staticon i {
+				position: absolute;
+				top: 10px;
+				right: -60px;
+				display: inline-block;
+				width: 55px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+			<header>
+    <span style="text-align: center;">客户</span>
+    </header>
+		<div class="page__bd content">
+			<div class="weui-grids">
+				<a href="javascript:;" data-url="./user.html" data-name="mingdan" class="weui-grid urlclass"> <div class="weui-grid__icon user">
+				<img src="../../image/lk1.png">
+				</div>
+				<p class="weui-grid__label">
+					名单
+				</p> </a>
+			  <a href="javascript:;" data-url="./add.html" data-name="addmanager" class="weui-grid urlclass"> <div class="weui-grid__icon erp">
+			  				<img src="../../image/lk4.png">
+
+			  </div>
+				<p class="weui-grid__label">
+					增加
+				</p> </a>
+				<a href="javascript:;" data-url="./rank.html" data-name="hot" class="weui-grid urlclass" > <div class="weui-grid__icon rank">
+								<img src="../../image/lk5.png">
+
+				</div>
+				<p class="weui-grid__label">
+					排名
+				</p> </a>
+				<a href="javascript:;" data-url="./stat.html" data-name="stat" class="weui-grid urlclass"> <div class="weui-grid__icon chart">
+								<img src="../../image/lk6.png">
+
+				</div>
+				<p class="weui-grid__label">
+					个人统计
+				</p> </a>
+				<a href="javascript:;" class="weui-grid"> <div class="weui-grid__icon card">
+				
+								<img src="../../image/lk9.png">
+
+				</div>
+				<p class="weui-grid__label">
+					名片
+				</p> </a>
+				<a href="javascript:;" data-url="./stat.html"  data-name="product" class="weui-grid"> <div class="weui-grid__icon card">
+				
+								<img src="../../image/lk12.png">
+
+				</div>
+				<p class="weui-grid__label">
+					产品
+				</p> </a>
+			
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/wolf.js"></script>
+
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			$(".urlclass").bind("click", newFrame);
+			$(".card").bind("click", card);
+			$(".weui-grid__icon").css("marginLeft",($(".weui-grid").width()/2) -35 + "px");
+		}
+		
+	
+
+		function card() {
+			alert("暂未开放");
+		}
+
+		function newFrame(name, url) {
+			var name = $(this).attr("data-name");
+			var url = $(this).attr("data-url");
+			api.openWin({
+				name : name,
+				url : url,
+				bgColor : "#fff"
+			});
+		}
+	</script>
+</html>

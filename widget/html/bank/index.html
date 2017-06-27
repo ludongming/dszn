@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+		<style>
+			body {
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">转入</span>
+		</header>
+		<div class="page__bd content">
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__hd"><img src="../../image/bank/bocomm.jpg" alt="" style="width:40px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>
+						交通银行
+						<br>
+						<span></span>
+					</p>
+				</div> <div class="weui-cell__ft"></div> </a>
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<label class="weui-label">金额</label>
+					</div>
+					<div class="weui-cell__bd">
+						<input class="weui-input" type="number" id="money" pattern="[0-9]*"  placeholder="整数">
+					</div>
+				</div>
+				<div class="weui-cell weui-cells__title">
+					打款后2个工作日内到账
+				</div>
+				<div class="weui-btn-area">
+					<a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips" ontouchend="pay()">确认转入</a>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+		<script type="text/javascript" src="../../script/weui.min.js"></script>
+
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			})
+			console.log(OPENID);
+			setTopBar();
+		};
+		function pay(ret) {
+			var money = $("#money").val();
+			if (parseInt(money) < 1) {
+				weui.alert("请填写正确的转入金额");
+				return false;
+			}
+			var loading=weui.loading("即将跳转到银行支付页面");
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appbank/pay/?openid='+OPENID+'&money='+money,
+				
+			}, function(ret, err) {
+			
+			loading.hide();
+			var d=ret.data;
+		var url='https://wap.95559.com.cn/mobs/main.html#bocompay/payment/order?merchNo=301330459989532&orderNo='+d.orderno+'&orderDate='+d.date;
+					location.href=url;
+			});
+		}
+	</script>
+</html>

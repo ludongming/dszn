@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport"
+		name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<title>我的客户</title>
+		<!-- 引入 jQuery Mobile 样式 -->
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<!-- 引入 jQuery 库 -->
+		<!-- 引入 jQuery Mobile 库 -->
+		<style>
+		
+			.weui-navbar {
+				height: 30px;
+				line-height: 0px !important;
+				color: #666;
+				margin-top: 60px;
+			}
+			.area {
+				color: #ccc;
+			}
+			.huifu {
+				display: none !important;
+			}
+			.dj{font-size:0.8em;color:red;}
+			.action_name {
+				color: #666;
+			}
+			textarea {
+				border: none;
+				borer-raduis: 4px;
+			}
+			.recordtext {
+				background-color: #ebeced;
+				width: 100%;
+				height: 80%;
+			}
+			.mobile {
+				display: inline-block;
+				position: absolute;
+				right: 10px;
+				top: 40px;
+				width: 44px;
+				height: 44px;
+				background: url("../../image/mobile.png") no-repeat;
+			}
+			.replycon {
+				padding: 10px;
+				position: absolute;
+				bottom: 0px;
+				z-index: 999;
+				width: 100%;
+				height: 30%;
+				background: #fff;
+			}
+			.bg {
+				background: #f5f5f5;
+			}
+			.overtime {
+				display: inline-block;
+				background: #f2685b;
+				padding: 0px;
+				height: 22px;
+				border-radius: 4px;
+				font-size: 0.8em;
+				color: #fff;
+			}
+			.tools {
+				position: absolute;
+				bottom: 0px;
+				height: 20%;
+				width: 100%;
+			}
+			.navbar li {
+				margin-right: 5px;
+				float: left;
+				width: 30%;
+				background: #fff;
+				color: #000;
+				text-align: center;
+				height: 30px;
+				margin-top: 10px;
+				line-height: 30px;
+				border-radius: 4px;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		</style>
+	</head>
+	<body ontouchstart="">
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="title" style="text-align: center;">本店名单</span>
+		</header>
+				<div class="page__bd content">
+
+		<div class="weui-navbar">
+			<div class="weui-navbar__item" data="1">
+				定金客户
+			</div>
+			<div class="weui-navbar__item weui-bar__item_on" data="0">
+				所有客户
+			</div>
+			<div class="weui-navbar__item" data="2">
+				成交客户
+			</div>
+			<div class="weui-navbar__item" data="-1">
+				失效
+			</div>
+		</div>
+		<div class="contents">
+			<div id="main">
+			
+			</div>
+		</div>
+		</div>
+		<!---模板-->
+		<script id="interpolationtmpl" type="text/x-dot-template">
+			{{~it:value:index}}
+			<div class="{{?index%2==0}}bg{{?}} weui-cell weui-cell_access">
+			<div class="weui-media-box__hd">
+			<a href="javascript:;" class="lista" data-id="{{=value.id}}">
+			<div class="weui-media-box weui-media-box_text">
+			<h4 class="weui-media-box__title" style="color:#000;">
+			{{=value.username}} <small>{{=value.mobile_phone}}</small>  {{?value.money>0}}<span class="dj">¥ {{=value.money}}元</span>{{?}}
+			</h4>
+			<p class="weui-media-box__desc"> 小区 {{=value.area}} 备注 {{=value.remark}}
+			</p>
+			<ul class="weui-media-box__info">
+			<li class="weui-media-box__info__meta">{{=value.rq}}</li>
+			<li class="weui-media-box__info__meta">#{{=value.no}}</li>
+			<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+			{{?value.replynum>0}} <span style="color:green">已回复</span><span style="margin-left: 5px;">({{=value.replynum}})</span>{{??}}
+			<span style="color:orange">等待回复</span>{{?}}
+			</li>
+			</ul>
+			</div>
+			</a>
+			<a href="javascript:;" data-mobile="{{=value.mobile_phone}}" class="mobile"></a>
+			</div>
+			</div>
+			{{~}}
+		</script>
+		<script type="text/javascript" src="../../script/weui.min.js"></script>
+		<script type="text/javascript" src="../../script/zepto.min.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/doT.min.js"></script>
+		<script type="text/javascript" src="../../script/dropload.js"></script>
+						<script type="text/javascript" src="../../script/wolf.js"></script>
+
+		<script>
+			var before;
+			var currentStatus;
+			var isDrop = false;
+			var me;
+			var OPENID;
+			var status;
+			var page = 1;
+			apiready = function() {
+				setTopBar();
+				OPENID = api.getPrefs({
+					sync : true,
+					key : 'openid'
+				});
+				$(".weui-navbar__item").bind("touchend", change);
+				setDrop();
+				isDrop = true;
+			}
+			//切换按钮
+			function change() {
+				page = 1;
+				$("#main").html("");
+				var obj = $(this);
+				status = $(this).attr("data");
+				var arr = $(".weui-navbar__item");
+				arr.each(function() {
+					$(this).removeClass("weui-bar__item_on");
+				})
+				obj.addClass("weui-bar__item_on");
+				loadDataByStatus();
+			}
+
+			function goback() {
+				api.closeWin();
+			}
+
+			function tel() {
+				var mobile = $(this).attr("data-mobile");
+				location.href = "tel:" + mobile;
+			}
+
+			function detail() {
+				var nid = $(this).attr("data-id");
+				api.openWin({
+					name : 'reply',
+					url : './reply.html',
+					pageParam : {
+						nid : nid
+					}
+				});
+			}
+
+			function loadDataByStatus() {
+				api.ajax({
+					url : "http://www.d-shang.com/index.php?appcrm/getallmemberbypage/?status=" + status + "&p=" + page + "&openid=" + OPENID
+				}, function(ret, err) {
+					if (!ret.status) {
+						weui.alert(ret.message);
+						return false;
+					}
+					if (ret.data.length == 0) {
+						// 锁定
+						me.lock();
+						me.noData();
+					} else {
+						var arrText = doT.template($("#interpolationtmpl").text());
+						$("#main").append(arrText(ret.data));
+						$(".lista").bind("click", detail);
+						$(".mobile").bind("touchstart", tel);
+					}
+					if (ret.data.length < 20) {
+						me.lock();
+						me.noData();
+					}
+					me.resetload();
+				});
+			}
+
+			//下拉更新
+			// 页数
+			function setDrop() {
+				if (isDrop == true) {
+					return;
+				}
+				$('.contents').dropload({
+					scrollArea : window,
+					autoLoad : true,
+					domDown : {
+						domClass : 'dropload-down',
+						domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+						domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+						domNoData : '<div class="dropload-noData">没有更多数据</div>'
+					},
+					loadDownFn : function(mes) {
+						me = mes;
+						loadDataByStatus();
+						page += 1;
+					},
+					threshold : 50
+				});
+			}
+		</script>
+	</body>
+</html>

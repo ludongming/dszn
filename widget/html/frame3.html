@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" href="../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" href="../css/header.css" />
+		<style>
+			body {
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<span style="text-align: center;">理客</span>
+									<span ontouchend="refresh()" style="width:40px; margin-right:10px; vertical-align:middle;float:right;">刷新</span>
+
+		</header>
+		<div class="page__bd content">
+			<div class="weui-cells weui-cells_form">
+				<div class="weui-cells__title">
+					授权进度
+				</div>
+				<div class="weui-cell weui-cell_vcode">
+					<div class="weui-cell__bd">
+						正在权限检测....
+					</div>
+					<div class="weui-cell__ft weui-vcode-btn"></div>
+				</div>
+				<div class="weui-btn-area">
+					客服电话:0573-82696190
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/weui.min.js"></script>
+	<script type="text/javascript" src="../script/wolf.js"></script>
+	<script type="text/javascript" src="../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript" src="../script/dropload.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			checkAuthorize();
+		};
+		
+		function refresh(){
+			checkAuthorize();
+		}
+		
+		function checkAuthorize() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/checkauthrize/?openid=' + OPENID
+			}, function(ret, err) {
+				if (!ret.status) {
+					location.href = "./login.html";
+				}
+				var d = ret.data.data;
+				if (d == 0) {
+					location.href = "./crm/addmanager.html";
+				}
+				if (d == 2) {
+					location.href = "./crm/process.html";
+				}
+				if (d == 6) {
+					location.href = "./crm/employee.html";
+				}
+				if (d == 8) {
+					location.href = "./crm/vip.html";
+				}
+			});
+		}
+	</script>
+</html>

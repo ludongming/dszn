@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+				<link rel="stylesheet" href="../../css/header.css"/>
+
+		<style>
+			body {
+				background: #fff;
+			}
+			.area {
+				color: #666;
+				font-size: 0.9em;
+			}
+			.action_name {
+				color: #666;
+			}
+			.recordtext {
+				margin: 10px;
+				height: 70%;
+				width: 95%
+			}
+			#main {
+				background: #fff;
+				position: absolute;
+				top: 100px;
+				bottom: 30%;
+				left: 0;
+				right: 0;
+				overflow-y: scroll;
+			}
+			.list {
+				background: #e6e5eb;
+				padding-left: 10px;
+				border-radius: 4px;
+				margin-top: 5px;
+				width: 80%;
+				float: right;
+				margin-right: 10px;
+			}
+			.replycon {
+				position: fixed;
+				bottom: 0px;
+				z-index: 999;
+				width: 100%;
+				height: 30%;
+				background: #f5f5f5;
+			}
+			.bg {
+				background: #aee4ee;
+				float: left;
+				margin-left: 10px;
+			}
+			.tools {
+				position: absolute;
+				bottom: 10px;
+				height: 20%;
+				width: 100%;
+				padding-left: 10px;
+			}
+		</style>
+	</head>
+	<body ontouchstart="">
+		<header>
+			<i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i><span class="title" style="text-align: center;">客户</span>
+		</header>
+		<div class="page__bd content">
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><img src="../../image/replyuser.png" alt="" style="width:20px;margin-right:5px;display:block">
+					</div>
+					<div class="weui-cell__bd">
+						<p id="username">
+							名字
+						</p>
+					</div>
+					<div class="weui-cell__ft" id="userinfo">
+						地址
+					</div>
+				</div>
+			<div id="main">
+				正在加载中...
+			</div>
+		</div>
+		<!---模板-->
+		<script id="interpolationtmpl" type="text/x-dot-template">
+			{{~it:value:index}}
+			<div class="list {{?value.status==2}}bzj{{?}} {{?index%2==0}}bg{{?}}" id="user_{{=value.id}}">
+			<div class="ui-list-info" >
+			<div class="ui-wrap">{{=value.content}}<br>
+			<span class="area">{{=value.rq}}</span>
+			<span class="action_name"></span>
+			</div>
+			</div>
+			</div>
+			{{~}}
+		</script>
+		<div class="ui-border-t replycon weui-cells weui-cells_form">
+			<textarea class="recordtext weui-textarea" placeholder="勤跟进，勤记录！请输入新的跟进记录..."></textarea>
+			<div class="tools">
+				<button class="weui-btn weui-btn_mini weui-btn_primary" style="width:100px;" data="0">
+					记录
+				</button>
+				<button class="weui-btn weui-btn_mini weui-btn_default" data="-1">
+					失效
+				</button>
+				<button class="weui-btn weui-btn_mini weui-btn_default" data="2" >
+					已成交
+				</button>
+				<button class="weui-btn weui-btn_mini weui-btn_default" data="1">
+					交定金
+				</button>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/zepto.min.js"></script>
+		<script type="text/javascript" src="../../script/weui.min.js"></script>
+		<script type="text/javascript" src="../../script/doT.min.js"></script>
+		<script type="text/javascript" src="../../script/wolf.js"></script>
+		<script>
+			var OPENID;
+			var nid;
+			apiready = function() {
+				var param = api.pageParam;
+				nid = param.nid;
+				setTopBar();
+				OPENID = api.getPrefs({
+					sync : true,
+					key : 'openid'
+				});
+				loadRecordByNid();
+				$(".weui-btn").bind("click", record);
+			}
+			function loadRecordByNid() {
+				api.ajax({
+					url : "http://www.d-shang.com/index.php?appcrm/getrecordbynid/?nid=" + nid + "&openid=" + OPENID
+				}, function(ret, err) {
+					var arrText = doT.template($("#interpolationtmpl").text());
+					var d = ret.data;
+					$("#main").html(arrText(d.reply));
+					$("#username").html(d.user.username);
+					$("#userinfo").html(d.user.mobile_phone);
+				});
+			}
+
+			function goback() {
+				api.closeWin({
+				});
+			}
+
+			function record(status) {
+				var con = $(".recordtext").val();
+				var status = $(this).attr("data");
+				api.ajax({
+					url : "http://www.d-shang.com/index.php?appcrm/record/?openid=" + OPENID,
+					method : "post",
+					data : {
+						values : {
+							content : con,
+							nid : nid,
+							status : status
+						}
+					}
+				}, function(ret, err) {
+					if (ret.status) {
+						weui.toast(ret.message, {
+							duration : 3000,
+							className : "bears"
+						});
+						addCon();
+						$(".recordtext").val("");
+					} else {
+						alert(ret.message);
+					}
+				});
+			}
+
+			function addCon() {
+				loadRecordByNid();
+			}
+		</script>
+	</body>
+</html>

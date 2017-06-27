@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>顶上集成背景墙面订购系统</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<link rel="stylesheet" href="../../css/dropload.css">
+	</head>
+	<style>
+		body {
+			background-color: white;
+		}
+		.content {
+			width: 100%;
+			margin-top: 50px;
+		}
+		.picbox {
+			width: 50%;
+			height: 220px;
+			float: left;
+			margin-top: 5px;
+		}
+		.picbox img {
+			width: 98%;
+			height: 180px;
+			display: block;
+			margin: 0 auto;
+		}
+		.picname {
+			margin-top: 10px;
+			text-align: center;
+		}
+		.fenge {
+			clear: both;
+			width: 100%;
+			height: 5px;
+			background: #fff;
+		}
+	</style>
+	<body>
+		<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">选择分类</span>
+		</header>
+		<div class="page__bd content">
+			<div class="picarr" ></div>
+			<div class="fenge"></div>
+		</div>
+		<script id="interpolationtmpl" type="text/x-dot-template">
+			{{~it:value:index}}
+			<div class="picbox">
+			<a href="javascript:jump({{=value.id}},{{=value.cid}})">
+			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
+			</a>
+			<div class="picname">{{=value.title}}</div>
+			</div>
+			{{~}}
+		</script>
+		<script src="../../script/zepto.min.js"></script>
+		<script src="../../script/api.js"></script>
+		<script src="../../script/wolf.js"></script>
+		<script src="../../script/doT.min.js"></script>
+		<script src="../../script/weui.min.js"></script>
+		<script type="text/javascript" src="../../script/dropload.min.js"></script>
+		<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+		<script type="text/javascript">
+			var picArr;
+			var OPENID;
+			var isDrop = false;
+			var CID = 69;
+			var PAGE = 1;
+			var me;
+			var cidType = "集成背景画";
+			apiready = function() {
+				setTopBar();
+				setDrop();
+				isDrop = true;
+				initPicker();
+			}
+			function initPicker() {
+				$('#showPicker').on('click', function() {
+					api.ajax({
+						url : "http://www.dszpvip.com/index.php?paint/phonegetcid/?type=集成墙面画"
+					}, function(ret, err) {
+						//coding...
+						var data = ret.data;
+						var pickerArr = [];
+						for (var i = 0; i < data.length; i++) {
+							var obj;
+							obj = {
+								"label" : data[i]['name'],
+								"value" : data[i]['id']
+							};
+							pickerArr.push(obj);
+						}
+						weui.picker(pickerArr, {
+							onChange : function(result) {
+								//console.log(result);
+							},
+							onConfirm : function(result) {
+								setTitle(pickerArr, result);
+								$(".picarr").html("");
+								CID = result;
+								PAGE = 1;
+								phoneGetPic();
+							}
+						});
+					});
+				});
+			}
+			
+    	   function jump(id,cid){
+                api.openWin({
+                    name: "bigImg",
+                    url: "img.html",
+                    pageParam : {
+                        id:id,
+                        cid:cid
+                    },
+                    slidBackEnabled: false,
+                })
+            }
+
+			//设置标题栏
+			function setTitle(pickerArr, cid) {
+				for (var i = 0; i < pickerArr.length; i++) {
+					if (pickerArr[i].value == cid) {
+						$("#title").html(pickerArr[i].label);
+						return;
+					}
+				}
+			}
+
+			function goback() {
+				api.closeWin();
+			}
+
+			//获取图片
+			function phoneGetPic() {
+				var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
+				api.ajax({
+					url : url
+				}, function(ret, err) {
+					var d = ret.data.newslist;
+					if (d.length == 0) {
+						me.lock();
+						me.noData();
+					} else {
+						var arrText = doT.template($("#interpolationtmpl").text());
+						$(".picarr").append(arrText(d));
+						$('.pic').picLazyLoad();
+					}
+					//第一次加载数量不足的情况
+					if (d.length < 12) {
+						me.lock();
+						me.noData();
+					}
+					if (PAGE > 20) {
+						me.lock();
+						me.noData();
+					}
+					me.resetload();
+				});
+			}
+
+			function setDrop() {
+				$('.content').dropload({
+					scrollArea : window,
+					autoLoad : true,
+					domDown : {
+						domClass : 'dropload-down',
+						domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+						domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+						domNoData : '<div class="dropload-noData">没有更多数据</div>'
+					},
+					loadDownFn : function(mes) {
+						me = mes;
+						phoneGetPic(me);
+						PAGE++;
+					},
+					threshold : 50
+				});
+			}
+		</script>
+	</body>
+</html>

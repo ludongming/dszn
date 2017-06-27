@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>顶上宅配</title>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background-color: white;
+				overflow-x: hidden;
+			}
+			.content {
+				width: 100%;
+				margin-top: 50px;
+			}
+			.picbox {
+				width: 50%;
+				height: 220px;
+				float: left;
+				text-align: center;
+				margin-top: 5px;
+				position: relative;
+			}
+			.picbox img {
+				width: 98%;
+				height: 180px;
+				display: block;
+				margin: 0 auto;
+			}
+			.picname {
+				color:#666;
+				font-size:0.9em;
+			}
+			.love{position: absolute;left:10px;bottom:40px;display: inline-block;width: 30px;height:30px;}
+			.footer{position: fixed;bottom:0px;width:100%;height:50px;background: #000;opacity: 0.8;}
+			.footer .btnl{width:25%;color:#fff;float:left;line-height: 50px;text-align: center;border-right:1px #ccc solid;}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;" class="page__bd page__bd_spacing">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span   id="title" class="title" style="text-align: center;" >顶上宅配</span>
+			<span   id="showPicker" style="width:40px; margin-right:10px; float:right;">场景</span>
+		</header>
+		<div class="page__bd content" id="contents">
+			<div class="weui-search-bar" id="searchBar">
+				<div class="weui-search-bar__form">
+					<div class="weui-search-bar__box">
+						<i class="weui-icon-search"></i>
+						<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+						<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+					</div>
+					<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);"> <i class="weui-icon-search"></i> <span>搜索</span> </label>
+				</div>
+				<a href="javascript:;" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+			</div>
+			<div class="guanggao"></div>
+			<div class="picarr"></div>
+			<div class="fenge"></div>
+
+<div class="footer">
+
+<a href="" class="btnl">收藏夹</a>
+
+</div>
+
+		</div>
+		<script id="interpolationtmpl" type="text/x-dot-template">
+			{{~it:value:index}}
+			<div class="picbox">
+			<a href="javascript:void(0)"><img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic" onclick="jump({{=value.id}},{{=value.cid}},{{=value.index}})">
+
+<span class="love"><img src="../../image/love0.png" style="width:30px;height:30px;"></span>
+
+			</a>
+			<div class="picname">{{=value.title}}</div>
+			<div style="margin-top: 5px;padding-left: 2px;">
+			</div>
+			</div>
+			{{~}}
+		</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script src="../../script/zepto.min.js"></script>
+	<script src="../../script/doT.min.js"></script>
+	<script src="../../script/weui.min.js"></script>
+	<script src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/dropload.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript">
+		var picArr;
+		var OPENID;
+		var isDrop = false;
+		var PAGE = 1;
+		var CID = 12;
+		var me;
+		var cidType = "集成吊顶";
+		var arr = [];
+		var SEARCH = false;
+		//搜索模式不用下拉
+		var index;
+		var imageArr = [];
+		apiready = function() {
+			setTopBar();
+			setDrop();
+			isDrop = true;
+			getCid();
+		}
+		function search() {
+			index = 0;
+			$(".guanggao").html("搜索结果:");
+			var title = $("#searchInput").val();
+			if (title == "") {
+				return;
+			}
+			api.ajax({
+				url : 'http://www.dszpvip.com/index.php?paint/phonesearch/?title=' + title
+			}, function(ret, err) {
+				if (ret.data.length < 1) {
+					return false;
+				}
+				SEARCH = true;
+				var arrText = doT.template($("#interpolationtmpl").text());
+				ImageArr = ret.data;
+				$(".picarr").html(arrText(ret.data));
+				$('.pic').picLazyLoad();
+				loadImage();
+			});
+		}
+
+		function loadImage() {
+			if (index > ImageArr.length - 1) {
+				return;
+			}
+			var image = ImageArr[index].image;
+			var sku = ImageArr[index].sku;
+			api.imageCache({
+				url : 'http://www.dszpvip.com/' + image
+			}, function(ret, err) {
+				var url = ret.url;
+				$("#image" + sku).attr("src", url);
+				index += 1;
+				loadImage();
+			});
+		}
+
+		function setDrop() {
+			if (!SEARCH) {
+				$('.content').dropload({
+					scrollArea : window,
+					autoLoad : true,
+					domDown : {
+						domClass : 'dropload-down',
+						domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+						domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+						domNoData : '<div class="dropload-noData">没有更多数据</div>'
+					},
+					loadDownFn : function(mes) {
+						me = mes;
+						phoneGetPic(me);
+						PAGE++;
+					},
+					threshold : 50
+				});
+			}
+		}
+
+		function getCid() {
+			arr = [{
+				"label" : "集成吊顶",
+				"value" : 9,
+				"children" : []
+			}, {
+				"label" : "集成背景·墙面",
+				"value" : 51,
+				"children" : []
+			}]
+			api.ajax({
+				url : "http://www.dszpvip.com/index.php?paint/phonegetcid/?type=集成吊顶"
+			}, function(ret, err) {
+				var data = ret.data
+				for (var i = 0; i < data.length; i++) {
+					var obj;
+					obj = {
+						"label" : data[i].name,
+						"value" : data[i].id
+					};
+					arr[0].children.push(obj);
+				}
+				api.ajax({
+					url : "http://www.dszpvip.com/index.php?paint/phonegetcid/?type=集成背景墙面"
+				}, function(ret, err) {
+					 var datas = ret.data
+                            for (var i = 0; i < datas.length; i++) {
+                                var obj;
+                                obj = {
+                                    "label" : datas[i].name,
+                                    "value" : datas[i].id
+                                };
+                                arr[1].children.push(obj);
+                            }
+                            initPicker();
+				});
+			});
+		}
+
+		function initPicker() {
+			$('#showPicker').on('click', function() {
+				weui.picker(arr, {
+					onChange : function(result) {
+					},
+					onConfirm : function(result) {
+						SEARCH = false;
+						result = result.toString().replace(/^[0-9]{1,},/g, "");
+						setTitle(arr, result);
+						$(".picarr").html("");
+						$(".picarr").scrollTop("0");
+						CID = result;
+						PAGE = 1;
+						phoneGetPic();
+					}
+				});
+			});
+		}
+
+		//设置标题栏
+		function setTitle(pickerArr, cid) {
+			for (var i = 0; i < pickerArr.length; i++) {
+				if (pickerArr[i].value == cid) {
+					$("#title").html(pickerArr[i].label);
+					return;
+				}
+			}
+		}
+
+		function goback() {
+			api.closeWin();
+		}
+
+		function jump(id, cid, index2) {
+			if (SEARCH) {
+				var title = $("#searchInput").val();
+				api.openWin({
+					name : "bigImg",
+					url : "bigImg.html",
+					pageParam : {
+						search : true,
+						title : title,
+						index : index2
+					},
+					slidBackEnabled : false,
+				})
+			} else {
+				api.openWin({
+					name : "bigImg",
+					url : "bigImg.html",
+					pageParam : {
+						search : false,
+						id : id,
+						cid : cid
+					},
+					slidBackEnabled : false,
+				})
+			}
+		}
+
+		//获取图片
+		function phoneGetPic() {
+			var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
+			api.ajax({
+				url : url
+			}, function(ret, err) {
+				var d = ret.data.newslist;
+				console.log(JSON.stringify(ret));
+				if (d.length == 0) {
+					me.lock();
+					me.noData();
+				} else {
+					var arrText = doT.template($("#interpolationtmpl").text());
+					$(".picarr").append(arrText(d));
+					$('.pic').picLazyLoad();
+				}
+				//第一次加载数量不足的情况
+				if (d.length < 12) {
+					me.lock();
+					me.noData();
+				}
+				if (PAGE > 20) {
+					me.lock();
+					me.noData();
+				}
+				me.resetload();
+			});
+		}
+
+		$(function() {
+			var $searchBar = $('#searchBar'), $searchResult = $('#searchResult'), $searchText = $('#searchText'), $searchInput = $('#searchInput'), $searchClear = $('#searchClear'), $searchCancel = $('#searchCancel');
+			function hideSearchResult() {
+				$searchResult.hide();
+				$searchInput.val('');
+			}
+
+			function cancelSearch() {
+				hideSearchResult();
+				$searchBar.removeClass('weui-search-bar_focusing');
+				$searchText.show();
+			}
+
+
+			$searchText.on('click', function() {
+				$searchBar.addClass('weui-search-bar_focusing');
+				$searchInput.focus();
+			});
+			$searchInput.on('blur', function() {
+				if (!this.value.length)
+					cancelSearch();
+			}).on('input', function() {
+				if (this.value.length) {
+					$searchResult.show();
+					search();
+				} else {
+					$searchResult.hide();
+				}
+			});
+			$searchClear.on('click', function() {
+				hideSearchResult();
+				$searchInput.focus();
+			});
+			$searchCancel.on('click', function() {
+				cancelSearch();
+				$searchInput.blur();
+			});
+		});
+	</script>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<link rel="stylesheet" href="../css/weui.min.css">   
+	<link rel="stylesheet" href="../css/dropload.css">
+	<link rel="stylesheet" href="../css/header.css" />
+	<style>
+    	body{
+    		background:#fff;
+    	}
+    	#main{ margin-top: 41px;}
+    	.faq{ border-bottom: 1px solid #f1f1f1; height: 50px;}
+    	.faq span{ padding-left: 20px; width: 85%; height: 100%; display: inline-block; line-height: 50px;}
+    	.faq img{ width: 15px; height: 15px;}
+    </style>
+</head>
+<body>
+
+	<div id="contents">
+		<header style="position: fixed;">
+	    	<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back"/></i><span class="title" style="text-align: center;">问题</span>
+	    </header>
+	
+		<div id="main">
+		
+		</div>
+	</div>
+	
+</body>
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="faq" ontouchend="jump({{=value.id}})">
+		<span>{{=value.title}}</span><img src="../image/more.png" />
+	</div>
+	{{~}}			
+</script>
+
+
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script><script type="text/javascript">
+	var OPENID;
+	var page=1;
+	var isDrop=false;
+	apiready = function(){
+		var systemType = api.systemType;
+		if(systemType == "ios"){
+			$(".back").css("top","25px");
+			$("#main").css("marginTop","61px");
+		}
+		$api.fixStatusBar($api.dom('header'));
+		api.setStatusBarStyle({
+			style : 'dark',
+			color : '#6ab494'
+		});
+		OPENID=api.getPrefs({
+	      sync:true,
+	      key:'openid'
+      });
+		setDrop();
+		isDrop=true;	
+	};
+	
+	function jump(id){
+	    api.openWin({
+	       name: 'content',
+	       url: 'content.html',
+	       pageParam:{
+	       		id:id
+	       }
+        });
+	}
+	
+	function goback(){
+		api.closeWin({
+			name : 'faq'
+		});
+	}
+	
+	function loadData(me){
+	  api.ajax({
+	      url:'http://www.d-shang.com/index.php?app/getnewslist/?cid=2204&p='+page+'&openid='+OPENID
+      },function(ret,err){
+      		$(".title").html(ret.data[0].category_name);
+      	   	var d = ret.data;
+			
+			if (d.length ==0){
+				me.lock();
+				me.noData();
+			} else {
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").append(arrText(ret.data));
+			}
+			
+			//第一次加载数量不足的情况
+			if(d.length<20){
+				me.lock();
+				me.noData();
+			}
+			me.resetload();
+			$(".cnt").bind("click",jump);
+      	   
+      	   
+      });
+	
+	}
+	
+		function setDrop(){
+		if(isDrop==true){
+		   return false;
+		}
+		$('#contents').dropload({
+			scrollArea : window,
+			autoLoad : true,
+			domDown : {
+				domClass : 'dropload-down',
+				domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+				domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+				domNoData : '<div class="dropload-noData">没有更多数据</div>'
+			},
+			loadDownFn : function(me) {
+				loadData(me);
+				page += 1;
+			},
+			threshold : 50
+		});
+	}
+	
+</script>
+</html>

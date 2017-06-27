@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+		<style>
+			body {
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;" class="page__bd page__bd_spacing">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;" >出样</span>
+		</header>
+		<div class="page__bd content" id="main"></div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="weui-cells">
+		{{~it:value:index}}
+		<a class="weui-cell weui-cell_access" href="javascript:mx('{{=value}}')">
+		<div class="weui-cell__hd"><img src="../../image/pdf.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+		<div class="weui-cell__bd">
+		<p>{{=value}}</p>
+		</div>
+		<div class="weui-cell__ft"></div>
+		</a>
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			
+			loadData();
+		};
+		function mx(file) {
+			api.openWin({
+				name : 'pdfmx',
+				url : './mx.html',
+				pageParam : {
+					name : file
+				}
+			});
+		}
+
+		function loadData() {
+			var loading = weui.loading("正在获取文件");
+			var url = 'http://www.d-shang.com/index.php?app/getpdf/?openid=' + OPENID;
+			api.ajax({
+				url : url
+			}, function(ret, err) {
+				loading.hide();
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(ret.data));
+			});
+		}
+	</script>
+</html>

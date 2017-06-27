@@ -1,0 +1,118 @@
+	body {
+				background: #eff4f8;
+			}
+			.adv {
+				width: 100%;
+			}
+			.box {
+				width: 40%;
+				float: left;
+				margin: 10px;
+				background: #fff;
+				text-align: center;
+			}
+			.box img {
+				width: 100%;
+			}
+			.title {
+				width: 100%;
+				height: 30px;
+				font-size: 0.8em;
+			}
+			.title span {
+				color: #CCCCCC;
+			}
+			.searchBar {
+				position: fixed;
+				top: 0px;
+			}
+			.cnt {
+				width: 50%;
+				height: 200px;
+				float: left;
+				margin-bottom: 100px;
+			}
+			.cnt .pic {
+				width: 98%;
+				height: 100%;
+				display: block;
+				margin: 0 auto;
+			}
+			.cnt p {
+				text-align: center;
+			}
+			.shopname {
+				color: #000; /*line-height: 16px;*/
+				text-align: center;
+				font-size: 0.9em;
+				white-space: nowrap;
+				word-wrap: normal;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				min-height: 10px;
+				padding-top: 3px;
+			}
+			.type{color:#666;font-size:0.8em;}
+			.comment {
+				position: relative;
+				white-space: nowrap;
+				word-wrap: normal;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			.comment span {
+				vertical-align: middle;
+				color: #666;
+				font-size: 12px;
+			}
+			.price {
+				color: #f22e2f !important;
+				font-size: 1em !important;
+			}
+			.cpxx {
+				display: none;
+			}
+			.footer {
+				width: 100%;
+				height: 50px;
+				position: fixed;
+				bottom: 0;
+				background-color: white;
+			}
+			.footer div {
+				height: 100%;
+				text-align: center;
+				position: relative;
+				line-height: 27px;
+				font-size: 12px;
+				border: none;
+				float: left;
+			}
+			.footer div img {
+				width: 25px;
+				display: block;
+				margin: 2px auto;
+			}
+			.footer .share {
+				background-color: #fff;
+				color: #000;
+				width: 20%;
+			}
+			.footer .friend {
+				background-color: #f23030;
+				color: #fff;
+				width: 40%;
+			}
+			.wuhuo {
+				color: #666;
+			}
+			.content {
+				width: 100%;
+				position: absolute;
+				top: 40px;
+				left: 0;
+				right: 0;
+				bottom: 100px;
+				margin-top: 0 !important;
+			}
+			.buycart{background:url(../../image/buycart.png) no-repeat;width:30px;height:30px;}

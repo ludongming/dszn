@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+        <link rel="stylesheet" href="../../css/dropload.css">
+        <link rel="stylesheet" href="../../css/goods.css">
+        <style>
+            html, body {
+                background-color: white;
+            }
+            .main {
+                margin: 50px 0px;
+                text-indent: 32px;
+                width: 100%;
+                overflow-x: hidden;
+            }
+            .main img {
+                display: block;
+                margin: 0 auto;
+                width: 100%;
+                height:100%;
+            }
+            .title {
+                width: 100%;
+                text-indent: 0 !important;
+            }
+            .tit {
+                text-indent: 0;
+                margin-bottom: 20px;
+                font-size: 20px;
+                padding-left: 2px;
+            }
+            header {
+                width: 100%;
+                height: 40px;
+                background-color: #f3f3f3;
+                position: absolute;
+                top: 0;
+                border-bottom: 1px solid #ccc;
+                text-align: center;
+                line-height: 35px;
+                font-size: 18px;
+            }
+            .back {
+                width: 25px;
+                height: 25px;
+                position: absolute;
+                top: 8px;
+                left: 10px;
+            }
+            .footer {
+                width: 100%;
+                height: 50px;
+                position: fixed;
+                bottom: 0;
+                background-color: white;
+            }
+            .footer div {
+                width: 50%;
+                height: 100%;
+                text-align: center;
+                position: relative;
+                line-height: 50px;
+                color: white;
+                border: none;
+                float: left;
+            }
+            .footer div img {
+                width: 20px;
+                height: 20px;
+                position: relative;
+                top: 5px;
+                right: 2px;
+            }
+            .footer .share {
+                background-color: #10AEFF;
+            }
+            .footer .friend {
+                background-color: orange;
+            }
+        </style>
+    </head>
+    <body>
+        <header style="position: fixed;">
+            <i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i><span class="tit" style="text-align: center;">活动</span>
+        </header>
+        <div class="main" id="main"></div>
+        <div class="footer">
+            <div class="share" ontouchend="share(1)"><img src="../../image/share.png"  />分享给朋友
+            </div>
+            <div class="friend"  ontouchend="share(2)"><img src="../../image/friend.png" />分享到朋友圈
+            </div>
+        </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../script/zepto.min.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+    <script type="text/javascript">
+        var OPENID;
+        apiready = function() {
+            var systemType = api.systemType;
+            if (systemType == "ios") {
+                $(".back").css("top", "25px");
+                $(".main").css("marginTop", "70px");
+            }
+            $api.fixStatusBar($api.dom('header'));
+            api.setStatusBarStyle({
+                style : 'dark',
+                color : '#6ab494'
+            });
+            OPENID = api.getPrefs({
+                sync : true,
+                key : 'openid'
+            })
+            var params = api.pageParam;
+            loadData(params.id);
+        };
+        function goback() {
+            api.closeWin({
+            });
+        }
+
+        function loadData(id) {
+            api.ajax({
+                url : 'http://www.d-shang.com/index.php?wallsceil/getwallsconbyid/?id=' + id
+            }, function(ret, err) {
+                var name = "方案编号："+id;
+                $(".tit").html(name);
+                var a = replaceImage(ret.data.content);
+                $("#main").html(a);
+                $('.pic').picLazyLoad();
+            });
+        }
+
+        function replaceImage(con) {
+            var reg = /src=\"(.*?)\"/g;
+            var a = con.replace(reg, "src=\"../../image/defaultimage.png\" class=\"pic\" data-original=\"$1\"");
+            return a;
+        }
+
+        function share(type) {
+            var params = api.pageParam;
+            var title = "您好，这里有一个礼物，还未打开哦，赶紧拆开看一看吧。";
+            var scene = type == 1 ? "session" : "timeline";
+            var link = "http://www.d-shang.com/index.php?appanonymous/product/?id=" + params.id;
+            var wx = api.require('wx');
+            wx.shareWebpage({
+                apiKey : 'wx062395c72d4d0732',
+                scene : scene,
+                title : title,
+                description : "方案编号："+params.id,
+                thumb : 'widget://image/gift.png',
+                contentUrl : link
+            }, function(ret, err) {
+                if (ret.status) {
+                    alert('分享成功');
+                } else {
+                }
+            });
+        }
+    </script>
+</html>

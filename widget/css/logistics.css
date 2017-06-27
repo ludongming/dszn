@@ -1,0 +1,19 @@
+
+body{background-color:#eee;}
+/*body{background-color:;}*/
+.wrap{max-width:1024px;height:100%;}
+.txt{width:100%;text-align:left;background-color:#fff;margin-bottom:8px;padding:12px 2% 2px;border-bottom:1px solid #ddd;border-top:1px solid #ddd;}
+.txt li{width:100%;padding-bottom:6px;font-size:1rem;color:#242322;}
+.message{display:flex;justify-content:space-between;}
+.date{color:#999897;}
+.price{}
+.price strong{color:#ff5000;margin-left:10px;font-size:1.1em;font-weight:normal;}
+.more{margin:13px 0;padding:5px 10px ;border-radius:5px;font-size:0.9rem;background-color:#fff;color:#616364;display:inline-block;}
+.phone{color:#0b61e1;}
+.phone a:before{position:absolute;left:0;content:"";width:20px;height:20px;padding:2px;background-clip:padding-box;background:url(../img/phone.png) no-repeat center/90%;background-color:#0b61e1;border-radius:50%;}
+.phone a{display:block;width:100%;padding-left:28px;position:relative;text-decoration:none;color:inherit;}
+.small{font-style:normal;font-size:0.8em;margin:0 2px;}
+.search{width:100%;padding:8px 2%;background-color:#fff;text-align:left;display:flex;}
+.search input{height:35px;border:none;border-top-left-radius:5px;border-bottom-left-radius:5px;background-color:#ddd;padding:8px;color:#0b61e1;width:100%;}
+.search i{flex-shrink:0;display:inline-block;vertical-align:middle;width:35px;height:35px;background:url(../../xiaoyemian/img/sou.png) no-repeat center/100%;background-color:#ddd;border-top-right-radius:5px;border-bottom-right-radius:5px;}
+.txt li.remark{font-size:0.9rem;margin-top:6px;}

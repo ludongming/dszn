@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>title</title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/weuix.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+        <style>
+            body {
+            }
+            .thumb {
+                display: none;
+                border-top: 1px solid #f1f1f1;
+                position: absolute;
+                bottom: 0px;
+                height: 190px;
+                text-align: center;
+                background: #f1f1f1;
+                width: 100%;
+                line-height: 60px;
+                z-index: 2;
+            }
+            .thumb .l {
+                height: 60px;
+                width: 100%;
+                border-bottom: 1px #f5f5f5 solid;
+                background: #fff;
+            }
+            .thumb .cancle {
+                width: 100%;
+                margin-top: 8px;
+                height: 60px;
+                border-bottom: 1px #f1f1f1 solid;
+                background: #fff;
+            }
+            .warp {
+                position: fixed;
+                top: -60px;
+                height: 100%;
+                width: 100%;
+                background: #000;
+                opacity: 0.4;
+                display: none;
+                z-index: 1;
+            }
+            .dingwei {
+                width: 100%;
+            }
+            .cells {
+                width: 95%;
+                float: right;
+                border-bottom: 1px #f5f5f5 solid;
+                margin-bottom: 5px;
+                padding-top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <header style="position: fixed;">
+            <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">质量反馈</span>
+            <a href="javscript:;" ontouchend="send()" style="color:#27ae61;width:40px;margin-top:2px; margin-right:10px; vertical-align:middle;float:right;">提交 </a>
+        </header>
+        <div class="weui_cells" style="margin-top:70px;">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">主题</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" placeholder="请输入主题概要" type="text" id="title">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell weui_cell_select">
+                    <div class="weui_cell_hd"><label class="weui_label">问题分类</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" id="type">
+                            <option selected="" value="1">质量问题</option>
+                            <option value="2">物流与发货</option>
+                            <option value="3">账户余额问题</option>
+                            <option value="4">产品问题</option>
+                            <option value="5">专卖店上样问题</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="weui-cell__bd" > 
+                    <textarea class="weui-textarea" id="content"  placeholder="请在这里输入您的留言，我们会尽快回复，感谢您的建议！" rows="5"></textarea>
+                </div>
+                <div class="weui-uploader">
+                    <div class="weui-uploader_hd"></div>
+                    <div class="weui-uploader_bd">
+                        <div class="weui_uploader_input_wrp" onclick="pic()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+     <!--选择器-->
+    <div class="warp"></div>
+    <div class="thumb">
+        <div class="list">
+            <div class="l" onclick="getPic('camera')">
+                拍摄照片
+            </div>
+            <div class="l" onclick="getPic('album')">
+                从手机相册选择
+            </div>
+        </div>
+        <div class="cancle" ontouchend="cancle()">
+            取消
+        </div>
+    </div>
+    <!--选择器结束-->
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/wolf.js"></script>
+    <script type="text/javascript" src="../../script/zepto.min.js"></script>
+    <script type="text/javascript">
+        var OPENID;
+        var FILE;
+        apiready = function() {
+            setTopBar();
+            OPENID = api.getPrefs({
+                sync : true,
+                key : 'openid'
+            });
+        };
+        function goback() {
+            api.closeWin({
+            });
+        }
+
+        function cancle() {
+            $(".warp").hide();
+            $(".thumb").hide();
+        }
+
+        function pic() {
+            $(".warp").show();
+            $(".thumb").show();
+        }
+
+        function send() {
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var type = $("#type").val();
+        if(title == ""){
+            alert("请输入主题");
+            return;
+        }
+        if(content == ""){
+            alert("请输入描述");
+            return;
+        }
+            api.ajax({
+                url : 'http://www.d-shang.com/index.php?app/addnewadvice/?openid=' + OPENID,
+                method : 'post',
+                data : {
+                    values : {
+                        title:title,
+                        content:content,
+                        type:type,
+                        qtype:1//问题类型是质量反馈
+                    },
+                    files : {
+                        pic : FILE
+                    }
+                }
+            }, function(ret, err) {
+                //console.log(JSON.stringify(ret));
+                alert(ret.data.msg);
+                if (ret.data.status) {
+                    api.closeWin({
+                    });
+                }
+            });
+        }
+
+        function getPic(type) {
+            api.getPicture({
+                sourceType : type,
+                encodingType : 'jpg',
+                mediaValue : 'pic',
+                destinationType : 'url',
+                allowEdit : true,
+                quality : 80,
+                targetWidth : 1280,
+                targetHeight : 800,
+                saveToPhotoAlbum : false
+            }, function(ret, err) {
+                if (ret) {
+                    FILE = ret.data;
+                    var con = '<li class="weui-uploader__file"  onclick="pic()" style="background-image:url(' + ret.data + ')"></li>';
+                    $(".weui-uploader__bd").html(con);
+                    cancle();
+                } else {
+                    //alert(JSON.stringify(err));
+                }
+            });
+        }
+    </script>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background: #fff;
+			}
+			.list {
+			
+				width: 100%;
+				border-bottom: 1px #eee solid;
+				margin:0 auto;
+				height: 60px;
+				color: #666;
+			}
+			.leixing {
+			padding-left:10px;
+				float: left;
+				width:100px;
+				
+			}
+			.money {
+				color: #000;
+				float: right;
+				width:100px;
+			}
+			.rq {
+				float: right;
+				font-size:0.9em;
+				width:100px;
+			}
+			.mc {
+			padding-top:3px;
+	padding-left:10px;
+				float: left;
+				font-size:0.7em;
+				width:200px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">网银支付</span>
+		</header>
+		<div class="page__bd content">
+		<div id="main"></div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		{{~it:value:index}}
+		<div>
+		<div class="list">
+		   <span class="leixing">{{=value.chargetypes}}</span><span class="rq">{{=value.rq}}</span><br>
+		    <span class="mc">{{=value.orderno}}</span>
+		   <span class="money">+{{=value.money1}}</span>
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			loadData();
+		};
+		function loadData() {
+		  var loading = weui.loading('加载中...');
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appbank/finance/?openid=' + OPENID
+			}, function(ret, err) {
+								loading.hide();
+
+				var arrText = doT.template($("#interpolationtmpl").text());
+				var a = arrText(ret.data);
+				$("#main").html(a);
+			});
+		}
+	</script>
+</html>

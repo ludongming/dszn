@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<style>
+			body {
+				background: #fff;
+			}
+			.back{width:300px;height:100px;margin:0 auto;margin-top:100px;}
+			.btnback{
+			   width:200px;
+			   height:50px;
+			   border:1px #000 solid;
+			   color:#000;
+			   text-align:center;
+			   line-height:50px;
+			   border-radius:4px;
+			}
+		</style>
+	</head>
+	<body>
+	
+	<div class="back">
+	<a href="javascript:;" class="btnback" ontouchend="goback()">返回</a>
+	</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			api.setScreenOrientation({
+				orientation : 'landscape_left'
+			});
+			
+			var param=api.pageParam;
+
+			var pdfReader = api.require('pdfReader');
+			var url='http://www.d-shang.com/static/attached/pdf/'+param.name;
+			pdfReader.open({
+				path : url
+			});
+		};
+		
+		function goback(){
+		   api.setScreenOrientation({
+                    orientation : 'auto_portrait'
+                });
+                api.setStatusBarStyle({
+                    style : 'dark',
+                    color : '#6ab494'
+                });
+                api.closeWin();
+		}
+	</script>
+</html>

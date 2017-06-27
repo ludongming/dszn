@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/header.css">
+		<style>
+			body {
+			}
+			.cate {
+				width: 32.7%;
+				height: 42px;
+				text-align: center;
+				font-size: 0.8em;
+				float: left;
+				border: 1px solid #ccc;
+				border-top: none;
+			}
+			.cateleft {
+				border-left: none;
+			}
+			.title {
+				width: 100%;
+				height: 35px;
+				background: #f1f1f1;
+				color: #000;
+				line-height: 35px;
+				font-size: 1em;
+				text-align: left;
+				text-indent: 2em;
+				border-bottom: 1px solid #ccc;
+			}
+			.box {
+				width: 100%;
+				height: 160px;
+				margin-top: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span style="text-align: center;">产品</span>
+		</header>
+		<div class="page__bd content">
+			<div id="main"></div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="box">
+		{{~it:value:index}}
+		<div class="cate {{?index%3!=0}}cateleft{{?}}" data-id="{{=value.id}}">
+		{{=value.name}}
+		</div>
+		{{~}}
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+		<script type="text/javascript" src="../../script/wolfcache.js"></script>
+
+	<script type="text/javascript">
+		var cateData;
+		var current = 0;
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			getShowCate();
+		}
+		function getCateByCid() {
+			if (current > cateData.length - 1) {
+				//进行缓存
+				var cache = $("#main").html();
+				writeCache("buycatecache", cache);
+				return;
+			}
+			var cid = cateData[current].id;
+			var name = cateData[current].name;
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getcategorybycid/?cid=' + cid + "&openid=" + OPENID,
+				method : "get"
+			}, function(ret, err) {
+				$("#main").append("<div class='title'>" + name + "</div>");
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").append(arrText(ret.data));
+				$(".cate").bind("click", getGoodsByCid);
+				current += 1;
+				getCateByCid();
+			});
+		}
+
+		function getShowCate() {
+			var ret = readCache("buycatecache");
+			if (ret != "") {
+				console.log("缓存");
+				$("#main").html(ret);
+				$(".cate").bind("click", getGoodsByCid);
+				return;
+			}
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getshowcate/?type=1&openid=' + OPENID,
+				medthod : "get"
+			}, function(ret, err) {
+				cateData = ret.data;
+				getCateByCid();
+			});
+		}
+
+		function getGoodsByCid() {
+			var cid = $(this).attr("data-id");
+			var name = $(this).text();
+			api.openWin({
+				name : 'goods',
+				url : './goods.html',
+				pageParam : {
+					cid : cid,
+					name : name
+				}
+			});
+		}
+	</script>
+</html>

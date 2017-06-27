@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css" />
+	</head>
+	<style type="text/css">
+		.weui-cells{ 
+			margin-top: 41px;
+		}
+	</style>
+	<body style="height:100%;">
+		<header style="position: fixed;">
+	    	<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span class="title" style="text-align: center;">增加</span>
+	    </header>
+	    		<div class="page__bd content">
+
+		<div class="weui-cells weui-cells_form">
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">小区门牌号</label>
+				</div>
+				<div class="weui-cell__bd" >
+					<input type="text" name="area" class="weui-input" placeholder="如万科海上传奇6#1601">
+				</div>
+			</div>
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">业主</label>
+				</div>
+				<div class="weui-cell__bd" >
+					<input type="text" name="username" class="weui-input" placeholder="如王总、张女士">
+				</div>
+			</div>
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">手机</label>
+				</div>
+				<div class="weui-cell__bd">
+					<input type="text" name="tel" class="weui-input" placeholder="请输入手机号码">
+				</div>
+			</div>
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">备注</label>
+				</div>
+				<div class="weui-cell__bd">
+					<textarea name="remark" id="remark" class="weui-textarea" rows="3" placeholder="备注 如户型 及预约时间"></textarea>
+				</div>
+			</div>
+			<div class="weui-cell">
+				<button type="submit" class="weui-btn weui-btn_primary" ontouchend="add()" id="add">
+					录入
+				</button>
+			</div>
+		</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/dropload.js"></script>
+				<script type="text/javascript" src="../../script/wolf.js"></script>
+
+<script>
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+	}
+	
+	function goback(){
+		api.closeWin();
+	}
+	
+	function add() {
+		$("#add").hide();
+		var name = $("input[name='username']").val();
+		var mobile = $("input[name='tel']").val();
+		var area = $("input[name='area']").val();
+		var remark = $("#remark").val();
+		if (name == '') {
+			alert("请输入真实姓名");
+			return false;
+		}
+		if (mobile == '') {
+			alert("请输入手机号码");
+			return false;
+		}
+		var myreg = /^1\d{10}$/;
+		if (!myreg.test(mobile)) {
+			alert("手机格式不正确");
+			return false;
+		}
+		$.post("http://www.d-shang.com/index.php?appcrm/ajaxaddcrm", {
+			name : name,
+			mobile : mobile,
+			area : area,
+			remark : remark,
+			source : 14,
+			openid : OPENID
+		}, function(data) {
+			weui.alert(data.message,function(){
+						goback();
+
+			})
+		}, "json")
+	}
+</script>
+</body> </html>

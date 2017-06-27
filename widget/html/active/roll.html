@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background: #fbe35b;
+				text-align: center;
+			}
+			h1 {
+				color: #df4f46;
+				font-style: italic;
+			}
+			.game {
+				margin-top: 100px;
+				width: 240px;
+				height: 180px;
+				margin: 0 auto;
+				border: 8px #e64b47 solid;
+				border-radius: 4px;
+			}
+			.roll {
+				width: 60px;
+				height: 60px;
+				text-align: center;
+				color: #000;
+				background: #ff8e32;
+				float: left;
+				position: relative;
+			}
+			.line {
+				width: 100%;
+				height: 60px;
+			}
+			.roll img {
+				width: 40px;
+			}
+			.active {
+				background: #ffce5d;
+				color: #000;
+			}
+			.table {
+				margin: 0 auto;
+			}
+			#start {
+				background: #f35c41;
+				border: 2px #f98f65 solid;
+				color: #fff;
+				border-radius: 5px;
+				width: 150px;
+				height: 50px;
+				margin: 0 auto;
+				text-align: center;
+				line-height: 50px;
+			}
+			.score {
+				width: 118px;
+				height: 58px;
+				text-align: center;
+				font-weight: 700;
+				line-height: 60px;
+				border: 1px #ffffff solid;
+				font-size: 1.2em;
+			}
+			.roll span {
+				position: absolute;
+				bottom: 0px;
+				right: 0px;
+				border-radius: 10px;
+				font-weight: 700;
+				font-size: 0.9em;
+				color: #fff;
+			}
+			#main {
+				width: 100%;
+				overflow-y: hidden;
+				background: #f6b233;
+				text-align: left;
+				font-size: 0.8em;
+			}
+			.list {
+				width: 100%;
+				height: 40px;
+				margin-bottom: 5px;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<style>
+		</style>
+		</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">开心一刻</span>
+		</header>
+		<div class="page__bd content">
+			<h1>欢乐老虎机</h1>
+			<div class="game">
+				<div class="line">
+					<div class="roll roll-1 active"><img src="../../image/bell/1.png"><span class="span1"></span>
+					</div>
+					<div class="roll roll-2"><img src="../../image/bell/2.png"><span class="span2"></span>
+					</div>
+					<div class="roll roll-3"><img src="../../image/bell/3.png"><span class="span3"></span>
+					</div>
+					<div class="roll roll-4"><img src="../../image/bell/4.png"><span class="span4"></span>
+					</div>
+				</div>
+				<div class="line">
+					<div class="roll roll-10"><img src="../../image/bell/10.png"><span class="span10"></span>
+					</div>
+					<div class="roll score">
+						0
+					</div>
+					<div class="roll roll-5"><img src="../../image/bell/5.png"><span class="span5"></span></div>
+					</div>
+					<div class="line">
+						<div class="roll roll-9"><img src="../../image/bell/9.png"><span class="span9"></span>
+						</div>
+						<div class="roll roll-8"><img src="../../image/bell/8.png"><span class="span8"></span>
+						</div>
+						<div class="roll roll-7"><img src="../../image/bell/7.png"><span class="span7"></span>
+						</div>
+						<div class="roll roll-6"><img src="../../image/bell/6.png"><span class="span6"></span>
+						</div>
+					</div>
+				</div>
+				<div style="color:#cf5d1e;text-indent: 2em;font-size:0.8em;">
+					1、每次抽奖需要5积分。
+					<br>
+					&nbsp; &nbsp; &nbsp; &nbsp;2、每人每天可以抽取10次。
+				</div>
+				<div id="start">
+					开始
+				</div>
+				<div id="main"></div>
+			</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		{{~it:value:index}}
+		<div class="list">
+		{{=value.rq}} <img src="{{=value.headimgurl}}" alt="" style="width:40px;vertical-align:middle;display: inline-block;border-radius: 40px;">
+		{{=value.real_name}}
+		获得 {{=value.remark}}
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/lottery.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript">
+		var fruit = ['苹果', '猕猴桃', '芒果', '荔枝', '草莓', '椰子', '菠萝', '番茄', '香蕉', '西瓜'];
+		var money = ['5', '5', '5', '10', '15', '5', '0', '-10', '-5', '10'];
+		var OPENID;
+		function setIntegral() {//显示用户全部积分
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/getintegral/?openid=' + OPENID
+			}, function(ret, err) {
+				var money = Math.round(ret.data);
+				$(".score").html(money);
+				lottery.integral = money;
+			});
+		}
+
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			setIntegral();
+			lottery.openid = OPENID;
+			$("#start").bind('click', lottery.reset);
+			for (var i = 1; i < 11; i++) {//添加积分标识
+				$(".span" + i).html(money[i - 1]);
+			}
+			getData();
+		};
+		function playMusic() {
+			// 播放音乐
+			api.startPlay({
+				path : 'widget://wgt/res/1.mp3'
+			}, function(ret, err) {
+				alert(JSON.stringify(err));
+			});
+		}
+
+		function stopMusic() {
+			api.stopPlay();
+		}
+
+		function getData() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/gethorse/?openid=' + OPENID
+			}, function(ret, err) {
+				var arrText = doT.template($("#interpolationtmpl").text());
+				var a = arrText(ret.data);
+				var c = a.replace(/\/0/g, "/64");
+				$("#main").html(c);
+				$('.pic').picLazyLoad();
+				api.refreshHeaderLoadDone();
+			});
+		}
+	</script>
+	</script>
+</html>

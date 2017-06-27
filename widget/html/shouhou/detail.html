@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>title</title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/weuix.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+        <style>
+            body {
+            }
+            .thumb {
+                display: none;
+                border-top: 1px solid #f1f1f1;
+                position: absolute;
+                bottom: 0px;
+                height: 190px;
+                text-align: center;
+                background: #f1f1f1;
+                width: 100%;
+                line-height: 60px;
+                z-index: 2;
+            }
+            .thumb .l {
+                height: 60px;
+                width: 100%;
+                border-bottom: 1px #f5f5f5 solid;
+                background: #fff;
+            }
+            .thumb .cancle {
+                width: 100%;
+                margin-top: 8px;
+                height: 60px;
+                border-bottom: 1px #f1f1f1 solid;
+                background: #fff;
+            }
+            .warp {
+                position: fixed;
+                top: -60px;
+                height: 100%;
+                width: 100%;
+                background: #000;
+                opacity: 0.4;
+                display: none;
+                z-index: 1;
+            }
+            .dingwei {
+                width: 100%;
+            }
+            .cells {
+                width: 95%;
+                float: right;
+                border-bottom: 1px #f5f5f5 solid;
+                margin-bottom: 5px;
+                padding-top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <header style="position: fixed;">
+            <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">我的建议</span>
+        </header>
+        <div class="weui_cells" style="margin-top: 65px;">
+            <p>
+                你的问题，我们积极解决
+            </p>
+            <p>
+                直到你的问题被解决，你都可以再回复
+            </p>
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label class="weui_label">用户：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="user"></p>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label class="weui_label">核心问题：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="title"></p>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label class="weui_label">问题分类：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="type"></p>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label class="weui_label">状态：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="status"></p>
+                </div>
+            </div>
+            <div class="picarr"></div>
+            <div class="picarr2"></div>
+        </div>
+        <script id="interpolationtmpl" type="text/x-dot-template">
+            {{~it:value:index}}
+            {{? value.sponsor == 1}}
+            <article class="myword">
+            <p><i class="kh"></i></p>
+            <p>{{=value.content}}</p>
+            <ul class="mypic">
+            <li class="img-close"></li>
+            {{ for(var i=0,len=value.image.length;i<len;i++) { }}
+            <li>
+            <img src="{{=value.image[i].image}}" width="600" height="600">
+            </li>
+            {{ } }}
+            </ul>
+            <span>{{=value.add_time}}</span>
+            </article>
+            {{?? value.sponsor == 2}}
+            <article class="bossword">
+            <p><i class="kf"></i> {{=value.real_name}}</p>
+            <p>{{=value.content}}</p>
+            <ul class="mypic">
+            <li class="img-close"></li>
+            {{ for(var i=0,len=value.image.length;i<len;i++) { }}
+            <li>
+            <img src="{{=value.image[i].image}}" width="600" height="600">
+            </li>
+            {{ } }}
+            </ul>
+            <span>{{=value.add_time}}</span>
+            </article>
+            {{?}}
+            {{~}}
+        </script>
+        <script id="interpolationtmpl2" type="text/x-dot-template">
+            {{? it.comment.issolve == 0}}
+            <div class="weui_cells">
+            {{? it.sf == 1}}
+            <div class="cell">
+            <div class="weui-cell__bd" >
+            <textarea class="weui-textarea" id="content"  placeholder="请在这里输入您的留言，我们会尽快回复，感谢您的建议！" rows="5"></textarea>
+            </div>
+            <div class="weui-uploader">
+            <div class="weui-uploader_hd"></div>
+            <div class="weui-uploader_bd">
+            <div class="weui_uploader_input_wrp" onclick="pic()"></div>
+            </div>
+            </div>
+            </div>
+            <table id="showimage" class="img-txt"></table>
+            <button type="button" onclick="subData(1,{{= it.comment.id}})">提交</button>
+            {{?? it.sf == 2}}
+            <input type="text" id="replier" placeholder="回复人(与顶上的一致)">
+            <div class="cell">
+            <div class="weui-cell__bd" >
+            <textarea class="weui-textarea" id="content"  placeholder="请在这里输入您的留言，我们会尽快回复，感谢您的建议！" rows="5"></textarea>
+            </div>
+            <div class="weui-uploader">
+            <div class="weui-uploader_hd"></div>
+            <div class="weui-uploader_bd">
+            <div class="weui_uploader_input_wrp" onclick="pic()"></div>
+            </div>
+            </div>
+            </div>
+            <table  id="showimage" class="img-txt"></table>
+            <button type="button" onclick="subData(2,{{= it.comment.id}})">提交</button>
+            {{?}}
+            {{? it.sf == 2}}
+            <button class="solved" onclick="solve({{it.comment.id}})">已解决</button>
+            {{?}}
+            </div>
+            {{?}}
+        </script>
+    </body>
+    <!--选择器-->
+    <div class="warp"></div>
+    <div class="thumb">
+        <div class="list">
+            <div class="l" onclick="getPic('camera')">
+                拍摄照片
+            </div>
+            <div class="l" onclick="getPic('album')">
+                从手机相册选择
+            </div>
+        </div>
+        <div class="cancle" ontouchend="cancle()">
+            取消
+        </div>
+    </div>
+    <!--选择器结束-->
+    <script src="../../script/zepto.min.js"></script>
+    <script src="../../script/api.js"></script>
+    <script src="../../script/wolf.js"></script>
+    <script src="../../script/doT.min.js"></script>
+    <script src="../../script/weui.min.js"></script>
+    <script type="text/javascript">
+        var OPENID;
+        var FILE;
+        apiready = function() {
+            setTopBar();
+            OPENID = api.getPrefs({
+                sync : true,
+                key : 'openid'
+            });
+            var params = api.pageParam;
+            api.ajax({
+                url : 'http://www.d-shang.com/index.php?app/getadvicedetail/?openid=' + OPENID + '&id=' + params.id
+            }, function(ret, err) {
+                console.log(JSON.stringify(ret.data.reply[0].image));
+                var arr = ret.data.reply[0].image;
+                for (var i = 0; i < arr.length; i++) {
+                    arr[i].image = "http://www.d-shang.com" + arr[i].image.slice(1);
+                    arr[i].thumb = "http://www.d-shang.com" + arr[i].thumb.slice(1);
+                }
+                var text = doT.template($("#interpolationtmpl").text());
+                $(".picarr").html(text(ret.data.reply));
+                var text2 = doT.template($("#interpolationtmpl2").text());
+                $(".picarr2").html(text2(ret.data));
+                outputA(ret.data.comment);
+            });
+        };
+        function outputA(data) {
+            $("#user").append(data.customer);
+            $(".kh").text(data.customer);
+            $("#title").text(data.title);
+            type = data.type;
+            if (type == 1) {
+                $("#type").text("质量问题");
+            } else if (type == 2) {
+                $("#type").text("物流与发货");
+            } else if (type == 3) {
+                $("#type").text("账户余额问题");
+            } else if (type == 4) {
+                $("#type").text("产品问题");
+            } else {
+                $("#type").text("专卖店上样问题");
+            }
+            if (data.issolve == 1) {
+                $("#status").text("已解决");
+            } else {
+                $("#status").text("活跃");
+            }
+        }
+
+        function outputB() {
+        }
+
+        function outputC() {
+        }
+
+        function subData(type, id) {
+            var content = $("#content").val();
+            console.log(content);
+            if (content == null || content == '') {
+                alert("请输入留言");
+                return;
+            }
+            if (type == 1) {//1 客户提交 2 管理员提交
+                api.ajax({
+                    url : 'http://www.d-shang.com/index.php?app/customerreply/?openid=' + OPENID,
+                    method : 'post',
+                    data : {
+                        values : {
+                            id : id,
+                            reply : content,
+                        },
+                        files : {
+                            pic : FILE
+                        }
+                    }
+                }, function(ret, err) {
+                    console.log(JSON.stringify(ret));
+                    alert(ret.data.msg);
+                });
+            } else if (type == 2) {
+                var replier = $("#replier").val();
+                if (replier == null || replier == '') {
+                    alert("请输入名称");
+                    return;
+                }
+                api.ajax({
+                    url : 'http://www.d-shang.com/index.php?app/adminreply/?openid=' + OPENID,
+                    method : 'post',
+                    data : {
+                        values : {
+                            id : id,
+                            replycomment : content,
+                            replier:replier
+                        },
+                        files : {
+                            pic : FILE
+                        }
+                    }
+                }, function(ret, err) {
+                    console.log(JSON.stringify(ret));
+                });
+            }
+        }
+
+        function goback() {
+            api.closeWin({
+            });
+        }
+
+        function cancle() {
+            $(".warp").hide();
+            $(".thumb").hide();
+        }
+
+        function pic() {
+            $(".warp").show();
+            $(".thumb").show();
+        }
+
+        function send() {
+            var title = $("#title").val();
+            var content = $("#content").val();
+            var type = $("#type").val();
+            if (title == "") {
+                alert("请输入主题");
+            }
+            if (content == "") {
+                alert("请输入描述");
+            }
+            api.ajax({
+                url : 'http://www.d-shang.com/index.php?app/addnewadvice/?openid=' + OPENID,
+                method : 'post',
+                data : {
+                    values : {
+                        title : title,
+                        content : content,
+                        type : type,
+                        qtype : 1//问题类型是质量反馈
+                    },
+                    files : {
+                        pic : FILE
+                    }
+                }
+            }, function(ret, err) {
+                //console.log(JSON.stringify(ret));
+                alert(ret.data.msg);
+                if (ret.data.status) {
+                    api.closeWin({
+                    });
+                }
+            });
+        }
+
+        function getPic(type) {
+            api.getPicture({
+                sourceType : type,
+                encodingType : 'jpg',
+                mediaValue : 'pic',
+                destinationType : 'url',
+                allowEdit : true,
+                quality : 80,
+                targetWidth : 1280,
+                targetHeight : 800,
+                saveToPhotoAlbum : false
+            }, function(ret, err) {
+                if (ret) {
+                    FILE = ret.data;
+                    var con = '<li class="weui-uploader__file"  onclick="pic()" style="background-image:url(' + ret.data + ')"></li>';
+                    $(".weui-uploader__bd").html(con);
+                    cancle();
+                } else {
+                    //alert(JSON.stringify(err));
+                }
+            });
+        }
+    </script>
+</html>

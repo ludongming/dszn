@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+			}
+
+			.weui-navbar {
+				margin-top: 41px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="title" style="text-align: center;">授权</span>
+		</header>
+				<div class="page__bd content">
+
+		
+		<div id="main"></div>
+		<div>
+			开启权限后，可以看到本店的数据，可以使用名单、增加、排名、名片功能。
+		</div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="weui-cells">
+		{{~it:value:index}}
+		<div class="weui-cell weui-cell_switch">
+		<div class="weui-cell__bd">{{=value.real_name}}</div>
+		<div class="weui-cell__ft">
+		<input class="weui-switch" type="checkbox"  data-id="{{=value.uid}}" {{?value.status==1}}checked="checked"{{?}}}>
+		</div>
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/dropload.js"></script>
+				<script type="text/javascript" src="../../script/wolf.js"></script>
+
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			loadUser();
+			api.setRefreshHeaderInfo({
+				loadingImg : 'widget://image/refresh.png',
+				bgColor : '#ccc',
+				textColor : '#fff',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...'
+			}, function(ret, err) {
+				loadUser();
+			});
+		};
+		function goback() {
+			api.closeWin();
+		}
+
+		function valid() {
+			var uid = $(this).attr("data-id");
+			var status = $(this).attr("checked");
+			status = status == true ? 1 : 0;
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appcrm/savemanager/?openid=' + OPENID,
+				data : {
+					values : {
+						"uid" : uid,
+						"status" : status
+					}
+				},
+				method : "post"
+			}, function(ret, err) {
+				weui.toast(ret.message, {
+					duration : 3000,
+					className : "bears"
+				});
+			});
+		}
+
+		function loadUser() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appcrm/getmanager/?openid=' + OPENID
+			}, function(ret, err) {
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(ret.data));
+				$(".weui-switch").bind("change", valid);
+				api.refreshHeaderLoadDone();
+			});
+		}
+	</script>
+</html>

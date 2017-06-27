@@ -1,0 +1,7 @@
+*{box-sizing:border-box;margin:0;padding:0;}
+body{text-align:center;font-family:ff-tisa-web-pro-1,ff-tisa-web-pro-2,"Lucida Grande","Hiragino Sans GB","Hiragino Sans GB W3",Helvetica,Arial,Verdana,sans-serif;
+   word-wrap:break-word;word-break:break-all;overflow-x:hidden;}
+header,nav,footer,section,article,figure,figcaption,aside,hgroup{display:block;}
+html{font-size:16px;}
+ul{list-style-type:none;display:inline-block;}
+.wrap{width:100%;padding-bottom:15%;}

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    	<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css" /> 
+    <style>
+		body {
+			background: #f5f5f5;
+		}
+		.balance {
+			color: #000;
+			width: 100%;
+			height: 150px;
+		}
+		.box {
+			width: 32%;
+			height: 100px;
+			border: 1px #666 solid;
+			border-left: none !important;
+			margin-top: 50px;
+			float: left;
+			text-align: center;
+		}
+		.shuoming {
+			height: 20px;
+			width: 100%;
+			padding-top: 10px;
+			text-align: left;
+			text-indent: 2em;
+			font-size: 0.9em;
+			color: #000;
+		}
+		.vip {
+			width: 100%;
+			height: 150px;
+			text-align: center;
+			height: 150px;
+			background: #e84c3d;
+			color: #fff;
+			padding-top: 20px;
+		}
+		.weui-grid a {
+			color: #000 !important;
+		}
+		.weui-grids {
+			background: #fff !important;
+		}
+		.weui-grid__icon {
+			width: 70px;
+		}
+		.process {
+			width: 300px;
+			margin: 0 auto;
+			margin-top: 30px;
+		}
+		.js_progress {
+			background: #2d3e50 !important;
+			position: relative;
+		}
+		.tip {
+			position: absolute;
+			top: -20px;
+			color: #fff;
+			right: -10px;
+			font-size: 0.8em;
+		}
+		.weui-progress {
+			position: relative;
+			margin-bottom: 20px;
+		}
+		.taskmoney {
+			position: absolute;
+			right: -40px;
+			bottom: -20px;
+			font-size: 0.8em;
+			color: #fff;
+		}
+		.hk {
+			color: #000 !important;
+		}
+		.yue {
+			color: #000 !important;
+		}
+		.bottom {
+			position: fixed;
+			bottom: 0px;
+			height: 60px;
+			width: 100%;
+			line-height: 60px;
+		}
+		.bottom .left {
+			width: 50%;
+			float: left;
+			text-align: center;
+			color: #000;
+			border-top: 1px #ddd solid;
+		}
+		.bottom .right {
+			width: 50%;
+			background: #2772ff;
+			text-align: center;
+			color: #fff;                                                                                                                                
+			float: left;
+		}
+    </style>
+</head>
+<body>
+	<header style="position: fixed;">
+    	<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">公司财务信息</span>
+
+    </header>
+    		<div class="page__bd content">
+
+
+<div class="vip">
+<div class="title">
+<span style="font-size:1.2em;font-weight: 700">VIP会员</span><br>
+<span style="font-size:0.8em;font-weight: 700">完成本月任务,次月自动升级为VIP</span>
+</div>
+<div class="process">
+<div class="weui-progress">
+            <div class="weui-progress__bar">
+                <div class="weui-progress__inner-bar js_progress"><span class="tip">0%</span></div>
+            </div>
+            
+               <span class="taskmoney">0.00</span>
+        </div>
+
+<span style="font-size:0.8em;color:#ecf0f1!important;">再努力下，只需<span class="shengyu"></span>升级为VIP会员哦</span>
+</div>
+</div>
+
+
+<div class="weui-grids">
+        <a class="weui-grid" href="javascript:goods(0)">
+            <div class="weui-grid__icon">
+                <span class="dd" style="color:#000;">0.00</span>
+            </div>
+            <p class="weui-grid__label">订单</p>
+        </a>
+          <a href="javascript:account()" class="weui-grid">
+            <div class="weui-grid__icon">
+               <span class="hk">0.00</span>
+            </div>
+            <p class="weui-grid__label">回款</p>
+        </a>
+          <a href="javascript:;" class="weui-grid">
+            <div class="weui-grid__icon">
+               <span ontouchend="balance()" class="yue">点击查看</span>
+            </div>
+            <p class="weui-grid__label">余额</p>
+        </a>
+     
+    </div>
+
+
+
+
+<div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:account();" >
+                <div class="weui-cell__bd">
+                    <p>回款情况</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:goods(0)">
+                <div class="weui-cell__bd">
+                    <p>已发货产品</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            
+             <a class="weui-cell weui-cell_access" href="javascript:goods(1)">
+                <div class="weui-cell__bd">
+                    <p>未发货产品</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        </div>
+
+
+
+
+<div class="shuoming">
+ 　此数据仅供参考,具体以公司财务实际对账余额为准
+</div>
+	
+	</div>
+	
+	
+	<div class="bottom">
+	<div class="left" ontouchend="chargemx()">支付记录</div>
+	<div class="right" ontouchend="bank()">在线支付</div>
+	</div>
+	
+</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	
+	
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			setTopBar();
+
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			loadERPOrder();
+		};
+
+      function bank(){
+        api.openWin({
+	        name: 'bank',
+	        url: '../bank/index.html'
+        });
+      
+      }
+      function chargemx(){
+        api.openWin({
+	        name: 'chargemx',
+	        url: '../bank/chargemx.html'
+        });
+      
+      }
+
+
+		function goods(status) {
+
+			api.openWin({
+				name : 'account',
+				url : './goods.html',
+				pageParam : {
+					status : status
+				}
+			});
+		}
+
+		function account() {
+			api.openWin({
+				name : 'account',
+				url : './account.html'
+			});
+
+		}
+
+		function loadERPOrder() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appbuy/geterporder/?openid=' + OPENID
+			}, function(ret, err) {
+				
+				if(!ret.status){
+				   weui.alert(ret.message,function(){
+				     
+				     api.closeWin({
+                     });
+				   });
+				   return false;
+				
+				}
+				
+				var d = ret.data;
+				$(".taskmoney").html(d.taskmoney);
+				var last = (d.taskmoney * 100 - d.money * 100) / 100;
+				var bfb = Math.round((d.money / d.taskmoney) * 100);
+
+				$(".js_progress").width(bfb + "%");
+				$(".tip").html(bfb + "%");
+				$(".shengyu").html(last);
+				$(".hk").html("¥" + d.money);
+				$(".dd").html("¥" + d.xsje);
+			});
+		}
+
+		function balance() {
+			var loading = "<img src='../../image/loading1.gif' width='15px'>";
+			$(".yue").html(loading);
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appbuy/geterpbalance/?openid=' + OPENID
+			}, function(ret, err) {
+				//coding...
+				var d = ret.data;
+				$(".yue").html("¥" + d);
+			});
+		}
+</script>
+</html>

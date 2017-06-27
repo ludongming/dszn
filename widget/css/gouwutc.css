@@ -1,0 +1,17 @@
+.tcwrap{position:fixed;top:0;left:0;bottom:0;z-index:99;width:100%;height:100%;background:rgba(0,0,0,0.5);}
+.tcclose{position:absolute;top:-10%;right:1px;width:30px;height:30px;border-radius:50%;background:url(../img/close.jpg);background-repeat:no-repeat;background-size:100%;background-position:0 0;}
+.tcmain{position:absolute;bottom:0px;left:0;width:100%;font-size:1rem;background-color:#fff;}
+.tcmain p{width:100%;border-bottom:1px solid #f6f4f4;padding:5% 5% 2% 5%;font-size:1.1rem;}
+.tcbtn{width:100%;border-bottom:1px solid #f6f4f4;padding:5%;padding-bottom:8%;}
+.tcbtn button,.tcbtn input{width:50px;height:35px;margin:0;text-align:center;}
+.tcbtn button{background-color:#eaeaea;border:1px solid #eaeaea;font-size:1.2rem;}
+.tcbtn button:active{background:#d3d2d2;border:1px solid #d3d2d2;box-shadow:1px 1px 1px 1px #eaeaea;background-clip:content-box;color:rgba(0,0,0,0.5);}
+.tcbtn input:active{border-color:#dfdede;}
+.tcadd{width:100%;padding:3%;text-align:center;font-size:1rem;border:1px solid #ff5000;background-color:#ff5000;background:-webkit-gradient(linear,left top,left bottom,color-stop(0.5,#ff5000),to(#fc631d));color:#fff;}
+.tcadd:active{background:#f98b59;border:1px solid #f98b59;color:rgba(255,255,255,0.5);background-clip:padding-box;}
+.success{position:absolute;top:40%;left:20%;width:200px;height:120px;line-height:120px;text-align:center;background:#000;color:#fff;border-radius:5px;}
+.success .tcclose{top:-17%;right:-3%;}
+/*width:200px;height:100px;line-height:100px;text-align:center;*/
+.tcbtnz{width:100%;height:auto;}
+#tcwrap{display:none;}
+#tccg{display:none;}

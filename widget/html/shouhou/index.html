@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/dropload.css">
+
+    <style>
+    	body{
+    	   background-color: white;
+    	}
+        .main{width:100%;text-align:left;padding:8px 1%;}
+        .main ul{width:100%;}
+        .main li{width:100%;padding:3px 2%;margin:8px 0;display:flex;justify-content:space-between;flex-flow:row wrap; display:-webkit-flex;-webkit-justify-content:space-between;-webkit-flex-flow:row wrap; }
+        .main li a{width:100%;color:inherit;text-decoration:none;}
+        .s-txt{display:block;width:100%;padding:0 3% 0 0;font-size:1rem;border:0 solid red;}
+        .main li span{display:inline-block;margin-left:1%;font-size:0.8rem;color:#7e7e7d;border:0 solid red;}
+        .main li span:first-of-type{width:80%; }
+        .done{color:#e52013 }
+        .main li.worked{background-color:#f9e8a2;border:1px solid #c8c082;border-radius:5px;padding-top:8px;padding-bottom:8px;}
+        .main li.worked span:last-child{color:#e52013;}
+        span.solved{position:absolute;top:2px;left:80%;width:45px;height:45px;bottom:0;border-radius:50%;border:1px solid red;}
+        .solved i{display:block;width:100%;height:100%;background:url(../../image/solved.png) no-repeat center;background-size:cover;}
+        .solved-li{ position:relative;}    	
+    </style>
+</head>
+<body>
+        <header style="position: fixed;" id="add" class="page__bd page__bd_spacing">
+            <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">创建</span>
+        </header>
+        <div class="page__bd content">
+            <div class="picarr" ></div>
+            <div class="fenge"></div>
+        </div>
+        <script id="interpolationtmpl" type="text/x-dot-template">
+            <div class="main">
+                <ul>
+                {{~it:value:index}}
+                {{? value.issolve == 1}}
+                    <li class="solved-li">
+                    <a href="javascript:detail({{=value.id}})">
+                    <p class="s-txt">{{=value.title}}</p>
+                    <span>{{=value.add_time}}</span>
+                    <span class="solved"> <i ></i></span>
+                    </a>
+                    </li>                
+                {{?? value.isreply == 1}}
+                    <li class="worked"><a href="javascript:detail({{=value.id}})"><p class="s-txt">{{=value.title}}</p><span>{{=value.add_time}}</span><span>已答复</span></a></li>
+                {{?? value.isreply == 0}}
+                    <li><a href="javascript:detail({{=value.id}})"><p class="s-txt">{{=value.title}}</p><span>{{=value.add_time}}</span><span>等待答复</span></a></li>
+                {{?}}            
+                {{~}}
+                </ul>
+            </div>
+        </script>
+</body>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/wolf.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/weui.min.js"></script>
+<script type="text/javascript">
+    var OPENID;
+    apiready = function(){
+        setTopBar();
+        OPENID = api.getPrefs({
+            sync: true,
+            key:'openid'
+        })
+        api.ajax({
+            url : 'http://www.d-shang.com/index.php?app/getadvice/?openid=' + OPENID
+        }, function(ret, err) {
+        if(ret.data.length>0){
+            var arrText = doT.template($("#interpolationtmpl").text());
+            $(".picarr").append(arrText(ret.data));    
+        }
+        });
+        $("#add").on('click',function(){
+            api.openWin({
+	            name: 'creat',
+	            url: './creat.html'
+            });
+        });
+    };
+    
+    function detail(id){
+        api.openWin({
+	        name: 'detail',
+	        url: './detail.html',
+            pageParam : {
+                id:id
+            },
+            slidBackEnabled: false,	        
+        });
+    }
+    
+    function goback(){
+        api.closeWin({
+        });
+    }
+</script>
+</html>

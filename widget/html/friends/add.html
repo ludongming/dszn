@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+		<style>
+			body {
+			}
+			.thumb {
+				display: none;
+				border-top: 1px solid #f1f1f1;
+				position: absolute;
+				bottom: 0px;
+				height: 190px;
+				text-align: center;
+				background: #f1f1f1;
+				width: 100%;
+				line-height: 60px;
+				z-index: 2;
+			}
+			.thumb .l {
+				height: 60px;
+				width: 100%;
+				border-bottom: 1px #f5f5f5 solid;
+				background: #fff;
+			}
+			.thumb .cancle {
+				width: 100%;
+				margin-top: 8px;
+				height: 60px;
+				border-bottom: 1px #f1f1f1 solid;
+				background: #fff;
+			}
+			.warp {
+				position: fixed;
+				top: -60px;
+				height: 100%;
+				width: 100%;
+				background: #000;
+				opacity: 0.4;
+				display: none;
+				z-index: 1;
+			}
+			.dingwei {
+				width: 100%;
+			}
+			.address {
+				margin-left: 10px;
+			}
+			.cells {
+				width: 95%;
+				float: right;
+				border-bottom: 1px #f5f5f5 solid;
+				margin-bottom: 5px;
+				padding-top: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">足迹</span>
+			<a href="javscript:;" ontouchend="send()" style="color:#27ae61;width:40px;margin-top:2px; margin-right:10px; vertical-align:middle;float:right;">发送 </a>
+		</header>
+		<div class="page__bd content">
+			<div class="cells">
+				<div class="weui-cell__bd" >
+					<textarea class="weui-textarea" id="con"  placeholder="这一刻的想法..." rows="3"></textarea>
+				</div>
+				<div class="weui-uploader">
+					<div class="weui-uploader__hd"></div>
+					<div class="weui-uploader__bd">
+						<div class="weui-uploader__input-box" onclick="pic()"></div>
+					</div>
+				</div>
+			</div>
+			<div class="dingwei">
+				<img src="../../image/dingwei.png" style="vertical-align:middle;width:30px;margin-left:10px;"><span class="address" ontouchend="addlocation()">点击获取位置</span>
+			</div>
+	</body>
+	</div> <!--选择器-->
+	<div class="warp"></div>
+	<div class="thumb">
+		<div class="list">
+			<div class="l" onclick="getPic('camera')">
+				拍摄照片
+			</div>
+			<div class="l" onclick="getPic('album')">
+				从手机相册选择
+			</div>
+		</div>
+		<div class="cancle" ontouchend="cancle()">
+			取消
+		</div>
+	</div>
+	<!--选择器结束-->
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/dropload.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var FILE;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			addlocation();
+		};
+		function goback() {
+			api.closeWin({
+			});
+		}
+
+		function cancle() {
+			$(".warp").hide();
+			$(".thumb").hide();
+		}
+
+		function pic() {
+			$(".warp").show();
+			$(".thumb").show();
+		}
+
+		function addlocation() {
+			var aMapLBS = api.require('aMapLBS');
+			aMapLBS.configManager({
+				accuracy : 'hundredMeters',
+				filter : 1
+			}, function(ret, err) {
+				if (ret.status) {
+					//alert('定位管理器初始化成功！');
+					locationAddress();
+				}
+			});
+		}
+
+		function locationAddress() {
+			var aMapLBS = api.require('aMapLBS');
+			aMapLBS.singleAddress({
+				timeout : 10
+			}, function(ret, err) {
+				if (ret.status) {
+					var d = ret.address;
+					var address = d.province+" "+d.city;
+					$(".address").html(address);
+				}
+			});
+		}
+
+		function send() {
+			if (FILE == undefined) {
+				weui.alert("请上传图片");
+				return false;
+			}
+			var con = $("#con").val();
+			var address = $(".address").html();
+			api.showProgress({
+				title : '正在上传图片',
+				text : '稍等片刻',
+				modal : false
+			});
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?blog/addblog/?openid=' + OPENID,
+				method : 'post',
+				data : {
+					values : {
+						content : con,
+						address : address
+					},
+					files : {
+						file : FILE
+					}
+				},
+				report : false
+			}, function(ret, err) {
+	
+				if (ret.status) {
+					api.hideProgress();
+					api.execScript({
+						name : 'home', //这里root代表index.html
+						frameName : 'frame0',
+						script : 'refresh();'
+					});
+					api.closeWin({
+					});
+				}else{
+				  api.hideProgress();
+
+				   weui.alert(ret.message);
+				
+				}
+				//coding...
+			});
+		}
+
+		function getPic(type) {
+			api.getPicture({
+				sourceType : type,
+				encodingType : 'jpg',
+				mediaValue : 'pic',
+				destinationType : 'url',
+				allowEdit : true,
+				quality : 80,
+				targetWidth : 1280,
+				targetHeight : 800,
+				saveToPhotoAlbum : false
+			}, function(ret, err) {
+				if (ret) {
+					FILE = ret.data;
+					var con = '<li class="weui-uploader__file"  onclick="pic()" style="background-image:url(' + ret.data + ')"></li>';
+					$(".weui-uploader__bd").html(con);
+					cancle();
+				} else {
+					//alert(JSON.stringify(err));
+				}
+			});
+		}
+	</script>
+</html>

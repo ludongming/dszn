@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport"
+		name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.0.0/dingtalk.js"></script>
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<title></title>
+		<style>
+			.weui-cells {
+				margin: 0px;
+			}
+			.bg {
+				
+				background: #f5f5f5;
+			}
+	
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+	    	<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="title" style="text-align: center;">个人统计</span>
+	    </header>
+		<div class="page__bd content">
+			<div class="weui-cells__title">
+				最近录入情况
+			</div>
+			<div class="">
+				<div id="main"></div>
+			</div>
+		</div>
+	</body>
+</html>
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="weui-cells {{?index%2==0}}bg{{?}}">
+	<div class="weui-cell">
+	<div class="weui-cell__bd">
+	<p>{{=value.name1}}</p>
+	</div>
+	<div class="weui-cell__ft">{{=value.rq}}</div>
+	</div>
+	</div>
+	{{~}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/dropload.js"></script>
+				<script type="text/javascript" src="../../script/wolf.js"></script>
+
+<script>
+	var OPENID;
+	var isDrop = false;
+	var page = 1;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		setDrop();
+		isDrop = true;
+	}
+	
+	function goback(){
+		api.closeWin();
+	}
+	
+	function loadRank(me) {
+		$.get("http://www.d-shang.com/index.php?appcrm/getcrmlist/?p=" + page + "&openid=" + OPENID, function(data) {
+			if (!data.status) {
+				weui.alert(data.message);
+				return false;
+			}
+			if (data.data.length == 0) {
+				// 锁定
+				me.lock();
+				me.noData();
+			} else {
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").append(arrText(data.data));
+			}
+			if (page > 10) {
+				me.lock();
+				me.noData();
+			}
+			me.resetload();
+		}, "json")
+	}
+
+	function setDrop() {
+		if (isDrop) {
+			return false;
+		}
+		// dropload
+		$('.content').dropload({
+			scrollArea : window,
+			autoLoad : true,
+			domDown : {
+				domClass : 'dropload-down',
+				domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+				domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+				domNoData : '<div class="dropload-noData">没有更多数据</div>'
+			},
+			loadDownFn : function(me) {
+				loadRank(me);
+				page += 1;
+			},
+			threshold : 1000
+		});
+	}
+</script>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/header.css">
+		<style>
+			body {
+			}
+			.cate {
+				width: 32.7%;
+				height: 42px;
+				text-align: center;
+				font-size: 0.8em;
+				float: left;
+				border: 1px solid #ccc;
+				border-top: none;
+			}
+			.cateleft {
+				border-left: none;
+			}
+			.title {
+				width: 100%;
+				height: 35px;
+				background: #f1f1f1;
+				color: #000;
+				line-height: 35px;
+				font-size: 1em;
+				text-align: left;
+				text-indent: 2em;
+				border-bottom: 1px solid #ccc;
+			}
+			.box {
+				width: 100%;
+				height: 160px;
+				margin-top: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span style="text-align: center;">产品</span>
+		</header>
+		<div class="page__bd content">
+			<div id="main">
+				<div class="box">
+					<div class="cate" ontouchend="remark('丽影')">
+						丽影
+					</div>
+					<div class="cate" ontouchend="remark('乐扣Ⅱ')">
+						乐扣Ⅱ
+					</div>
+					<div class="cate" ontouchend="cate(2091,'扣板')">
+						扣板
+					</div>
+					<div class="cate" ontouchend="cate(2092,'电器')">
+						电器
+					</div>
+					<div class="cate"  ontouchend="cate(2093,'LED灯')">
+						LED灯
+					</div>
+					<div class="cate" ontouchend="cate(100,'工程家装')">
+						工程家装
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/wolfcache.js"></script>
+	<script type="text/javascript">
+		var cateData;
+		var current = 0;
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+		}
+	
+		function cate(cid, name) {
+			api.openWin({
+				name : 'factorygoods',
+				url : './goods.html',
+				pageParam : {
+					cid : cid,
+					name : name
+				}
+			});
+		}
+		
+		function remark(name) {
+			api.openWin({
+				name : 'remark',
+				url : './remark.html',
+				pageParam : {
+					name : name
+				}
+			});
+		}
+	</script>
+</html>

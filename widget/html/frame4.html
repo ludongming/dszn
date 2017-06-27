@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>登陆</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" href="../css/weui.min.css">
+		<link rel="stylesheet" href="../css/header.css" />
+		<style>
+			.info {
+				width: 100%;
+				height: 200px;
+				background: url(../image/infobg.jpg) no-repeat;
+				color: #fff;
+				text-align: center;
+			}
+			.qiandao {
+				width: 100%;
+				height: 20px;
+				padding-top: 5px;
+				clear: both;
+			}
+			.headImg {
+				margin-top: 5px;
+				width: 100%;
+				height: 100px;
+			}
+			.text {
+				margin-top: 5px;
+				width: 100%;
+				line-height: 20px;
+			}
+			.face {
+				width: 100px;
+				height: 100px;
+				border-radius: 100px;
+				display: inline-block;
+			}
+			.clock {
+				display: inline-block;
+				background: #f03c57;
+				width: 80px;
+				color: #fff;
+				float: right;
+				margin-right: 10px;
+				padding: 4px;
+			}
+			.buyvip {
+				text-align: center;
+				margin-top: 10px;
+			}
+			.content{background:#f5f5f5;min-height:600px;}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<span class="tit" style="text-align: center;">我</span>
+
+			<img src="../image/shezhi.png" ontouchend="set()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
+		</header>
+		<div class="page__bd content">
+			<div class="info">
+				<div class="qiandao">
+					<button class="clock" onclick="clock()">
+						打卡签到
+					</button>
+				</div>
+				<div class="headImg">
+					<img src="../image/default.png" class="face">
+				</div>
+				<div class="text">
+					<span class="username"></span>
+					<br>
+					<img src="../image/shouji1.png" style="width:20px;vertical-align:middle;"><span id="mobile"></span>
+				</div>
+			</div>
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__hd"><img src="../image/weixin.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					微信 <p class="lf"></p>
+				</div> <span class="weui-cell__ft" onclick="wxlogin()" id="weixin">点击绑定</span> </a>
+				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="faq()">
+				<div class="weui-cell__hd"><img src="../image/faq.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>
+						常见问题
+					</p>
+				</div> <span class="weui-cell__ft"></span> </a>
+				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="address()">
+				<div class="weui-cell__hd"><img src="../image/dizhi.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>
+						我的地址
+					</p>
+				</div> <span class="weui-cell__ft"></span> </a>
+			</div>
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="shouhou();">
+				<div class="weui-cell__hd"><img src="../image/pinpai.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>
+						品牌售后服务
+					</p>
+				</div> <span class="weui-cell__ft"></span> </a>
+				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="erp();">
+				<div class="weui-cell__hd"><img src="../image/yue.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>
+						当月回款/余额
+					</p>
+				</div> <span class="weui-cell__ft"></span> </a>
+				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="wuliu();">
+				<div class="weui-cell__hd"><img src="../image/wuliu.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>
+						物流查询
+					</p>
+				</div> <span class="weui-cell__ft"></span> </a>
+			
+			</div>
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="about();">
+				<div class="weui-cell__hd"><img src="../image/we1.png" alt="" style="width:30px;margin-right:5px;display:block">
+				</div>
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>
+						关于我们
+					</p>
+				</div> <span class="weui-cell__ft"></span> </a>
+			</div>
+			<div class="buyvip">
+				感谢你的使用
+			</div>
+		</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/wolf.js"></script>
+	<script type="text/javascript" src="../script/weui.min.js"></script>
+	<script type="text/javascript" src="../script/zepto.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var APIKEY = "wx062395c72d4d0732";
+		var APISECRET = "7c0dfeaddf169f74af09a522af587fbb";
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : "openid"
+			})
+			loadData();
+			$api.fixStatusBar($api.dom('#contents'));
+			api.setStatusBarStyle({
+				style : 'dark',
+				color : '#6ab494'
+			});
+			setTopBar();
+		}
+		function bank() {
+			api.openWin({
+				name : 'bank',
+				url : './bank/index.html'
+			});
+		}
+
+		function cart() {
+			api.openWin({
+				name : 'cart',
+				url : './cart.html'
+			});
+		}
+		
+		function erp(){
+		 api.openWin({
+				name : 'erp',
+				url : './erp/index.html'
+			});
+		}
+
+		function notice() {
+			api.openWin({
+				name : 'notice',
+				url : './notice.html'
+			});
+		}
+
+		function clock() {
+			api.openWin({
+				name : 'clock',
+				url : './clock.html'
+			});
+		}
+
+		function set() {
+			api.openWin({
+				name : 'set',
+				url : './set.html'
+			});
+		}
+
+		function address() {
+			api.openWin({
+				name : 'address',
+				url : './address.html'
+			});
+		}
+		
+		function faq() {
+			api.openWin({
+				name : 'faq',
+				url : './faq.html'
+			});
+		}
+
+		function about() {
+			api.openWin({
+				name : 'about',
+				url : './about.html'
+			});
+		}
+		
+		function wuliu(){
+          api.openWin({
+              name: 'wuliu',
+              url: './wuliu.html'
+          });
+        }
+		
+		function shouhou(){
+		  api.openWin({
+	          name: 'shouhou',
+	          url: './shouhou/index.html'
+          });
+		}
+		
+		
+
+		
+		function loadData() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+			}, function(ret, err) {
+				var user = ret.data;
+				var weixin = user.weixin;
+				if (weixin != false) {
+					$("#weixin").html("已绑定");
+					$(".face").attr("src", weixin.headimgurl);
+				}
+				$(".username").html("你好," + user.real_name + "<br />");
+				$("#mobile").html(user.mobile_phone);
+				if (user.crm.vip == 0 || user.crm.expire_time == "1970-01-01") {
+					$(".buyvip").html(user.buyvip);
+					$(".buyvip").show();
+					$(".vips").hide();
+					return false;
+				}
+				bindPush(user.mobile_phone);
+				$(".buyvip").hide();
+				$(".time").html(user.crm.expire_time);
+			});
+		}
+
+		//绑定单独消息
+		function bindPush(mobile) {
+			var ajpush = api.require('ajpush');
+			var param = {
+				alias : mobile,
+				tags : ['客户']
+			};
+			ajpush.bindAliasAndTags(param, function(ret) {
+				var statusCode = ret.statusCode;
+			});
+		}
+
+		
+
+		//第一步授权登录
+		function wxlogin() {
+			var wx = api.require('wx');
+			wx.auth({
+				apiKey : APIKEY
+			}, function(ret, err) {
+				if (ret.status) {
+					getAccessToken(ret.code);
+				} else {
+				}
+			});
+		}
+
+		//第二步获取accesstoken
+		function getAccessToken(code) {
+			var wx = api.require('wx');
+			wx.getToken({
+				apiKey : APIKEY,
+				apiSecret : APISECRET,
+				code : code
+			}, function(ret, err) {
+				if (ret.status) {
+					getUserInfo(ret.accessToken, ret.openId);
+				} else {
+				}
+			});
+		}
+
+		//第三步获得用户信息
+		function getUserInfo(accessToken, openId) {
+			var wx = api.require('wx');
+			wx.getUserInfo({
+				accessToken : accessToken,
+				openId : openId
+			}, function(ret, err) {
+				if (ret.status) {
+					//alert(JSON.stringify(ret));
+					bindUser(ret);
+				} else {
+				
+				}
+			});
+		}
+
+		//绑定账号
+		function bindUser(user) {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/bindweixin/?openid=' + OPENID,
+				method : 'post',
+				data : {
+					values : {
+						"wxopenid" : user.openid,
+						"nickname" : user.nickname,
+						"headimgurl" : user.headimgurl,
+						"unionid" : user.unionid,
+						"sex" : user.sex
+					}
+				}
+			}, function(ret, err) {
+				alert(ret.message);
+				if (ret.status == true) {
+					$("#weixin").html("已绑定");
+					$(".face").attr("src", user.headimgurl);
+				}
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" href="../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" href="../css/header.css" />
+		<style>
+			body {
+				background: #fff;
+			}
+			.clock {
+				width: 100%;
+				height: 40px;
+				background: #f0f5f9;
+			}
+			.clock a {
+				float: right;
+				display: inline-block;
+				
+				width:25%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+			}
+			.address{color:#ccc;}
+			.rank{display:inline-block;line-height:20px;margin-left:10px;text-align:center;margin-top:20px;float:left;width:20px;height:20px;background:#c1c2c6;color:#666;margin-right:20px;}
+		.level{position:absolute;color:red;top:-5px;right:0px;font-size:0.8em;}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back" /></i><span style="text-align: center;">签到</span>
+		</header>
+		<div class="page__bd content">
+			<div class="clock">
+					<a style="background: #e67f22;color: #fff;" href="javascript:;" ontouchend="roll()">赚积分</a> 
+					<a style="background: #f03c57;color: #fff;" href="javascript:;" ontouchend="clock()">打卡签到</a>
+					<a style="background: #10AEFF;color: #fff;" href="javascript:;" ontouchend="ranking()">排名</a>
+										<a style="background: #27ae61;color: #fff;" href="javascript:;" ontouchend="guize()">送花规则</a> 
+
+			</div>
+			<div id="main"></div>
+			<div id="main2"></div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="weui-cells__title">今日签到</div>
+		{{~it:value:index}}
+		<div class="weui-cell">
+		<div class="weui-cell__hd" style="position:relative;">
+		 {{?index<3}}
+        <img src="../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+        {{??}}
+        
+        <span class="rank">{{=index+1}}</span>
+        {{?}}
+		
+		<img src="../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block">
+		
+		<span class="level" id="level{{=value.id}}">
+		{{?value.flower>0}} x{{=value.flower}}{{?}}</span>
+		
+		</div>
+		<div class="weui-cell__bd">
+		<p>{{=value.real_name}}
+		
+		</p>
+		<p class="address">{{=value.address}}</p>
+		</div>
+		<div class="weui-cell__ft">
+		<p id="flower{{=value.id}}">
+		
+		{{?value.isflower==0}}	
+		<img src="../image/flowers.png" style="width:25px;vertical-align: middle" ontouchend="addFlower({{=value.uid}},{{=value.id}})">
+		{{??}}
+				<img src="../image/flower1.png" style="width:25px;vertical-align: middle">
+
+		{{?}}
+		</p>
+		<p style="font-size:0.8em;">{{=value.rq}}</p></div>
+		</div>
+		{{~}}
+	</script>
+    <script id="interpolationtmpl2" type="text/x-dot-template">
+        <div class="weui-cells__title">连续签到前100排名 <span style="float:right">连续签到/总签到</span></div>
+        {{~it:value:index}}
+        <div class="weui-cell">
+        <div class="weui-cell__hd">
+        
+     
+		 {{?index<3}}
+        <img src="../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+        {{??}}
+        
+        <span class="rank">{{=index+1}}</span>
+        {{?}}
+        <img src="../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block"></div>
+        <div class="weui-cell__bd">
+        <p>{{=value.real_name}}</p>
+        <p class="address">{{=value.address}}</p>
+        </div>
+        <div class="weui-cell__ft">
+        <p style="font-size:0.8em;">{{?value.flower>0}}<img src="../image/flower2.png" style="width:25px;vertical-align: middle">x{{=value.flower}}{{?}}</p>
+        <span style="font-size:0.8em;">{{=value.lx}}/{{=value.days}}</span></div>
+        </div>
+        {{~}}
+    </script>	
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/weui.min.js"></script>
+	<script type="text/javascript" src="../script/wolf.js"></script>
+	<script type="text/javascript" src="../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript" src="../script/dropload.js"></script>
+	<script type="text/javascript" src="../script/zepto.picLazyLoad.min.js"></script>
+
+	<script type="text/javascript">
+		var OPENID;
+		var ADDRESS;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			getData();
+			addlocation();
+			api.setRefreshHeaderInfo({
+				loadingImg : 'widget://image/refresh.png',
+				bgColor : '#ccc',
+				textColor : '#fff',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...'
+			}, function(ret, err) {
+				getData();
+			});
+		};
+		
+		function guize(){
+		 api.openWin({
+	       name: 'content',
+	       url: './content.html',
+	       pageParam:{
+	       		id:37748
+	       }
+        });
+		}
+		
+		function addFlower(uid,id){
+		  var con="<img src=\"../image/flower1.png\" style=\"width:25px;vertical-align: middle\">";
+		  $("#flower"+id).html(con);
+		  var num=$("#level"+id).html();
+		  num=num.match(/\d+/);
+		  num=num==null?0:num;
+		  num=parseInt(num)+1;
+	
+		  api.ajax({
+	          url:'http://www.d-shang.com/index.php?appclock/addflower/?openid='+OPENID+"&touid="+uid
+          },function(ret,err){
+          	  weui.alert(ret.message);
+          	  if(ret.status){
+          	  	  $("#level"+id).html("x"+num);
+          	  }
+          });
+		
+		}
+		
+		function roll(){
+		 api.openWin({
+	         name: 'roll',
+	         url: './active/roll.html'
+         });
+		}
+		
+		function clock() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
+				method:'post',
+				data:{
+				values:{
+				  address:ADDRESS
+				}
+				}
+			}, function(ret, err) {
+				weui.toast(ret.message, {
+					duration : 3000,
+					className : "bears"
+				});
+				getData();
+			});
+		}
+		
+		function ranking(){
+		  $("#main").html("");
+            api.ajax({
+                url : 'http://www.d-shang.com/index.php?appclock/ranking/?openid=' + OPENID           
+            }, function(ret, err) {
+                var arrText = doT.template($("#interpolationtmpl2").text());
+                var a=arrText(ret.data);
+
+                 var c= a.replace(/\/0/g,"/132");
+                $("#main2").html(c);
+                $('.pic').picLazyLoad();
+                api.refreshHeaderLoadDone();
+            });		  
+		}
+
+		function goback() {
+			api.closeWin({
+			});
+		}
+		
+			function addlocation() {
+			var aMapLBS = api.require('aMapLBS');
+			aMapLBS.configManager({
+				accuracy : 'hundredMeters',
+				filter : 1
+			}, function(ret, err) {
+				if (ret.status) {
+					//alert('定位管理器初始化成功！');
+					locationAddress();
+				}
+			});
+		}
+
+		
+		function locationAddress() {
+			var aMapLBS = api.require('aMapLBS');
+			aMapLBS.singleAddress({
+				timeout : 10
+			}, function(ret, err) {
+				if (ret.status) {
+					var d = ret.address;
+					ADDRESS =  d.province+" "+d.city;
+
+				}
+			});
+		}
+
+		function getData() {
+		  $("#main2").html("");
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/gettodayuser/?openid=' + OPENID
+			}, function(ret, err) {
+			console.log(JSON.stringify(err));
+				var arrText = doT.template($("#interpolationtmpl").text());
+				var a=arrText(ret.data);
+			     var c= a.replace(/\/0/g,"/132");
+				$("#main").html(c);
+				$('.pic').picLazyLoad();
+				api.refreshHeaderLoadDone();
+			});
+		}
+	</script>
+</html>

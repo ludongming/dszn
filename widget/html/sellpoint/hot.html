@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1,width=device-width,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background: white;
+			}
+			.container {
+				width: 100%;
+				background-color: #0063dc;
+				height: 1000px;
+			}
+			.icon {
+				height: 10%;
+			}
+			.customer {
+			}
+			.frame-left {
+				font-family: "微软雅黑", Verdana, sans-serif, "宋体";
+				border: 2px solid lightgray;
+				border-radius: 10px;
+				padding: 10px 10px;
+				width: 70%;
+				margin: 10px 5px 0px 5px;
+				background-color: white;
+				text-align: left;
+			}
+			.frame-right {
+				font-family: "微软雅黑", Verdana, sans-serif, "宋体";
+				border: 2px solid gold;
+				border-radius: 10px;
+				padding: 10px 10px;
+				width: 50%;
+				margin: 10px 5px 0px 5px;
+				background-color: white;
+				text-align: right;
+			}
+			.patent {
+				font-size: 14px;
+				color: red;
+			}
+			header {
+				background-color: deepskyblue !important;
+				color: white;
+			}
+			.ui-container {
+				margin-top: 50px;
+				margin-bottom: 60px;
+			}
+			#footer {
+				width: 100%;
+				height: 50px;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				border-top: 1px solid #ccc;
+				background-color: white;
+			}
+			#footer div {
+				float: left;
+			}
+			.question {
+				width: 65%;
+				height: 50px;
+				line-height: 60px;
+			}
+			.question textarea {
+				width: 100%;
+				height: 100%;
+				border: none;
+				font-size: 15px;
+				line-height: 50px;
+			}
+			.sendBtn {
+				width: 20%;
+				height: 100%;
+				margin-left: 8%;
+			}
+			.sendBtn button {
+				color: white;
+				width: 100%;
+				height: 70%;
+				margin-top: 5%;
+				background-color: deepskyblue;
+				border: none;
+				border-radius: 5px;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/whiteBack.png" class="back"/></i><span class="tit" style="text-align: center;">智能小D</span>
+		</header>
+		<section class="ui-container ui-center" style="height: auto;">
+			<div class="ui-flex ui-flex-pack-start">
+				<div class="frame-left">
+					<p>
+						Hi，我是智能小D
+					</p>
+					<p>
+						您有什么问题，我已准备为您解答
+					</p>
+					<p>
+						输入您需要咨询的产品名称
+					</p>
+					<p>
+						例：普罗旺斯
+					</p>
+					<p>
+						LED超薄方灯
+					</p>
+				</div>
+			</div>
+		</section>
+		<div class="ui-footer ui-footer-stable ui-btn-group ui-border-t" id="footer">
+			<div class="ui-form-item ui-form-item-textarea ui-border-b question">
+				<textarea placeholder="有其他需要，点此问我吧" style="padding-left: 35px;" id="q"></textarea>
+			</div>
+			<div class="ui-btn-wrap sendBtn" style="padding: 5px 10px;">
+				<button class="ui-btn-lg ui-btn-primary" ontouchend="question()">
+					发送
+				</button>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		var systemType = api.systemType;
+		if (systemType == "ios") {
+			$(".back").css("top", "23px");
+			$(".ui-container").css("marginTop", "70px");
+		}
+		$api.fixStatusBar($api.dom('header'));
+		api.setStatusBarStyle({
+			style : 'dark',
+			color : '#6ab494'
+		});
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		$("#q").keyup(function(event) {
+			if (event.which == 13) {
+				question();
+			}
+		});
+		//获取输入框高度，并设置内容框的style
+		var height = $("#footer").height(true);
+		$("section").css("margin-bottom", (height + 10) + "px");
+	}
+	function goback() {
+		api.closeWin();
+	}
+
+	function question() {
+		var question = $.trim($("#q").val());
+		if (question == '') {
+			alert("请输入要询问的内容");
+			return;
+		}
+		var pushQuestion = '<div class="ui-flex ui-flex-pack-end"><div class="frame-right">' + question + '</div></div>';
+		$("section").append(pushQuestion);
+		$("#q").val("");
+		api.ajax({
+			url : "http://www.d-shang.com/index.php?app/answer/?openid=" + OPENID,
+			method : 'post',
+			data : {
+				values : {
+					question : question
+				}
+			}
+		}, function(data, err) {
+		
+			pushQuestion = '<div class="ui-flex ui-flex-pack-start"><div class="frame-left">' + data['data'] + '</div></div>';
+			$("section").append(pushQuestion);
+			var h = $("section").height();
+			window.scrollTo(0, h);
+		});
+	}
+
+	//当选择唯一答案时进入此方法
+	function accurateQuestion(name) {
+		var question = null;
+		if (name != undefined) {
+			question = name;
+		} else {
+			alert("程序有误，请联系管理员");
+			return;
+		}
+		api.ajax({
+			url : "http://www.d-shang.com/index.php?app/uniqueanswer/?openid=" + OPENID,
+			method : "post",
+			data : {
+				values : {
+					question : question
+				}
+			}
+		}, function(data, err) {
+			var pushQuestion = '<div class="ui-flex ui-flex-pack-start"><div class="frame-left">' + data['data'] + '</div></div>';
+			$("section").append(pushQuestion);
+			var h = $("section").height();
+			window.scrollTo(0, h);
+		});
+	}
+</script>
+</body> </html>

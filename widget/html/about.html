@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dropload.css">
+		<link rel="stylesheet" href="../css/weui.min.css"/>
+		<link rel="stylesheet" href="../css/goods.css">
+		<link rel="stylesheet" href="../css/header.css" />
+		<style>
+			html, body {
+				background-color: white;
+			}
+			.main {
+				margin-top: 50px;
+				text-indent: 32px;
+				width: 92%;
+				margin-left: 4%;
+				margin-right: 4%;
+			}
+			.title {
+				text-indent: 0;
+			}
+			.main img {
+				width: 80%;
+			}
+			.audio {
+				width: 100%;
+			}
+			.arm {
+				margin-left: 20px;
+				margin-top: 70px;
+				padding: 5px;
+				width: 90%;
+				height: 40px;
+				border: 1px #ccc solid;
+				line-height: 40px;
+				color: #000;
+				font-size: 1.2em;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">关于我们</span>
+		</header>
+		<div class="main">
+			<div class="audio">
+				<div class="arm">
+					<span id="record"><img src="../image/luyin.png" style="width:30px;vertical-align:middle;" ontouchend="read()"></span>
+					<span class="author">语音</span>
+				</div>
+			</div>
+			<div id="main"></div>
+		</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var isStop = 0;
+		apiready = function() {
+			var systemType = api.systemType;
+			if (systemType == "ios") {
+				$(".back").css("top", "25px");
+				$(".main").css("marginTop", "70px");
+			}
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			})
+			$api.fixStatusBar($api.dom('header'));
+			api.setStatusBarStyle({
+				style : 'dark',
+				color : '#6ab494'
+			});
+			var params = api.pageParam;
+			loadData(params.id);
+		};
+		function beginRead() {
+			var speechRecognizer = api.require('speechRecognizer');
+			var con = $("#main").html();
+			con = con.replace(/<p([\S ]*?>[\S ]*?)<\/p>/gi, '$1')
+			speechRecognizer.read({
+				readStr : con,
+				speed : 60,
+				volume : 60,
+				voice : 'xiaoyan',
+				rate : 16000,
+				audioPath : 'fs://speechRecogniser/read.pcm'
+			}, function(ret, err) {
+				if (ret.status) {
+					ret.speakProgress
+				} else {
+					api.alert({
+						msg : err.msg
+					});
+				}
+			});
+		}
+
+		function read() {
+			var speechRecognizer = api.require('speechRecognizer');
+			var con;
+			if (isStop == 1) {
+				con = "<img src=\"../image/luyin.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
+				speechRecognizer.pauseRead();
+				isStop = 2;
+				$("#record").html(con);
+				return;
+			}
+			if (isStop == 2) {
+				con = "<img src=\"../image/bofang.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
+				isStop = 1;
+				speechRecognizer.resumeRead();
+				$("#record").html(con);
+				return;
+			}
+			if (isStop == 0) {
+				con = "<img src=\"../image/bofang.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
+				isStop = 1;
+				beginRead();
+				$("#record").html(con);
+				return;
+			}
+		}
+
+		function goback() {
+			api.closeWin({
+				name : 'about'
+			});
+		}
+
+		function loadData(id) {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getnewsconbyid/?id=28860&openid=' + OPENID
+			}, function(ret, err) {
+				$("#main").html(ret.data.content);
+			});
+		}
+	</script>
+</html>

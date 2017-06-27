@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>精选</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css">
+
+		<style>
+			body {
+				background: #f1f1f1;
+			}
+			.adv {
+				width: 100%;
+			}
+			.box {
+				width: 40%;
+				float: left;
+				margin: 10px;
+				background: #fff;
+				text-align: center;
+			}
+			.box img {
+				width: 100%;
+			}
+			.title {
+				width: 100%;
+				height: 30px;
+				font-size: 0.8em;
+			}
+			.title span {
+				color: #CCCCCC;
+			}
+			.searchBar {
+				position: fixed;
+				top: 0px;
+			}
+			.cnt {
+				width: 50%;
+				height: 180px;
+				float: left;
+				margin-bottom: 60px;
+			}
+			.cnt .pic {
+				width: 98%;
+				height: 100%;
+				display: block;
+				margin: 0 auto;
+			}
+			.cnt p {
+				text-align: center;
+			}
+			.shopname {
+				color: #333; /*line-height: 16px;*/
+				text-align: center;
+				font-size: 12px;
+				white-space: nowrap;
+				word-wrap: normal;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				min-height: 10px;
+				padding-bottom: 2px;
+				padding-top: 3px;
+			}
+			.comment {
+				margin-bottom: 6px;
+				position: relative;
+				white-space: nowrap;
+				word-wrap: normal;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			.comment span {
+				vertical-align: middle;
+				color: #666;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+	<header style="position: fixed;">
+<i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i>
+    <span style="text-align: center;">新品</span>
+    	    <img src="../../image/shaixuan.png" ontouchend="fenlei()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
+
+    
+    </header>
+		<div class="page__bd content">
+
+		<div class="weui-search-bar" id="searchBar">
+			<div class="weui-search-bar__form">
+				<div class="weui-search-bar__box">
+					<i class="weui-icon-search"></i>
+					<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+					<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+				</div>
+				<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);"> <i class="weui-icon-search"></i> <span>搜索</span> </label>
+			</div>
+			<a href="javascript:;" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+		</div>
+		<div class="guanggao">
+			<img src="" class="adv" id="adv">
+		</div>
+		<div id="main">
+			数据加载中
+		</div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="list">
+		{{~it:value:index}}
+		<div class="cnt" onclick="jump({{=value.nid}},'{{=value.goods_name}}')">
+		<img class="pic" id="image{{=value.sku}}" src="../../image/defaultimage.png" />
+		<div class="con">
+		<p class="shopname">{{=value.goods_name}}</p>
+		<p class="comment">
+		<span>{{=value.type}} </span>&nbsp;
+		<span>{{=value.num}}{{=value.unit}}/件</span>
+		</p>
+		</div>
+		</div>
+		{{~}}
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/wolf.js"></script>
+
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var ImageArr;
+		var index = 0;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			loadAdv();
+			loadData();
+		};
+		
+		function fenlei(){
+		   api.openWin({
+	           name: 'fenlei',
+	           url: './fenlei.html'
+           });
+		}
+		
+		
+		function search() {
+			index = 0;
+			$(".guanggao").html("搜索结果:");
+			var title = $("#searchInput").val();
+			if (title == "") {
+				return;
+			}
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/searchgoods/?title=' + title + "&openid=" + OPENID
+			}, function(ret, err) {
+				if (ret.data.length<1) {
+					return false;
+				}
+				var arrText = doT.template($("#interpolationtmpl").text());
+				ImageArr = ret.data;
+				$("#main").html(arrText(ret.data));
+				$(".box").bind("click", jump);
+				loadImage();
+			});
+		}
+
+		$(function() {
+			var $searchBar = $('#searchBar'), $searchResult = $('#searchResult'), $searchText = $('#searchText'), $searchInput = $('#searchInput'), $searchClear = $('#searchClear'), $searchCancel = $('#searchCancel');
+			function hideSearchResult() {
+				$searchResult.hide();
+				$searchInput.val('');
+			}
+
+			function cancelSearch() {
+				hideSearchResult();
+				$searchBar.removeClass('weui-search-bar_focusing');
+				$searchText.show();
+			}
+
+
+			$searchText.on('click', function() {
+				$searchBar.addClass('weui-search-bar_focusing');
+				$searchInput.focus();
+			});
+			$searchInput.on('blur', function() {
+				if (!this.value.length)
+					cancelSearch();
+			}).on('input', function() {
+				if (this.value.length) {
+					$searchResult.show();
+					search();
+				} else {
+					$searchResult.hide();
+				}
+			});
+			$searchClear.on('click', function() {
+				hideSearchResult();
+				$searchInput.focus();
+			});
+			$searchCancel.on('click', function() {
+				cancelSearch();
+				$searchInput.blur();
+			});
+		});
+		function loadAdv() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getadv/?id=113&openid=' + OPENID
+			}, function(ret, err) {
+				//coding...
+				$("#adv").attr("src", "http://www.d-shang.com/" + ret.data.image);
+			});
+		}
+
+		function jump(id, name) {
+			api.openWin({
+				name : 'mx',
+				url : './productmx.html',
+				pageParam : {
+					id : id,
+					name : name
+				}
+			});
+		}
+
+		function loadData() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/recommend/?node=1&openid=' + OPENID
+			}, function(ret, err) {
+				if (ret.data.length<1) {
+					return false;
+				}
+				var arrText = doT.template($("#interpolationtmpl").text());
+				ImageArr = ret.data;
+				$("#main").html(arrText(ret.data));
+				loadImage();
+			});
+		}
+
+		function loadImage() {
+			if (index > ImageArr.length - 1) {
+				return;
+			}
+			var image = ImageArr[index].image;
+			var sku = ImageArr[index].sku;
+			api.imageCache({
+				url : 'http://www.d-shang.com/' + image
+			}, function(ret, err) {
+				var url = ret.url;
+				$("#image" + sku).attr("src", url);
+				index += 1;
+				loadImage();
+			});
+		}
+	</script>
+</html>

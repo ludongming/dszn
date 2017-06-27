@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/dropload.css">
+		<link rel="stylesheet" href="../css/weui.min.css"/>
+		<link rel="stylesheet" href="../css/goods.css">   
+		<link rel="stylesheet" href="../css/header.css" /> 
+		<style>
+    	html,body{
+    		background-color: white;
+    	}
+    	.main{ margin-top: 50px;  width: 92%; margin-left: 4%; margin-right: 4%; }
+    	.title{ text-indent: 0;}
+    	.main img{ width: 80%;}
+    	
+    </style>
+</head>
+<body>
+	<header style="position: fixed;">
+    	<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">问题</span>
+    </header>
+    <div class="main">
+   
+    <div id="main"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function(){
+		var systemType = api.systemType;
+		if(systemType == "ios"){
+			$(".back").css("top","25px");
+			$(".main").css("marginTop","70px");
+		}
+		OPENID = api.getPrefs({
+			sync: true,
+			key:'openid'
+		})
+		$api.fixStatusBar($api.dom('header'));
+		api.setStatusBarStyle({
+			style : 'dark',
+			color : '#6ab494'
+		});
+		var params=api.pageParam;
+		loadData(params.id);
+	};
+	
+	function goback(){
+		api.closeWin({
+			name : 'content'
+		});
+	}
+	
+	function loadData(id){
+	  api.ajax({
+	      url:'http://www.d-shang.com/index.php?app/getnewsconbyid/?id='+id+'&openid=' + OPENID
+      },function(ret,err){
+      	  $(".tit").html(ret.data.title);
+      	  $("#main").html(ret.data.content);
+      });
+	
+	}
+</script>
+</html>

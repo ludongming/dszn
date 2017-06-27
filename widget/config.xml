@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget id="A6945021829765" version="0.0.1"> 
+  <name>顶上智能</name>  
+  <description>Example For APICloud.</description>  
+  <author email="116311316@qq.com" href="http://www.apicloud.com">Developer</author>  
+  <content src="./html/login.html"/>  
+  <preference name="pageBounce" value="false"/>  
+  <preference name="appBackground" value="rgba(0,0,0,0.0)"/>  
+  <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>  
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>  
+  <preference name="hScrollBarEnabled" value="true"/>  
+  <preference name="vScrollBarEnabled" value="true"/>  
+  <preference name="autoLaunch" value="true"/>  
+  <preference name="fullScreen" value="false"/>  
+  <preference name="autoUpdate" value="true"/>  
+  <preference name="smartUpdate" value="true"/>  
+  <preference name="debug" value="true"/>  
+  <preference name="statusBarAppearance" value="true"/>  
+  <preference name="backgroundMode" value="remote-notification"/>  
+  <permission name="readPhoneState"/>  
+  <permission name="camera"/>  
+  <permission name="record"/>  
+  <permission name="location"/>  
+  <permission name="fileSystem"/>  
+  <permission name="internet"/>  
+  <permission name="bootCompleted"/>  
+  <permission name="hardware"/>  
+  <access origin="*"/>  
+  <feature name="wxPay"> 
+    <param name="urlScheme" value="wx062395c72d4d0732"/>  
+    <param name="apiKey" value="wx062395c72d4d0732"/>  
+    <param name="apiSecret" value="7c0dfeaddf169f74af09a522af587fbb"/> 
+  </feature>  
+  <feature name="ajpush"> 
+    <param name="app_key" value="e7d42601edde4de92d3038cb"/>  
+    <param name="channel" value="4b8a4ff71251195cd7bb40b9"/> 
+  </feature>  
+  <feature name="aMapLBS"> 
+    <param name="android_api_key" value="cda44ddd75abc6effc0f5d1d804a6f56"/>  
+    <param name="ios_api_key" value="b4d6b2f6dd1ef2e1f74ea4eae8ad4618"/> 
+  </feature>  
+  <feature name="hanvonCloudBcardReader "> 
+    <param name="androidkey" value="be0ccb10-d63c-4c98-bd10-2b9a6648f779"/>  
+    <param name="iOSkey" value="71498490-6023-4f84-adb5-c35e543934d4"/> 
+  </feature> 
+</widget>

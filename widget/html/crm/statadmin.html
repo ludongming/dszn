@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="cache-control" content="no-cache">
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			.staticon {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				color: #000;
+				position: relative;
+				border-radius: 12px;
+				font-size: 12px;
+				margin: 10px
+			}
+			.staticon i {
+				position: absolute;
+				top: 10px;
+				right: -60px;
+				display: inline-block;
+				width: 55px;
+				text-align: center;
+			}
+			.user {
+				background: #ec8d74 url(../../image/chart.png) no-repeat center center;
+			}
+			.success {
+				background: #58be9e url(../../image/user.png) no-repeat center center;
+			}
+			.month {
+				background: #6683d5 url(../../image/month.png) no-repeat center center;
+			}
+			.active {
+				background: #f0b634 url(../../image/active.png) no-repeat center center;
+			}
+			.rank {
+				background: #e55f78 url(../../image/rank.png) no-repeat center center;
+			}
+			.invalid {
+				background: #c385d0 url(../../image/invalid.png) no-repeat center center;
+			}
+			.card {
+				background: #5dcbee url(../../image/camera.png) no-repeat center center;
+			}
+			.erp {
+				background: #fa6f50 url(../../image/erp.png) no-repeat center center;
+			}
+			.overtime {
+				background: #fe6091 url(../../image/overtime.png) no-repeat center center;
+			}
+			.control {
+				background: #27ae61 url(../../image/control.png) no-repeat center center;
+			}
+			.list {
+				width: 100%;
+				height: 100px;
+			}
+			.list .nav {
+				width: 100%;
+				height: 30px;
+				background: #f3f3f3;
+				color: #666;
+				line-height: 30px;
+			}
+			.list .left_main {
+				width: 50%;
+				float: left;
+			}
+			.list .right_main {
+				width: 48%;
+				float: left;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			.ui-container{
+				margin-top: 31px;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+	    	<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="title" style="text-align: center;">个人统计</span>
+	    </header>
+			<div class="page__bd content">
+
+			<div class="list">
+				<div class="nav"></div>
+				<div class="left_main">
+					<a href="javascript:;" class="btninfo" data-status="0"> <span class="user staticon"><i>总人数
+						<br>
+						<span id="user"></span></i></a>
+					</span>
+				</div>
+				<div class="right_main">
+					<a href="javascript:;"  class="btninfo" data-status="2"> <span class="staticon success"><i>已签约
+						<br>
+						<span id="success"></span></i> </span> </a>
+				</div>
+			</div>
+			<div class="list">
+				<div class="nav"></div>
+				<div class="left_main">
+					<a href="javascript:;"  class="btninfo" data-status="0"> <span class="staticon month"><i>本月人数
+						<br>
+						<span id="month"></span></i></span> </a>
+				</div>
+				<div class="right_main">
+					<a href="javascript:;"  class="btninfo" data-status="1"> <span class="staticon active"><i>活跃人数
+						<br>
+						<span id="active"></span></i></span> </a>
+				</div>
+			</div>
+			<div class="list">
+				<div class="nav"></div>
+				<div class="left_main">
+					<a href="./rank.html"> <span class="staticon rank"><i>排名
+						<br>
+						<span id="rank"></span></i></span> </a>
+				</div>
+				<div class="right_main">
+					<a href="javascript:;"  class="btninfo" data-status="-1"> <span class="staticon invalid"><i>失效
+						<br>
+						<span id="invalid"></span></i></span> </a>
+				</div>
+			</div>
+		</section>
+		<input type="hidden" id="code" value="">
+	</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/dropload.js"></script>
+				<script type="text/javascript" src="../../script/wolf.js"></script>
+
+<script>
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		stat();
+		$(".btninfo").bind("click", push)
+	}
+	function card() {
+		parent.card();
+	}
+
+	function goback(){
+		api.closeWin();
+	}
+
+	function push(url) {
+		var status = $(this).attr("data-status");
+		location.href = "./user.html?status=" + status;
+	}
+
+
+
+	function stat() {
+		$.get("http://www.d-shang.com/index.php?appcrm/statadmin/?openid=" + OPENID, function(data) {
+			var d = data.data;
+			$("#user").html(d.total + "人");
+			$("#month").html(d.total + "人");
+			$("#success").html(d.success + "人");
+			$("#active").html(d.active + "人");
+			$("#invalid").html(d.invalid + "人");
+			$("#rank").html("第" + d.rank);
+		}, "json")
+	}
+</script>

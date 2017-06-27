@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.0.0/dingtalk.js"></script>
+    <link rel="stylesheet" href="./css/weui.min.css"/>
+
+</head>
+<body ontouchstart="">
+
+
+
+<div class="page__bd">
+
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cells__title">名片信息录入</div>
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">联系人</label>
+        </div>
+
+        <div class="weui-cell__bd" >
+
+            <input type="text" name="contact" id="name" class="weui-input" placeholder="请输入联系人">
+        </div>
+    </div>
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">手机</label>
+        </div>
+
+        <div class="weui-cell__bd">
+
+            <input type="text" name="tel" id="mobile" class="weui-input" placeholder="请输入手机号码">
+        </div>
+    </div>
+
+
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">地址</label>
+        </div>
+
+        <div class="weui-cell__bd">
+            <textarea name="area" id="address" class="weui-textarea" placeholder="请输入地址" rows="2"></textarea>
+        </div>
+    </div>
+
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">加盟项目</label>
+        </div>
+
+        <div class="weui-cell__bd">
+            <select id="type" class="weui-select">
+                <option value="0">顶上集成吊顶</option>
+                <option value="1">顶上集成背景·墙面</option>
+                <option value="2">顶上顶墙合一</option>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">门店位置</label>
+        </div>
+
+        <div class="weui-cell__bd">
+            <select id="position" class="weui-select">
+                <option value="4">红星美凯龙</option>
+                <option value="5">居然之家</option>
+                <option value="6">喜盈门</option>
+                <option value="3">当地主流建材市场</option>
+                <option value="7">建材商城内</option>
+                <option value="8">准备拿店面</option>
+                <option value="1">无店铺</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">门店面积</label>
+        </div>
+
+        <div class="weui-cell__bd">
+            <select id="area" class="weui-select">
+                <option value="4">小于150平方</option>
+                <option value="5" selected>150-200平方</option>
+                <option value="6">200-300平方</option>
+                <option value="7">300-500平方</option>
+                <option value="8">500平方以上</option>
+                <option value="9">无店铺</option>
+            </select>
+        </div>
+    </div>
+
+
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">备注</label>
+        </div>
+
+        <div class="weui-cell__bd">
+            <textarea name="remark" id="remark" class="weui-textarea" placeholder="请输入地址" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="weui-cell">
+        <button type="submit" class="weui-btn weui-btn_primary" onclick="add()" id="add">录入</button>
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+</body>
+</html>
+<script type="text/javascript" src="../../static/public/zepto.min.js"></script>
+<script type="text/javascript" src="./js/weui.min.js"></script>
+<script type="text/javascript" src="./js/salt-router.js"></script>
+
+<script>
+    $(function () {
+       var cardinfo= salt.router.getMessage("card");
+        var a=$.parseJSON(cardinfo);
+        $("#name").val(a.NAME);
+        $("#address").text(a.ADDRESS);
+        $("#mobile").val(a.MPHONE);
+      var remark= a.COMPANY+" "+ a.PHONE;
+        $("#remark").text(remark);
+
+        //    initProvince();
+        $("#dialogclose").bind("click",function(){
+            $(".ui-dialog").removeClass("show");
+            $("#add").show();
+        })
+    })
+
+    dd.ready(function(){
+        dd.ui.webViewBounce.disable();
+
+
+    });
+
+
+
+    function notice(con){
+        weui.alert(con, function () {
+            $("#add").show();
+
+        }, {
+            title: '提示'
+        });
+
+    }
+
+    function add() {
+        $("#add").hide();
+        var address = $("#address").val();
+        var name = $("input[name='contact']").val();
+        var mobile = $("input[name='tel']").val();
+        var type = $("#type").val();
+        var position = $("#position").val();
+        var area = $("#area").val();
+        var remark=$("#remark").val();
+        if(name == ''){
+            notice("请输入真实姓名")
+            return;
+        }
+        if(mobile == ''){
+            notice("请输入手机号码")
+            return;
+        }
+        var myreg = /^1\d{10}$/;
+        if(!myreg.test(mobile)){
+            notice("手机格式不正确")
+            return false;
+        }
+        $.post("/index.php?dingding/ajaxaddcrm", {
+            address: address,
+            name: name,
+            mobile: mobile,
+            type:type,
+            position:position,
+            area:area,
+            source:13,
+            remark:remark
+        }, function (data) {
+            if (data.status) {
+                weui.alert(data.message, function () {
+                   location.href="./user.html?status=0";
+
+                }, {
+                    title: '提示'
+                });
+
+            } else {
+                notice(data.message)
+
+            }
+            $("#add").show();
+
+        }, "json")
+    }
+</script>
+</body>
+</html>

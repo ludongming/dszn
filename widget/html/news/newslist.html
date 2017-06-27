@@ -1,0 +1,145 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>产品列表</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background: #fff;
+			}
+			.box {
+				width: 90%;
+				margin: 0 auto;
+				margin-top: 10px;
+				border-bottom: 1px solid #f1f1f1;
+			}
+			.box .title {
+				width: 100%;
+				text-align: left;
+				font-size: 1em;
+				line-height: 1.2em;
+				word-wrap: break-word;
+			}
+			.box .image {
+				margin-top: 10px;
+				width: 100%;
+				text-align: center;
+			}
+			.box .remark {
+				margin-top: 10px;
+				margin-bottom: 10px;
+				font-size: 0.8em;
+				color: #ccc;
+				text-align: left;
+				line-height: 1.2em;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">城市团购、砍价活动</span>
+		</header>
+		<div class="page__bd content">
+			<div id="main"></div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		{{~it:value:index}}
+		<div class="box" data-id="{{=value.id}}">
+		<div class="title">
+		{{=value.title}}
+		</div>
+		<div class="image">
+		<img src="../../image/defaultimage.png" data-original="http://www.d-shang.com/{{=value.thumb}}" class="pic" alt="" width="100%">
+		</div>
+		<div class="remark">
+		{{=value.rq}} {{=value.author}}
+		</div>
+		</div>
+		{{~}}
+	</script>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+	var page = 1;
+	var isDrop = false;
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		console.log(OPENID);
+		setDrop();
+		isDrop = true;
+	};
+	function setDrop() {
+		$('.content').dropload({
+			scrollArea : window,
+			autoLoad : true,
+			domDown : {
+				domClass : 'dropload-down',
+				domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+				domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+				domNoData : '<div class="dropload-noData">没有更多数据</div>'
+			},
+			loadDownFn : function(me) {
+				loadData(me);
+				page += 1;
+			},
+			threshold : 50
+		});
+	}
+
+	function loadData(me) {
+		api.ajax({
+			url : "http://www.d-shang.com/index.php?app/getnewslist/?cid=2&p=" + page + "&openid=" + OPENID
+		}, function(ret, err) {
+			var d = ret.data;
+			if (d.length == 0) {
+				me.lock();
+				me.noData();
+			} else {
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").append(arrText(ret.data));
+				$('.pic').picLazyLoad();
+			}
+			//第一次加载数量不足的情况
+			if (d.length < 12) {
+				me.lock();
+				me.noData();
+			}
+			if (page > 20) {
+				me.lock();
+				me.noData();
+			}
+			$(".box").bind("click", jump);
+			me.resetload();
+		});
+	}
+
+	function goback() {
+		api.closeWin();
+	}
+
+	function jump() {
+		var id = $(this).attr("data-id");
+		api.openWin({
+			name : 'news',
+			url : './newscontent.html',
+			pageParam : {
+				"id" : id
+			}
+		});
+	}
+</script>

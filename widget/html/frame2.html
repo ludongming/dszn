@@ -1,0 +1,129 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>服务</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../css/weui.min.css">
+		<link rel="stylesheet" href="../css/dropload.css">
+		<link rel="stylesheet" href="../css/header.css">
+		<style>
+			body {
+				background: #fff;
+			}
+			.list {
+				border-bottom: 1px #e7e7e7 solid;
+				width: 100%;
+				float: right;
+			}
+			.list img{width:100%;}
+		
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<span style="text-align: center;">服务</span>
+		</header>
+		<div class="page__bd content">
+			<div id="main">
+			
+			<div class="list" data-url="./dszp/hot.html" data-name="dszp" data-vip="1">
+						<img src="../image/dszp.png">
+			</div>
+				
+				<div class="list" data-url="./3D/index.html" data-name="3D" data-vip="1">
+						<img src="../image/quanjing.jpg">
+			</div>
+				
+				
+				<div class="list" data-url="./goods/index.html" data-name="design" data-vip="0">
+						<img src="../image/chanpinku.png">
+					
+				</div>
+				
+				
+			<div class="list" data-url="./design/hot.html" data-name="design" data-vip="1">
+						<img src="../image/diaodingqiangmian.png">
+					
+				</div>
+				
+				<div class="list"  data-url="./paint/index.html" data-name="program" data-vip="0">
+						<img src="../image/qiangmianhua.png">
+					
+				</div>
+				
+				
+				
+				
+					<div class="list" data-url="./sellpoint/hot.html" data-name="sellpoint" data-vip="1">
+						<img src="../image/zhinengxiaod.png">
+					
+				</div>
+			
+			
+					<div class="list" data-url="./pdf/index.html" data-name="pdf" data-vip="0">
+						<img src="../image/chuyang.png">
+					
+				</div>
+			
+				
+				<div class="list" data-url="./newslist.html" data-name="news" data-vip="0">
+						<img src="../image/dingshangxinwen.jpg">
+					
+				</div>
+				
+				
+				
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/wolf.js"></script>
+<script type="text/javascript" src="../script/weui.min.js"></script>
+
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		setTopBar();
+		$(".list").bind("click", jump);
+	};
+	function jump() {
+		var vip = $(this).attr("data-vip");
+		var url = $(this).attr("data-url");
+		var name = $(this).attr("data-name");
+		if (vip == 0) {
+			api.openWin({
+				name : name,
+				url : url
+			});
+		} else {
+		  isVip(name,url);
+		}
+	}
+
+	function isVip(name,url) {
+		api.ajax({
+			url : 'http://www.d-shang.com/index.php?app/checkvip/?openid=' + OPENID
+		}, function(ret, err) {
+			if (ret.status) {
+				api.openWin({
+					name : name,
+					url : url
+				});
+			} else {
+				weui.toast(ret.message, {
+					duration : 1000,
+					className : "bears"
+				});
+			}
+		});
+	}
+</script>

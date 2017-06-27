@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.0.0/dingtalk.js"></script>
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css" />
+		<title>二维码</title>
+		<style>
+			body {
+				margin: 0;
+			}
+			#main {
+				width: 100%;
+				margin-top: 41px;
+			}
+			.text {
+				padding-left: 15px;
+			}
+			.footer {
+				width: 100%;
+				height: 50px;
+				position: fixed;
+				bottom: 0;
+				background-color: white;
+			}
+			.footer div {
+				width: 50%;
+				height: 100%;
+				text-align: center;
+				position: relative;
+				line-height: 50px;
+				color: white;
+				border: none;
+				float: left;
+			}
+			.footer div img {
+				width: 20px;
+				height: 20px;
+				position: relative;
+				top: 5px;
+				right: 2px;
+			}
+			.footer .share {
+				background-color: #10AEFF;
+			}
+			.footer .friend {
+				background-color: orange;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="title" style="text-align: center;">二维码</span>
+		</header>
+		<div class="page__bd content">
+			<div class="weui-cells">
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<label class="weui-label">分享标题</label>
+					</div>
+					<div class="weui-cell__bd" >
+						<textarea type="text" name="title" id="title" class="weui-textarea">顶上邀您加入参加本活动，更有机会赢取精美好礼哦</textarea>
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<label class="weui-label">分享描述</label>
+					</div>
+					<div class="weui-cell__bd" >
+						<textarea name="descript" id="descript" class="weui-textarea" rows="2">上市企业，高新技术企业，独家活性炭工艺，20年不变形，赶快加入吧!</textarea>
+					</div>
+				</div>
+			</div>
+	
+			<p class="text">
+				使用说明:<br>
+			1、点击下方的分享给朋友或分享到朋友圈。<br>
+			2、客户点开链接后，输入信息，你就可以在本店名单中看到信息。<br>
+			</p>
+		</div>
+		<div class="footer">
+			<div class="share" ontouchend="share(1)"><img src="../../image/share.png" />分享给朋友
+			</div>
+			<div class="friend" ontouchend="share(2)" ><img src="../../image/friend.png" />分享到朋友圈
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+				<script type="text/javascript" src="../../script/wolf.js"></script>
+
+<script>
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		//loadQrcode();
+	}
+	function loadQrcode() {
+		var url = "http://www.d-shang.com/index.php?appcrm/getqrcode/?openid=" + OPENID;
+		api.ajax({
+			url : url
+		}, function(ret, err) {
+			downloadImage(ret.data);
+		});
+	}
+
+	function downloadImage(image) {
+		var url = "http://www.d-shang.com/" + image;
+		api.imageCache({
+			url : url
+		}, function(ret, err) {
+			var url = ret.url;
+			$("#qrcode").attr("src", url);
+		});
+	}
+
+	function saveqr() {
+		var url = $("#qrcode").attr("src");
+		api.saveMediaToAlbum({
+			path : url
+		}, function(ret, err) {
+			if (ret && ret.status) {
+				weui.toast("保存成功", {
+					duration : 3000,
+					className : "bears"
+				});
+			} else {
+				alert(err.msg);
+			}
+		});
+	}
+
+	function goback() {
+		api.closeWin();
+	}
+
+	function share(id) {
+		var title = $("#title").val();
+		var desc = $("#descript").text();
+		var type = id == 1 ? "session" : "timeline";
+		var wx = api.require('wx');
+		var contentUrl = "http://www.d-shang.com/static/app/index.html?openid=" + OPENID
+		wx.shareWebpage({
+			apiKey : 'wx062395c72d4d0732',
+			scene : type,
+			title : title,
+			description : desc,
+			thumb : 'widget://image/redpack.png',
+			contentUrl : contentUrl
+		}, function(ret, err) {
+			if (ret.status) {
+				alert('分享成功');
+			} else {
+				alert(err.code);
+			}
+		});
+	}
+</script>

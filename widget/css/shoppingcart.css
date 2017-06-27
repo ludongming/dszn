@@ -1,0 +1,111 @@
+html{font-size:16px;}
+*{overflow-x:hidden;}
+.wrap{}
+.toper{width:100%;padding:1.5%;text-align:center;font-size:1.1rem;background-color:#ff5000;color:#fff;}
+.main{width:100%;background-color:#f2f2f2;}
+.main ul {width:100%;margin-bottom:4%;padding:1% 0;clear:both;background-color:#fafafa;display:flex;display:-webkit-flex;border-bottom:1px solid #dedddd;}
+.main li{float:left;border:0px solid red;}
+.radios{width:5%;text-align:center;align-self:center;-webkit-align-self:center;}
+.img{width:24%;height:auto;text-align:center;background-color:#fff;}
+.txt{width:100%;padding-left:4%;}
+.change{width:16%;clear:both;}
+.radios input,.radios button{width:26px;height:26px;border-radius:50%;vertical-align:middle;-webkit-appearance:none;appearance:none;}
+.radios input{margin-bottom:40%;}
+.radios input:active{background:#ece8e8;box-shadow:1px 1px 1px #e5e2e2;}
+/*.radios button{font-size:0.8rem;font-weight:bold;color:#fff;background-color:#ff5000;background-image:url(../img/sc.png);background-repeat:no-repeat;background-size:100%;background-position:50% 50%;}*/
+/*.radios button:active{font-size:0.8rem;font-weight:bold;color:#ff5000;background-color:#fff;background-image:url(../img/sc-c.png);background-repeat:no-repeat;background-size:100%;background-position:50% 50%;}*/
+.unselected{border:1px solid #e0dddd;background-color:#fff;}
+.selected{background-color:#ff5000;border:1px solid #ff5000;background-image:url(../image/img/gou.png);background-repeat:no-repeat;background-size:150%;background-position:50% 50%;}
+.img img{max-width:100%;vertical-align:middle;}
+.txt{text-align:left;}
+.txt p{width:100%;margin-bottom:2%;display:block;clear:both!important;border:0 solid red;}
+.name{font-size:1rem;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.guige{font-size:0.9rem;color:#9d9999;}
+.price{font-size:0.9rem;color:#ff5000;}
+.change{height:36px;line-height:36px;}
+.zenjian,.change input{float:left;height:100%;width:20%;}
+.zenjian{text-align:center;font-size:1.3rem;border:1px solid #f0eded;background-color:#f0eded;}
+.zenjian:active{background:#e2e0e0;border:1px solid #e2e0e0;color:#fff;background-clip:padding-box;}
+.change input{border:1px solid #fff;color:#000;text-align:center;font-size:0.9rem;}
+.change input:hover,.change input:active{border:1px solid #e2e0e0;}
+.heji{width:100%;height:55px;position:fixed;left:0;bottom:0;background-color:#fff;clear:both;border:0 solid red;}
+.totalp{float:right;font-size:0.9rem;margin-right:2%;padding-top:3px;}
+.totalp .price{font-size:1.1rem;display:block;}
+.jies{float:right;width:28%;height:100%;padding:0 3.6%;font-size:1.1rem;background-color:#ff5000;color:#fff;}
+.jies:active{background:#fc834d;color:rgba(255,255,255,0.5);}
+.delet{width:12%;height:100%;margin-left:26%;background:url(../image/img/ljx.png);background-repeat:no-repeat;background-size:90%;background-position:50% 50%;}
+.delet:active{height:100%;width:12%;background:url(../image/img/ljx_h.png);background-repeat:no-repeat;background-size:90%;background-position:50% 50%;}
+.fanhui{float:left;padding:0 4%;height:100%;background-color:#d8d8d8;}
+
+/*样式补充*/
+.xzlg{width:100%;border:0 solid red;}
+.xzlg p{width:100%;padding:2%;border-bottom:1px solid #d8d8d8;background-color:#fff;color:#ff5000;}
+.xzlg p a{color:inherit;}
+.xzlg ul{width:100%;padding:2%;padding-bottom:5%;clear:both;display:inline-block;}
+.xzlg li{float:left;width:auto;padding:1% 2%;}
+.lgwx{border:1px solid #fff!important;background-color:#e4e2e2;}
+.lgxz{background-color:#fff;border:1px solid #e4e2e2!important;}
+.xzlg li input{width:18px;height:18px;border-radius:50%;vertical-align:middle;-webkit-appearance:none;appearance:none;}
+
+
+@media screen and (max-width:350px){
+    html{font-size:14px;}
+    .main li{}
+    .change{clear:left!important;}
+}
+@media screen and (min-width:420px){
+    html{font-size:22px;}
+    .radios input,.radios button{width:40px;height:40px;display:block;margin-left:20%;}
+    .change{height:56px;line-height:56px;}
+	.heji{height:60px;}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<style>
+			body {
+				background: #f5f5f5;
+			}
+			.tit a {
+				color: #000;
+				display: inline-block;
+				width: 70px;
+			}
+			.tit .active {
+				border-bottom: 1px #000 solid;
+			}
+			.list {
+				background: #fff;
+				width: 100%;
+				border-bottom: 1px solid #f1f1f1;
+				margin-bottom: 10px;
+			}
+			.list .info {
+				height: 50px;
+			}
+			.list .info .head img {
+				margin-top: 4px;
+				float: left;
+				width: 50px;
+				height: 50px;
+				border-radius: 50px;
+				margin-left: 10px;
+				vertical-align: middle;
+			}
+			.list .info .username {
+				margin-left: 10px;
+				margin-top: 15px;
+				float: left;
+				color: #000;
+			}
+			.list .info .pub_time {
+				float: right;
+				margin-top: 15px;
+				margin-right: 10px;
+				color: #666;
+			}
+			.list .image {
+				margin-top: 10px;
+				width: 100%;
+				clear: both;
+				max-height: 300px;
+				overflow-y: hidden;
+			}
+			.list .message {
+				width: 95%;
+				padding-left: 10px;
+			}
+			.list .tip {
+				margin-top: 5px;
+				height: 25px;
+				width: 100%;
+				margin-bottom: 10px;
+			}
+			.list .tip .tool {
+				float: right;
+				width: 23%;
+				padding-left: 20px;
+			}
+			.zan {
+				font-size: 0.8em;
+				color: #666;
+				margin-left: 3px;
+			}
+			.dingwei {
+				float: left;
+				margin-left: 10px;
+			}
+			.reply {
+				background: #f1f1f1;
+				display: none;
+			}
+			.reply .text {
+				width: 80%;
+				float: left;
+			}
+			.input_text {
+				margin-left: 10px;
+				width: 90%;
+				margin-top: 5px;
+				height: 30px;
+				border: none;
+				background: #fff;
+			}
+			.replybtn {
+				text-align: center;
+				border-radius: 4px;
+				display: inline-block;
+				width: 60px;
+				height: 30px;
+				line-height: 30px;
+				margin-top: 5px;
+				border: 1px #ccc solid;
+				background: #fff;
+				color: #666;
+			}
+			.comment {
+				color: #746e7c;
+				width: 100%;
+				clear: both;
+				font-size: 0.9em;
+				max-height: 200px;
+				overflow-y: hidden;
+			}
+			.commentlist {
+				margin-left: 20px;
+				border-top: 1px #f1f1f1 solid;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+	<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i>			<span class="tit" style="text-align: center;">用户 </span>
+		</header>
+		<div class="page__bd content">
+			<div id="main"></div>
+		</div>
+	</body>
+	<!--地址模板-->
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		{{~it:value:index}}
+		<div class="list">
+		<div class="info">
+		<div class="head">
+		<img src="../../image/default.jpg"  data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
+		</div>
+		<div class="username">{{=value.real_name}}</div>
+		<div class="pub_time">{{=value.rq}}</div>
+		</div>
+		<div class="image">
+		<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" width="100%;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+		</div>
+		<div class="message">{{=value.content}}</div>
+		<div class="tip">
+		<div class="dingwei">
+		<img src="../../image/dingwei.png"  style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</a>
+		</div>
+		<div class="tool"><img src="../../image/pinglun.png"  style="width:25px;vertical-align:middle;" onclick="pinglun({{=value.id}})"> <span class="zan">{{?value.commentnum>0}}{{=value.commentnum}}{{?}}</span></div>
+		<div class="tool"><img src="../../image/zan.png" style="width:25px;vertical-align:middle;" onclick="zan({{=value.id}})">
+		<span class="zan zan_{{=value.id}}">{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}</span>
+		</div>
+		</div>
+		<div class="reply pl{{=value.id}}">
+		<div class="text">
+		<input type="text" id="text{{=value.id}}"  class="input_text" value="">
+		</div>
+		<div class="reply_btn">
+		<a href="javascript:;" class="replybtn" ontouchend="addComment()">发送</a>
+		</div>
+		</div>
+		<div class="comment">
+		<div class="commentlist">
+		<span class="commentfirst"></span>
+		{{ for(var i=0, catlen=value.comment.length; i<catlen; i++) { }}
+		</spam>{{=value.comment[i].real_name}}:{{=value.comment[i].comment}}<br>
+		{{ } }}
+		</div>
+		</div>
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/dropload.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var isDrop = false;
+		var me;
+		var page = 1;
+		var REPLYID = 0;
+		var UID;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			var params = api.pageParam;
+			UID = params.uid;
+			setDrop();
+		};
+		
+		function goback(){
+		 api.closeWin({
+         });
+		}
+		function pinglun(id) {
+			if (REPLYID > 0) {
+				$(".pl" + REPLYID).hide();
+			}
+			REPLYID = id;
+			$(".pl" + id).show();
+			$("#text" + id).focus();
+		}
+
+		function bigImage(image) {
+			console.log(image);
+			var photoBrowser = api.require('photoBrowser');
+			photoBrowser.open({
+				images : [image],
+				placeholderImg : 'widget://res/img/apicloud.png',
+				bgColor : '#000'
+			}, function(ret, err) {
+				if (ret.eventType == "click") {
+					photoBrowser.close();
+				}
+			});
+		}
+
+		function addComment() {
+			var comment = $("#text" + REPLYID).val();
+			if (comment == "") {
+				alert("不能为空，写点什么吧!");
+				return false;
+			}
+			$("#text" + REPLYID).val("");
+			$(".pl" + REPLYID).hide();
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?blog/addcomment/?openid=' + OPENID,
+				data : {
+					values : {
+						nid : REPLYID,
+						comment : comment
+					}
+				},
+				method : "post"
+			}, function(ret, err) {
+				if (!ret.status) {
+					alert(ret.message);
+				} else {
+					$(".commentfirst").before(ret.data + ":" + comment + "<br>");
+				}
+			});
+		}
+
+		function refresh() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=' + page + '&openid=' + OPENID + "&uid=" + UID
+			}, function(ret, err) {
+				var d = ret.data;
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(ret.data));
+				$('.pic').picLazyLoad();
+				me.resetload();
+			});
+		}
+
+		function zan(nid) {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?blog/flower/?openid=' + OPENID + "&nid=" + nid
+			}, function(ret, err) {
+				$(".zan_" + nid).html(ret.data.flower + "人点赞");
+			});
+		}
+
+		function friend() {
+			api.openWin({
+				name : 'friend',
+				url : './friends/add.html'
+			});
+		}
+
+		function setDrop() {
+			if (isDrop == true) {
+				return false;
+			}
+			$('.content').dropload({
+				scrollArea : window,
+				autoLoad : true,
+				domDown : {
+					domClass : 'dropload-down',
+					domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+					domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+					domNoData : '<div class="dropload-noData">没有更多数据</div>'
+				},
+				domUp : {
+					domClass : 'dropload-down',
+					domRefresh : '<div class="dropload-refresh">↑下拉更新</div>',
+					domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+					domNoData : '<div class="dropload-noData">已刷新</div>'
+				},
+				loadDownFn : function(mes) {
+					me = mes;
+					loadData();
+					page += 1;
+				},
+				loadUpFn : function(mes) {
+					me = mes;
+					page = 1;
+					refresh();
+				},
+				threshold : 50
+			});
+		}
+
+		function loadData() {
+
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=' + page + '&openid=' + OPENID + "&uid=" + UID
+			}, function(ret, err) {
+				var d = ret.data;
+
+				if (d.length == 0) {
+					me.lock();
+					me.noData();
+				} else {
+					var arrText = doT.template($("#interpolationtmpl").text());
+					$("#main").append(arrText(ret.data));
+					$('.pic').picLazyLoad();
+				}
+				//第一次加载数量不足的情况
+				if (d.length < 20) {
+					me.lock();
+					me.noData();
+				}
+				me.resetload();
+			});
+		}
+	</script>
+</html>
