@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>顶上宅配</title>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style>
+        body {
+            background: #f6f6f6;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 50px;
+            background: #f2f2f2;
+            opacity: 0.9;
+        }
+
+        .footer .btnl {
+            width: 25%;
+            color: #000;
+            float: left;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .list {
+            width: 100%;
+            height: 380px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .list .image {
+            width: 100%;
+            height: 250px;
+            overflow-y: hidden;
+            position: relative;
+        }
+
+        .list .title {
+            position: absolute;
+            right: 5px;
+            bottom:10px;
+            color: #fff;
+            font-size:0.9em;
+        }
+
+        .list img {
+            width: 100%;
+            max-height: 250px;
+        }
+
+        .tool {
+            width: 100%;
+            height:50px;
+            position: relative;
+            line-height:50px;
+        }
+.head{width:20px;height:20px;border-radius: 20px;}
+.mingdan{width:90%;;line-height:20px;padding:2px;margin: 0 auto;background:#f5f5f5;margin-left:10px;margin-top: 5px;margin-bottom: 5px;border-radius: 5px;font-size:0.8em;color:#989898;}
+    </style>
+</head>
+
+<body>
+    <header style="position: fixed;" class="page__bd page__bd_spacing">
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;">顶上宅配</span>
+    </header>
+    <div class="page__bd content" id="content">
+
+        <div id="main"></div>
+
+        <div class="footer">
+
+            <a href="./recommend.html" class="btnl">
+                <span></span> 最新
+            </a>
+            <a href="./top.html" class="btnl">TOP</a>
+            <a href="./me.html" class="btnl">我的收藏</a>
+            <a href="./cate.html" class="btnl">场景</a>
+
+        </div>
+
+    </div>
+    <script id="interpolationtmpl" type="text/x-dot-template">
+        {{~it:value:index}}
+        <div class="list">
+        <div class="tool">
+            <img src="../../image/default.png" style="margin-left:10px;margin-top:5px;width:40px;height:40px;border-radius:20px;vertical-align:center;" class="pic head" data-original="{{=value.headimgurl}}">
+            <span style="position:absolute;top:0px;display:inline-block;">&nbsp;{{=value.username}} </span><span style="text-align:right;display:inline-block;position:absolute;width:100px;font-size:0.8em;right:10px;color:#666;">{{=value.rq}}</span>
+        </div>
+            <div class="image">
+                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}">
+                <span class="title">{{=value.title}}</span>
+
+            </div>
+<div class="tool" style="height:30px;">
+<span style="display:inline-block;position:absolute;width:30px;right:20px;"><img src="../../image/love0.png"></span>
+
+</div>
+
+            <div class="tool" style="30px;">
+
+
+<div class="mingdan">
+{{ for(var i=0, catlen=value.users.length; i<catlen; i++) { }}
+
+{{=value.users[i].username}},
+{{}}}
+喜欢
+</div>
+
+            </div>
+        </div>
+        {{~}}
+    </script>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/weui.min.js"></script>
+<script src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+    var me;
+    apiready = function() {
+        setTopBar();
+        setDrop();
+        loadLastDesgin();
+    }
+
+    function loadLastDesgin() {
+
+        api.ajax({
+            url: 'http://www.dszpvip.com/index.php?love/getlastlove'
+        }, function(ret, err) {
+            if (ret) {
+                var d = ret.data;
+                var arrText = doT.template($("#interpolationtmpl").text());
+                $("#main").html(arrText(d));
+                $('.pic').picLazyLoad();
+            } else {
+                alert(JSON.stringify(err));
+            }
+
+            if (me != undefined) {
+                me.resetload();
+
+            }
+
+        });
+
+
+
+
+
+
+    }
+
+
+
+    function setDrop() {
+        $('.content').dropload({
+            scrollArea: window,
+            autoLoad: true,
+            domUp: {
+                domClass: 'dropload-down',
+                domRefresh: '<div class="dropload-refresh">↑下拉更新</div>',
+                domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+                domNoData: '<div class="dropload-noData">已刷新</div>'
+            },
+            loadUpFn: function(mes) {
+                me = mes;
+                loadLastDesgin();
+            },
+            threshold: 50
+        });
+
+    }
+</script>
+
+</html>

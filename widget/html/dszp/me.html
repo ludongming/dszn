@@ -85,20 +85,8 @@
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;">顶上宅配</span>
 	</header>
 	<div class="page__bd content" id="contents">
-		<div class="weui-search-bar" id="searchBar">
-			<div class="weui-search-bar__form">
-				<div class="weui-search-bar__box">
-					<i class="weui-icon-search"></i>
-					<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-					<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-				</div>
-				<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);"> <i class="weui-icon-search"></i> <span>搜索</span> </label>
-			</div>
-			<a href="javascript:;" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-		</div>
-		<div class="guanggao"></div>
+
 		<div class="picarr"></div>
-		<div class="fenge"></div>
 
 		<div class="footer">
 
@@ -114,13 +102,13 @@
 	</div>
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
-		<div class="picbox">
+		<div class="picbox  love{{=value.id}}">
 			<a href="javascript:void(0)"><img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic" onclick="jump({{=value.id}},{{=value.cid}},{{=value.index}})">
 
 
 			</a>
 			<div class="picname">
-				<span class="love" id="love_{{=value.id}}" onclick="love({{=value.id}})" data-status="0"><img src="../../image/love0.png"   ></span> {{=value.title}}
+				<span class="love" id="love_{{=value.id}}" onclick="love({{=value.id}})" data-status="1"><img src="../../image/love1.png"   ></span> {{=value.title}}
 
 			</div>
 			<div style="margin-top: 5px;padding-left: 2px;">
@@ -137,18 +125,11 @@
 <script type="text/javascript" src="../../script/dropload.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript">
-	var picArr;
 	var OPENID;
 	var isDrop = false;
 	var PAGE = 1;
-	var CID = 12;
 	var me;
-	var cidType = "集成吊顶";
-	var arr = [];
-	var SEARCH = false;
-	//搜索模式不用下拉
-	var index;
-	var imageArr = [];
+
 	apiready = function() {
 		setTopBar();
 		isDrop = true;
@@ -157,33 +138,11 @@
 			key: 'openid'
 		});
 
-		var params = api.pageParam;
-		CID = params.cid;
-
 		setDrop();
 
 
 	}
 
-	function search() {
-		index = 0;
-		var title = $("#searchInput").val();
-		if (title == "") {
-			return;
-		}
-		api.ajax({
-			url: 'http://www.dszpvip.com/index.php?paint/phonesearch/?title=' + title
-		}, function(ret, err) {
-			if (ret.data.length < 1) {
-				return false;
-			}
-			SEARCH = true;
-			var arrText = doT.template($("#interpolationtmpl").text());
-			ImageArr = ret.data;
-			$(".picarr").html(arrText(ret.data));
-			$('.pic').picLazyLoad();
-		});
-	}
 
 
 	function love(id) {
@@ -208,22 +167,24 @@
 				}
 
 			}, function(ret, err) {
-				console.log(JSON.stringify(err));
+
 				if (ret) {} else {
 					alert(JSON.stringify(err));
 				}
 			});
 
 		} else {
+			$(".love"+id).remove();
+			return;
 			con = "<img src=\"../../image/love0.png\">";
 			status = 0;
 			api.ajax({
 				url: 'http://www.dszpvip.com/index.php?love/removelovebyuidandnid/',
-				method:"post",
-				data:{
-					values:{
-						nid:id,
-						openid:OPENID
+				method: "post",
+				data: {
+					values: {
+						nid: id,
+						openid: OPENID
 					}
 				}
 			}, function(ret, err) {
@@ -243,76 +204,48 @@
 	}
 
 	function setDrop() {
-		if (!SEARCH) {
-			$('.content').dropload({
-				scrollArea: window,
-				autoLoad: true,
-				domDown: {
-					domClass: 'dropload-down',
-					domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
-					domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-					domNoData: '<div class="dropload-noData">没有更多数据</div>'
-				},
-				loadDownFn: function(mes) {
-					me = mes;
-					phoneGetPic(me);
-					PAGE++;
-				},
-				threshold: 50
-			});
-		}
+		$('.content').dropload({
+			scrollArea: window,
+			autoLoad: true,
+			domDown: {
+				domClass: 'dropload-down',
+				domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
+				domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+				domNoData: '<div class="dropload-noData">没有更多数据</div>'
+			},
+			loadDownFn: function(mes) {
+				me = mes;
+				phoneGetPic(me);
+				PAGE++;
+			},
+			threshold: 50
+		});
+
 	}
 
 
-
-	//设置标题栏
-	function setTitle(pickerArr, cid) {
-		for (var i = 0; i < pickerArr.length; i++) {
-			if (pickerArr[i].value == cid) {
-				$("#title").html(pickerArr[i].label);
-				return;
-			}
-		}
-	}
 
 	function goback() {
 		api.closeWin();
 	}
 
-	function jump(id, cid, index2) {
-		if (SEARCH) {
-			var title = $("#searchInput").val();
-			api.openWin({
-				name: "bigImg",
-				url: "bigImg.html",
-				pageParam: {
-					search: true,
-					title: title,
-					index: index2
-				},
-				slidBackEnabled: false,
-			})
-		} else {
-			api.openWin({
-				name: "bigImg",
-				url: "bigImg.html",
-				pageParam: {
-					search: false,
-					id: id,
-					cid: cid
-				},
-				slidBackEnabled: false,
-			})
-		}
-	}
+
 
 	//获取图片
 	function phoneGetPic() {
-		var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
+		var url = 'http://www.dszpvip.com/index.php?love/getlovebyuid/';
 		api.ajax({
-			url: url
+			url: url,
+			method: 'post',
+			data: {
+				values: {
+					'openid': OPENID,
+					'p': PAGE
+				}
+			}
 		}, function(ret, err) {
-			var d = ret.data.newslist;
+			console.log(JSON.stringify(err));
+			var d = ret.data;
 			if (d.length == 0) {
 				me.lock();
 				me.noData();
@@ -333,51 +266,6 @@
 			me.resetload();
 		});
 	}
-
-	$(function() {
-		var $searchBar = $('#searchBar'),
-			$searchResult = $('#searchResult'),
-			$searchText = $('#searchText'),
-			$searchInput = $('#searchInput'),
-			$searchClear = $('#searchClear'),
-			$searchCancel = $('#searchCancel');
-
-		function hideSearchResult() {
-			$searchResult.hide();
-			$searchInput.val('');
-		}
-
-		function cancelSearch() {
-			hideSearchResult();
-			$searchBar.removeClass('weui-search-bar_focusing');
-			$searchText.show();
-		}
-
-
-		$searchText.on('click', function() {
-			$searchBar.addClass('weui-search-bar_focusing');
-			$searchInput.focus();
-		});
-		$searchInput.on('blur', function() {
-			if (!this.value.length)
-				cancelSearch();
-		}).on('input', function() {
-			if (this.value.length) {
-				$searchResult.show();
-				search();
-			} else {
-				$searchResult.hide();
-			}
-		});
-		$searchClear.on('click', function() {
-			hideSearchResult();
-			$searchInput.focus();
-		});
-		$searchCancel.on('click', function() {
-			cancelSearch();
-			$searchInput.blur();
-		});
-	});
 </script>
 
 </html>

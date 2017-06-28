@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>顶上宅配</title>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style>
+        body {
+            background: #f6f6f6;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 50px;
+            background: #f2f2f2;
+            opacity: 0.9;
+        }
+
+        .footer .btnl {
+            width: 25%;
+            color: #000;
+            float: left;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .list {
+            width: 100%;
+            height: 280px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .list .image {
+            width: 100%;
+            height: 250px;
+            overflow-y: hidden;
+            position: relative;
+        }
+
+        .list .title {
+            position: absolute;
+            bottom: 10px;
+            right: 5px;
+            color: #fff;
+        }
+
+        .list img {
+            width: 100%;
+            max-height: 250px;
+        }
+
+        .tool {
+            width: 100%;
+            position: relative;
+        }
+
+        .box {
+            display: inline-block;
+            width: 33%;
+            height: 180px;
+            float: left;
+            text-align: center;
+        }
+
+        .classtitle {
+            width: 100%;
+            clear: both;
+            text-indent: 1em;
+            color: #000;
+            background: #f8f8f8;
+        }
+
+        .box img {
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <header style="position: fixed;" class="page__bd page__bd_spacing">
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;">顶上宅配</span>
+    </header>
+    <div class="page__bd content" id="content">
+
+        <div id="main">
+
+
+
+            <div>
+                <div class="classtitle">集成背景·墙面</div>
+                <a class="box" data-cid="83">
+                    <img src="../../image/keting.png"> <br>客厅
+                </a>
+
+                <a class="box" data-cid="86">
+                    <img src="../../image/keting.png"> <br>卧室
+                </a>
+                <a class="box" data-cid="87">
+                    <img src="../../image/keting.png"> <br>其他
+                </a>
+
+
+            </div>
+
+            <div>
+                <div class="classtitle">集成吊顶</div>
+                <a class="box" data-cid="12">
+                    <img src="../../image/keting.png"> <br>客厅
+                </a>
+                <a class="box" data-cid="13">
+                    <img src="../../image/keting.png"> <br>餐厅
+                </a>
+                <a class="box" data-cid="10">
+                    <img src="../../image/keting.png"> <br>厨房
+                </a>
+                <a class="box" data-cid="11">
+                    <img src="../../image/keting.png"> <br>卫生间
+                </a>
+                <a class="box" data-cid="19">
+                    <img src="../../image/keting.png"> <br>儿童房
+                </a>
+                <a class="box" data-cid="14">
+                    <img src="../../image/keting.png"> <br>卧室
+                </a>
+                <a class="box" data-cid="17">
+                    <img src="../../image/keting.png"> <br>高档会所
+                </a>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div class="footer">
+
+            <a href="./recommend.html" class="btnl">
+                <span></span> 最新
+            </a>
+            <a href="javascript:;" class="btnl">TOP</a>
+            <a href="javascript:;" class="btnl">我的收藏</a>
+            <a href="javascript:changjing()" class="btnl">场景</a>
+
+        </div>
+
+    </div>
+
+
+
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/weui.min.js"></script>
+<script src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        setTopBar();
+        $(".box").bind("click", mx);
+    }
+
+
+    function mx() {
+        var cid = $(this).attr("data-cid");
+
+        api.openWin({
+            name: 'hot',
+            url: './hot.html',
+            pageParam: {
+                cid: cid
+            }
+        });
+
+
+
+    }
+</script>
+
+</html>
