@@ -84,7 +84,7 @@
 			.zan {
 				font-size: 0.8em;
 				color: #777;
-				margin-left: 3px;
+				margin-right: 3px;
 			}
 			.dingwei {
 				float: left;
@@ -239,8 +239,10 @@
 		<div class="dingwei">
 		<img src="../image/dingwei.png"  style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</a>
 		</div>
-		<div class="tool"><img src="../image/zan{{=value.isflower}}.png" id="zanimage{{=value.id}}" data="{{=value.isflower}}"  class="toolimage" ontouchend="zan({{=value.id}})">
+		<div class="tool">
 		<span class="zan zan_{{=value.id}}">{{?value.flower>0}} {{=value.flower}} {{?}}</span>
+
+		<img src="../image/zan{{=value.isflower}}.png" id="zanimage{{=value.id}}" data="{{=value.isflower}}"  class="toolimage" ontouchend="zan({{=value.id}})">
 		</div>
 		</div>
 		<div class="reply pl{{=value.id}}">
@@ -508,11 +510,14 @@
 		}
 
 		function loadRecommendData() {
+
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?blog/getrecommendblogbypage/?p=' + page1 + "&openid=" + OPENID,
 				timeout : 5,
 				report : false
 			}, function(ret, err) {
+				me1.resetload();
+
 				if (ret.status) {
 					var d = ret.data;
 					var arrText = doT.template($("#interpolationtmpl").text());
@@ -523,17 +528,19 @@
 						me1.lock();
 						me1.noData(false);
 					}
-					me1.resetload();
 				}
 			});
 		}
 
 		function loadAllData() {
+
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?blog/getblogbypage/?p=' + page2 + "&openid=" + OPENID,
 				timeout : 5,
 				report : false
 			}, function(ret, err) {
+				me2.resetload();
+
 				if (ret.status) {
 					var d = ret.data;
 					var arrText = doT.template($("#interpolationtmpl").text());
@@ -544,7 +551,6 @@
 						me2.lock();
 						me2.noData(false);
 					}
-					me2.resetload();
 				}
 			});
 		}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>顶上宅配</title>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style>
+        body {
+            background: #f6f6f6;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 50px;
+            background: #f2f2f2;
+            opacity: 0.9;
+        }
+
+        .footer .btnl {
+            width: 25%;
+            color: #000;
+            float: left;
+            line-height: 50px;
+            text-align: center;
+        }
+        .list{width:100%;height:280px;margin-bottom: 10px;background: #fff;}
+        .list .image{width:100%;height:250px;overflow-y: hidden;position: relative;}
+        .list .title{position: absolute;bottom:10px;right:5px;color:#fff;}
+        .list img{width:100%;max-height: 250px;}
+        .tool{width:100%;position:relative;}
+    </style>
+</head>
+
+<body>
+    <header style="position: fixed;" class="page__bd page__bd_spacing">
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;">顶上宅配</span>
+    </header>
+    <div class="page__bd content" id="content">
+
+        <div id="main"></div>
+
+        <div class="footer">
+
+            <a href="javascript:;" class="btnl">
+                <span></span> 最新
+            </a>
+            <a href="javascript:;" class="btnl">TOP</a>
+            <a href="javascript:;" class="btnl">我的收藏</a>
+            <a href="./hot.html" class="btnl">场景</a>
+
+        </div>
+
+    </div>
+    <script id="interpolationtmpl" type="text/x-dot-template">
+        {{~it:value:index}}
+        <div class="list">
+
+<div class="image">
+            <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}">
+            <div class="title">{{=value.title}}</div>
+</div>
+<div class="tool">
+ 鲁冬明                     <span style="display:inline-block;position:absolute;width:20px;right:10px;"><img src="../../image/flower1.png" ></span>
+</div>
+        </div>
+        {{~}}
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/weui.min.js"></script>
+<script src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+    var me;
+    apiready = function() {
+        console.log(123);
+        setTopBar();
+        setDrop();
+        loadLastDesgin();
+    }
+
+    function loadLastDesgin() {
+
+      api.ajax({
+              url: 'http://www.dszpvip.com/index.php?love/getlastlove'
+          }, function(ret, err) {
+              if (ret) {
+                  var d = ret.data;
+                  var arrText = doT.template($("#interpolationtmpl").text());
+                  $("#main").html(arrText(d));
+                  $('.pic').picLazyLoad();
+          } else {
+              alert(JSON.stringify(err));
+          }
+
+          if(me!=undefined){
+            me.resetload();
+
+          }
+
+      });
+
+
+
+
+
+
+    }
+
+
+    function setDrop() {
+        $('.content').dropload({
+            scrollArea: window,
+            autoLoad: true,
+            domUp : {
+              domClass : 'dropload-down',
+              domRefresh : '<div class="dropload-refresh">↑下拉更新</div>',
+              domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
+              domNoData : '<div class="dropload-noData">已刷新</div>'
+            },
+            loadUpFn: function(mes) {
+                me = mes;
+                loadLastDesgin();
+            },
+            threshold: 50
+        });
+
+    }
+</script>
+
+</html>
