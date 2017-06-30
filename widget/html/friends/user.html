@@ -151,8 +151,7 @@
 		<div class="dingwei">
 		<img src="../../image/dingwei.png"  style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</a>
 		</div>
-		<div class="tool"><img src="../../image/pinglun.png"  style="width:25px;vertical-align:middle;" onclick="pinglun({{=value.id}})"> <span class="zan">{{?value.commentnum>0}}{{=value.commentnum}}{{?}}</span></div>
-		<div class="tool"><img src="../../image/zan.png" style="width:25px;vertical-align:middle;" onclick="zan({{=value.id}})">
+		<div class="tool"><img src="../../image/zan0.png" style="width:25px;vertical-align:middle;" onclick="zan({{=value.id}})">
 		<span class="zan zan_{{=value.id}}">{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}</span>
 		</div>
 		</div>
@@ -198,7 +197,7 @@
 			UID = params.uid;
 			setDrop();
 		};
-		
+
 		function goback(){
 		 api.closeWin({
          });

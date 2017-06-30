@@ -1,7 +1,7 @@
 //极光推送
 function initJPPush() {
 	jpush = api.require('ajpush');
-	
+
 		addJPPushListen();
 
 	api.addEventListener({
@@ -14,7 +14,7 @@ function initJPPush() {
 			var title = ajpush.title;
 			var content = ajpush.content;
 			var extra = ajpush.extra;
-		
+
 		}
 
 	})
@@ -38,7 +38,7 @@ function initJPPush() {
 			var ajpush = ret.value;
 			var content = ajpush.content;
 			var extra = ajpush.extra;
-			
+
 
 		}
 	})
@@ -95,39 +95,5 @@ function sendBadge() {
 		name : 'home', //这里root代表index.html
 		frameName : 'frame0',
 		script : 'setBadgeNum();'
-	});
-}
-
-//读取消息
-function readMessage(message) {
-	//异步返回结果：
-	api.readFile({
-		path : 'fs://message.txt'
-	}, function(ret, err) {
-		if (ret.status) {
-			var data = JSON.parse(ret.data);
-		} else {
-			var data = new Array();
-		}
-
-		var d = new Date();
-		var rq = (d.getMonth() + 1) + "/" + d.getDate();
-		message.rq = rq;
-		data.push(message);
-		addMessage(JSON.stringify(data));
-	});
-}
-
-//写入消息
-function addMessage(string) {
-	api.writeFile({
-		path : 'fs://message.txt',
-		data : string
-	}, function(ret, err) {
-		if (ret.status) {
-			//成功
-		} else {
-			alert(err.msg);
-		}
 	});
 }

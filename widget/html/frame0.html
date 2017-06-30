@@ -304,7 +304,6 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript" src="../script/dropload.min.js"></script>
 <script type="text/javascript" src="../script/zepto.picLazyLoad.min.js"></script>
-<script type="text/javascript" src="../script/jpush.js"></script>
 <script type="text/javascript">
 	var OPENID;
 	var page1 = 1;
@@ -397,17 +396,8 @@
 			}
 
 			if (ret.eventType == "longPress") {
-
-				photoBrowser.getImage({
-					index: 0
-				}, function(ret, err) {
-					if (ret) {
-						saveImage(ret.path);
-
-					} else {
-						alert(JSON.stringify(err));
-					}
-				});
+				var img=photoBrowser.getI
+				saveImage(image);
 			}
 
 		});
@@ -421,7 +411,6 @@
 		}, function(ret, err) {
 			var index = ret.buttonIndex;
 			if (index == 1) {
-				console.log(image);
 				api.saveMediaToAlbum({
 					path: image
 				}, function(ret, err) {
@@ -440,32 +429,6 @@
 
 	}
 
-
-	function addComment() {
-		var comment = $("#text" + REPLYID).val();
-		if (comment == "") {
-			alert("不能为空，写点什么吧!");
-			return false;
-		}
-		$("#text" + REPLYID).val("");
-		$(".pl" + REPLYID).hide();
-		api.ajax({
-			url: 'http://www.d-shang.com/index.php?blog/addcomment/?openid=' + OPENID,
-			data: {
-				values: {
-					nid: REPLYID,
-					comment: comment
-				}
-			},
-			method: "post"
-		}, function(ret, err) {
-			if (!ret.status) {
-				alert(ret.message);
-			} else {
-				$(".commentfirst").before(ret.data + ":" + comment + "<br>");
-			}
-		});
-	}
 
 	function notice() {
 		api.openWin({

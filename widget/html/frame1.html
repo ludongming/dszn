@@ -1,239 +1,244 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" href="../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-		<link rel="stylesheet" href="../css/header.css" />
-		<link rel="stylesheet" href="../css/swiper.min.css" />
-		<style>
-			body {
-				background: #f5f5f5!important;
-				width:100%;
-				height:610px;
-			}
-			#password {
-				height: 60px;
-			}
-			.weui-cells__title {
-				margin-bottom: 25px;
-			}
-			.box {
-			background:#fff;
-				margin-top: 10px;
-				width: 100%;
-				height: 60px;
-				text-align: left;
-				float: left;
-				font-size: 1.2em;
-				line-height: 60px;
-				border-top: 1px #eee solid;
-				border-bottom: 1px #eee solid;
-			}
-			.swiper-slide {
-				width: 100%;
-			}
-			.box .img img {
-				margin-left: 20px;
-				margin-right: 20px;
-				vertical-align: middle;
-				margin-top: 5px;
-				width: 50px;
-				height: 50px;
-				float: left;
-			}
-			.box span {
-				display: block;
-			}
-			.help {
-				color: #666;
-				width: 100%;
-				clear:both;
-				height:30px;
-				text-align: center;
-				display: block;
-				position: absolute;
-				bottom: 20px;
-			}
-			.adv {
-				width: 100%;
-			}
-			.adv img {
-				height:300px;
-				
-			}
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;">
-			<span style="text-align: center;">订购</span>
-		</header>
-		<div class="page__bd content">
-			<div class="adv">
-				<div class="swiper-container" onclick="pro()">
-					<div class="swiper-wrapper"></div>
-				</div>
-			</div>
-			<div class="box" data-nodeid="1"  data-url="./buy/index.html">
-				<div class="img">
-					<img src="../image/zhanggui.png">
-				</div>
-				<span>集成吊顶产品库 /VIP产品</span>
-			</div>
-			<div class="box borderBottom" data-nodeid="2" data-url="./qm/index.html">
-				<div class="img">
-					<img src="../image/qiangmian1.png">
-				</div><span>集成背景·墙面</span>
-			</div>
-			<div class="box" data-nodeid="1" data-url="./factory/index.html">
-				<div class="img">
-					<img src="../image/gongcheng.png">
-				</div>
-				<span>工程定制</span>
-			</div>
-			<a href="javascript:;" class="help" ontouchend="help()">FAQ:如何使用?</a>
-		</div>
-		<div id="dialogs">
-			<!--BEGIN dialog1-->
-			<div class="js_dialog" id="iosDialog1" style="display: none;">
-				<div class="weui-mask"></div>
-				<div class="weui-dialog">
-					<div class="weui-dialog__hd">
-						<strong class="weui-dialog__title">授权密码</strong>
-					</div>
-					<div class="weui-dialog__bd">
-						<input class="weui-input" type="password" id="password"  placeholder="请输入授权码">
-					</div>
-					<div class="weui-dialog__ft">
-						<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default cancle">取消</a>
-						<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" ontouchend="sq()">确认</a>
-					</div>
-				</div>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" href="../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" href="../css/header.css" />
+	<link rel="stylesheet" href="../css/swiper.min.css" />
+	<style>
+		body {
+			background: #f5f5f5!important;
+			width: 100%;
+			height: 610px;
+		}
+
+		#password {
+			height: 60px;
+		}
+
+		.weui-cells__title {
+			margin-bottom: 25px;
+		}
+
+		.box {
+			background: #fff;
+			margin-top: 10px;
+			width: 100%;
+			height: 60px;
+			text-align: left;
+			float: left;
+			font-size: 1.2em;
+			line-height: 60px;
+			border-top: 1px #eee solid;
+			border-bottom: 1px #eee solid;
+		}
+
+		.swiper-slide {
+			width: 100%;
+			height: 300px;
+		}
+
+		.box .img img {
+			margin-left: 20px;
+			margin-right: 20px;
+			vertical-align: middle;
+			margin-top: 5px;
+			width: 50px;
+			height: 50px;
+			float: left;
+		}
+
+		.box span {
+			display: block;
+		}
+
+		.help {
+			color: #666;
+			width: 100%;
+			clear: both;
+			height: 30px;
+			text-align: center;
+			display: block;
+			position: absolute;
+			bottom: 20px;
+		}
+
+		.adv {
+			width: 100%;
+		}
+
+		.adv img {
+			height: 300px;
+		}
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;">
+		<span style="text-align: center;">订购</span>
+	</header>
+	<div class="page__bd content">
+		<div class="adv">
+			<div class="swiper-container" onclick="pro()">
+				<div class="swiper-wrapper"></div>
 			</div>
 		</div>
-	</body>
-	<script id="interpolationtmpl" type="text/x-dot-template">
-		{{~it:value:index}}
-		<div class="swiper-slide"><img src="../image/default.jpg" class="pic" data-original="http://www.d-shang.com/{{=value.image}}"></div>
-		{{~}}
-	</script>
-	<script type="text/javascript" src="../script/api.js"></script>
-	<script type="text/javascript" src="../script/weui.min.js"></script>
-	<script type="text/javascript" src="../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../script/wolf.js"></script>
-	<script type="text/javascript" src="../script/doT.min.js"></script>
-	<script type="text/javascript" src="../script/zepto.picLazyLoad.min.js"></script>
-	<script src="../script/swiper-3.3.1.min.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		var NODE;
-		var URL;
-		apiready = function() {
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
+		<div class="box" data-nodeid="1" data-url="./buy/index.html">
+			<div class="img">
+				<img src="../image/zhanggui.png">
+			</div>
+			<span>集成吊顶产品库 /VIP产品</span>
+		</div>
+		<div class="box borderBottom" data-nodeid="2" data-url="./qm/index.html">
+			<div class="img">
+				<img src="../image/qiangmian1.png">
+			</div><span>集成背景·墙面</span>
+		</div>
+		<div class="box" data-nodeid="1" data-url="./factory/index.html">
+			<div class="img">
+				<img src="../image/gongcheng.png">
+			</div>
+			<span>工程定制</span>
+		</div>
+	</div>
+
+</body>
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="swiper-slide"><img src="../image/default.jpg" class="pic" data-original="http://www.d-shang.com/{{=value.image}}"></div>
+	{{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/weui.min.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/wolf.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto.picLazyLoad.min.js"></script>
+<script src="../script/swiper-3.3.1.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	var NODE;
+	var URL;
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+		setTopBar();
+		$(".box").bind("click", shows);
+
+		loadAdv();
+	};
+
+	function lunbo() {
+		var mySwiper = new Swiper('.swiper-container', {
+			autoplay: 2000,
+			loop: true,
+			height: 300
+		})
+
+	}
+
+	function shows() {
+		NODE = $(this).attr("data-nodeid");
+    URL=$(this).attr("data-url");
+		api.prompt({
+			title: '授权密码',
+			buttons: ['取消', '确定']
+		}, function(ret, err) {
+			var index = ret.buttonIndex;
+			var text = ret.text;
+			if (index == 2) {
+				sq(ret.text);
+			}
+		});
+	}
+
+	function pro() {
+		api.openWin({
+			name: 'product',
+			url: './goods/index.html'
+		});
+	}
+
+	function help() {
+		api.openWin({
+			name: 'letter',
+			url: './active/letter.html',
+			slidBackEnabled: false
+		});
+	}
+
+	function loadAdv() {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appanonymous/getadvbytype/?type=7&openid=' + OPENID
+		}, function(ret, err) {
+			//coding...
+			var d = ret.data;
+			var arrText = doT.template($("#interpolationtmpl").text());
+			$(".swiper-wrapper").html(arrText(ret.data));
+			lunbo();
+			$('.pic').picLazyLoad();
+		});
+	}
+
+	function sq(password) {
+
+
+		if (password == null || password == undefined) {
+			api.toast({
+				msg: '授权密码不能为空',
+				duration: 1000,
+				location: 'middle'
 			});
-			setTopBar();
-			$(".box").bind("click", shows);
-			$(".cancle").bind("click", function() {
-				$("#iosDialog1").hide();
-			})
-			loadAdv();
-		};
-		function lunbo() {
-			var mySwiper = new Swiper('.swiper-container', {
-				autoplay : 2000,
-				loop : true
-			})
-			
+			return false;
 		}
-
-		function shows() {
-			NODE = $(this).attr("data-nodeid");
-			URL = $(this).attr("data-url");
-			$("#iosDialog1").show();
-			$("#password").focus();
-		}
-
-		function pro() {
-			api.openWin({
-				name : 'product',
-				url : './goods/index.html'
-			});
-		}
-
-		function help() {
-			api.openWin({
-				name : 'letter',
-				url : './active/letter.html',
-				slidBackEnabled : false
-			});
-		}
-
-		function loadAdv() {
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?appanonymous/getadvbytype/?type=7&openid=' + OPENID
-			}, function(ret, err) {
-				//coding...
-				var d = ret.data;
-				var arrText = doT.template($("#interpolationtmpl").text());
-				$(".swiper-wrapper").html(arrText(ret.data));
-				lunbo();
-				$('.pic').picLazyLoad();
-			});
-		}
-
-		function sq() {
-			$("#iosDialog1").hide();
-			var password = $("#password").val();
-			if (password == null || password == undefined) {
-				weui.toast("不能为空", {
-					duration : 3000,
-					className : "bears"
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appbuy/authorize/?openid=' + OPENID,
+			method: "post",
+			data: {
+				values: {
+					"password": password,
+					"node": NODE
+				}
+			}
+		}, function(ret, err) {
+			if (ret.status) {
+				jump();
+			} else {
+				api.toast({
+					msg: ret.message,
+					duration: 2000,
+					location: 'middle'
 				});
 				return false;
 			}
-			var node = $("#node").val();
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?appbuy/authorize/?openid=' + OPENID,
-				method : "post",
-				data : {
-					values : {
-						"password" : password,
-						"node" : NODE
-					}
-				}
-			}, function(ret, err) {
-				if (ret.status) {
-					jump(node);
-				} else {
-					weui.toast(ret.message, {
-						duration : 3000,
-						className : "bears"
-					});
-				}
+		});
+	}
+
+	function jump() {
+
+		var num=Math.round(Math.random()*10);
+		if (NODE == 1) {
+			api.openWin({
+				name: 'buy'+num,
+				url: URL,
+				slidBackEnabled: false
 			});
 		}
-
-		function jump(node) {
-			if (NODE == 1) {
-				api.openWin({
-					name : 'buy',
-					url : URL,
-					slidBackEnabled : false
-				});
-			} else
-				(NODE == 2)
-			{
-				api.openWin({
-					name : 'qm',
-					url : URL,
-					slidBackEnabled : false
-				});
-			}
+		if (NODE == 2) {
+			api.openWin({
+				name: 'qm'+num,
+				url: URL,
+				slidBackEnabled: false
+			});
 		}
-	</script>
+	}
+</script>
+
 </html>
