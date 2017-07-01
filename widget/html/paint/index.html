@@ -42,7 +42,8 @@
 	</style>
 	<body>
 		<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
-			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">选择分类</span>
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" class="title">画</span>
+			<span  id="title" style="float:right;margin-right:10px;">分类</span>
 		</header>
 		<div class="page__bd content">
 			<div class="picarr" ></div>
@@ -110,7 +111,7 @@
 					});
 				});
 			}
-			
+
     	   function jump(id,cid){
                 api.openWin({
                     name: "bigImg",
@@ -127,7 +128,7 @@
 			function setTitle(pickerArr, cid) {
 				for (var i = 0; i < pickerArr.length; i++) {
 					if (pickerArr[i].value == cid) {
-						$("#title").html(pickerArr[i].label);
+						$(".title").html(pickerArr[i].label);
 						return;
 					}
 				}

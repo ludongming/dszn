@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>精选</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css">
+	</head>
+	<body>
+	<header style="position: fixed;">
+<i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i>
+    <span style="text-align: center;">客服</span>
+
+
+    </header>
+		<div class="page__bd content">
+
+
+
+		<div id="main">
+
+		</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/wolf.js"></script>
+
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+      //创建美洽
+      var mq = api.require('meiQia');
+      //配置初始化美洽需要的appkey
+      var param = {
+          appkey: "9666f62b33176a6259291c3d10d2fb4a"
+      };
+      //初始化美洽
+      mq.initMeiQia(param, function(ret, err) {
+          if (ret) {
+              //初始化成功
+              mq.show();
+
+              alert(JSON.stringify(ret));
+          } else {
+              //初始化失败
+              alert(JSON.stringify(err));
+          }
+      })
+		};
+
+
+	</script>
+</html>

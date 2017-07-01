@@ -1,0 +1,203 @@
+body {
+  background: #f5f5f5;
+}
+
+.content {
+  min-height: 400px;
+}
+
+.tit a {
+  color: #000;
+  display: inline-block;
+  text-align: center;
+  font-size: 0.8em;
+  width: 70px;
+}
+
+.tit .active span {
+  border-bottom-width: 10px;
+  display: inline-block;
+  border-bottom: 1px #000 solid;
+}
+
+.list {
+  background: #fff;
+  width: 100%;
+  border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 10px;
+}
+
+.list .info {
+  height: 50px;
+}
+
+.list .info .head img {
+  margin-top: 4px;
+  float: left;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.list .info .username {
+  margin-left: 10px;
+  margin-top: 15px;
+  float: left;
+  color: #000;
+}
+
+.list .info .pub_time {
+  float: right;
+  margin-top: 15px;
+  margin-right: 10px;
+  color: #666;
+}
+
+.list .image {
+  margin-top: 10px;
+  width: 100%;
+  clear: both;
+  max-height: 300px;
+  overflow-y: hidden;
+}
+
+.list .message {
+  width: 95%;
+  padding-left: 10px;
+}
+
+.list .tip {
+  margin-top: 5px;
+  height: 25px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.list .tip .tool {
+  float: right;
+  width: 60px;
+  margin-right: 10px;
+}
+
+.zan {
+  font-size: 0.8em;
+  color: #777;
+  margin-right: 3px;
+}
+
+.dingwei {
+  float: left;
+  margin-left: 10px;
+}
+
+.reply {
+  background: #f1f1f1;
+  display: none;
+}
+
+.reply .text {
+  width: 80%;
+  float: left;
+}
+
+.input_text {
+  margin-left: 10px;
+  width: 90%;
+  margin-top: 5px;
+  height: 30px;
+  border: none;
+  background: #fff;
+}
+
+.replybtn {
+  text-align: center;
+  border-radius: 4px;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 5px;
+  border: 1px #ccc solid;
+  background: #fff;
+  color: #666;
+}
+
+.comment {
+  color: #746e7c;
+  width: 100%;
+  clear: both;
+  font-size: 0.9em;
+  max-height: 200px;
+  overflow-y: hidden;
+}
+
+.commentlist {
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 4px;
+  background: #f5f5f5;
+  padding: 4px;
+  font-size: 0.9em;
+  color: #989898;
+  margin-bottom: 10px;
+}
+
+.pub_time {
+  font-size: 0.8em;
+  color: #ccc;
+}
+
+.qd_left {
+  width: 49%;
+  float: left;
+}
+
+.qd_right {
+  text-align: center;
+  width: 49%;
+  height: 80px;
+  margin-top: 10px;
+  background: #fff;
+  color: #000;
+  float: left;
+}
+
+.qd {
+  width: 100%;
+  height: 150px;
+  line-height: 50px;
+  color: #fff;
+  font-size: 1.2em;
+  background-image: url(../image/mrqd1.png);
+  position: relative;
+  text-align: center;
+}
+
+.jingxuan {
+  width: 100%;
+  height: 150px;
+  line-height: 50px;
+  color: #fff;
+  font-size: 1.2em;
+  background-image: url(../image/jingxuan.png);
+  position: relative;
+  text-align: center;
+}
+
+.toolimage {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.rq {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  font-size: 1.3em;
+  font-weight: 700;
+  background: #fff;
+  color: #000;
+}

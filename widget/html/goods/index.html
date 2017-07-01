@@ -84,9 +84,9 @@
 	<header style="position: fixed;">
 <i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i>
     <span style="text-align: center;">新品</span>
-    	    <img src="../../image/shaixuan.png" ontouchend="fenlei()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
+    	    <span ontouchend="fenlei()" style="margin-right:10px;float:right;">分类</span>
 
-    
+
     </header>
 		<div class="page__bd content">
 
@@ -144,15 +144,15 @@
 			loadAdv();
 			loadData();
 		};
-		
+
 		function fenlei(){
 		   api.openWin({
 	           name: 'fenlei',
 	           url: './fenlei.html'
            });
 		}
-		
-		
+
+
 		function search() {
 			index = 0;
 			$(".guanggao").html("搜索结果:");

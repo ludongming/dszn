@@ -85,6 +85,7 @@
 			}
 			.audio {
 				width: 100%;
+				display: none;
 			}
 			.arm {
 				margin-left: 20px;
@@ -186,7 +187,7 @@
 				alert(ret.message);
 			});
 		}
-		
+
 		function loadVoice(){
 		  api.ajax({
 	          url:'http://www.d-shang.com/index.php?appvoice/getvoicebynid/?nid='+CONID+'&openid='+OPENID
@@ -199,13 +200,13 @@
               $(".time").html(time);
               $(".author").html(d.real_name);
              }
-          
+
           });
-		
+
 		}
-		
+
 		function parseTime(totaltime){
-		
+
 		var min = parseInt(totaltime / 60);
 				var time;
 				var sec;
@@ -292,7 +293,7 @@
 							alert("此产品还未有语音介绍哦，等待录制中");
 						}
 					});
-				} 
+				}
 			});
 		}
 

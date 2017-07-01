@@ -106,7 +106,7 @@
 				</div>
 				<div class="weui-cell__bd weui-cell_primary">
 					<p>
-						品牌售后服务
+						专属客服
 					</p>
 				</div> <span class="weui-cell__ft"></span> </a>
 				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="erp();">
@@ -125,7 +125,7 @@
 						物流查询
 					</p>
 				</div> <span class="weui-cell__ft"></span> </a>
-			
+
 			</div>
 			<div class="weui-cells">
 				<a class="weui-cell weui-cell_access" href="javascript:;" onclick="about();">
@@ -177,7 +177,7 @@
 				url : './cart.html'
 			});
 		}
-		
+
 		function erp(){
 		 api.openWin({
 				name : 'erp',
@@ -212,7 +212,7 @@
 				url : './address.html'
 			});
 		}
-		
+
 		function faq() {
 			api.openWin({
 				name : 'faq',
@@ -226,24 +226,24 @@
 				url : './about.html'
 			});
 		}
-		
+
 		function wuliu(){
           api.openWin({
               name: 'wuliu',
               url: './wuliu.html'
           });
         }
-		
+
 		function shouhou(){
 		  api.openWin({
-	          name: 'shouhou',
-	          url: './shouhou/index.html'
+	          name: 'meiqia',
+	          url: './meiqia/index.html'
           });
 		}
-		
-		
 
-		
+
+
+
 		function loadData() {
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
@@ -280,7 +280,7 @@
 			});
 		}
 
-		
+
 
 		//第一步授权登录
 		function wxlogin() {
@@ -321,7 +321,7 @@
 					//alert(JSON.stringify(ret));
 					bindUser(ret);
 				} else {
-				
+
 				}
 			});
 		}
