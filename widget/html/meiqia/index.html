@@ -1,65 +1,97 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>精选</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
-		<link rel="stylesheet" href="../../css/header.css">
-	</head>
-	<body>
-	<header style="position: fixed;">
-<i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i>
-    <span style="text-align: center;">客服</span>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>精选</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+    <link rel="stylesheet" href="../../css/header.css">
+</head>
+
+<body>
+    <header style="position: fixed;">
+        <i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i>
+        <span style="text-align: center;">客服</span>
 
 
     </header>
-		<div class="page__bd content">
+    <div class="page__bd content">
 
 
 
-		<div id="main">
+        <div id="main">
 
-		</div>
-		</div>
-	</body>
+        </div>
+    </div>
+</body>
 
-	<script type="text/javascript" src="../../script/api.js"></script>
-		<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
 
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../../script/doT.min.js"></script>
-	<script type="text/javascript" src="../../script/weui.min.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		apiready = function() {
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			});
-			setTopBar();
-      //创建美洽
-      var mq = api.require('meiQia');
-      //配置初始化美洽需要的appkey
-      var param = {
-          appkey: "9666f62b33176a6259291c3d10d2fb4a"
-      };
-      //初始化美洽
-      mq.initMeiQia(param, function(ret, err) {
-          if (ret) {
-              //初始化成功
-              mq.show();
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript">
+    var OPENID;
+    apiready = function() {
+        OPENID = api.getPrefs({
+            sync: true,
+            key: 'openid'
+        });
+        var params = api.pageParam;
+        setTopBar();
+    var user=JSON.parse(params.user);
+        meiQia(user);
+    };
 
-              alert(JSON.stringify(ret));
-          } else {
-              //初始化失败
-              alert(JSON.stringify(err));
-          }
-      })
-		};
+    function meiQia(user) {
+        //创建美洽
+        var mq = api.require('meiQia');
+        //配置初始化美洽需要的appkey
+        var param = {
+            appkey: "9666f62b33176a6259291c3d10d2fb4a"
+        };
+        //初始化美洽
+        mq.initMeiQia(param, function(ret, err) {
+            if (ret) {
+                getUserInfo(user);
+            } else {
+                //初始化失败
+                alert(JSON.stringify(err));
+            }
+        })
+
+    }
 
 
-	</script>
+    function getUserInfo(user) {
+
+        var mq = api.require('meiQia');
+        //设置用户信息
+        var infoParam = {
+            name: user.real_name,
+            tel: user.mobile_phone,
+            comment: user.real_name,
+            address:user.area,
+            avatar: user.weixin.headimgurl,
+            tags: ["付费用户", "使用疑问"]
+        };
+        mq.setClientInfo(infoParam);
+        bindClient(user.uid);
+    }
+
+    function bindClient(uid) {
+        var mq = api.require('meiQia');
+        //设置自定义用户Id
+        var customizedIdParam = {
+            id: uid,
+        };
+        mq.setLoginCustomizedId(customizedIdParam);
+        mq.show();
+    }
+</script>
+
 </html>

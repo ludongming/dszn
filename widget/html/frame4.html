@@ -151,6 +151,7 @@
 		var OPENID;
 		var APIKEY = "wx062395c72d4d0732";
 		var APISECRET = "7c0dfeaddf169f74af09a522af587fbb";
+		var USERDATA;
 		apiready = function() {
 			OPENID = api.getPrefs({
 				sync : true,
@@ -237,7 +238,10 @@
 		function shouhou(){
 		  api.openWin({
 	          name: 'meiqia',
-	          url: './meiqia/index.html'
+	          url: './meiqia/index.html',
+						pageParam:{
+							user:USERDATA
+						}
           });
 		}
 
@@ -249,6 +253,7 @@
 				url : 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
 			}, function(ret, err) {
 				var user = ret.data;
+				USERDATA=JSON.stringify(user);
 				var weixin = user.weixin;
 				if (weixin != false) {
 					$("#weixin").html("已绑定");

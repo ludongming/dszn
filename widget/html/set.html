@@ -1,72 +1,154 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/header.css"/>
-		<style>
-			body {
-			}
-			.btn{color:#000;background:#f1f1f1;display:block;width:100%;height:50px;text-align:center;line-height:50px;border-top:1px #eee solid;border-bottom:1px #eee solid;margin-bottom:10px;}
-		.loginout{background:#e84c3d!important;color:#fff!important;}
-		.banben{width:100%;height:100px;line-height:100px;text-align:center;}
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;">
-			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back" /></i><span style="text-align: center;">设置</span>
-		</header>
-		<div class="page__bd content">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/header.css" />
+	<style>
+		body {}
+
+		.btn {
+			color: #000;
+			background: #f1f1f1;
+			display: block;
+			width: 100%;
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			border-top: 1px #eee solid;
+			border-bottom: 1px #eee solid;
+			margin-bottom: 10px;
+		}
+
+		.loginout {
+			background: #e84c3d!important;
+			color: #fff!important;
+		}
+
+		.banben {
+			width: 100%;
+			height: 100px;
+			line-height: 100px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;">
+		<i class="backBtn" ontouchend="goback()"><img src="../image/back.png" class="back" /></i><span style="text-align: center;">设置</span>
+	</header>
+	<div class="page__bd content">
 		<div class="banben">
-				     <span class="version"></span>
+			<span class="version"></span>
 
 		</div>
-		
-			<a href="javascript:;" class="btn" id="clean" onclick="cleancache()">清理缓存</a>
-			<a href="javascript:;" class="btn loginout" onclick="loginout()">退出登录</a>
+
+		<input hidden="hidden" id="btn" name="btn1" type="radio" value="off" checked="checked" />
+
+		<div class="weui-cells weui-cells_form">
+			<div class="weui-cell weui-cell_switch">
+				<div class="weui-cell__bd">指纹授权</div>
+				<div class="weui-cell__ft">
+					<input class="weui-switch" type="checkbox" id="button1" name="button1"/>
+
+				</div>
+			</div>
 		</div>
-	</body>
-	<script type="text/javascript" src="../script/api.js"></script>
-	<script type="text/javascript" src="../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../script/wolf.js"></script>
-	<script type="text/javascript" src="../script/wolfcache.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		apiready = function() {
-			setTopBar();
-				var appVersion = api.appVersion;
-			$(".version").html("软件版本:" + appVersion);
-		};
-		function cleancache() {
-			$("#clean").html("<i class=\"weui-loading\"></i>");
-			//清理分类缓存
-			cleanDIYCache("catecache");
-			api.clearCache(function() {
-				api.toast({
-					msg : '清除完成'
+		<div class="weui-cells__tips">支持IOS8.0以上的操作系统，尚未支持Android</div>
+
+
+		<a href="javascript:;" class="btn" id="clean" style="margin-top:20px;" onclick="cleancache()">清理缓存</a>
+		<a href="javascript:;" class="btn loginout" onclick="loginout()">退出登录</a>
+	</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/wolf.js"></script>
+<script type="text/javascript" src="../script/wolfcache.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		var appVersion = api.appVersion;
+		$(".version").html("软件版本:" + appVersion);
+
+		var isChecked =  api.getPrefs({
+					sync : true,
+					key : 'fingerPrint'
 				});
-				$("#clean").html("清理缓存");
-			});
-			
-			
+
+		if (isChecked == 1) {
+			   $("#btn").val("on");
+			$("#button1").attr("checked", "checked");
+		}else{
+			   $("#btn").val("off");
 		}
 
-		function goback() {
-			api.closeWin({
-			});
-		}
 
-		function loginout() {
-			api.removePrefs({
-				key : 'openid'
+		$("#button1").bind("click", function() {
+
+
+			if($("#btn").val()=="off"){
+
+
+   api.toast({
+       msg: '已开启指纹识别',
+       duration: 2000,
+       location: 'bottom'
+   });
+
+		                         $("#btn").val("on");
+														 api.setPrefs({
+															 key: 'fingerPrint',
+															 value:1
+														 });
+
+		                     }else{
+
+		                         $("#btn").val("off");
+														 api.setPrefs({
+															 key: 'fingerPrint',
+															 value: 0
+														 });
+		                     }
+		});
+
+	};
+
+
+
+	function cleancache() {
+		$("#clean").html("<i class=\"weui-loading\"></i>");
+		//清理分类缓存
+		cleanDIYCache("catecache");
+		api.clearCache(function() {
+			api.toast({
+				msg: '清除完成'
 			});
-			api.closeWidget({
-				silent : true
-			});
-		}
-	</script>
+			$("#clean").html("清理缓存");
+		});
+
+
+	}
+
+	function goback() {
+		api.closeWin({});
+	}
+
+	function loginout() {
+		api.removePrefs({
+			key: 'openid'
+		});
+		api.closeWidget({
+			silent: true
+		});
+	}
+</script>
+
 </html>

@@ -129,6 +129,7 @@
 			sync: true,
 			key: 'openid'
 		});
+
 		setTopBar();
 		$(".box").bind("click", shows);
 
@@ -144,9 +145,61 @@
 
 	}
 
+
+
+
+
 	function shows() {
 		NODE = $(this).attr("data-nodeid");
-    URL=$(this).attr("data-url");
+		URL = $(this).attr("data-url");
+
+	var	isFinger=  api.getPrefs({
+					sync : true,
+					key : 'fingerPrint'
+				});
+
+		var OS = api.systemType;
+		if (OS == "ios"&&isFinger==1) {
+			var touchID = api.require('touchID');
+
+			touchID.verify(
+				function(ret, err) {
+					if (ret.status) {
+						fingerPrint();
+					} else {
+						if (ret.code == 0) {
+							setPassword();
+						} else if (ret.code == 1) {
+							setPassword();
+
+						} else if (ret.code == 2) {
+							api.alert({
+								msg: "验证三次失败,请用密码输入"
+							});
+							setPassword();
+
+						} else if (ret.code == 3) {
+							setPassword();
+
+						} else {
+							api.alert({
+								msg: "验证失败，未知错误"
+							});
+						shows();
+
+						}
+					}
+				});
+		} else {
+			setPassword();
+		}
+	}
+
+
+
+	function setPassword() {
+
+
 		api.prompt({
 			title: '授权密码',
 			buttons: ['取消', '确定']
@@ -157,6 +210,7 @@
 				sq(ret.text);
 			}
 		});
+
 	}
 
 	function pro() {
@@ -198,6 +252,35 @@
 			});
 			return false;
 		}
+		checkQX(password);
+	}
+
+
+	function fingerPrint() {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appbuy/fingerprint/?openid=' + OPENID,
+			method: "post",
+			data: {
+				values: {
+					"node": NODE
+				}
+			}
+		}, function(ret, err) {
+			if (ret.status) {
+				jump();
+			} else {
+				api.toast({
+					msg: ret.message,
+					duration: 2000,
+					location: 'middle'
+				});
+				return false;
+			}
+		});
+	}
+
+
+	function checkQX(password) {
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?appbuy/authorize/?openid=' + OPENID,
 			method: "post",
@@ -223,17 +306,17 @@
 
 	function jump() {
 
-		var num=Math.round(Math.random()*10);
+		var num = Math.round(Math.random() * 10);
 		if (NODE == 1) {
 			api.openWin({
-				name: 'buy'+num,
+				name: 'buy' + num,
 				url: URL,
 				slidBackEnabled: false
 			});
 		}
 		if (NODE == 2) {
 			api.openWin({
-				name: 'qm'+num,
+				name: 'qm' + num,
 				url: URL,
 				slidBackEnabled: false
 			});
