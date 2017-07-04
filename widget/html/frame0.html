@@ -68,10 +68,11 @@
 			<div class="dingwei">
 				<img src="../image/dingwei.png" style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</a>
 		</div>
-		<div class="tool">
-		<span class="zan zan_{{=value.id}}">{{?value.flower>0}} {{=value.flower}} {{?}}</span>
+		<div class="tool" style="position:relative;">
+		<span class="zan zan_{{=value.id}}" style="">{{?value.flower>0}} {{=value.flower}} {{?}}</span>
 
 				<img src="../image/zan{{=value.isflower}}.png" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
+
 			</div>
 		</div>
 		<div class="reply pl{{=value.id}}">
@@ -196,8 +197,16 @@
 			}
 
 			if (ret.eventType == "longPress") {
-				var img=photoBrowser.getI
-				saveImage(image);
+				photoBrowser.getImage({
+					index: 0
+				}, function(ret, err) {
+					if (ret) {
+						saveImage(ret.path);
+					} else {
+						alert(JSON.stringify(err));
+					}
+				});
+
 			}
 
 		});

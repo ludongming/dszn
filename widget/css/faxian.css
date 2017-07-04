@@ -190,6 +190,8 @@ body {
   width: 25px;
   height: 25px;
   vertical-align: middle;
+  position: absolute;
+  top:-3px;
 }
 
 .rq {

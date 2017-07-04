@@ -26,7 +26,7 @@
     </div>
     <script id="interpolationtmpl" type="text/x-dot-template">
         {{~it:value:index}}
-        <div class="list" style="height:330px;">
+        <div class="list">
             <div class="image">
             {{?index<3}}
                <img src="../../image/rank{{=index+1}}.png" style="position:absolute;width:40px;left:10px;top:5px">
@@ -35,10 +35,10 @@
                <span class="rank">{{=index+1}}</span>
                {{?}}
                 <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}">
-                <span class="title">{{=value.title}}</span>
 
             </div>
-<div class="tool" style="height:30px;">
+<div class="tool" style="height:24px;">
+<span style="position:absolute;left:10px;line-height:20px;font-size:0.9em;color:#666;top:2px;display:inline-block;">{{=value.title}}</span>
 {{? value.islove==true}}
 <span style="display:inline-block;position:absolute;width:30px;right:20px;" id="love_{{=value.nid}}" ontouchend="love({{=value.nid}})" data-status="1"><img src="../../image/love1.png" ></span>
 
@@ -47,7 +47,7 @@
 {{?}}
 </div>
 
-            <div class="tool" style="30px;">
+            <div class="tool" style="height:auto;padding-bottom:10px;">
 
 
 <div class="mingdan">
