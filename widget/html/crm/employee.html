@@ -29,6 +29,8 @@
 				width: 55px;
 				text-align: center;
 			}
+			.title{width:100%;height:30px;text-indent:1em;color:#666;background:#f5f5f5;line-height:30px;}
+
 		</style>
 	</head>
 	<body>
@@ -36,6 +38,11 @@
     <span style="text-align: center;">客户</span>
     </header>
 		<div class="page__bd content">
+
+
+						<div class="title">
+						员工权限
+						</div>
 			<div class="weui-grids">
 				<a href="javascript:;" data-url="./user.html" data-name="mingdan" class="weui-grid urlclass"> <div class="weui-grid__icon user">
 				<img src="../../image/lk1.png">
@@ -43,6 +50,18 @@
 				<p class="weui-grid__label">
 					名单
 				</p> </a>
+
+
+				<a href="javascript:;" data-url="./qrcode.html" data-name="qrcode" class="weui-grid urlclass">
+ <div class="weui-grid__icon qrcode">
+
+								<img src="../../image/lk2.png">
+
+				</div>
+				<p class="weui-grid__label">
+					转发
+				</p> </a>
+
 			  <a href="javascript:;" data-url="./add.html" data-name="addmanager" class="weui-grid urlclass"> <div class="weui-grid__icon erp">
 			  				<img src="../../image/lk4.png">
 
@@ -64,24 +83,10 @@
 				<p class="weui-grid__label">
 					个人统计
 				</p> </a>
-				<a href="javascript:;" class="weui-grid"> <div class="weui-grid__icon card">
-				
-								<img src="../../image/lk9.png">
 
-				</div>
-				<p class="weui-grid__label">
-					名片
-				</p> </a>
-				<a href="javascript:;" data-url="./stat.html"  data-name="product" class="weui-grid"> <div class="weui-grid__icon card">
-				
-								<img src="../../image/lk12.png">
 
-				</div>
-				<p class="weui-grid__label">
-					产品
-				</p> </a>
-			
-				
+
+
 			</div>
 		</div>
 	</body>
@@ -101,8 +106,8 @@
 			$(".card").bind("click", card);
 			$(".weui-grid__icon").css("marginLeft",($(".weui-grid").width()/2) -35 + "px");
 		}
-		
-	
+
+
 
 		function card() {
 			alert("暂未开放");

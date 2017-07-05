@@ -244,11 +244,12 @@
 		}
 
 		function getData() {
+			var loading=weui.loading("正在拼命加载中...")
 		  $("#main2").html("");
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?appclock/gettodayuser/?openid=' + OPENID
 			}, function(ret, err) {
-			console.log(JSON.stringify(err));
+				loading.hide();
 				var arrText = doT.template($("#interpolationtmpl").text());
 				var a=arrText(ret.data);
 			     var c= a.replace(/\/0/g,"/132");

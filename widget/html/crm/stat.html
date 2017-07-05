@@ -84,7 +84,7 @@
 				-ms-user-select: none;
 				user-select: none;
 			}
-	
+
 		</style>
 	</head>
 	<body>
@@ -102,7 +102,7 @@
 					</span>
 				</div>
 				<div class="right_main">
-					<a href="javascript:;"  class="btninfo" data-status="2"> <span class="staticon success"><i>已签约
+					<a href="javascript:;"  class="btninfo" data-status="2"> <span class="staticon success"><i>已成交
 						<br>
 						<span id="success"></span></i> </span> </a>
 				</div>
@@ -115,7 +115,7 @@
 						<span id="month"></span></i></span> </a>
 				</div>
 				<div class="right_main">
-					<a href="javascript:;"  class="btninfo" data-status="1"> <span class="staticon active"><i>活跃人数
+					<a href="javascript:;"  class="btninfo" data-status="1"> <span class="staticon active"><i>已交定金
 						<br>
 						<span id="active"></span></i></span> </a>
 				</div>
@@ -171,7 +171,7 @@
 
 	function stat() {
 		$.get("http://www.d-shang.com/index.php?appcrm/stat/?openid=" + OPENID, function(data) {
-			var d = data.data; 
+			var d = data.data;
 			$("#user").html(d.total + "人");
 			$("#month").html(d.total + "人");
 			$("#success").html(d.success + "人");
