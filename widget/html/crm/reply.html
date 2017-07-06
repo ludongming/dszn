@@ -128,6 +128,9 @@
 			<button class="weui-btn weui-btn_mini weui-btn_default" data="1">
 					交定金
 				</button>
+				<button class=" weui-btn_mini weui-btn_default" ontouchend="sms()">
+						短信
+					</button>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../script/api.js"></script>
@@ -174,7 +177,6 @@
 		}
 
 		function delUserById() {
-			console.log(nid,OPENID);
 			api.ajax({
 				url: 'http://www.d-shang.com/index.php?appcrm/removecrmbyidanduid/?id=' + nid + '&openid=' + OPENID,
 				method: 'get'
@@ -214,6 +216,27 @@
 
 		function goback() {
 			api.closeWin({});
+		}
+
+		function sms(){
+			var mobile=	$("#userinfo").html();
+			var con=$(".recordtext").val();
+			api.sms({
+			    numbers: [mobile],
+			    text:con
+			}, function(ret, err) {
+			    if (ret && ret.status) {
+			        //已发送
+			    } else {
+			        //发送失败
+			    }
+			});
+
+
+  if(con!=""){
+		record(0);
+	}
+
 		}
 
 		function record(status) {

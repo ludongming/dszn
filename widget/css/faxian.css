@@ -170,10 +170,13 @@ body {
   line-height: 50px;
   color: #fff;
   font-size: 1.2em;
-  background-image: url(../image/mrqd1.png);
+  background:#fff;
   position: relative;
   text-align: center;
+  overflow-y: hidden;
 }
+
+.qd img{width:100%;}
 
 .jingxuan {
   width: 100%;

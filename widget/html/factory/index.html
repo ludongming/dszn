@@ -126,8 +126,9 @@
 			});
 			setTopBar();
 			loadData();
+			loadAdv();
 		};
-	
+
 		function vip() {
 		   api.openWin({
 	           name: 'vip',
@@ -239,7 +240,7 @@
 		});
 		function loadAdv() {
 			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/getadv/?openid=' + OPENID
+				url : 'http://www.d-shang.com/index.php?app/getadv/?id=125&openid=' + OPENID
 			}, function(ret, err) {
 				//coding...
 				$("#adv").attr("src", "http://www.d-shang.com/" + ret.data.image);
@@ -270,6 +271,6 @@
 			});
 		}
 
-		
+
 	</script>
 </html>

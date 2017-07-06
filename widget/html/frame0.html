@@ -30,6 +30,7 @@
 				<div class="swiper-slide swiper-no-swiping">
 					<div class="recommendmain">
 						<div class="qd" onclick="clock()">
+							<img src="../mrqd1.png" id="qiandao">
 							<div style="width:80px;height:90px;line-height:40px;text-align:center;right:10%;top:20%;position:absolute;background:#000;opacity: 0.7;">
 								<span style="font-size:0.9em;">每日签到</span>
 								<br>
@@ -120,6 +121,7 @@
 			key: 'openid'
 		});
 		rq();
+		loadAdv();
 		setRecommendDrop();
 		setAllDrop();
 		mySwiper = new Swiper('.swiper-container', {
@@ -127,7 +129,17 @@
 		})
 	};
 
+	function loadAdv() {
+		api.ajax({
+			url : 'http://www.d-shang.com/index.php?app/getadv/?id=123&openid=' + OPENID
+		}, function(ret, err) {
+			//coding...
+			$("#qiandao").attr("src", "http://www.d-shang.com/" + ret.data.image);
+		});
+	}
+
 	function rq() {
+		loadAdv();
 		var myDate = new Date();
 		var month = myDate.getMonth() + 1;
 		var day = myDate.getDate();
