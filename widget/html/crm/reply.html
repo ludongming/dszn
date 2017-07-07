@@ -64,12 +64,16 @@
 		}
 
 		.tools {
+			background:#fff;
 			position: absolute;
-			bottom: 10px;
-			height: 20%;
+			height: 40px;
+			bottom:0px;
 			width: 100%;
-			padding-left: 10px;
+				border-top:1px #e6e6e6 solid;
 		}
+		.btn{width:18%;float:left;display:inline-block;height:40px;
+			line-height: 40px;text-align: center;color:#000;font-size:0.8em;
+			border-left:1px #e6e6e6 solid;}
 
 		#deluser {
 			display: none;
@@ -116,21 +120,23 @@
 	<div class="ui-border-t replycon weui-cells weui-cells_form">
 		<textarea class="recordtext weui-textarea" placeholder="勤跟进，勤记录！请输入新的跟进记录..."></textarea>
 		<div class="tools">
-			<button class="weui-btn weui-btn_mini weui-btn_primary" style="width:100px;" data="0">
-					发送
-				</button>
-			<button class="weui-btn weui-btn_mini weui-btn_default" data="-1">
+
+		<a href="javascript:;" class="btn" data="-1">
 					失效
-				</button>
-			<button class="weui-btn weui-btn_mini weui-btn_default" data="2">
+				</a>
+		 <a href="javascript:;" class="btn" data="2">
 					已成交
-				</button>
-			<button class="weui-btn weui-btn_mini weui-btn_default" data="1">
+				</a>
+		<a href="javascript:;" class="btn" data="1">
 					交定金
-				</button>
-				<button class=" weui-btn_mini weui-btn_default" ontouchend="sms()">
+				</a>
+		<a href="javascript:;" class="btn"ontouchend="sms()">
 						短信
-					</button>
+					</a>
+
+					<a href="javascript:;" class="btn"  style="width:26%;background:#007aff;color:#fff;font-size:1em;" data="0">
+							发送
+						</a>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../script/api.js"></script>
@@ -167,7 +173,7 @@
 				buttons: ['心意已决', '容我三思']
 			}, function(ret, err) {
 				if (ret.buttonIndex == 1) {
-					   delUserById();
+					delUserById();
 				} else {
 
 				}
@@ -192,11 +198,11 @@
 
 		}
 
-		function shuaxin(){
+		function shuaxin() {
 			api.execScript({
-				name : 'mingdan', //这里root代表index.html
-				frameName : '',
-				script : 'reload();'
+				name: 'mingdan', //这里root代表index.html
+				frameName: '',
+				script: 'reload();'
 			});
 		}
 
@@ -218,24 +224,24 @@
 			api.closeWin({});
 		}
 
-		function sms(){
-			var mobile=	$("#userinfo").html();
-			var con=$(".recordtext").val();
+		function sms() {
+			var mobile = $("#userinfo").html();
+			var con = $(".recordtext").val();
 			api.sms({
-			    numbers: [mobile],
-			    text:con
+				numbers: [mobile],
+				text: con
 			}, function(ret, err) {
-			    if (ret && ret.status) {
-			        //已发送
-			    } else {
-			        //发送失败
-			    }
+				if (ret && ret.status) {
+					//已发送
+				} else {
+					//发送失败
+				}
 			});
 
 
-  if(con!=""){
-		record(0);
-	}
+			if (con != "") {
+				record(0);
+			}
 
 		}
 
