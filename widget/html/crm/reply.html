@@ -121,20 +121,20 @@
 		<textarea class="recordtext weui-textarea" placeholder="勤跟进，勤记录！请输入新的跟进记录..."></textarea>
 		<div class="tools">
 
-		<a href="javascript:;" class="btn" data="-1">
+		<a href="javascript:;" class="btn zt" data="-1">
 					失效
 				</a>
-		 <a href="javascript:;" class="btn" data="2">
+		 <a href="javascript:;" class="btn zt" data="2">
 					已成交
 				</a>
-		<a href="javascript:;" class="btn" data="1">
+		<a href="javascript:;" class="btn zt" data="1">
 					交定金
 				</a>
 		<a href="javascript:;" class="btn"ontouchend="sms()">
 						短信
 					</a>
 
-					<a href="javascript:;" class="btn"  style="width:26%;background:#007aff;color:#fff;font-size:1em;" data="0">
+					<a href="javascript:;" class="btn zt"  style="width:26%;background:#007aff;color:#fff;font-size:1em;" data="0">
 							发送
 						</a>
 		</div>
@@ -162,7 +162,7 @@
 				key: 'openid'
 			});
 			loadRecordByNid();
-			$(".weui-btn").bind("click", record);
+			$(".zt").bind("click", record);
 		}
 
 		function delUser() {
