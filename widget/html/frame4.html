@@ -289,6 +289,42 @@
 
 		//第一步授权登录
 		function wxlogin() {
+
+      var con=$("#weixin").html();
+			if(con=="已绑定"){
+
+				api.confirm({
+	     title: '你是否要解除关联？',
+	     msg: '解除后，你还可以重新绑定',
+	     buttons: ['取消', '解除关联']
+	 }, function(ret, err) {
+	     var index = ret.buttonIndex;
+			 if(index==2){
+    api.ajax({
+        url: 'http://www.d-shang.com/index.php?app/removeweixin/?openid='+OPENID,
+    },function(ret, err){
+        if (ret) {
+          $("#weixin").html("点击绑定");
+					$(".face").attr("src", "../image/default.png");
+
+        } else {
+            alert( JSON.stringify( err ) );
+        }
+    });
+
+
+
+			 }
+	 });
+
+
+			}else{
+          bindWeiXin();
+			}
+
+		}
+
+		function bindWeiXin(){
 			var wx = api.require('wx');
 			wx.auth({
 				apiKey : APIKEY
@@ -296,6 +332,7 @@
 				if (ret.status) {
 					getAccessToken(ret.code);
 				} else {
+					alert(JSON.stringify(err));
 				}
 			});
 		}
