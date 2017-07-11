@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background: #fff;
+			}
+      .name{color:#000;font-weight:700;}
+      .rq{color:#c3c3c3;font-size:0.8em;}
+      .zengjia{color:#13b019;font-weight:700;}
+      .jianshao{color:#000;font-weight:700;}
+
+		</style>
+	</head>
+
+  <body>
+    <header style="position: fixed;">
+      <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">金豆明细</span>
+    </header>
+    <div class="page__bd content">
+<div id="main"></div>
+    </div>
+
+    <script id="interpolationtmpl2" type="text/x-dot-template">
+
+    {{~it:value:index}}
+    <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p class="name">{{=value.remark}}</p>
+                        <p class="rq">{{=value.rq}}</p>
+                    </div>
+
+                    {{?value.money>0}}
+                    <div class="weui-cell__ft zengjia">+ {{=value.money}}
+                    {{??}}
+                    <div class="weui-cell__ft jianshao">{{=value.money}}
+
+                    {{?}}
+                    </div>
+                </div>
+                {{~}}
+    </script>
+  </body>
+  </html>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/weui.min.js"></script>
+  <script type="text/javascript" src="../../script/wolf.js"></script>
+  <script type="text/javascript" src="../../script/zepto.min.js"></script>
+  <script type="text/javascript" src="../../script/doT.min.js"></script>
+  <script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../../script/dropload.js"></script>
+  <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script>
+var OPENID;
+
+apiready=function(){
+setTopBar();
+  OPENID = api.getPrefs({
+    sync : true,
+    key : 'openid'
+  });
+  loadData();
+
+}
+
+function loadData(){
+  api.ajax({
+      url: 'http://www.d-shang.com/index.php?appgift/getgiftrecordbyuid/?openid='+OPENID,
+  },function(ret, err){
+      if (ret) {
+        var arrText = doT.template($("#interpolationtmpl2").text());
+        var a = arrText(ret.data);
+        $("#main").html(a);
+      } else {
+          alert( JSON.stringify( err ) );
+      }
+  });
+
+
+
+}
+</script>

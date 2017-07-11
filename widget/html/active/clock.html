@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" href="../../css/weui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" href="../../css/header.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+
+		<style>
+			body {
+				background: #fff;
+			}
+			.clock {
+				width: 100%;
+				height: 40px;
+				background: #f0f5f9;
+			}
+			.clock a {
+				float: right;
+				display: inline-block;
+				width: 25%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+			}
+			.address {
+				color: #ccc;
+			}
+			.rank {
+				display: inline-block;
+				line-height: 20px;
+				margin-left: 10px;
+				text-align: center;
+				margin-top: 20px;
+				float: left;
+				width: 20px;
+				height: 20px;
+				background: #c1c2c6;
+				color: #666;
+				margin-right: 20px;
+			}
+			.level {
+				position: absolute;
+				color: red;
+				top: -5px;
+				right: 0px;
+				font-size: 0.8em;
+			}
+			.gift {
+				position: fixed;
+				bottom: 0px;
+				height: 400px;
+				width: 100%;
+				background: #2a2627;
+				border-top: 1px #3e3a3b solid;
+				display: none;
+				opacity: 0.97;
+			}
+			.gift .tools {
+				width: 100%;
+				height: 50px;
+				position: absolute;
+				bottom: 0px;
+				line-height: 50px;
+				color: #949091;
+				border-top: 1px #3e3a3b solid;
+			}
+			.gift .topbar {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				color: #fff;
+				height: 30px;
+				font-size: 1.2em;
+			}
+			.gift a {
+				color: #fff !important;
+			}
+			#giftcon {
+				position: absolute;
+				top: 30px;
+				border-top: 1px #3e3a3b solid;
+				padding-top: 5px;
+				padding-left: 5px;
+			}
+			.gift .sendBtn {
+				background: #fe5047;
+				color: #fff;
+				text-align: center;
+				line-height: 50px;
+				float: right;
+				display: inline-block;
+				border-top: 1px #fe5047 solid;
+				width: 150px;
+				height: 50px;
+			}
+			.active {
+				display: inline-block;
+				width: 60px;
+				height: 29px;
+				text-align: center;
+				border-bottom: 1px #fff solid;
+				margin-left: 10px;
+			}
+			.box {
+				width: 24%;
+				height: 150px;
+				float: left;
+				text-align: center;
+				border: 1px #2a2627 solid;
+			}
+			.box img {
+				width: 100%;
+				height: 90px;
+			}
+			.box .boxname {
+				font-weight: 700px;
+				display: block;
+				color: #fff;
+			}
+			.box .boxmoney {
+				color: #949091;
+			}
+			.xz {
+				border: 1px #c66d73 solid;
+				background: #221e1f;
+			}
+			.money {
+				color: #c23d58;
+				font-size: 1.2em;
+				font-weight: 700
+			}
+			#main{z-index:999;}
+			.zf{font-size:0.8em;margin-left:20px;display:inline-block;width:200px;height:29px;white-space:nowrap;overflow: hidden;}
+			.footer{position: fixed;bottom:0px;height:50px;text-align: center;width:100%;background:#f2f2f2;line-height: 50px;color:#000!important;opacity: 1;}
+			.footer .nav{display: inline-block;width:30%;float:left;height:50px;}
+			.cartitle{width:100%;text-indent: 1em;}
+.parking{height:150px;}
+.swiper-slide{height:150px;}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">签到</span>
+		</header>
+		<div class="page__bd content">
+			<div class="clock">
+				<a style="background: #000;color: #fff;" href="javascript:;" ontouchend="bean()">
+<img src="../../image/jindou.png" style="width:25px;vertical-align:middle">
+					我的金豆</a>
+				<a style="background: #f03c57;color: #fff;" href="javascript:;" ontouchend="clock()">打卡签到</a>
+				<a style="background: #10AEFF;color: #fff;" href="javascript:;" ontouchend="car()">
+					<img src="../../image/car.png" style="width:25px;vertical-align:middle">
+
+					4S店</a>
+				<a style="background: #27ae61;color: #fff;" href="javascript:;" ontouchend="guize()">礼物规则</a>
+			</div>
+
+<div class="parking">
+	<div class="swiper-container">
+	  <div class="swiper-wrapper">
+	  </div>
+	</div>
+</div>
+
+			<div id="main"></div>
+			<div id="main2"></div>
+			<div class="gift">
+				<div class="topbar">
+					<a href="javascript:;" class="nav active">礼物</a>
+					<span class="zf">送给 <span id="zfname"></span></span>
+
+					<a href="javascript:;" class="nav" ontouchend="closeGift()" style="float:right;margin-right:10px;">X</a>
+
+				</div>
+				<div id="giftcon"></div>
+				<div class="tools">
+					<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金币</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="weui-cells__title">今日签到</div>
+		{{~it:value:index}}
+		<div class="weui-cell">
+		<div class="weui-cell__hd" style="position:relative;">
+		{{?value.car==0}}
+		<div class="zb"><img src="../../image/park.png" style="top:-10px;position:absolute;left:240px;width:80px;height:80px;"></div>
+{{??}}
+<div class="zb"><img src="../../image/park.png"  class="pic" data-original="http://www.d-shang.com/{{=value.carinfo.image}}" style="top:-10px;position:absolute;left:240px;width:80px;height:80px;">
+</div>
+
+{{?}}
+
+		{{?index
+		<3}} <img src="../../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+		{{??}}
+		<span class="rank">{{=index+1}}</span> {{?}}
+		<img src="../../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block">
+		<span class="level" id="level{{=value.id}}">
+		{{?value.flower>0}} x{{=value.flower}}{{?}}</span>
+		</div>
+		<div class="weui-cell__bd">
+		<p style="display:inline-block;width:60px;height:20px;overflow:hidden;word-break:none;">{{=value.real_name}}	</p>
+		<p class="address">{{=value.address}}</p>
+
+
+		</div>
+		<div class="weui-cell__ft">
+		<p id="flower{{=value.id}}">
+
+		<img src="../../image/songli.png" style="width:25px;vertical-align: middle" ontouchend="gift({{=value.uid}},'{{=value.real_name}}')">
+		</p>
+		<p style="font-size:0.8em;">{{=value.rq}}</p>
+		</div>
+		</div>
+		{{~}}
+	</script>
+	<script id="interpolationtmpl2" type="text/x-dot-template">
+		<div class="weui-cells__title">连续签到前100排名 <span style="float:right">连续签到/总签到</span></div>
+		{{~it:value:index}}
+		<div class="weui-cell">
+		<div class="weui-cell__hd">
+		{{?index
+		<3}} <img src="../../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+		{{??}}
+		<span class="rank">{{=index+1}}</span> {{?}}
+		<img src="../../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block"></div>
+		<div class="weui-cell__bd">
+		<p>{{=value.real_name}}</p>
+		<p class="address">{{=value.address}}</p>
+		</div>
+		<div class="weui-cell__ft">
+		<p style="font-size:0.8em;">{{?value.flower>0}}<img src="../../image/flower2.png" style="width:25px;vertical-align: middle">x{{=value.flower}}{{?}}</p>
+		<span style="font-size:0.8em;">{{=value.lx}}/{{=value.days}}</span></div>
+		</div>
+		{{~}}
+	</script>
+	<script id="giftlist" type="text/x-dot-template">
+		{{~it:value:index}}
+		<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" ontouchend="xuanzhong({{=value.id}})">
+		<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
+		<span class="boxname">{{=value.name}}</span>
+		<span class="boxmoney">{{=value.money}}金币</span>
+		</div>
+		{{~}}
+	</script>
+
+
+	<script id="parking" type="text/x-dot-template">
+{{~it:value:index}}
+<div class="swiper-slide" style="z-index:-999!important">
+<div class="carimg">
+<img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}"></div>
+<div class="cartitle">{{=value.real_name}}<span style="font-size:0.8em;color:#9a4505">({{=value.address}})</span> <span style="color:#666">开着 {{=value.name}} 来了</span></div>
+
+</div>
+{{~}}
+</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../script/dropload.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var ADDRESS;
+		var TOUID;//赠送礼物对象
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			loadGift();
+			//载入汽车
+			getLastCar();
+			//载入当前金额
+			getUserInfo();
+			getData();
+			addlocation();
+			api.setRefreshHeaderInfo({
+				loadingImg : 'widget://image/refresh.png',
+				bgColor : '#ccc',
+				textColor : '#fff',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...'
+			}, function(ret, err) {
+				getData();
+			});
+		};
+
+			function lunbo() {
+				var mySwiper = new Swiper('.swiper-container', {
+					autoplay: 1000,
+					loop: true,
+					direction : 'horizontal'
+									})
+
+			}
+
+
+		function send() {
+			var id = $(".xz").attr("data-id");
+			var con=$("#zfname").html()+" 将收到你的礼物";
+			api.confirm({
+				title : '确认赠送',
+				msg : con,
+				buttons : ['取消', '确定']
+			}, function(ret, err) {
+				if (ret.buttonIndex == 2) {
+					api.ajax({
+						url : 'http://www.d-shang.com/index.php?appgift/buygift/?openid=' + OPENID,
+						method : 'post',
+						data : {
+							values : {
+								giftid : id,
+								touid :TOUID
+							}
+						}
+					}, function(ret, err) {
+						if (ret.status) {
+								getUserInfo();
+							alert(ret.message);
+						} else {
+							alert(ret.message);
+						}
+					});
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+
+function getLastCar(){
+
+  api.ajax({
+      url: 'http://www.d-shang.com/index.php?appgift/getlastcar/?openid='+OPENID,
+  },function(ret, err){
+      if (ret) {
+				var arrText = doT.template($("#parking").text());
+				var a = arrText(ret.data);
+				$(".swiper-wrapper").html(a);
+				$('.pic').picLazyLoad();
+				lunbo();
+      } else {
+          alert( JSON.stringify( err ) );
+      }
+  });
+
+
+}
+
+		function getUserInfo(){
+
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+			}, function(ret, err) {
+				var user = ret.data;
+				var money=Math.round(user.coupons);
+			   $(".money").html(money);
+			});
+		}
+
+		function xuanzhong(id) {
+			var arr = $(".box");
+			arr.each(function() {
+				$(this).removeClass("xz");
+			})
+			$("#box_" + id).addClass("xz");
+		}
+
+		function gift(uid, name) {
+			TOUID=uid;
+			$("#zfname").html(name);
+			$(".gift").show();
+		}
+
+		function loadGift() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appgift/getallgift/?openid=' + OPENID,
+			}, function(ret, err) {
+				if (ret) {
+					var arrText = doT.template($("#giftlist").text());
+					var a = arrText(ret.data);
+					$("#giftcon").html(a);
+					$('.pic').picLazyLoad();
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function closeGift() {
+			$(".gift").hide();
+		}
+
+		function guize() {
+			api.openWin({
+				name : 'content',
+				url : '../content.html',
+				pageParam : {
+					id : 37748
+				}
+			});
+		}
+
+		function addFlower(uid, id) {
+			var con = "<img src=\"../../image/flower1.png\" style=\"width:25px;vertical-align: middle\">";
+			$("#flower" + id).html(con);
+			var num = $("#level" + id).html();
+			num = num.match(/\d+/);
+			num = num == null ? 0 : num;
+			num = parseInt(num) + 1;
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/addflower/?openid=' + OPENID + "&touid=" + uid
+			}, function(ret, err) {
+				weui.alert(ret.message);
+				if (ret.status) {
+					$("#level" + id).html("x" + num);
+				}
+			});
+		}
+
+		function bean() {
+			api.openWin({
+				name : 'bean',
+				url : './bean.html'
+			});
+		}
+
+		function clock() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
+				method : 'post',
+				data : {
+					values : {
+						address : ADDRESS
+					}
+				}
+			}, function(ret, err) {
+				weui.toast(ret.message, {
+					duration : 3000,
+					className : "bears"
+				});
+				getData();
+			});
+		}
+
+		function car(){
+
+api.openWin({
+    name: 'car',
+    url: './car.html'
+});
+
+
+		}
+
+		function ranking() {
+			var loading = weui.loading("拼命加载中...");
+			$("#main").html("");
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/ranking/?openid=' + OPENID
+			}, function(ret, err) {
+				loading.hide();
+				var arrText = doT.template($("#interpolationtmpl2").text());
+				var a = arrText(ret.data);
+				var c = a.replace(/\/0/g, "/132");
+				$("#main2").html(c);
+				$('.pic').picLazyLoad();
+				api.refreshHeaderLoadDone();
+			});
+		}
+
+		function goback() {
+			api.closeWin({});
+		}
+
+		function addlocation() {
+			var aMapLBS = api.require('aMapLBS');
+			aMapLBS.configManager({
+				accuracy : 'hundredMeters',
+				filter : 1
+			}, function(ret, err) {
+				if (ret.status) {
+					//alert('定位管理器初始化成功！');
+					locationAddress();
+				}
+			});
+		}
+
+		function locationAddress() {
+			var aMapLBS = api.require('aMapLBS');
+			aMapLBS.singleAddress({
+				timeout : 10
+			}, function(ret, err) {
+				if (ret.status) {
+					var d = ret.address;
+					ADDRESS = d.province + " " + d.city;
+				}
+			});
+		}
+
+		function getData() {
+			var loading = weui.loading("正在拼命加载中...")
+			$("#main2").html("");
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appclock/gettodayuser/?openid=' + OPENID
+			}, function(ret, err) {
+				loading.hide();
+				var arrText = doT.template($("#interpolationtmpl").text());
+				var a = arrText(ret.data);
+				var c = a.replace(/\/0/g, "/132");
+				$("#main").html(c);
+				$('.pic').picLazyLoad();
+				api.refreshHeaderLoadDone();
+			});
+		}
+	</script>
+</html>

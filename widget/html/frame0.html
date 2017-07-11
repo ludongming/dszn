@@ -176,7 +176,7 @@
 	function clock() {
 		api.openWin({
 			name: 'clock',
-			url: './clock.html'
+			url: './active/clock.html'
 		});
 	}
 
@@ -284,7 +284,10 @@
 		$(".zan_" + nid).html(flower);
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?blog/flower/?openid=' + OPENID + "&nid=" + nid
-		}, function(ret, err) {});
+		}, function(ret, err) {
+console.log(JSON.stringify(err));
+
+		});
 	}
 
 	function friend() {
