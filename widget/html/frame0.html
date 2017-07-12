@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/swiper.min.css" />
 	<link rel="stylesheet" href="../css/dropload.css">
 	<link rel="stylesheet" href="../css/faxian.css">
+	<link rel="stylesheet" href="../css/gift.css">
 
 	<style>
 
@@ -47,6 +48,19 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div class="gift">
+		<div class="topbar">
+			<a href="javascript:;" class="nav active">礼物</a>
+			<span class="zf">送给 <span id="zfname"></span></span>
+
+			<a href="javascript:;" class="nav" ontouchend="closeGift()" style="float:right;margin-right:10px;">X</a>
+
+		</div>
+		<div id="giftcon"></div>
+		<div class="tools">
+			<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金豆</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
 		</div>
 	</div>
 </body>
@@ -94,6 +108,16 @@
 			</div>
 		</div>
 		{{?}}
+	</div>
+	{{~}}
+</script>
+<!--礼物-->
+<script id="giftlist" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
+	<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
+	<span class="boxname">{{=value.name}}</span>
+	<span class="boxmoney">{{=value.money}}金豆</span>
 	</div>
 	{{~}}
 </script>
@@ -285,7 +309,6 @@
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?blog/flower/?openid=' + OPENID + "&nid=" + nid
 		}, function(ret, err) {
-console.log(JSON.stringify(err));
 
 		});
 	}

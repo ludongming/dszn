@@ -1,0 +1,87 @@
+.gift {
+  position: fixed;
+  bottom: 0px;
+  height: 400px;
+  width: 100%;
+  background: #2a2627;
+  border-top: 1px #3e3a3b solid;
+  display: none;
+  opacity: 0.97;
+}
+.gift .tools {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  bottom: 0px;
+  line-height: 50px;
+  color: #949091;
+  border-top: 1px #3e3a3b solid;
+}
+.gift .topbar {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  color: #fff;
+  height: 30px;
+  font-size: 1.2em;
+}
+.gift a {
+  color: #fff !important;
+}
+#giftcon {
+  position: absolute;
+  top: 30px;
+  border-top: 1px #3e3a3b solid;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+.gift .sendBtn {
+  background: #fe5047;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  float: right;
+  display: inline-block;
+  border-top: 1px #fe5047 solid;
+  width: 150px;
+  height: 50px;
+}
+.active {
+  display: inline-block;
+  width: 60px;
+  height: 29px;
+  text-align: center;
+  border-bottom: 1px #fff solid;
+  margin-left: 10px;
+}
+.box {
+  width: 24%;
+  height: 150px;
+  float: left;
+  text-align: center;
+  border: 1px #2a2627 solid;
+}
+.box img {
+  width: 100%;
+  height: 90px;
+}
+.box .boxname {
+  font-weight: 700px;
+  display: block;
+  color: #fff;
+}
+.box .boxmoney {
+  color: #949091;
+}
+.xz {
+  border: 1px #c66d73 solid;
+  background: #221e1f;
+}
+.money {
+  color: #c23d58;
+  font-size: 1.2em;
+  font-weight: 700
+}
+.zf{font-size:0.8em;margin-left:20px;display:inline-block;width:200px;height:29px;white-space:nowrap;overflow: hidden;}
+.footer{position: fixed;bottom:0px;height:50px;text-align: center;width:100%;background:#f2f2f2;line-height: 50px;color:#000!important;opacity: 1;}
+.footer .nav{display: inline-block;width:30%;float:left;height:50px;}

@@ -253,6 +253,8 @@
 				url : 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
 			}, function(ret, err) {
 				var user = ret.data;
+				bindPush(user.mobile_phone);
+
 				USERDATA=JSON.stringify(user);
 				var weixin = user.weixin;
 				if (weixin != false) {
@@ -267,7 +269,6 @@
 					$(".vips").hide();
 					return false;
 				}
-				bindPush(user.mobile_phone);
 				$(".buyvip").hide();
 				$(".time").html(user.crm.expire_time);
 			});
@@ -282,6 +283,7 @@
 			};
 			ajpush.bindAliasAndTags(param, function(ret) {
 				var statusCode = ret.statusCode;
+				
 			});
 		}
 
