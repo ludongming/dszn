@@ -26,24 +26,6 @@ http://www.d-shang.com/index.php?app/getuserinfo/?openid=OPENID
 
 
 #礼物系统使用方法
-1、先引入gift.css 和 gift.js
-2、先把js模板进入到页面
-3、引入小图标，并且加上touch事件。
-·
-
-<!--礼物JS模板-->
-<script id="giftlist" type="text/x-dot-template">
-	{{~it:value:index}}
-	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
-	<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
-	<span class="boxname">{{=value.name}}</span>
-	<span class="boxmoney">{{=value.money}}金豆</span>
-	</div>
-	{{~}}
-</script>
-
-·
-<img src="../../image/songli.png" style="width:25px;vertical-align: middle" ontouchend="gift({{=value.uid}},'{{=value.real_name}}')">
-
-·
-·
+1、先引入gift.css 和 gift.js  
+2、先把js模板进入到页面  
+3、引入小图标，并且加上touch事件。  
