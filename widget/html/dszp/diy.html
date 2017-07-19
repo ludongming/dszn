@@ -19,7 +19,7 @@
         <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;">顶上宅配</span>
     </header>
     <div class="page__bd content" id="content">
-
+<img src="../../image/srdz.jpg" width="100%">
         <div id="main"></div>
 
 
@@ -28,11 +28,11 @@
         {{~it:value:index}}
         <div class="list">
         <div class="tool">
-            <img src="../../image/default.png" style="margin-left:10px;margin-top:5px;width:40px;height:40px;border-radius:20px;vertical-align:center;" class="pic head" data-original="{{=value.headimgurl}}">
-            <span style="position:absolute;top:0px;display:inline-block;">&nbsp;{{=value.username}} </span><span style="text-align:right;display:inline-block;position:absolute;width:100px;font-size:0.8em;right:10px;color:#666;">{{=value.rq}}</span>
+            <img src="../../image/dingzhi.png" style="margin-left:10px;margin-top:5px;width:40px;height:40px;border-radius:20px;vertical-align:center;" class="head">
+            <span style="position:absolute;top:0px;display:inline-block;">&nbsp;私人定制 </span><span style="text-align:right;display:inline-block;position:absolute;width:100px;font-size:0.8em;right:10px;color:#666;">{{=value.sj}}</span>
         </div>
             <div class="image">
-                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}"  onclick="bigImage('http://www.dszpvip.com/{{=value.mpic}}',0)">
+                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}"  onclick="bigImage('http://www.dszpvip.com/{{=value.mpic}}',1)">
 
             </div>
 <div class="tool" style="height:30px;">
@@ -90,7 +90,7 @@
     function loadLastDesgin() {
 
         api.ajax({
-            url: 'http://www.dszpvip.com/index.php?love/getlastlove',
+            url: 'http://www.dszpvip.com/index.php?love/getlastdesign',
             method:'post',
             data:{
               values:{

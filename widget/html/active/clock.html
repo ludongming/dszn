@@ -43,10 +43,11 @@
 			text-align: center;
 			margin-top: 20px;
 			float: left;
-			width: 20px;
+			width: 25px;
 			height: 20px;
 			background: #c1c2c6;
 			color: #666;
+			font-size:0.9em;
 			margin-right: 20px;
 		}
 
@@ -104,7 +105,7 @@
 				<a href="javascript:;" class="nav active">礼物</a>
 				<span class="zf">送给 <span id="zfname"></span></span>
 
-				<a href="javascript:;" class="nav" ontouchend="closeGift()" style="float:right;margin-right:10px;">X</a>
+				<a href="javascript:;" class="nav" ontouchend="closeGift()" style="float:right;margin-right:10px;font-size:1.2em;">X</a>
 
 			</div>
 			<div id="giftcon"></div>
@@ -142,7 +143,7 @@
 		<div class="weui-cell__ft">
 			<p id="flower{{=value.id}}">
 
-				<img src="../../image/songli.png" style="width:25px;vertical-align: middle" ontouchend="gift({{=value.uid}},'{{=value.real_name}}')">
+				<img src="../../image/songli.png" style="width:25px;vertical-align: middle" ontouchend="gift({{=value.uid}},'{{=value.real_name}}',0)">
 			</p>
 			<p style="font-size:0.8em;">{{=value.rq}}</p>
 		</div>
@@ -184,7 +185,7 @@
 	{{~it:value:index}}
 	<div class="swiper-slide" style="z-index:-999!important">
 		<div class="carimg">
-			<img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}"></div>
+			<img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}" style="width:160px;"></div>
 		<div class="cartitle">{{=value.real_name}}<span style="font-size:0.8em;color:#9a4505">({{=value.address}})</span> <span style="color:#666">开着 {{=value.name}} 来了</span></div>
 
 	</div>
@@ -196,12 +197,11 @@
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
-<script type="text/javascript" src="../../script/dropload.js"></script>
+<script type="text/javascript" src="../../script/gift.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript">
 	var OPENID;
 	var ADDRESS;
-	var TOUID; //赠送礼物对象
 	apiready = function() {
 		OPENID = api.getPrefs({
 			sync: true,

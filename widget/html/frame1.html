@@ -92,18 +92,24 @@
 			<div class="img">
 				<img src="../image/zhanggui.png">
 			</div>
-			<span>集成吊顶产品库 /VIP产品</span>
+			<span>顶上集成吊顶产品库 /VIP产品</span>
 		</div>
 		<div class="box borderBottom" data-nodeid="2" data-url="./qm/index.html">
 			<div class="img">
 				<img src="../image/qiangmian1.png">
-			</div><span>集成背景·墙面</span>
+			</div><span>顶上集成背景·墙面</span>
 		</div>
 		<div class="box" data-nodeid="1" data-url="./factory/index.html">
 			<div class="img">
 				<img src="../image/gongcheng.png">
 			</div>
-			<span>工程定制</span>
+			<span>顶上工程定制</span>
+		</div>
+		<div class="box" data-nodeid="3" data-url="./yd/index.html">
+			<div class="img">
+				<img src="../image/qiangmian1.png">
+			</div>
+			<span>移动集成背景·墙面</span>
 		</div>
 	</div>
 
@@ -317,6 +323,14 @@
 		if (NODE == 2) {
 			api.openWin({
 				name: 'qm' + num,
+				url: URL,
+				slidBackEnabled: false
+			});
+		}
+
+		if (NODE == 3) {
+			api.openWin({
+				name: 'yd' + num,
 				url: URL,
 				slidBackEnabled: false
 			});

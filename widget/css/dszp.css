@@ -13,7 +13,7 @@ body {
 }
 
 .footer .btnl {
-    width: 25%;
+    width: 20%;
     color: #000;
     float: left;
     line-height: 50px;
@@ -22,13 +22,13 @@ body {
 
 .list {
     width: 100%;
+    height:auto;
     margin-bottom: 10px;
     background: #fff;
 }
 
 .list .image {
     width: 100%;
-    height: 250px;
     overflow-y: hidden;
     position: relative;
 }

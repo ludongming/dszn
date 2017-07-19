@@ -22,16 +22,7 @@
 
         <div id="main"></div>
 
-        <div class="footer">
 
-            <a href="javascript:;" class="btnl active"  tag="0">
-                 最新
-            </a>
-            <a href="javascript:;" class="btnl"  tag="1">TOP</a>
-            <a href="javascript:;" class="btnl"  tag="2">我的收藏</a>
-            <a href="javascript:;" class="btnl"  tag="3">场景</a>
-
-        </div>
 
     </div>
 
@@ -48,13 +39,38 @@
     apiready = function() {
         setTopBar();
         funIniGroup();
-        $(".btnl").bind("click", randomSwitchBtn);
+        setMenu(0);
+    }
+    function setMenu(index){
+      api.openFrame({
+          name: 'menu',
+          url: './menu.html',
+          rect: {
+              x: 0,
+              y: api.winHeight-50,
+              w: api.winWidth,
+              h: 50
+          },
+          pageParam: {
+              index: index
+          },
+          bounces: false,
+          bgColor: 'rgba(0,0,0,0)',
+          vScrollBarEnabled: false,
+          hScrollBarEnabled: false
+      });
+
+
+      api.setFrameGroupIndex({
+          name: 'dszp',
+          index: index
+      });
     }
 
     function funIniGroup() {
         var frames = [];
-        var nameArr = ["recommend", "top", "me", "cate"];
-        for (var i = 0, len = nameArr.length; i < len; i++) {
+        var nameArr = ["recommend",'diy', "top", "me","cate"];
+        for (var i = 0, len = 6; i < len; i++) {
             frames.push({
                 name: nameArr[i],
                 url: './' + nameArr[i] + '.html',
@@ -72,7 +88,7 @@
                 x: 0,
                 y: 0,
                 w: width,
-                h: height - 50
+                h: height
             },
             index: 0,
             frames: frames,
@@ -83,21 +99,6 @@
 
     }
 
-    // 随意切换按钮
-    function randomSwitchBtn() {
-        var obj = $(this);
-        var index = obj.attr("tag");
-        var arr = $(".footer a");
-        arr.each(function() {
-            $(this).removeClass("active");
-        })
-        obj.addClass("active");
-
-        api.setFrameGroupIndex({
-            name: 'dszp',
-            index: index
-        });
-    }
 </script>
 
 </html>

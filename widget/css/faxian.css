@@ -43,9 +43,15 @@ body {
 
 .list .info .username {
   margin-left: 10px;
-  margin-top: 15px;
+  margin-top: 5px;
   float: left;
   color: #000;
+}
+.mp{
+  display: block;
+  width:60px;
+  color:#666;
+  font-size:0.9em;
 }
 
 .list .info .pub_time {
@@ -93,13 +99,17 @@ body {
 }
 
 .reply {
-  background: #f1f1f1;
-  display: none;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 0.9em;
+  color: #aea9b0;
+  margin-bottom: 10px;
 }
 
-.reply .text {
-  width: 80%;
-  float: left;
+.replyname {
+color:#415b76;
 }
 
 .input_text {

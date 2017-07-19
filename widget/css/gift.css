@@ -6,6 +6,7 @@
   background: #2a2627;
   border-top: 1px #3e3a3b solid;
   display: none;
+  z-index: 999;
   opacity: 0.97;
 }
 .gift .tools {

@@ -34,7 +34,7 @@
 
                <span class="rank">{{=index+1}}</span>
                {{?}}
-                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}">
+                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}" onclick="bigImage('http://www.dszpvip.com/{{=value.mpic}}',2)">
 
             </div>
 <div class="tool" style="height:24px;">
@@ -53,7 +53,7 @@
 <div class="mingdan">
 {{ for(var i=0, catlen=value.users.length; i<catlen; i++) { }}
 
-{{=value.users[i].username}},
+@{{=value.users[i].username}}
 {{}}}
 喜欢
 </div>
@@ -68,6 +68,7 @@
 <script src="../../script/zepto.min.js"></script>
 <script src="../../script/doT.min.js"></script>
 <script src="../../script/weui.min.js"></script>
+<script src="../../script/dszp.js"></script>
 <script src="../../script/wolf.js"></script>
 <script type="text/javascript" src="../../script/dropload.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>

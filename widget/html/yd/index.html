@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>云系统</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/header.css">
+		<link rel="stylesheet" href="../../css/gouwutc.css">
+		<link rel="stylesheet" href="../../css/buygoods.css">
+		<style>
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i>
+			<span style="text-align: center; margin-left: 15%;">移动集成背景·墙面</span>
+			<img src="../../image/shaixuan.png" ontouchend="fenlei()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
+		</header>
+		<div class="page__bd content">
+			<div>
+				<div class="weui-search-bar" id="searchBar">
+					<div class="weui-search-bar__form">
+						<div class="weui-search-bar__box">
+							<i class="weui-icon-search"></i>
+							<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+							<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+						</div>
+						<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);"> <i class="weui-icon-search"></i> <span>搜索</span> </label>
+					</div>
+					<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+				</div>
+				<div class="guanggao">
+					<img src="../../image/adv5.jpg" class="adv" id="adv">
+				</div>
+				<div id="main">
+					数据加载中
+				</div>
+				<div class="tcwrap" id="tcwrap">
+					<div class="tcmain" id="tcmain">
+						<button class="tcclose" onclick="closeTc()"></button>
+						<p>
+							数量
+						</p>
+						<div class="tcbtnz" id="tcbtn"></div>
+					</div>
+					<div class="success" id="tccg">
+						恭喜你，提交成功！
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="share"  onclick="loadData()"><img src="../../image/newPro.png">新品
+			</div>
+			<div class="share" onclick="fenlei()"><img src="../../image/fenlei1.png" />分类
+			</div>
+			<div class="share" onclick="order()"><img src="../../image/order1.png" />订单
+			</div>
+			<div class="friend" onclick="cart()" style="line-height: 50px;" >
+				购物车
+			</div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="list">
+		{{~it:value:index}}
+		<div class="cnt">
+		<img class="pic" id="image{{=value.sku}}" src="../../image/defaultimage.png" data-original="http://www.d-shang.com/{{=value.image}}"; onclick="jump({{=value.nid}},'{{=value.goods_name}}')"/>
+		<div class="con">
+		<p class="shopname">{{=value.goods_name}}</p>
+		<p class="comment"><span class="price">¥{{=value.price}}</span></p>
+		<p class="type">
+			<span>{{=value.type}} </span>&nbsp;<span>{{=value.num}}{{=value.unit}}/件</span></p>
+		<p class="cart">
+		{{?value.status<0}}
+		<a href="javascript:;" class="wuhuo">无货</a>
+		{{??}}
+		<a href="javascript:;"  onclick="addGoods('{{=value.sku}}')">
+		<img src="../../image/buycart.png" width="30px;">
+		</a>
+		{{?}}
+		</p>
+		</div>
+		</div>
+		<!--产品信息-->
+		<div class="cpxx" id="cpxx_{{=value.sku}}">
+		<div class="tcbtn">
+		<button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value.sku}}">+</button>
+		</div>
+		<div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.price}}"  packages="{{=value.num}}">加入购物车</div>
+		</div>
+		<!--产品信息结束--->
+		{{~}}
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/wcart.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			var systemType = api.systemType;
+			if (systemType == "ios") {
+				$(".back").css("top", "23px");
+				$(".content").css("top", "60px");
+			}
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			$("#tcwrap").bind("touchend", function(e) {
+				var con=$("#tcbtn").html();
+			$("#cpxx_" + selectsku).html(con);
+				$("#tcwrap").hide();
+			});
+			$("#tcmain").bind("touchend", function(e) {
+				e.stopPropagation();
+			});
+			setTopBar();
+			loadData();
+			loadAdv();
+		};
+
+		function vip() {
+		   api.openWin({
+	           name: 'vip',
+	           url: './vip.html'
+           });
+		}
+
+		function order() {
+			api.openWin({
+				name : 'order',
+				url : './order.html'
+			});
+		}
+
+		function cart() {
+			api.openWin({
+				name : 'cart',
+				url : './cart.html'
+			});
+		}
+
+		function fenlei() {
+			api.openWin({
+				name : 'fenlei',
+				url : './fenlei.html'
+			});
+		}
+
+		var selectsku = "";
+		function addGoods(sku) {
+			selectsku = sku;
+			var con = $("#cpxx_" + sku).html();
+			$("#tcbtn").html(con);
+			wcart.init("factory");
+			$("#cpxx_" + sku).html("");
+			$("#tcwrap").show();
+			wcart.completeAddGoods = function() {
+				weui.toast("添加成功", {
+					duration : 500,
+					className : "bears"
+				});
+				$("#tcbtn").html("");
+				$("#cpxx_" + sku).html(con);
+				$("#tcwrap").hide();
+			}
+		}
+
+		function closeTc() {
+			var con = $("#tcbtn").html();
+			$("#cpxx_" + selectsku).html(con);
+			$("#tcwrap").hide();
+		}
+
+		function search() {
+			$(".guanggao").html("");
+			var title = $("#searchInput").val();
+			if (title == "") {
+				return;
+			}
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appfactory/search/?title=' + title + "&openid=" + OPENID
+			}, function(ret, err) {
+				if (ret.data.length < 1) {
+					return false;
+				}
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(ret.data));
+				$('.pic').picLazyLoad();
+			});
+		}
+
+		$(function() {
+			var $searchBar = $('#searchBar'), $searchResult = $('#searchResult'), $searchText = $('#searchText'), $searchInput = $('#searchInput'), $searchClear = $('#searchClear'), $searchCancel = $('#searchCancel');
+			function hideSearchResult() {
+				$searchResult.hide();
+				$searchInput.val('');
+			}
+
+			function cancelSearch() {
+				hideSearchResult();
+				$searchBar.removeClass('weui-search-bar_focusing');
+				$searchText.show();
+			}
+
+
+			$searchText.on('click', function() {
+				$searchBar.addClass('weui-search-bar_focusing');
+				$searchInput.focus();
+			});
+			$searchInput.on('blur', function() {
+				if (!this.value.length)
+					cancelSearch();
+			}).on('input', function() {
+				if (this.value.length) {
+					$searchResult.show();
+					search();
+				} else {
+					$searchResult.hide();
+				}
+			});
+			$searchClear.on('click', function() {
+				hideSearchResult();
+				$searchInput.focus();
+			});
+			$searchCancel.on('click', function() {
+				cancelSearch();
+				$searchInput.blur();
+			});
+		});
+		function loadAdv() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/getadv/?id=127&openid=' + OPENID
+			}, function(ret, err) {
+				//coding...
+				$("#adv").attr("src", "http://www.d-shang.com/" + ret.data.image);
+			});
+		}
+
+		function jump(id, name) {
+			api.openWin({
+				name : 'mx',
+				url : '../goods/productmx.html',
+				pageParam : {
+					id : id,
+					name : name
+				}
+			});
+		}
+
+		function loadData() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/recommend/?node=3&openid=' + OPENID
+			}, function(ret, err) {
+				if (ret.data.length < 1) {
+					return false;
+				}
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(ret.data));
+				$('.pic').picLazyLoad();
+			});
+		}
+
+
+	</script>
+</html>

@@ -28,7 +28,7 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox  love{{=value.id}}">
-			<a href="javascript:void(0)"><img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic" onclick="jump({{=value.id}},{{=value.cid}},{{=value.index}})">
+			<a href="javascript:void(0)"><img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic" onclick="bigImage('http://www.dszpvip.com/{{=value.mpic}}',3)">
 
 
 			</a>
@@ -47,6 +47,7 @@
 <script src="../../script/doT.min.js"></script>
 <script src="../../script/weui.min.js"></script>
 <script src="../../script/wolf.js"></script>
+<script src="../../script/dszp.js"></script>
 <script type="text/javascript" src="../../script/dropload.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript">
@@ -73,59 +74,39 @@
 	function love(id) {
 		var status = $("#love_" + id).attr("data-status");
 		var con = "";
-		if (status == 0) {
-			weui.toast("收藏成功", {
-				duration: 1000,
-				className: "bears"
-			});
-			con = "<img src=\"../../image/love1.png\">";
-			status = 1;
 
-			api.ajax({
-				url: 'http://www.dszpvip.com/index.php?love/addlove/',
-				method: "post",
-				data: {
-					values: {
-						nid: id,
-						openid: OPENID
-					}
-				}
+   api.confirm({
+       title: '不喜欢我了？',
+       msg: '我在场景分类中等你',
+       buttons: ['容我三思', '心意已决']
+   }, function(ret, err){
+       if( ret.buttonIndex==2 ){
+				 $(".love"+id).remove();
+				 con = "<img src=\"../../image/love0.png\">";
+				 status = 0;
+				 api.ajax({
+					 url: 'http://www.dszpvip.com/index.php?love/removelovebyuidandnid/',
+					 method: "post",
+					 data: {
+						 values: {
+							 nid: id,
+							 openid: OPENID
+						 }
+					 }
+				 }, function(ret, err) {
+					 if (ret) {
 
-			}, function(ret, err) {
+					 } else {
+						 alert(JSON.stringify(err));
+					 }
+				 });
+       }else{
 
-				if (ret) {} else {
-					alert(JSON.stringify(err));
-				}
-			});
-
-		} else {
-			$(".love"+id).remove();
-			return;
-			con = "<img src=\"../../image/love0.png\">";
-			status = 0;
-			api.ajax({
-				url: 'http://www.dszpvip.com/index.php?love/removelovebyuidandnid/',
-				method: "post",
-				data: {
-					values: {
-						nid: id,
-						openid: OPENID
-					}
-				}
-			}, function(ret, err) {
-				if (ret) {
-
-				} else {
-					alert(JSON.stringify(err));
-				}
-			});
+       }
+   });
 
 
 
-		}
-		$("#love_" + id).attr("data-status", status);
-
-		$("#love_" + id).html(con);
 	}
 
 	function setDrop() {

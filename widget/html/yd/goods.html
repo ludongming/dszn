@@ -42,7 +42,7 @@
 	<div class="con">
 	<p class="shopname">{{=value.goods_name}}</p>
 	<p class="comment">
-	<span class="price">¥{{=value.tj_price}}</span>
+	<span class="price">¥{{=value.price}}</span>
 	</p>
 	<p class="type"><span>{{=value.type}} </span>&nbsp;
 	<span>{{=value.num}}{{=value.unit}}/件</span></p>
@@ -61,7 +61,7 @@
 	<div class="tcbtn">
 	<button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" mini="{{=value.order_num}}" value="{{=value.order_num}}"><button class="wcart_add" sku="{{=value.sku}}">+</button>
 	</div>
-	<div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.tj_price}}"  packages="{{=value.num}}">加入购物车</div>
+	<div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.price}}"  packages="{{=value.num}}">加入购物车</div>
 	</div>
 	<!--产品信息结束--->
 	{{~}}
@@ -148,16 +148,18 @@
 	}
 
 	function loadData(me) {
+
 		api.ajax({
-			url : 'http://www.d-shang.com/index.php?appfactory/getgoodsbycid/?p=' + page + '&cid=' + cid + "&openid=" + OPENID
+			url : 'http://www.d-shang.com/index.php?appyd/getgoodsbycid/?p=' + page + '&cid=' + cid + "&openid=" + OPENID
 		}, function(ret, err) {
 			var d = ret.data;
+
 			if (d.length == 0) {
 				me.lock();
 				me.noData();
 			} else {
 				var arrText = doT.template($("#interpolationtmpl").text());
-				$("#main").append(arrText(ret.data));
+				$("#main").append(arrText(d.data));
 				$('.pic').picLazyLoad();
 			}
 			//第一次加载数量不足的情况
