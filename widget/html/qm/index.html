@@ -18,21 +18,11 @@
 		<header style="position: fixed;">
 			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i>
 			<span style="text-align: center; margin-left: 15%;">背景·墙面</span>
-			<img src="../../image/shaixuan.png" ontouchend="fenlei()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
+			<img src="../../image/search1.png" ontouchend="showSearch()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
 		</header>
 		<div class="page__bd content">
 			<div>
-				<div class="weui-search-bar" id="searchBar">
-					<div class="weui-search-bar__form">
-						<div class="weui-search-bar__box">
-							<i class="weui-icon-search"></i>
-							<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-							<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-						</div>
-						<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);"> <i class="weui-icon-search"></i> <span>搜索</span> </label>
-					</div>
-					<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-				</div>
+
 				<div class="guanggao">
 					<img src="../../image/adv2.jpg" class="adv" id="adv">
 				</div>
@@ -97,6 +87,9 @@
 		</div>
 		<!--产品信息结束--->
 		{{~}}
+		<div class="cnt"></div>
+		<div class="cnt"></div>
+
 		</div>
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
@@ -110,11 +103,7 @@
 	<script type="text/javascript">
 		var OPENID;
 		apiready = function() {
-			var systemType = api.systemType;
-			if (systemType == "ios") {
-				$(".back").css("top", "23px");
-				$(".content").css("top", "60px");
-			}
+	
 			OPENID = api.getPrefs({
 				sync : true,
 				key : 'openid'
@@ -144,6 +133,20 @@
 				name : 'order',
 				url : './order.html'
 			});
+		}
+
+
+		function showSearch(){
+		 api.prompt({
+				title:"请输入产品名称",
+				 buttons: ['取消', '确定']
+		 }, function(ret, err){
+				 if( ret.buttonIndex==2 ){
+							search(ret.text);
+				 }
+		 });
+
+
 		}
 
 		function fangan(){
@@ -192,9 +195,8 @@
 			$("#tcwrap").hide();
 		}
 
-		function search() {
+		function search(title) {
 			$(".guanggao").html("");
-			var title = $("#searchInput").val();
 			if (title == "") {
 				return;
 			}
@@ -210,44 +212,7 @@
 			});
 		}
 
-		$(function() {
-			var $searchBar = $('#searchBar'), $searchResult = $('#searchResult'), $searchText = $('#searchText'), $searchInput = $('#searchInput'), $searchClear = $('#searchClear'), $searchCancel = $('#searchCancel');
-			function hideSearchResult() {
-				$searchResult.hide();
-				$searchInput.val('');
-			}
 
-			function cancelSearch() {
-				hideSearchResult();
-				$searchBar.removeClass('weui-search-bar_focusing');
-				$searchText.show();
-			}
-
-
-			$searchText.on('click', function() {
-				$searchBar.addClass('weui-search-bar_focusing');
-				$searchInput.focus();
-			});
-			$searchInput.on('blur', function() {
-				if (!this.value.length)
-					cancelSearch();
-			}).on('input', function() {
-				if (this.value.length) {
-					$searchResult.show();
-					search();
-				} else {
-					$searchResult.hide();
-				}
-			});
-			$searchClear.on('click', function() {
-				hideSearchResult();
-				$searchInput.focus();
-			});
-			$searchCancel.on('click', function() {
-				cancelSearch();
-				$searchInput.blur();
-			});
-		});
 		function loadAdv() {
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?app/getadv/?id=124&openid=' + OPENID
