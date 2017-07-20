@@ -21,16 +21,8 @@
 		.gift {
 			bottom: 50px;
 		}
+	 .nav .active{color:red;height:20px;}
 
-		.swiper-pagination-bullet-active {
-			color: #000;
-		}
-
-		.swiper-pagination-bullet {
-			font-size: 0.9em;
-			width: 100px!important;
-			background: #f2f2f2;
-		}
 	</style>
 </head>
 
@@ -40,10 +32,10 @@
 
 		<span class="tit">
 
-			<a class="nav" href="#jingxuan">
+			<a class="nav  nav_0" href="javascript:void(0)" style="color:red;" ontouchend="switchBtn(0)">
 		 精选
 		</a>
-			<a class="nav" href="#zuixin">
+			<a class="nav nav_1" href="javascript:void(0)" ontouchend="switchBtn(1)">
 			最新
 		</a>
 
@@ -67,14 +59,16 @@
 								<span class="rq"></span>
 							</div>
 						</div>
-						<div id="recommendmain">1111111111111</div>
+						<div id="recommendmain"></div>
 					</div>
 
 				</div>
 				<div class="swiper-slide swiper-no-swiping">
 					<div class="allmain">
-						<div class="jingxuan"></div>
-						<div id="allmain">222222222</div>
+						<div class="jingxuan">
+							<img src="../image/jingxuan.jpg" height="100%;">
+						</div>
+						<div id="allmain"></div>
 					</div>
 				</div>
 			</div>
@@ -192,17 +186,15 @@
 			sync: true,
 			key: 'openid'
 		});
-		rq();
-		loadAdv();
 		loadGift();
 		dropDownRecommend();
+		dropDownAllData();
 
-		var mySwiper = new Swiper('.swiper-container', {
+		 mySwiper = new Swiper('.swiper-container', {
 			autoplay: false, //可选选项，自动滑动
-			noSwiping : true,
+			noSwiping : true
 
 		})
-		//loadAllData();
 	}
 </script>
 

@@ -75,6 +75,7 @@ function addJPPushListen() {
             alert(JSON.stringify(ret));
         }
     });
+    addPushListen();
 
 }
 

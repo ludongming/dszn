@@ -57,7 +57,7 @@
 		{{~it:value:index}}
 		<ul class="wcart_{{=value.sku}}">
 		<li class="radios"></li>
-		<li class="img y_center"><img src="{{=value.image}}"></li>
+		<li class="img y_center"><img src="../../default.png" class="pic" data-original="{{=value.image}}"></li>
 		<li class="txt">
 		<p class="name">{{=value.goods_name}}</p>
 		<p class="guige">{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
@@ -80,6 +80,8 @@
 	<script type="text/javascript" src="../../script/wcart.js"></script>
 	<script type="text/javascript" src="../../script/wolf.js"></script>
 	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+
 	<script type="text/javascript">
 		var OPENID;
 		apiready = function() {
@@ -107,9 +109,10 @@
 					}
 				}
 			}, function(ret, err) {
-				console.log(JSON.stringify(ret.data));
 				var aa = doT.template($("#interpolationtpl").text());
 				$("#main").html(aa(ret.data.goods));
+				$('.pic').picLazyLoad();
+
 				wcart.init('gld');
 				wcart.mode = 'cartModel';
 				$("#token").val(ret.data.token);
@@ -151,7 +154,7 @@
 				alert(ret.message);
 			});
 		}
-		
+
 		function order(){
 		  api.closeWin({
           });

@@ -7,6 +7,28 @@ function loadAdv() {
     });
 }
 
+function switchBtn(index) {
+
+    if (index == 1) {
+        $(".nav_0").css({
+            "color": "black"
+        });
+        $(".nav_1").css({
+            "color": "red"
+        });
+        mySwiper.slideTo(1, 500, false); //切换到第一个slide，速度为1秒
+
+    } else {
+        $(".nav_1").css({
+            "color": "black"
+        });
+        $(".nav_0").css({
+            "color": "red"
+        });
+        mySwiper.slideTo(0, 500, false); //切换到第一个slide，速度为1秒
+    }
+}
+
 
 function showQDBox() {
     var dialogBox = api.require('dialogBox');
@@ -283,11 +305,32 @@ function refresh() {
 
 
 function dropDownRecommend() {
-    $('.content').dropload({
+    $('.recommendmain').dropload({
         scrollArea: window,
         autoLoad: true,
-        loadUpFn: function(me) {
+        loadDownFn: function(me) {
+            rq();
             loadRecommendData(me);
+            me.lock('down');
+        },
+        loadUpFn: function(me) {
+            rq();
+            loadRecommendData(me);
+        }
+    })
+}
+
+
+function dropDownAllData() {
+    $('.allmain').dropload({
+        scrollArea: window,
+        autoLoad: true,
+        loadDownFn: function(me) {
+            loadAllData(me);
+            me.lock('down');
+        },
+        loadUpFn: function(me) {
+            loadAllData(me);
         }
     })
 }
@@ -301,27 +344,43 @@ function loadRecommendData(me) {
     }, function(ret, err) {
         me.resetload();
 
+        if (typeof(err) == "object") {
+
+            weui.alert("网络请求超时，请稍后再试");
+            return false;
+        }
+
         if (ret.status) {
             var d = ret.data;
             var arrText = doT.template($("#interpolationtmpl").text());
             $("#recommendmain").html(arrText(d));
             $('.pic').picLazyLoad();
         }
+
+
+
     });
 }
 
-function loadAllData() {
+function loadAllData(me) {
 
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogbypage/?p=1&openid=' + OPENID,
         timeout: 5,
         report: false
     }, function(ret, err) {
+        me.resetload();
+        if (typeof(err) == "object") {
+            weui.alert("网络请求超时，请稍后再试");
+            return false;
+        }
+
         if (ret.status) {
             var d = ret.data;
             var arrText = doT.template($("#interpolationtmpl").text());
             $("#allmain").html(arrText(d));
             $('.pic').picLazyLoad();
         }
+
     });
 }

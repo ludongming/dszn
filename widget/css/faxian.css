@@ -6,19 +6,17 @@ body {
   min-height: 400px;
 }
 
-.tit a {
+.nav{
   color: #000;
-  display: inline-block;
-  text-align: center;
   font-size: 0.8em;
-  width: 70px;
+height:30px;
+line-height: 20px;
+  width:60px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
-.tit .active span {
-  border-bottom-width: 10px;
-  display: inline-block;
-  border-bottom: 1px #000 solid;
-}
+
 
 .list {
   background: #fff;
@@ -194,7 +192,6 @@ color:#415b76;
   line-height: 50px;
   color: #fff;
   font-size: 1.2em;
-  background-image: url(../image/jingxuan.png);
   position: relative;
   text-align: center;
 }

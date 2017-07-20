@@ -10,13 +10,13 @@ var wcart={
   expires:604800,//有效期
   init:function(cookieName){
      wcart.cookieName=cookieName;
-     
-     $("."+wcart.addButton).bind("touchend",wcart.addGoods);
-     $("."+wcart.removeButton).bind("touchend",wcart.removeGoods);
-     $(".wcart_add").bind("touchend",wcart.addGoodsNum);
-     $(".wcart_reduce").bind('touchend',wcart.reduceGoodsNum);
+
+     $("."+wcart.addButton).bind("click",wcart.addGoods);
+     $("."+wcart.removeButton).bind("click",wcart.removeGoods);
+     $(".wcart_add").bind("click",wcart.addGoodsNum);
+     $(".wcart_reduce").bind('click',wcart.reduceGoodsNum);
      $(".wcart_num").bind('change',wcart.changeNum);
-     $(".wcart_empty").bind('touchend',wcart.emptyGoods);
+     $(".wcart_empty").bind('click',wcart.emptyGoods);
      wcart.statis();
   },
   parseCookie:function(){
@@ -43,7 +43,7 @@ var wcart={
        isRepeat=true;
      }
   }
- 
+
   if(!isRepeat){
     obj.push(newGoods);
   }
@@ -51,13 +51,13 @@ var wcart={
    var str=JSON.stringify(obj);
    wcart.setCookie(wcart.cookieName,str);
    wcart.statis();
- 
+
    wcart.completeAddGoods();
    //回调方法
-   
+
   },
   completeAddGoods:function(){
-	  
+
   },
   removeGoods:function(){
     var obj=wcart.parseCookie();
@@ -74,17 +74,16 @@ var wcart={
     wcart.statis();
   },
   emptyGoods:function(){
-  
+
     api.removePrefs({
 	    key:wcart.cookieName
     });
-  
-  
+
+
     wcart.statis();
   },
   statis:function(){
     var obj=wcart.parseCookie();
-	
     var total=0.00;
     var num=0;
     if(obj.length<1){
@@ -113,15 +112,14 @@ var wcart={
   },
   autoNum:function(sku,num){
     var currentNum=$("#num_"+sku).val();
-
     var nowNum=parseInt(currentNum)+parseInt(num);
 
       var mini=$("#num_"+sku).attr('mini');
-      
+
       if(parseInt(nowNum)<1){
          return;
       }
-      
+
     if(parseInt(nowNum)<parseInt(mini)){
         alert("最少"+mini+"件起订!");
         $("#num_"+sku).val(mini);
@@ -147,14 +145,14 @@ var wcart={
      var num=$(this).val();
      var sku=$(this).attr('sku');
 
-	 
+
 	  var mini=$(this).attr('mini');
       if(parseInt(num)<parseInt(mini)){
           alert("最少"+mini+"件起订!");
           $("#num_"+sku).val(mini);
           return;
       }
-	 
+
      var reg=new RegExp(/^\d+$/i);
      if(!num.match(reg)){
        var lastNum=wcart.getGoodsNum(sku);
@@ -202,8 +200,8 @@ var wcart={
   getCookie:function(){
     return api.getPrefs({
 	    sync:true,
-	    key:wcart.cookieName  
+	    key:wcart.cookieName
     });
   }
-  
+
 }
