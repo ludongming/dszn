@@ -21,8 +21,11 @@
 		.gift {
 			bottom: 50px;
 		}
-	 .nav .active{color:red;height:20px;}
 
+		.nav .active {
+			color: red;
+			height: 20px;
+		}
 	</style>
 </head>
 
@@ -42,7 +45,7 @@
 		  </span>
 
 
-		<span style="display:inline-block;position:relative;float:right;margin-right:10px; "> <img src="../image/laba.png" ontouchend="notice()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:-6px;">0</span>		</span>
+		<span style="display:inline-block;position:relative;float:right;margin-right:5px;width:50px; "> <img src="../image/laba.png" ontouchend="notice()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>		</span>
 	</header>
 	<div class="page__bd content">
 
@@ -118,7 +121,7 @@
 		<span class="zan zan_{{=value.id}}" style="">{{?value.flower>0}} {{=value.flower}} {{?}}
 
 </span>
-				<img src="../image/songli.png" class="toolimage" style="right:80px;" ontouchend="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
+				<img src="../image/songli.png" class="toolimage" style="right:80px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
 
 				<img src="../image/zan{{=value.isflower}}.png" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
 
@@ -188,13 +191,13 @@
 		});
 		loadGift();
 		dropDownRecommend();
-		dropDownAllData();
-
-		 mySwiper = new Swiper('.swiper-container', {
+		mySwiper = new Swiper('.swiper-container', {
 			autoplay: false, //可选选项，自动滑动
-			noSwiping : true
+			noSwiping: true
 
 		})
+		addlocation();
+
 	}
 </script>
 

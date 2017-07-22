@@ -57,7 +57,10 @@
 		{{~it:value:index}}
 		<ul class="wcart_{{=value.sku}}">
 		<li class="radios"></li>
-		<li class="img y_center"><img src="../../default.png" class="pic" data-original="{{=value.image}}"></li>
+		<li class="img y_center"><img src="../../default.png" class="pic" data-original="{{=value.image}}">
+		<a href="javascript:void(0)" sku="{{=value.sku}}" class="delet removewcart" style="display:inline-block;width:40px;color:#000">删除</a>
+
+		</li>
 		<li class="txt">
 		<p class="name">{{=value.goods_name}}</p>
 		<p class="guige">{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
@@ -68,7 +71,6 @@
 		<a class="zenjian wcart_reduce" sku="{{=value.sku}}">-</a>
 		<input type="text" class="wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="{{=value.count}}">
 		<a  href="javascript:void(0)" class="zenjian wcart_add" sku="{{=value.sku}}">+</a>
-		<button href="javascript:void(0)" sku="{{=value.sku}}" class="delet removewcart">删除</button>
 		</p>
 		</li>
 		</ul>

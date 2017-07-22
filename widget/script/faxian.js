@@ -152,7 +152,7 @@ function isClock() {
     }, function(ret, err) {
         if (ret.data == false) {
             showQDBox();
-        } else {}
+        }
     });
 
 }
@@ -305,71 +305,34 @@ function refresh() {
 
 
 function dropDownRecommend() {
-    $('.recommendmain').dropload({
+    $('.content').dropload({
         scrollArea: window,
         autoLoad: true,
         loadDownFn: function(me) {
-            rq();
             loadRecommendData(me);
             me.lock('down');
+            rq();
         },
         loadUpFn: function(me) {
-            rq();
+
             loadRecommendData(me);
+
+            rq();
         }
     })
 }
 
 
-function dropDownAllData() {
-    $('.allmain').dropload({
-        scrollArea: window,
-        autoLoad: true,
-        loadDownFn: function(me) {
-            loadAllData(me);
-            me.lock('down');
-        },
-        loadUpFn: function(me) {
-            loadAllData(me);
-        }
-    })
-}
 
 
 function loadRecommendData(me) {
     api.ajax({
-        url: 'http://www.d-shang.com/index.php?blog/getrecommendblogbypage/?p=1&openid=' + OPENID,
+        url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
         timeout: 5,
         report: false
     }, function(ret, err) {
-        me.resetload();
+      me.resetload();
 
-        if (typeof(err) == "object") {
-
-            weui.alert("网络请求超时，请稍后再试");
-            return false;
-        }
-
-        if (ret.status) {
-            var d = ret.data;
-            var arrText = doT.template($("#interpolationtmpl").text());
-            $("#recommendmain").html(arrText(d));
-            $('.pic').picLazyLoad();
-        }
-
-
-
-    });
-}
-
-function loadAllData(me) {
-
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?blog/getblogbypage/?p=1&openid=' + OPENID,
-        timeout: 5,
-        report: false
-    }, function(ret, err) {
-        me.resetload();
         if (typeof(err) == "object") {
             weui.alert("网络请求超时，请稍后再试");
             return false;
@@ -378,9 +341,12 @@ function loadAllData(me) {
         if (ret.status) {
             var d = ret.data;
             var arrText = doT.template($("#interpolationtmpl").text());
-            $("#allmain").html(arrText(d));
+            $("#recommendmain").html(arrText(d.recommend));
+            $("#allmain").html(arrText(d.all));
             $('.pic').picLazyLoad();
         }
+
+
 
     });
 }

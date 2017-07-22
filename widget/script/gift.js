@@ -31,7 +31,6 @@ function send() {
                     }
                 }
             }, function(ret, err) {
-                console.log(JSON.stringify(ret));
                 if (ret.status) {
                     getUserInfo();
                 } else {
@@ -48,7 +47,7 @@ function send() {
             });
 
         } else {
-          
+
         }
     });
 }
@@ -89,6 +88,8 @@ function loadGift() {
             var a = arrText(ret.data);
             $("#giftcon").html(a);
             $('.pic').picLazyLoad();
+            getUserInfo();
+
         } else {
             alert(JSON.stringify(err));
         }
