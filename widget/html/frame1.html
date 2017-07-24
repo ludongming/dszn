@@ -14,7 +14,7 @@
 		body {
 			background: #f5f5f5!important;
 			width: 100%;
-			height: 610px;
+			height: 730px;
 		}
 
 		#password {
@@ -43,13 +43,18 @@
 			height: 300px;
 		}
 
-		.box .img img {
-			margin-left: 20px;
-			margin-right: 20px;
-			vertical-align: middle;
-			margin-top: 5px;
-			width: 50px;
-			height: 50px;
+		.box .img {
+			margin-top: 15px;
+			margin-left:10px;
+			margin-right:10px;
+			border-radius: 15px;
+			width: 60px;
+			height: 30px;
+			text-align: center;
+line-height:30px;
+color:#fff;
+font-size:0.8em;
+background:#e67f22;
 			float: left;
 		}
 
@@ -89,27 +94,34 @@
 			</div>
 		</div>
 		<div class="box" data-nodeid="1" data-url="./buy/index.html">
-			<div class="img">
-				<img src="../image/zhanggui.png">
+			<div class="img" style="background:#e84c3d">
+				上市
 			</div>
 			<span>顶上集成吊顶产品库 /VIP产品</span>
 		</div>
 		<div class="box borderBottom" data-nodeid="2" data-url="./qm/index.html">
-			<div class="img">
-				<img src="../image/qiangmian1.png">
+			<div class="img" style="background:#8d44ad">
+				高新
 			</div><span>顶上集成背景·墙面</span>
 		</div>
 		<div class="box" data-nodeid="1" data-url="./factory/index.html">
-			<div class="img">
-				<img src="../image/gongcheng.png">
+			<div class="img" style="background:#27ae61">
+			环保
 			</div>
 			<span>顶上工程定制</span>
 		</div>
-		<div class="box" data-nodeid="3" data-url="./yd/index.html">
-			<div class="img">
-				<img src="../image/qiangmian1.png">
+		<div class="box" data-nodeid="4" data-url="./ydqm/index.html">
+			<div class="img" style="background:#f39c11">
+			10大
 			</div>
 			<span>移动集成背景·墙面</span>
+		</div>
+
+		<div class="box" data-nodeid="3" data-url="./ydceil/index.html">
+			<div class="img" style="background:#3598db">
+			定制
+			</div>
+			<span>移动集成吊顶</span>
 		</div>
 	</div>
 
@@ -159,13 +171,13 @@
 		NODE = $(this).attr("data-nodeid");
 		URL = $(this).attr("data-url");
 
-	var	isFinger=  api.getPrefs({
-					sync : true,
-					key : 'fingerPrint'
-				});
+		var isFinger = api.getPrefs({
+			sync: true,
+			key: 'fingerPrint'
+		});
 
 		var OS = api.systemType;
-		if (OS == "ios"&&isFinger==1) {
+		if (OS == "ios" && isFinger == 1) {
 			var touchID = api.require('touchID');
 
 			touchID.verify(
@@ -188,8 +200,8 @@
 							setPassword();
 
 						} else {
-						
-	setPassword();
+
+							setPassword();
 						}
 					}
 				});
@@ -327,11 +339,20 @@
 
 		if (NODE == 3) {
 			api.openWin({
-				name: 'yd' + num,
+				name: 'ydceil' + num,
 				url: URL,
 				slidBackEnabled: false
 			});
 		}
+
+
+				if (NODE == 4) {
+					api.openWin({
+						name: 'ydqm' + num,
+						url: URL,
+						slidBackEnabled: false
+					});
+				}
 	}
 </script>
 

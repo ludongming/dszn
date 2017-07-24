@@ -2,6 +2,10 @@ function loadAdv() {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?app/getadv/?id=123&openid=' + OPENID
     }, function(ret, err) {
+        if(typeof(err)=="object"){
+          weui.alert("推荐图加载失败");
+          return false;
+        }
         //coding...
         $("#qiandao").attr("src", "http://www.d-shang.com/" + ret.data.image);
     });
@@ -129,6 +133,8 @@ function addlocation() {
         if (ret.status) {
             //alert('定位管理器初始化成功！');
             locationAddress();
+        }else{
+          alert(err.msg);
         }
     });
 }
@@ -141,6 +147,9 @@ function locationAddress() {
         if (ret.status) {
             var d = ret.address;
             ADDRESS = d.province + " " + d.city;
+        }else{
+          alert(err.msg);
+
         }
     });
 }
@@ -150,6 +159,11 @@ function isClock() {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?appclock/checkuserclock/?openid=' + OPENID
     }, function(ret, err) {
+      if(typeof(err)=="object"){
+        weui.alert("推荐图加载失败");
+        return false;
+      }
+
         if (ret.data == false) {
             showQDBox();
         }
@@ -305,33 +319,32 @@ function refresh() {
 
 
 function dropDownRecommend() {
-    $('.content').dropload({
-        scrollArea: window,
-        autoLoad: true,
-        loadDownFn: function(me) {
-            loadRecommendData(me);
-            me.lock('down');
-            rq();
-        },
-        loadUpFn: function(me) {
 
-            loadRecommendData(me);
+  api.setRefreshHeaderInfo({
+      loadingImg: 'widget://image/refresh.png',
+      bgColor: '#ccc',
+      textColor: '#fff',
+      textDown: '下拉刷新...',
+      textUp: '松开刷新...'
+  }, function(ret, err) {
+      //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+      loadRecommendData();
+      rq();
 
-            rq();
-        }
-    })
+  });
+
 }
 
 
 
 
-function loadRecommendData(me) {
+function loadRecommendData() {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
         timeout: 5,
         report: false
     }, function(ret, err) {
-      me.resetload();
+      api.refreshHeaderLoadDone();
 
         if (typeof(err) == "object") {
             weui.alert("网络请求超时，请稍后再试");

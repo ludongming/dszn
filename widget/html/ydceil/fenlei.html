@@ -47,25 +47,22 @@
 		<div class="page__bd content">
 			<div id="main">
 				<div class="box">
-					<div class="cate" ontouchend="cate(2162,'新源板')">
-						新源板
-					</div>
-					<div class="cate" ontouchend="cate(2163,'航空板')">
-						航空板
-					</div>
-					<div class="cate" ontouchend="cate(2158,'电器')">
-						电器
-					</div>
-					<div class="cate"  ontouchend="cate(2159,'LED灯')">
-						LED灯
-					</div>
-					<div class="cate" ontouchend="cate(2160,'换气扇')">
-						换气扇
-					</div>
+
+
 				</div>
 			</div>
 		</div>
 	</body>
+
+
+	<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+<div class="cate" ontouchend="cate({{=value.id}},'{{=value.name}}')">
+	{{=value.name}}
+</div>
+{{~}}
+</script>
+
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/doT.min.js"></script>
 	<script type="text/javascript" src="../../script/api.js"></script>
@@ -81,6 +78,7 @@
 				key : 'openid'
 			});
 			setTopBar();
+			getCateByFid(2156);
 		}
 
 		function cate(cid, name) {
@@ -92,6 +90,22 @@
 					name : name
 				}
 			});
+		}
+
+		function getCateByFid(fid){
+
+      api.ajax({
+          url: 'http://www.d-shang.com/index.php?appyd/getcatebyfid/?fid='+fid+'&openid='+OPENID,
+      },function(ret, err){
+          if (ret) {
+						var arrText = doT.template($("#interpolationtmpl").text());
+						$(".box").html(arrText(ret.data));
+          } else {
+              alert( JSON.stringify( err ) );
+          }
+      });
+
+
 		}
 
 		function remark(name) {
