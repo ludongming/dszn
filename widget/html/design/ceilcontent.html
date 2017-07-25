@@ -72,11 +72,19 @@
     api.closeWin();
   }
 
+
   function addpicclass(d) {
     var re = /<img[^>]+src=['"]([^'"]+)['"]+/g;
     var newimg = d.replace(re, "<img class=\"pic\" src=\"../../image/default.png\" data-original=\"$1\"");
     console.log(newimg);
     return newimg;
+
+  function addpicclass(d){
+    var re =/<img/g;
+    var newimg = d.replace(re,"<img class=\"pic\" ");
+    console.log(newimg);
+      return newimg;
+
   }
 </script>
 
