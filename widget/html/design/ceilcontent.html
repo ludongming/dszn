@@ -2,39 +2,38 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="../../css/weui.min.css">
-  <link rel="stylesheet" href="../../css/design.css">
-  <link rel="stylesheet" href="../../css/dropload.css">
-  <link rel="stylesheet" href="../../css/header.css" />
-  <style media="screen">
-    img {
-      width: 100%;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" href="../../css/design.css">
+    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style media="screen">
+        img {
+            width: 100%;
+        }
 
-    .main {
-      width: 100%;
-    }
-  </style>
+        .main {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-  <header style="position: fixed;" class="page__bd page__bd_spacing">
-    <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
-    <span id="title" class="title" style="text-align: center;  margin-right:40px;"></span>
-  </header>
+    <header style="position: fixed;" class="page__bd page__bd_spacing">
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
+        <span id="title" class="title" style="text-align: center;  margin-right:40px;"></span>
+    </header>
 
-  <div class="page__bd content">
-    <div class="main"></div>
-  </div>
+    <div class="page__bd content">
+        <div class="main"></div>
+    </div>
 
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
-<script type="text/javascript" src="../../script/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js">
@@ -42,50 +41,43 @@
 </script>
 <script id="interpolationtmpl" type="text/x-dot-template">
 
-  <div class="ceilcontent">{{=it}}</div>
+    <div class="ceilcontent">{{=it}}</div>
 
 </script>
 <script type="text/javascript">
-  apiready = function() {
-    var id = api.pageParam.id;
-    var title = api.pageParam.title;
-    getceilcontentbyid(id, title);
-  }
+    apiready = function() {
+        var id = api.pageParam.id;
+        var title = api.pageParam.title;
+        getceilcontentbyid(id, title);
+    }
 
-  function getceilcontentbyid(id, title) {
-    api.ajax({
-      url: 'http://www.d-shang.com/index.php?wallsceil/getwallsconbyid/?id=' + id,
-      method: 'post',
-    }, function(ret) {
-      if (ret.status) {
-        var d = ret.data;
-        var arrText = doT.template($("#interpolationtmpl").text());
-        var newd = addpicclass(d.content);
-        $(".main").html(arrText(newd));
-        $("#title").html(title);
-        $('.pic').picLazyLoad();
-      }
-    });
-  }
-
-  function goback() {
-    api.closeWin();
-  }
+    function getceilcontentbyid(id, title) {
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?wallsceil/getwallsconbyid/?id=' + id,
+            method: 'post',
+        }, function(ret) {
+            if (ret.status) {
+                var d = ret.data;
+                var newd = addPicClass(d.content);
 
 
-  function addpicclass(d) {
-    var re = /<img[^>]+src=['"]([^'"]+)['"]+/g;
-    var newimg = d.replace(re, "<img class=\"pic\" src=\"../../image/default.png\" data-original=\"$1\"");
-    console.log(newimg);
-    return newimg;
+                $(".main").html(newd);
+                //$("#title").html(title);
+                $('.pic').picLazyLoad();
+            }
+        });
+    }
 
-  function addpicclass(d){
-    var re =/<img/g;
-    var newimg = d.replace(re,"<img class=\"pic\" ");
-    console.log(newimg);
-      return newimg;
+    function goback() {
+        api.closeWin();
+    }
 
-  }
+
+    function addPicClass(d) {
+        var re = /<img[^>]+src=['"]([^'"]+)['"]+/g;
+        var newimg = d.replace(re, "<img class=\"pic\" src=\"../../image/default.png\" data-original=\"$1\"");
+        return newimg;
+    }
 </script>
 
 </html>
