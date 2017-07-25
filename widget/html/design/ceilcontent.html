@@ -57,7 +57,6 @@
       method: 'post',
     }, function(ret) {
       if (ret.status) {
-        console.log(JSON.stringify(ret)); //转化为字符串
         var d = ret.data;
         var arrText = doT.template($("#interpolationtmpl").text());
          var newd=addpicclass(d.content);
@@ -72,8 +71,9 @@
   }
 
   function addpicclass(d){
-    var re =/<img[^>]+>/g;
-    var newimg = d.replace(re,"<img class=\"pic\" >");
+    var re =/<img/g;
+    var newimg = d.replace(re,"<img class=\"pic\" ");
+    console.log(newimg);
       return newimg;
   }
 </script>
