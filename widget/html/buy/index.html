@@ -43,11 +43,11 @@
 			</div>
 		</div>
 		<div class="footer">
-			<div class="share"  onclick="loadData()"><img src="../../image/newPro.png">新品
+			<div class="share" onclick="vip()"><img src="../../image/vip2.png" />VIP
 			</div>
 			<div class="share"  onclick="fenlei()"><img src="../../image/fenlei1.png">分类
 			</div>
-			<div class="share" onclick="vip()"><img src="../../image/vip2.png" />VIP
+			<div class="share"  onclick="fangan()"><img src="../../image/fangan.png">方案
 			</div>
 			<div class="share" onclick="order()"><img src="../../image/order1.png" />订单
 			</div>
@@ -231,6 +231,11 @@
 		}
 
 		function loadData() {
+
+
+
+
+
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?app/recommend/?node=1&openid=' + OPENID
 			}, function(ret, err) {
@@ -241,6 +246,14 @@
 				$("#main").html(arrText(ret.data));
 				$('.pic').picLazyLoad();
 			});
+
+		}
+		function fangan(){
+			api.openWin({
+						name: 'fangan',
+						url: '../design/hot.html'
+					});
+
 		}
 
 
