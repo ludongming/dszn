@@ -188,18 +188,14 @@
 			$("#tcwrap").hide();
 		}
 
-		function search() {
+		function search(title) {
 			$(".guanggao").html("");
-			var title = $("#searchInput").val();
 			if (title == "") {
 				return;
 			}
 			api.ajax({
-				url : 'http://www.d-shang.com/index.php?appyd/search/?name=' + title + "&openid=" + OPENID
+				url : 'http://www.d-shang.com/index.php?app/searchgoods/?node=3&title=' + title + "&openid=" + OPENID
 			}, function(ret, err) {
-				if (ret.data.length < 1) {
-					return false;
-				}
 				var arrText = doT.template($("#interpolationtmpl").text());
 				$("#main").html(arrText(ret.data));
 				$('.pic').picLazyLoad();

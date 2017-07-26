@@ -201,7 +201,7 @@
 				return;
 			}
 			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/searchgoods/?title=' + title + "&openid=" + OPENID
+				url : 'http://www.d-shang.com/index.php?app/searchgoods/?node=2&title=' + title + "&openid=" + OPENID
 			}, function(ret, err) {
 				if (ret.data.length < 1) {
 					return false;
