@@ -33,7 +33,7 @@
 <script type="text/javascript" src="../../script/weui.min.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" id="interpolationtmpl">
-      //循环模板
+
     	{{~it:value:index}}
   <a class="weui-grid" href="javascript:getPaint({{=value.id}},'{{=value.name}}');">
     <p class="weui-grid__label">{{=value.name}}</p>
@@ -70,7 +70,8 @@
         pageParam: {
             id:id,
             name:name
-        }
+        },
+        slidBackEnabled: true
     });
   }
 </script>
