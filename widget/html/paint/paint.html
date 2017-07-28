@@ -48,10 +48,10 @@
 </style>
 
 <body>
-	<header style="position: fixed;" class="page__bd page__bd_spacing">
+	<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
-		<span style="text-align: center;" class="title">定制画</span>
-		<span id="showPicker" style="float:right;margin-right:10px;" onclick="openPaintChoose()">分类</span>
+		<span style="text-align: center;" class="title"></span>
+
 	</header>
 	<div class="page__bd content">
 		<div class="picarr"></div>
@@ -78,27 +78,19 @@
 		var picArr;
 		var OPENID;
 		var isDrop = false;
-		var CID = 69;
 		var PAGE = 1;
 		var me;
 		var cidType = "集成背景画";
 		apiready = function() {
+			var PAGE = 1;
 			setTopBar();
 			setDrop();
 			isDrop = true;
-			phoneGetPic();
-
+			var cid = api.pageParam.id;
+			var title = api.pageParam.name;
+			phoneGetPic(cid, title);
 		}
-		//打开分类
-		function openPaintChoose() {
-			api.openWin({
-				name: 'paintchoose',
-				url: './paintchoose.html',
-				slidBackEnabled: true,
-			});
 
-		}
-		//查看大图
 		function jump(id, cid) {
 			api.openWin({
 				name: "bigImg",
@@ -107,19 +99,20 @@
 					id: id,
 					cid: cid
 				},
-				slidBackEnabled: false,
+				slidBackEnabled: true,
 			})
 		}
 		//返回
 		function goback() {
 			api.closeWin();
 		}
-		//获取列表显示
-		function phoneGetPic() {
+
+		//获取图片列表
+		function phoneGetPic(CID, name) {
 			var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
 			api.ajax({
 				url: url
-			}, function(ret, err) {
+			}, function(ret) {
 				var d = ret.data.newslist;
 				if (d.length == 0) {
 					me.lock();
@@ -128,6 +121,7 @@
 					var arrText = doT.template($("#interpolationtmpl").text());
 					$(".picarr").append(arrText(d));
 					$('.pic').picLazyLoad();
+					$(".title").html(name);
 				}
 				//第一次加载数量不足的情况
 				if (d.length < 12) {

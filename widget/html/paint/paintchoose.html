@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>选择</title>
+  <link rel="stylesheet" href="../../css/weui.min.css">
+  <link rel="stylesheet" href="../../css/design.css">
+  <link rel="stylesheet" href="../../css/dropload.css">
+  <link rel="stylesheet" href="../../css/header.css" />
+</head>
+
+<body>
+  <header style="position: fixed;" class="page__bd page__bd_spacing">
+    <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
+    <span id="title" class="title" style="text-align: center;  margin-right:40px;">选择</span>
+  </header>
+  <div class="page_bd content">
+    <div class="page grid js_show">
+      <div class="page__hd" style="margin-top:70px;">
+        <div class="page__title">定制画分类</div>
+      </div>
+        <div class="weui-grids">
+
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" id="interpolationtmpl">
+      //循环模板
+    	{{~it:value:index}}
+  <a class="weui-grid" href="javascript:getPaint({{=value.id}},'{{=value.name}}');">
+    <p class="weui-grid__label">{{=value.name}}</p>
+  </a>
+        {{~}}
+</script>
+<script type="text/javascript">
+  apiready = function() {
+    setTopBar();
+    getClassName();
+  }
+
+  function goback() {
+    api.closeWin();
+  }
+
+
+  function getClassName(){
+    api.ajax({
+      url : "http://www.dszpvip.com/index.php?paint/phonegetcid/?type=集成墙面画",
+      method:'post'
+    }, function(ret, err) {
+      //coding...
+      var data = ret.data;
+      var arrText = doT.template($("#interpolationtmpl").text());
+      	$(".weui-grids").append(arrText(data));
+      })
+  }
+
+  function getPaint(id,name){
+    api.openWin({
+        name: 'paint',
+        url: './paint.html',
+        pageParam: {
+            id:id,
+            name:name
+        }
+    });
+  }
+</script>
+
+</html>

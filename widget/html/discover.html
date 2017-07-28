@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+  <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+  <title>Hello APP</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+
+  <link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../css/header.css" />
+  <link rel="stylesheet" type="text/css" href="../css/swiper.min.css" />
+  <link rel="stylesheet" type="text/css" href="../css/dropload.css" />
+  <style>
+    .nav {
+
+
+      position: relative;
+      width: 190px;
+      height: 20px;
+
+      float: right;
+    }
+
+    .menu {
+      height: 40px;
+      line-height: 40px;
+      font-size: 1em;
+      color: #000;
+      text-align: center;
+      text-indent: 0.5em;
+    }
+
+    .menu.selected {
+      font-size: 1em;
+      color: red;
+      font-weight: bolder;
+    }
+  </style>
+</head>
+
+<body>
+  <header style="position: fixed;">
+    <img src="../image/xj.png" ontouchend="friend()" style="width:25px;margin-top:8px; margin-left:10px; vertical-align:middle;float:left;">
+
+    <span class="tit">
+<div class="nav">
+      <a class="menu " tapmode="selected"  href="javascript:void(0)"   onclick="fnSetNavMenuIndex(0);">
+     精选
+    </a>
+      <a class="menu selected" tapmode="selected" href="javascript:void(0)" onclick="fnSetNavMenuIndex(1);">
+      最新
+    </a>
+</div>
+      </span>
+
+
+    <span style="display:inline-block;position:relative;float:right;margin-right:5px;width:50px; "> <img src="../image/laba.png" ontouchend="notice()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>    </span>
+  </header>
+
+</body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/wolf.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript" src="../script/weui.min.js"></script>
+<script type="text/javascript" src="../script/gift.js"></script>
+<script type="text/javascript" src="../script/fx.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+  apiready = function() {
+    setTopBar();
+    menus = $api.domAll('.menu');
+    openFrames();
+  };
+
+
+  var menus;
+
+  function openFrames() {
+    var frames = [];
+
+    for (var i = 0; i < menus.length; i++) {
+      frames.push({
+        name: 'discover_frame_',
+        url: './discover_frame.html',
+
+      });
+    }
+
+    api.openFrameGroup({
+      name: 'mainFrameGroup',
+      scrollEnabled: true,
+      rect: {
+        x: 0,
+        y: 80,
+        w: 'auto',
+        h: 'auto'
+      },
+      index: 0,
+      frames: frames
+    }, function(ret, err) {
+      fnSetNavMenuSelected(ret.index);
+    });
+  }
+
+
+  function fnSetNavMenuIndex(index_) {
+    fnSetNavMenuSelected(index_);
+    api.setFrameGroupIndex({
+      name: 'mainFrameGroup',
+      index: index_,
+      scroll: true
+    });
+  }
+
+  function fnSetNavMenuSelected(index_) {
+    for (var i = 0; i < menus.length; i++) {
+      if (index_ == i) {
+        $api.addCls(menus[i], 'selected');
+      } else {
+        $api.removeCls(menus[i], 'selected');
+      }
+    }
+  }
+</script>
+
+</html>
