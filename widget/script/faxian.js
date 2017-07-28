@@ -2,9 +2,9 @@ function loadAdv() {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?app/getadv/?id=123&openid=' + OPENID
     }, function(ret, err) {
-        if(typeof(err)=="object"){
-          weui.alert("推荐图加载失败");
-          return false;
+        if (typeof(err) == "object") {
+            weui.alert("推荐图加载失败");
+            return false;
         }
         //coding...
         $("#qiandao").attr("src", "http://www.d-shang.com/" + ret.data.image);
@@ -12,25 +12,22 @@ function loadAdv() {
 }
 
 function switchBtn(index) {
+    backSwitchBtn(index);
+    mySwiper.slideTo(index, 500, false); //切换到第一个slide，速度为1秒
 
-    if (index == 1) {
-        $(".nav_0").css({
-            "color": "black"
-        });
-        $(".nav_1").css({
-            "color": "red"
-        });
-        mySwiper.slideTo(1, 500, false); //切换到第一个slide，速度为1秒
+}
 
-    } else {
-        $(".nav_1").css({
-            "color": "black"
-        });
-        $(".nav_0").css({
-            "color": "red"
-        });
-        mySwiper.slideTo(0, 500, false); //切换到第一个slide，速度为1秒
-    }
+function backSwitchBtn(index){
+  var navArr = $(".nav");
+  navArr.each(function() {
+      $(this).css({
+          "color": "black"
+      });
+  })
+
+  $(".nav_" + index).css({
+      "color": "red"
+  });
 }
 
 
@@ -133,8 +130,8 @@ function addlocation() {
         if (ret.status) {
             //alert('定位管理器初始化成功！');
             locationAddress();
-        }else{
-          alert(err.msg);
+        } else {
+            alert(err.msg);
         }
     });
 }
@@ -147,8 +144,8 @@ function locationAddress() {
         if (ret.status) {
             var d = ret.address;
             ADDRESS = d.province + " " + d.city;
-        }else{
-          alert(err.msg);
+        } else {
+            alert(err.msg);
 
         }
     });
@@ -159,10 +156,10 @@ function isClock() {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?appclock/checkuserclock/?openid=' + OPENID
     }, function(ret, err) {
-      if(typeof(err)=="object"){
-        weui.alert("推荐图加载失败");
-        return false;
-      }
+        if (typeof(err) == "object") {
+            weui.alert("推荐图加载失败");
+            return false;
+        }
 
         if (ret.data == false) {
             showQDBox();
@@ -320,18 +317,18 @@ function refresh() {
 
 function dropDownRecommend() {
 
-  api.setRefreshHeaderInfo({
-      loadingImg: 'widget://image/refresh.png',
-      bgColor: '#ccc',
-      textColor: '#fff',
-      textDown: '下拉刷新...',
-      textUp: '松开刷新...'
-  }, function(ret, err) {
-      //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-      loadRecommendData();
-      rq();
+    api.setRefreshHeaderInfo({
+        loadingImg: 'widget://image/refresh.png',
+        bgColor: '#ccc',
+        textColor: '#fff',
+        textDown: '下拉刷新...',
+        textUp: '松开刷新...'
+    }, function(ret, err) {
+        //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+        loadRecommendData();
+        rq();
 
-  });
+    });
 
 }
 
@@ -344,7 +341,7 @@ function loadRecommendData() {
         timeout: 5,
         report: false
     }, function(ret, err) {
-      api.refreshHeaderLoadDone();
+        api.refreshHeaderLoadDone();
 
         if (typeof(err) == "object") {
             weui.alert("网络请求超时，请稍后再试");
@@ -356,6 +353,7 @@ function loadRecommendData() {
             var arrText = doT.template($("#interpolationtmpl").text());
             $("#recommendmain").html(arrText(d.recommend));
             $("#allmain").html(arrText(d.all));
+            $("#rankmain").html(arrText(d.rank));
             $('.pic').picLazyLoad();
         }
 
