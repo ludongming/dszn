@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>墙面画定制</title>
+  <link rel="stylesheet" href="../../css/weui.min.css">
+  <link rel="stylesheet" href="../../css/header.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0px;
+      width: 100%;
+      background-color: #fff;
+    }
+
+    div {
+      margin: 15px;
+    }
+
+    .paintname {
+      font-size: 1.2em;
+      border-bottom: 2px dashed #ccc;
+      height: 40px;
+      color: #666666;
+      line-height: 30px;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .paintpic {
+      color: #666666;
+      margin-top: 70px;
+    }
+
+    .paintsize {
+      color: #666666;
+      font-size: 1em;
+      border: 1px dashed #ccc;
+      padding: 10px;
+    }
+
+    .paintprice {
+      color: #666666;
+      font-size: 1em;
+    }
+
+    .price {
+      color: red;
+      font-size: 1.2em;
+    }
+
+    .paintcustom {
+      color: #666666;
+      font-size: 1em;
+    }
+
+
+    .paintclass {
+      color: #666666;
+      font-size: 1em;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .submit {
+      display: block;
+      width: 80px;
+      height: 30px;
+      border-radius: 7px;
+      background-color: green;
+      line-height: 30px;
+      text-align: center;
+      color: #fff;
+    }
+    .submitpaint{
+      margin-bottom: 50px;
+      position: absolute;
+      right: 30px;
+    }
+    .choosesize{
+        border: 1px dashed #ccc;
+    }
+    .choosesize a{
+      text-decoration: none;
+      color:#666;
+      display: block;
+      margin: 5px;
+      font-size: 1em;
+      width: 250px;
+
+    }
+      .selected{
+      border:2px solid red;
+    }
+    .menu{
+      text-decoration: none;
+      color:#666;
+      display: block;
+      margin: 5px;
+      font-size: 1em;
+
+    }
+    input{
+      font-size: 1em;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header style="position: fixed;" class="page__bd page__bd_spacing">
+    <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
+    <span id="title" class="title" style="text-align: center;  margin-right:40px;">墙面画定制</span>
+  </header>
+  <div class="page_bd content">
+    <div class="paintpic"><img src="../../image/zhinengxiaod.png" alt="" class="paintimg"></div>
+    <div class="paintname">城市剪影-59</div>
+      <div class="paintclass">色彩风格：城市剪影</div>
+    <div class="paintprice">单价：<span class="price">￥437元/块</span></div>
+    <div class="paintsize">
+      最大尺寸：
+      <p>双层铝墙板 波西米亚粗麻纹：单块最高3米，宽0.55米</p>
+      <p>木塑板 波西米亚粗麻纹：单块最高3米，宽度0.6米</p>
+      <p>木塑板 波西米亚粗麻纹：单块最高2.6米，宽度0.6米</p>
+    </div>
+
+    <div class="choosesize">
+      定制框体：
+      <a href="javascript:;" class="menu selected" onclick="addborder(this)" width="3">3米 双层铝墙板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu" onclick="addborder(this)" width="3">3米 木塑板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu" onclick="addborder(this)" width="2">2.6米 木塑板 波西米亚粗麻纹</a>
+    </div>
+    <div class="paintcustom">
+      定制尺寸<br>
+      <span>高&nbsp;&nbsp;<input type="text"  style="width:100px "; placeholder="单位是米" class="custom" id="customheight"></in></span>&nbsp;&nbsp;*&nbsp;&nbsp;
+      <span>宽&nbsp;&nbsp;<input type="text" style="width:100px; " placeholder="单位是米" class="custom" id="customheight"></in></span>
+    </div>
+    <div class="submitpaint">
+      <a href="javascript:getOrder();" class="submit">提交定制</a>
+    </div>
+    <!--提示框-->
+<div class="js_dialog" id="dialog">
+
+</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/wolf.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/weui.min.js"></script>
+<script type="text/javascript">
+  apiready = function() {
+    setTopBar();
+    var title=api.pageParam.title;
+    var thumb=api.pageParam.thumb;
+    var category_name=api.pageParam.category_name;
+    $('.paintname').html(title);
+    var some_url='http://www.dszpvip.com/'+thumb;
+    $(".paintimg").attr("src",some_url);
+  }
+    function addborder(obj){
+      var a=$(".menu");
+        $.each(a,function(){
+        $(this).removeClass("selected");
+});
+  $(obj).addClass("selected")
+}
+function getOrder(){
+
+
+}
+</script>
+
+</html>

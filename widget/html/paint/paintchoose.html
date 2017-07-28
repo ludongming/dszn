@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,8 +21,9 @@
       <div class="page__hd" style="margin-top:70px;">
         <div class="page__title">定制画分类</div>
       </div>
-        <div class="weui-grids">
+      <div class="weui-grids">
 
+      </div>
     </div>
   </div>
 </body>
@@ -33,12 +33,11 @@
 <script type="text/javascript" src="../../script/weui.min.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" id="interpolationtmpl">
-
-    	{{~it:value:index}}
-  <a class="weui-grid" href="javascript:getPaint({{=value.id}},'{{=value.name}}');">
-    <p class="weui-grid__label">{{=value.name}}</p>
-  </a>
-        {{~}}
+  {{~it: value: index}}
+  <a class = "weui-grid"  href = "javascript:getPaint({{=value.id}},'{{=value.name}}');" >
+    <p class = "weui-grid__label" >
+    {{=value.name}}</p></a>
+    {{~}}
 </script>
 <script type="text/javascript">
   apiready = function() {
@@ -51,27 +50,27 @@
   }
 
 
-  function getClassName(){
+  function getClassName() {
     api.ajax({
-      url : "http://www.dszpvip.com/index.php?paint/phonegetcid/?type=集成墙面画",
-      method:'post'
+      url: "http://www.dszpvip.com/index.php?paint/phonegetcid/?type=集成墙面画",
+      method: 'post'
     }, function(ret, err) {
       //coding...
       var data = ret.data;
       var arrText = doT.template($("#interpolationtmpl").text());
-      	$(".weui-grids").append(arrText(data));
-      })
+      $(".weui-grids").append(arrText(data));
+    })
   }
 
-  function getPaint(id,name){
+  function getPaint(id, name) {
     api.openWin({
-        name: 'paint',
-        url: './paint.html',
-        pageParam: {
-            id:id,
-            name:name
-        },
-        slidBackEnabled: true
+      name: 'paint',
+      url: './paint.html',
+      pageParam: {
+        id: id,
+        name: name
+      },
+      slidBackEnabled: true
     });
   }
 </script>

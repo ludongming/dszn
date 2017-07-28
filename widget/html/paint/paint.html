@@ -60,7 +60,7 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox">
-			<a href="javascript:jump({{=value.id}},{{=value.cid}})">
+			<a href="javascript:jump()">
 			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
 			</a>
 			<div class="picname">{{=value.title}}</div>
@@ -91,13 +91,12 @@
 			phoneGetPic(cid, title);
 		}
 
-		function jump(id, cid) {
+		function jump() {
 			api.openWin({
-				name: "bigImg",
-				url: "img.html",
+				name: "paintOrder",
+				url: "paintOrder.html",
 				pageParam: {
-					id: id,
-					cid: cid
+
 				},
 				slidBackEnabled: true,
 			})
@@ -108,11 +107,11 @@
 		}
 
 		//获取图片列表
-		function phoneGetPic(CID, name) {
+		function phoneGetPic(CID,name) {
 			var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
 			api.ajax({
 				url: url
-			}, function(ret) {
+			}, function(ret, err) {
 				var d = ret.data.newslist;
 				if (d.length == 0) {
 					me.lock();
@@ -121,7 +120,6 @@
 					var arrText = doT.template($("#interpolationtmpl").text());
 					$(".picarr").append(arrText(d));
 					$('.pic').picLazyLoad();
-					$(".title").html(name);
 				}
 				//第一次加载数量不足的情况
 				if (d.length < 12) {

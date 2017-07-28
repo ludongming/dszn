@@ -48,6 +48,7 @@
 </style>
 
 <body>
+
 	<header style="position: fixed;" class="page__bd page__bd_spacing">
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
 		<span style="text-align: center; margin-left:50px;" class="title">定制画</span>
@@ -60,7 +61,7 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox">
-			<a href="javascript:jump({{=value.id}},{{=value.cid}})">
+			<a href="javascript:jump('{{=value.thumb}}','{{=value.title}}','{{=value.category_name}}') ">
 			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
 			</a>
 			<div class="picname">{{=value.title}}</div>
@@ -99,17 +100,19 @@
 
 		}
 		//查看大图
-		function jump(id, cid) {
+		function jump(thumb,title,category_name) {
 			api.openWin({
-				name: "bigImg",
-				url: "img.html",
+				name: "paintOrder",
+				url: "paintOrder.html",
 				pageParam: {
-					id: id,
-					cid: cid
+					thumb:thumb,
+					title:title,
+					category_name:category_name
 				},
-				slidBackEnabled: false,
+				slidBackEnabled: true
 			})
 		}
+
 		//返回
 		function goback() {
 			api.closeWin();
@@ -120,7 +123,9 @@
 			api.ajax({
 				url: url
 			}, function(ret, err) {
+					console.log(JSON.stringify(ret));
 				var d = ret.data.newslist;
+				console.log(JSON.stringify(d));
 				if (d.length == 0) {
 					me.lock();
 					me.noData();
