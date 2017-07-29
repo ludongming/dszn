@@ -16,20 +16,24 @@
       background-color: #fff;
     }
 
-    div {
-      margin: 15px;
-    }
+
 
     .paintname {
       font-size: 1.2em;
-      border-bottom: 2px dashed #ccc;
-      height: 40px;
-      color: #666666;
-      line-height: 30px;
+
+
+      color: #000;
+
+      margin-left: 15px;
+    }
+
+    .nameheader {
+      border-bottom: 1px solid #ccc;
     }
 
     img {
       width: 100%;
+      max-height: 350px;
     }
 
     .paintpic {
@@ -42,75 +46,106 @@
       font-size: 1em;
       border: 1px dashed #ccc;
       padding: 10px;
+      margin: 15px;
+      background-color: #f0f0f0;
     }
 
     .paintprice {
       color: #666666;
       font-size: 1em;
+      margin-left: 15px;
     }
 
     .price {
-      color: red;
+      color: #ff5b02;
       font-size: 1.2em;
+      font-weight: bold;
     }
 
     .paintcustom {
       color: #666666;
       font-size: 1em;
+      margin: 15px;
+      margin-bottom: 60px;
     }
 
 
     .paintclass {
-      color: #666666;
-      font-size: 1em;
+      color: #c0c0c0;
+      font-size: 0.7em;
+      margin-left: 15px;
+      border: 1px solid #ccc;
+      width: auto;
+      display: inline-block !important;
+      display: inline;
+      border-radius: 3px;
     }
 
     a {
       text-decoration: none;
     }
 
-    .submit {
+    .paintsub {
       display: block;
-      width: 80px;
-      height: 30px;
-      border-radius: 7px;
-      background-color: green;
-      line-height: 30px;
+      width: 120px;
+      height: 50px;
+      background-color: #ff6a05;
+      line-height: 50px;
       text-align: center;
       color: #fff;
+      font-size: 1em;
+      float: right;
     }
-    .submitpaint{
-      margin-bottom: 50px;
-      position: absolute;
-      right: 30px;
+
+    .submitpaint {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      background-color: #f0f0f0;
     }
-    .choosesize{
-        border: 1px dashed #ccc;
+
+    .choosesize {
+      border: 1px dashed #ccc;
+      margin: 15px;
+      color: #666;
     }
-    .choosesize a{
+
+    .choosesize a {
       text-decoration: none;
-      color:#666;
+      color: #666;
       display: block;
       margin: 5px;
       font-size: 1em;
-      width: 250px;
+      width: auto;
+      display: inline-block !important;
+      display: inline;
+    }
 
+    .selected {
+      border: 2px solid #ff5b02!important;
+      background-color: #ff5b02!important;
+      color: #fff!important;
+      border-radius: 3px!important;
     }
-      .selected{
-      border:2px solid red;
-    }
-    .menu{
+
+    .menu {
       text-decoration: none;
-      color:#666;
+      border: 1px solid #ccc;
       display: block;
       margin: 5px;
       font-size: 1em;
-
+      border-radius: 3px;
+      display: block;
     }
-    input{
+
+    input {
       font-size: 1em;
     }
 
+    .unit {
+      color: #ff5b02;
+      font-size: 1em;
+    }
   </style>
 </head>
 
@@ -120,10 +155,15 @@
     <span id="title" class="title" style="text-align: center;  margin-right:40px;">墙面画定制</span>
   </header>
   <div class="page_bd content">
-    <div class="paintpic"><img src="../../image/zhinengxiaod.png" alt="" class="paintimg"></div>
-    <div class="paintname">城市剪影-59</div>
-      <div class="paintclass">色彩风格：城市剪影</div>
-    <div class="paintprice">单价：<span class="price">￥437元/块</span></div>
+    <div class="paintpic"><img src="../../image/defaultimage.png" alt="" class="paintimg"></div>
+    <div class="nameheader">
+      <div class="paintname">城市剪影-59</div>
+        <div class="paintclass">色彩风格：城市剪影</div>
+      <div class="paintprice">单价：<span class="unit">￥</span><span class="price">437元/块</span></div>
+    </div>
+
+
+
     <div class="paintsize">
       最大尺寸：
       <p>双层铝墙板 波西米亚粗麻纹：单块最高3米，宽0.55米</p>
@@ -132,23 +172,20 @@
     </div>
 
     <div class="choosesize">
-      定制框体：
-      <a href="javascript:;" class="menu selected" onclick="addborder(this)" width="3">3米 双层铝墙板 波西米亚粗麻纹</a>
-      <a href="javascript:;" class="menu" onclick="addborder(this)" width="3">3米 木塑板 波西米亚粗麻纹</a>
-      <a href="javascript:;" class="menu" onclick="addborder(this)" width="2">2.6米 木塑板 波西米亚粗麻纹</a>
+      定制框体： <br>
+      <a href="javascript:;" class="menu selected" onclick="addborder(this)" width="3" price="437">3米 双层铝墙板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu" onclick="addborder(this)" width="3" price="380">3米 木塑板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu" onclick="addborder(this)" width="2.6" price="330">2.6米 木塑板 波西米亚粗麻纹</a>
     </div>
     <div class="paintcustom">
       定制尺寸<br>
-      <span>高&nbsp;&nbsp;<input type="text"  style="width:100px "; placeholder="单位是米" class="custom" id="customheight"></in></span>&nbsp;&nbsp;*&nbsp;&nbsp;
-      <span>宽&nbsp;&nbsp;<input type="text" style="width:100px; " placeholder="单位是米" class="custom" id="customheight"></in></span>
+      <span>高&nbsp;&nbsp;<input type="text"  style="width:100px "; placeholder="单位是米" class="custom" id="height"></in></span>&nbsp;&nbsp;*&nbsp;&nbsp;
+      <span>宽&nbsp;&nbsp;<input type="text" style="width:100px; " placeholder="单位是米" class="custom" id="width"></in></span>
     </div>
     <div class="submitpaint">
-      <a href="javascript:getOrder();" class="submit">提交定制</a>
+      <a href="javascript:;" class="paintsub" onclick="message()">提交定制</a>
     </div>
-    <!--提示框-->
-<div class="js_dialog" id="dialog">
 
-</div>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script src="../../script/zepto.min.js"></script>
@@ -159,24 +196,92 @@
 <script type="text/javascript">
   apiready = function() {
     setTopBar();
-    var title=api.pageParam.title;
-    var thumb=api.pageParam.thumb;
-    var category_name=api.pageParam.category_name;
+    var title = api.pageParam.title;
+    var pic = api.pageParam.pic;
+    var category_name = api.pageParam.category_name;
     $('.paintname').html(title);
-    var some_url='http://www.dszpvip.com/'+thumb;
-    $(".paintimg").attr("src",some_url);
+    var some_url = 'http://www.dszpvip.com/' + pic;
+    $(".paintimg").attr("src", some_url);
+    $('.paintclass').html(category_name)
   }
-    function addborder(obj){
-      var a=$(".menu");
-        $.each(a,function(){
-        $(this).removeClass("selected");
-});
-  $(obj).addClass("selected")
-}
-function getOrder(){
 
+  function addborder(obj) {
+    var a = $(".menu");
+    $.each(a, function() {
+      $(this).removeClass("selected");
+    });
+    $(obj).addClass("selected");
+    var price = $(".selected").attr("price");
+    $('.price').html(price + '元/块');
+  }
 
-}
+  function message() {
+    //首先获取选中的a标签的数字，名称
+    var name = $(".selected").text();
+    var widthsize = $(".selected").attr("width");
+    var price = $(".selected").attr("price");
+    //然后获取输入框的数字
+    var height = Math.floor($("#height").val()*100)/100;
+    var width = Math.floor($("#width").val()*100)/100;
+     $("#height").val(height);
+     $("#width").val(width);
+    //进行判断
+    //判断高度不能大于3米，宽不限。
+    $("#height").val(height);
+    if (parseFloat(height) > parseFloat("3.00")) {
+      api.alert({
+        msg: "超出最大尺寸"
+      });
+      $("#height").val("");
+      return;
+    }
+    $("#width").val(width);
+    if (height == 0 || width == 0) {
+      api.alert({
+        msg: "请输入尺寸"
+      });
+      $("#height").val("");
+      $("#width").val("");
+      return;
+    }
+    if (parseFloat(height) < parseFloat("0") || parseFloat(width) < parseFloat("0")) {
+      api.alert({
+        msg: "请输入正确的尺寸"
+      });
+      return;
+    }
+    var num = Math.ceil(FloatDiv(width, widthsize)); //向上四舍五入
+    var sum = price * num;
+    var str = "名称：" + name + "\n数量：" + num + "块\n" + "单价：￥" + price + "元\n规格：长 " + height + "米， 宽 " + width + "米\n总计：￥" + sum + "元\n";
+    api.confirm({
+      title: '请确认价格',
+      msg: str,
+      buttons: ['购买', '取消']
+    }, function(ret, err) {
+      api.alert({
+        msg: "取消"
+      });
+    });
+  }
+
+  //浮点数除法运算
+
+  function FloatDiv(arg1, arg2) {
+    var t1 = 0,
+      t2 = 0,
+      r1, r2;
+    try {
+      t1 = arg1.toString().split(".")[1].length
+    } catch (e) {}
+    try {
+      t2 = arg2.toString().split(".")[1].length
+    } catch (e) {}
+    with(Math) {
+      r1 = Number(arg1.toString().replace(".", ""));
+      r2 = Number(arg2.toString().replace(".", ""));
+      return (r1 / r2) * pow(10, t2 - t1);
+    }
+  }
 </script>
 
 </html>
