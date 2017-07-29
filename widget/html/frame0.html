@@ -41,7 +41,9 @@
 			<a class="nav nav_1" href="javascript:void(0)" ontouchend="switchBtn(1)">
 			最新
 		</a>
-
+		<a class="nav nav_2" href="javascript:void(0)" ontouchend="switchBtn(2)">
+		热门
+	</a>
 		  </span>
 
 
@@ -52,7 +54,7 @@
 
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide swiper-no-swiping">
+				<div class="swiper-slide">
 					<div class="recommendmain">
 						<div class="qd" onclick="clock()">
 							<img src="../mrqd1.png" id="qiandao">
@@ -66,12 +68,18 @@
 					</div>
 
 				</div>
-				<div class="swiper-slide swiper-no-swiping">
+				<div class="swiper-slide">
 					<div class="allmain">
 						<div class="jingxuan">
 							<img src="../image/jingxuan.jpg" height="100%;">
 						</div>
 						<div id="allmain"></div>
+					</div>
+				</div>
+
+				<div class="swiper-slide">
+					<div class="rankmain">
+						<div id="rankmain"></div>
 					</div>
 				</div>
 			</div>
@@ -194,9 +202,14 @@
 		rq();
 		loadRecommendData();
 		mySwiper = new Swiper('.swiper-container', {
-			autoplay: false, //可选选项，自动滑动
-			noSwiping: true
-
+			autoplay: false,
+			direction : 'horizontal',
+			resistanceRatio : 0,
+			longSwipesRatio:0.4,
+			touchAngle:20,
+			onSlideChangeEnd: function(swiper, even) {
+				backSwitchBtn(mySwiper.activeIndex);
+      }
 		})
 		addlocation();
 
