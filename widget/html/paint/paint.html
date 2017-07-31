@@ -61,7 +61,7 @@
 		{{~it:value:index}}
 		<div class="picbox">
 			<a href="javascript:jump('{{=value.pic}}','{{=value.title}}','{{=value.category_name}}');">
-			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
+				<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
 			</a>
 			<div class="picname">{{=value.title}}</div>
 		</div>
@@ -91,14 +91,14 @@
 			phoneGetPic(cid, title);
 		}
 
-		function jump(pic,title,category_name) {
+		function jump(pic, title, category_name) {
 			api.openWin({
 				name: "paintOrder",
 				url: "paintOrder.html",
 				pageParam: {
-					pic:pic,
-					title:title,
-					category_name:category_name
+					pic: pic,
+					title: title,
+					category_name: category_name
 				},
 				slidBackEnabled: true
 			})
@@ -109,31 +109,23 @@
 		}
 
 		//获取图片列表
-		function phoneGetPic(CID,name) {
+		function phoneGetPic(CID, name) {
 			var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
 			api.ajax({
 				url: url
 			}, function(ret, err) {
-				var d = ret.data.newslist;
-				if (d.length == 0) {
-					me.lock();
-					me.noData();
-				} else {
-					var arrText = doT.template($("#interpolationtmpl").text());
-					$(".picarr").append(arrText(d));
-					$('.pic').picLazyLoad();
-					$('.title').html(name);
-				}
-				//第一次加载数量不足的情况
-				if (d.length < 12) {
-					me.lock();
-					me.noData();
-				}
-				if (PAGE > 20) {
-					me.lock();
-					me.noData();
-				}
 				me.resetload();
+
+				if (typeof(err) == "object") {
+					return false;
+				}
+				var d = ret.data.newslist;
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$(".picarr").append(arrText(d));
+				$('.pic').picLazyLoad();
+				$('.title').html(name);
+
+
 			});
 		}
 

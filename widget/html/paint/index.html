@@ -123,9 +123,7 @@
 			api.ajax({
 				url: url
 			}, function(ret, err) {
-				//	console.log(JSON.stringify(ret));
 				var d = ret.data.newslist;
-				console.log(JSON.stringify(d));
 				if (d.length == 0) {
 					me.lock();
 					me.noData();
