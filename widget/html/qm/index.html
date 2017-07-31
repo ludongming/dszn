@@ -234,16 +234,10 @@
 		}
 
 		function loadData() {
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/recommend/?node=2&openid=' + OPENID
-			}, function(ret, err) {
-				if (ret.data.length < 1) {
-					return false;
-				}
-				var arrText = doT.template($("#interpolationtmpl").text());
-				$("#main").html(arrText(ret.data));
-				$('.pic').picLazyLoad();
-			});
+			api.openWin({
+						name: 'paint',
+						url: '../paint/index.html'
+					});
 		}
 
 
