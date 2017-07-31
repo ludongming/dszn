@@ -114,18 +114,19 @@
       text-decoration: none;
       color: #666;
       display: block;
-      margin: 5px;
-      font-size: 1em;
+      margin: 3px;
+font-size: 0.8em;
       width: auto;
       display: inline-block !important;
       display: inline;
+      padding: 3px;
     }
 
     .selected {
       border: 2px solid #ff5b02!important;
       background-color: #ff5b02!important;
       color: #fff!important;
-      border-radius: 3px!important;
+      border-radius: 5px!important;
     }
 
     .menu {
@@ -133,9 +134,10 @@
       border: 1px solid #ccc;
       display: block;
       margin: 5px;
-      font-size: 1em;
-      border-radius: 3px;
+
+      border-radius: 5px;
       display: block;
+
     }
 
     input {
@@ -173,9 +175,9 @@
 
     <div class="choosesize">
       定制框体： <br>
-      <a href="javascript:;" class="menu selected" onclick="addborder(this)" width="3" price="437">3米 双层铝墙板 波西米亚粗麻纹</a>
-      <a href="javascript:;" class="menu" onclick="addborder(this)" width="3" price="380">3米 木塑板 波西米亚粗麻纹</a>
-      <a href="javascript:;" class="menu" onclick="addborder(this)" width="2.6" price="330">2.6米 木塑板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu selected"  sku="109965" onclick="addborder(this)" width="3" price="437">3米 双层铝墙板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu"  sku="10996" onclick="addborder(this)" width="3" price="380">3米 木塑板 波西米亚粗麻纹</a>
+      <a href="javascript:;" class="menu"  sku="110574" onclick="addborder(this)" width="2.6" price="330">2.6米 木塑板 波西米亚粗麻纹</a>
     </div>
     <div class="paintcustom">
       定制尺寸<br>
@@ -185,7 +187,7 @@
     <div class="submitpaint">
       <a href="javascript:;" class="paintsub" onclick="message()">提交定制</a>
     </div>
-
+<input type="hidden" name="token" id="token" value="170731131523YANO">
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script src="../../script/zepto.min.js"></script>
@@ -202,7 +204,7 @@
     $('.paintname').html(title);
     var some_url = 'http://www.dszpvip.com/' + pic;
     $(".paintimg").attr("src", some_url);
-    $('.paintclass').html(category_name)
+    $('.paintclass').html(category_name);
   }
 
   function addborder(obj) {
@@ -256,20 +258,17 @@
     api.confirm({
       title: '请确认价格',
       msg: str,
-      buttons: ['购买', '取消']
+      buttons: [ '取消','提交订单']
     }, function(ret, err) {
-      api.alert({
-        msg: "取消"
-      });
+      //提交成功后
+      subOrder(height,num,width);
     });
   }
 
   //浮点数除法运算
 
   function FloatDiv(arg1, arg2) {
-    var t1 = 0,
-      t2 = 0,
-      r1, r2;
+    var t1 = 0,t2 = 0,r1, r2;
     try {
       t1 = arg1.toString().split(".")[1].length
     } catch (e) {}
@@ -281,6 +280,32 @@
       r2 = Number(arg2.toString().replace(".", ""));
       return (r1 / r2) * pow(10, t2 - t1);
     }
+  }
+  //提交订单
+  function subOrder(height,num,width){
+    OPENID='44vpis+4qJhXwj3IXOgY';
+    //获取选中的sku：编号
+    var sku=$(".selected").attr("sku");
+    //获取token的值
+    var token=$("#token").val();
+    //获取选中的商品名
+    var remark=$(".paintname").text();
+    //备注产品名+高度+宽度
+      remark+="/高度："+height+"/宽度："+width;
+
+    //提交到接口地址
+    api.ajax({
+        url: 'http://www.d-shang.com/index.php?appbuy/addpaintorder/?openid='+OPENID,
+        method: 'post',
+        data: {
+            token:token,
+            sku:sku,
+            num:num,
+            remark:remark
+        }
+    }, function(ret) {
+        console.log(JSON.stringify(ret));
+    });
   }
 </script>
 
