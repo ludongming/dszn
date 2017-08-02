@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<div class="share"  onclick="loadData()"><img src="../../image/newPro.png">定制画
+			<div class="share"  onclick="openPaint()"><img src="../../image/newPro.png">定制画
 			</div>
 			<div class="share" onclick="fenlei()"><img src="../../image/fenlei1.png" />分类
 			</div>
@@ -234,6 +234,18 @@
 		}
 
 		function loadData() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?app/recommend/?node=2&openid=' + OPENID
+			}, function(ret, err) {
+				if (ret.data.length < 1) {
+					return false;
+				}
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(ret.data));
+				$('.pic').picLazyLoad();
+			});
+		}
+		function openPaint(){
 			api.openWin({
 						name: 'paint',
 						url: '../paint/index.html'

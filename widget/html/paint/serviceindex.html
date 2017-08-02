@@ -48,10 +48,11 @@
 </style>
 
 <body>
-	<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
-		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
-		<span style="text-align: center;" class="title"></span>
 
+	<header style="position: fixed;" class="page__bd page__bd_spacing">
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
+		<span style="text-align: center; margin-left:50px;" class="title">定制画</span>
+		<span id="showPicker" style="float:right;margin-right:10px;" onclick="openPaintChoose()">分类</span>
 	</header>
 	<div class="page__bd content">
 		<div class="picarr"></div>
@@ -60,8 +61,8 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox">
-			<a href="javascript:jump('{{=value.pic}}','{{=value.title}}','{{=value.category_name}}');">
-				<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
+			<a href="javascript:jump({{=value.id}},{{=value.cid}}) ">
+			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
 			</a>
 			<div class="picname">{{=value.title}}</div>
 		</div>
@@ -78,52 +79,68 @@
 		var picArr;
 		var OPENID;
 		var isDrop = false;
+		var CID = 69;
 		var PAGE = 1;
 		var me;
 		var cidType = "集成背景画";
 		apiready = function() {
-			var PAGE = 1;
 			setTopBar();
 			setDrop();
 			isDrop = true;
-			var cid = api.pageParam.id;
-			var title = api.pageParam.name;
-			phoneGetPic(cid, title);
-		}
+			phoneGetPic();
 
-		function jump(pic, title, category_name) {
+		}
+		//打开分类
+		function openPaintChoose() {
 			api.openWin({
-				name: "paintorder",
-				url: "paintorder.html",
+				name: 'servicepaintchoose',
+				url: './servicepaintchoose.html',
+				slidBackEnabled: true,
+			});
+
+		}
+		//定制画页面
+		function jump(id, cid) {
+			api.openWin({
+				name: "bigImg",
+				url:"img.html",
 				pageParam: {
-					pic: pic,
-					title: title,
-					category_name: category_name
+					id: id,
+					cid: cid
 				},
-				slidBackEnabled: true
+				slidBackEnabled: true,
 			})
 		}
+
 		//返回
 		function goback() {
 			api.closeWin();
 		}
-
-		//获取图片列表
-		function phoneGetPic(CID, name) {
+		//获取列表显示
+		function phoneGetPic() {
 			var url = 'http://www.dszpvip.com/index.php?paint/phonegetpic/?cid=' + CID + "&p=" + PAGE;
 			api.ajax({
 				url: url
 			}, function(ret, err) {
-				me.resetload();
-
-				if (typeof(err) == "object") {
-					return false;
-				}
 				var d = ret.data.newslist;
-				var arrText = doT.template($("#interpolationtmpl").text());
-				$(".picarr").append(arrText(d));
-				$('.pic').picLazyLoad();
-				$('.title').html(name);
+				if (d.length == 0) {
+					me.lock();
+					me.noData();
+				} else {
+					var arrText = doT.template($("#interpolationtmpl").text());
+					$(".picarr").append(arrText(d));
+					$('.pic').picLazyLoad();
+				}
+				//第一次加载数量不足的情况
+				if (d.length < 12) {
+					me.lock();
+					me.noData();
+				}
+				if (PAGE > 20) {
+					me.lock();
+					me.noData();
+				}
+				me.resetload();
 			});
 		}
 

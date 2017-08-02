@@ -201,6 +201,11 @@ font-size: 0.8em;
     var title = api.pageParam.title;
     var pic = api.pageParam.pic;
     var category_name = api.pageParam.category_name;
+    //获取openid
+    OPENID = api.getPrefs({
+      sync : true,
+      key : 'openid'
+    });
     $('.paintname').html(title);
     var some_url = 'http://www.dszpvip.com/' + pic;
     $(".paintimg").attr("src", some_url);
@@ -264,9 +269,7 @@ font-size: 0.8em;
       subOrder(height,num,width);
     });
   }
-
   //浮点数除法运算
-
   function FloatDiv(arg1, arg2) {
     var t1 = 0,t2 = 0,r1, r2;
     try {
@@ -283,7 +286,6 @@ font-size: 0.8em;
   }
   //提交订单
   function subOrder(height,num,width){
-    OPENID='44vpis+4qJhXwj3IXOgY';
     //获取选中的sku：编号
     var sku=$(".selected").attr("sku");
     //获取token的值
@@ -298,13 +300,15 @@ font-size: 0.8em;
         url: 'http://www.d-shang.com/index.php?appbuy/addpaintorder/?openid='+OPENID,
         method: 'post',
         data: {
+          values:{
             token:token,
             sku:sku,
             num:num,
             remark:remark
+          }
         }
     }, function(ret) {
-        console.log(JSON.stringify(ret));
+      api.alert({msg:'恭喜你,订单提交成功!'});
     });
   }
 </script>

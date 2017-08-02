@@ -60,7 +60,7 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox">
-			<a href="javascript:jump('{{=value.pic}}','{{=value.title}}','{{=value.category_name}}');">
+			<a href="javascript:jump({{=value.id}},{{=value.cid}})">
 				<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
 			</a>
 			<div class="picname">{{=value.title}}</div>
@@ -91,16 +91,15 @@
 			phoneGetPic(cid, title);
 		}
 
-		function jump(pic, title, category_name) {
+		function jump(id, cid) {
 			api.openWin({
-				name: "paintorder",
-				url: "paintorder.html",
+				name: "bigImg",
+				url: "img.html",
 				pageParam: {
-					pic: pic,
-					title: title,
-					category_name: category_name
+					id: id,
+					cid: cid
 				},
-				slidBackEnabled: true
+				slidBackEnabled: true,
 			})
 		}
 		//返回

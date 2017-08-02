@@ -22,7 +22,7 @@
 	<header style="position: fixed;">
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
 		<span style="text-align: center; margin-left: 15%;">常规</span>
-		<img src="../../image/voice.png" ontouchend="voice()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
+		<img src="../../image/voice.png" ontouchend="voice()" style="width:25px;margin-top:8px;margin-right:10px; vertical-align:middle;float:right;">
 
 		<img src="../../image/search1.png" ontouchend="showSearch()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
 	</header>
@@ -88,6 +88,7 @@
 			</div>
 		</div>
 		<!--产品信息-->
+		<!--购物车弹出框-->
 		<div class="cpxx" id="cpxx_{{=value.sku}}">
 			<div class="tcbtn">
 				<button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value.sku}}">+</button>
