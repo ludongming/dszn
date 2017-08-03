@@ -210,6 +210,7 @@
     var some_url = 'http://www.dszpvip.com/' + pic;
     $(".paintimg").attr("src", some_url);
     $('.paintclass').html(category_name);
+
   }
 
   function addborder(obj) {
@@ -264,7 +265,7 @@
       title: '请确认价格',
       msg: str,
       buttons: [ '取消','提交订单']
-    }, function(ret, err) {
+    }, function(ret) {
       //提交成功后
       subOrder(height,num,width);
     });
@@ -308,7 +309,11 @@
           }
         }
     }, function(ret) {
+
       api.alert({msg:'恭喜你,订单提交成功!'});
+
+    }, function(err) {
+      console.log(JSON.stringify(err));
     });
   }
 </script>
