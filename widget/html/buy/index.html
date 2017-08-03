@@ -290,6 +290,7 @@
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?app/recommend/?node=1&openid=' + OPENID
 		}, function(ret, err) {
+console.log(OPENID);
 			if (ret.data.length < 1) {
 				return false;
 			}
