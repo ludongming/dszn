@@ -295,7 +295,6 @@
     var remark=$(".paintname").text();
     //备注产品名+高度+宽度
       remark+="/高度："+height+"/宽度："+width;
-
     //提交到接口地址
     api.ajax({
         url: 'http://www.d-shang.com/index.php?appbuy/addpaintorder/?openid='+OPENID,
@@ -309,11 +308,7 @@
           }
         }
     }, function(ret) {
-
       api.alert({msg:'恭喜你,订单提交成功!'});
-
-    }, function(err) {
-      console.log(JSON.stringify(err));
     });
   }
 </script>

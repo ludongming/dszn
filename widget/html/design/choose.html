@@ -23,55 +23,56 @@
         <div class="page__title">集成吊顶</div>
       </div>
       <div class="weui-grids">
-        <a class="weui-grid" href="javascript:;" onclick="openprogramme(1,1)">
+        <a class="weui-grid" href="javascript:;" data-placeType="1" data-type="1" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/blue/1.png" alt=""></div>
           <p class="weui-grid__label">厨房</p>
         </a>
-        <a class="weui-grid" href="javascript:;" onclick="openprogramme(1,2)">
+        <a class="weui-grid" href="javascript:;" data-placeType="2" data-type="1" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/blue/2.png" alt=""></div>
           <p class="weui-grid__label">卫生间</p>
         </a>
-        <a class="weui-grid" href="javascript:;" onclick="openprogramme(1,3)">
+        <a class="weui-grid" href="javascript:;" data-placeType="3" data-type="1" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/blue/3.png" alt=""></div>
           <p class="weui-grid__label">客厅</p>
         </a>
-        <a class="weui-grid" href="javascript:;" onclick="openprogramme(1,4)">
+        <a class="weui-grid" href="javascript:;" data-placeType="4" data-type="1" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/blue/4.png" alt=""></div>
           <p class="weui-grid__label">卧室</p>
         </a>
-        <a class="weui-grid" href="javascript:;" data-type="5" onclick="openprogramme(1,5)">
+        <a class="weui-grid" href="javascript:;" data-placeType="5" data-type="1" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/blue/5.png" alt=""></div>
           <p class="weui-grid__label">儿童房</p>
         </a>
       </div>
+      <div>
       <div class="page__hd">
         <div class="page__title">集成背景·墙面</div>
       </div>
       <div class="weui-grids">
 
-        <a class="weui-grid" href="javascript:;" data-type="3" onclick="openprogramme(2,3)">
+        <a class="weui-grid" href="javascript:;" data-placeType="3" data-type="2" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/pink/3.png" alt=""></div>
           <p class="weui-grid__label">客厅</p>
         </a>
-        <a class="weui-grid" href="javascript:;" data-placeType="4" onclick="openprogramme(2,4)">
+        <a class="weui-grid" href="javascript:;" data-placeType="4" data-type="2" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/pink/4.png" alt=""></div>
           <p class="weui-grid__label">卧室</p>
         </a>
-        <a class="weui-grid" href="javascript:;" data-placeType="5" onclick="openprogramme(2,5)">
+        <a class="weui-grid" href="javascript:;" data-placeType="5" data-type="2" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/pink/5.png" alt=""></div>
           <p class="weui-grid__label">儿童房</p>
         </a>
-        <a class="weui-grid" href="javascript:;" data-placeType="6" onclick="openprogramme(2,6)">
+        <a class="weui-grid" href="javascript:;" data-placeType="6" data-type="2" onclick="openprogramme(this)">
           <div class="weui-grid__icon"><img src="../../image/designicon/pink/6.png" alt=""></div>
           <p class="weui-grid__label">百变方案</p>
         </a>
       </div>
     </div>
+    </div>
   </div>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
-
 <script type="text/javascript" src="../../script/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/weui.min.js"></script>
@@ -79,15 +80,23 @@
   apiready = function() {
     setTopBar();
   }
-
-  function openprogramme(type, placeType) {
-
+  //把a标签的dom传进来,node是整个a标签的内容
+  function openprogramme(node) {
+    //获取type和placeType
+    var type = $(node).attr("data-type");
+    var placeType = $(node).attr("data-placeType");
+    //获取大类（集成吊顶或者墙面），父亲的同胞的儿子，和小分类
+    var typename = $(node).parent().siblings(".page__hd").children(".page__title").html();
+    var placename = $(node).children("p").html();
+    //打开方案页面
     api.openWin({
       name: 'programme',
       url: './programme.html',
       pageParam: {
-        type: type,
-        placeType: placeType
+          type:type,
+          placeType:placeType,
+          typename:typename,
+          placename:placename
       }
     });
   }
