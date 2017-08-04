@@ -258,38 +258,11 @@
             buttons: ['取消', '提交订单']
         }, function(ret) {
             //提交成功后
-            subOrder(height, num, width);
+            if(ret.buttonIndex==2){
+              subOrder(height, num, width);
+            }
         });
     }
-<<<<<<< HEAD
-  }
-  //提交订单
-  function subOrder(height,num,width){
-    //获取选中的sku：编号
-    var sku=$(".selected").attr("sku");
-    //获取token的值
-    var token=$("#token").val();
-    //获取选中的商品名
-    var remark=$(".paintname").text();
-    //备注产品名+高度+宽度
-      remark+="/高度："+height+"/宽度："+width;
-    //提交到接口地址
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?appbuy/addpaintorder/?openid='+OPENID,
-        method: 'post',
-        data: {
-          values:{
-            token:token,
-            sku:sku,
-            num:num,
-            remark:remark
-          }
-        }
-    }, function(ret) {
-      api.alert({msg:'恭喜你,订单提交成功!'});
-    });
-  }
-=======
     //浮点数除法运算
     function FloatDiv(arg1, arg2) {
         var t1 = 0,
@@ -335,19 +308,15 @@
                 }
             }
         }, function(ret, err) {
-            if (ret) {
                 api.alert({
-                    msg: '恭喜你,订单提交成功!'
+                    msg: ret.message
                 });
 
-            } else {
-                alert(JSON.stringify(err));
-            }
+
         });
 
 
     }
->>>>>>> c32aba6e7f263cff4fd5fdd60d71c80239c5d053
 </script>
 
 </html>
