@@ -1,7 +1,7 @@
 .tcwrap{position:fixed;top:0;left:0;bottom:0;z-index:99;width:100%;height:100%;background:rgba(0,0,0,0.5);}
 .tcclose{position:absolute;top:-10%;right:1px;width:30px;height:30px;border-radius:50%;background:url(../img/close.jpg);background-repeat:no-repeat;background-size:100%;background-position:0 0;}
 .tcmain{position:absolute;bottom:0px;left:0;width:100%;font-size:1rem;background-color:#fff;}
-.tcmain p{width:100%;border-bottom:1px solid #f6f4f4;padding:5% 5% 2% 5%;font-size:1.1rem;}
+.tcmain p{width:100%;padding:5% 5% 2% 5%;font-size:0.9rem;color:#818181;}
 .tcbtn{width:100%;border-bottom:1px solid #f6f4f4;padding:5%;padding-bottom:8%;}
 .tcbtn button,.tcbtn input{width:50px;height:35px;margin:0;text-align:center;}
 .tcbtn button{background-color:#eaeaea;border:1px solid #eaeaea;font-size:1.2rem;}
