@@ -1,61 +1,127 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>云系统</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
-		<link rel="stylesheet" href="../../css/header.css">
-		<link rel="stylesheet" href="../../css/gouwutc.css">
-    <style>
-    .leixing{display:inline-block;clear:right;margin-top:5px;margin-left:10px;border:1px #d3d3d3 solid;font-size: 0.9em;line-height:28px;height:28px;color:#000;padding-left:10px;padding-right:10px;border-radius: 4px;}
-    .active{border-color:#ffcbdb;color:#e45765;}
-    </style>
-  </head>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>云系统</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" href="../../css/header.css">
+	<link rel="stylesheet" href="../../css/gouwutc.css">
+	<style>
+	body,html{
+		background-color: transparent !important;
+
+	}
+	.bg{
+		background-color: #f2f2f2;
+		opacity:0.7;
+	filter:"alpha(opacity=70)";
+		position:fixed;height:100%;width:100%;bottom:0px;z-index:-1;
+	}
+		.leixing {
+			display: inline-block;
+			clear: right;
+			margin-top: 5px;
+			margin-left: 10px;
+			border: 1px #d3d3d3 solid;
+			font-size: 0.9em;
+			line-height: 28px;
+			height: 28px;
+			color: #000;
+			padding-left: 10px;
+			padding-right: 10px;
+			border-radius: 4px;
+		}
+
+		.active {
+			border-color: #e45765;
+			color: #e45765;
+		}
+
+		.goodsimage {
+			position: relative;
+			border-bottom: 1px #f5f5f5 solid;
+			height: 80px;
+		}
+
+		.goodsimage .goodsimg {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			left: 20px;
+			top: -25px;
+		}
+	</style>
+</head>
+
 <body>
+<div class="bg"></div>
+	<div class="tcwrap">
+		<div class="tcmain" id="tcmain">
 
-  <div class="tcwrap" id="tcwrap">
-    <div class="tcmain" id="tcmain">
-      <button class="tcclose" onclick="closeTc()"></button>
-      <p class="tctitle">
-        规格
-      </p>
-     <div class="guige">
+			<div class="goodsimage">
 
-     </div>
 
-      <p class="tctitle">
-        数量
-      </p>
-      <div class="tcbtnz" id="tcbtn">
+			</div>
 
-      </div>
-    </div>
-  </div>
+
+
+			<p class="tctitle">
+				规格
+			</p>
+			<div class="guige">
+
+			</div>
+
+			<p class="tctitle">
+				数量
+			</p>
+			<div class="tcbtnz" id="goodsnum">
+
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>
+
+<script id="goodsimage" type="text/x-dot-template">
+	<div class="goodsimg">
+		<img src="http://www.d-shang.com/{{=it.image}}" style="width:100px;height:100px;border-radius: 5px;">
+	</div>
+
+	<div style="text-align:right;width:90%;">
+		<a href="javascript:;" style="display:inline-block;width:50px;height:30px;color:#d3d3d3!important;font-size:1.2em;" onclick="closeTc();">X</a></div>
+
+	<div style="position:absolute;left:130px;top:20px;">
+		<p>
+			<span style="color:#cc5048;font-weight:700;">¥{{=it.price}}</span>
+			<br>
+			<span style="color:#989898">商品编码:{{=it.sku}}</span>
+		</p>
+	</div>
+</script>
+
 
 
 <script id="goodstype" type="text/x-dot-template">
-{{~it:value:index}}
-<a href="javascript:;" class="leixing">{{=value.goods_name}}</a>
-{{~}}
+	{{~it:value:index}}
+	<a href="javascript:;" class="leixing sku{{=value.sku}}" ontouchend="selectGoods('{{=value.sku}}')">{{=value.goods_name}}</a> {{~}}
 </script>
 
 
 <script id="goodsinfo" type="text/x-dot-template">
-<!--产品信息-->
-{{=va}}
-<div class="cpxx" id="cpxx_{{=value.sku}}">
-<div class="tcbtn">
-<button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value.sku}}">+</button>
-</div>
-<div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.price}}"  packages="{{=value.num}}">加入购物车</div>
-</div>
-<!--产品信息结束--->
-
+	<!--产品信息-->
+	<div class="cpxx" id="cpxx_{{=it.sku}}">
+		<div class="tcbtn">
+			<button class="wcart_reduce" sku="{{=it.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=it.sku}}" sku="{{=it.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=it.sku}}">+</button>
+		</div>
+		<div class="tcadd addwcart" sku="{{=it.sku}}" price="{{=it.price}}" packages="{{=it.num}}">加入购物车</div>
+	</div>
+	<!--产品信息结束--->
 </script>
 
 
@@ -68,38 +134,65 @@
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 
 <script>
-var OPENID;
-var selectsku = "";
-apiready=function(){
-   var sku=api.pageParam.sku;
-  initCart('gld');
-  loadGoodsData(sku);
-}
+	var OPENID;
+	var COOKIE = 'gld';
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+
+		var sku = api.pageParam.sku;
+		loadGoodsData(sku);
+
+	}
+
+	function selectGoods(sku) {
+		loadGoodsData(sku);
+	}
 
 
-function loadGoodsData(){
-  api.ajax({
-      url: 'http://www.d-shang.com/index.php?appbuy/getgoodsbysku/?sku='+sku+'&openid='+OPENID,
-  },function(ret, err){
-    var arrText = doT.template($("#goodstype").text());
-    $("#main").html(arrText(ret.data));
-  });
+	function loadGoodsData(sku) {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appbuy/getgoodsmxbysku/?sku=' + sku + '&openid=' + OPENID,
+		}, function(ret, err) {
+			//购物车信息和图片
+			var arrText = doT.template($("#goodsinfo").text());
+			var arrText3 = doT.template($("#goodsimage").text());
+			$(".goodsimage").html(arrText3(ret.data.info));
+
+			$("#goodsnum").html(arrText(ret.data.info));
+
+			//规格
+			var arrText2 = doT.template($("#goodstype").text());
+			$(".guige").html(arrText2(ret.data.other));
 
 
-}
+			$(".sku" + sku).addClass("active");
+			initCart(COOKIE);
+		});
 
 
-//初始化购物车
-function initCart(cookie) {
-  wcart.init(cookie);
-  wcart.completeAddGoods = function() {
-    weui.toast("添加成功", {
-      duration : 500,
-      className : "bears"
-    });
-  }
-}
+	}
+
+	function closeTc() {
+		api.closeFrame({});
+
+	}
+
+	//初始化购物车
+	function initCart(cookie) {
+		wcart.init(cookie);
+		wcart.completeAddGoods = function() {
+			api.toast({
+			    msg: '添加成功',
+			    duration: 2000,
+			    location: 'middle'
+			});
 
 
+			closeTc();
 
+		}
+	}
 </script>

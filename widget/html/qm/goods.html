@@ -21,18 +21,7 @@
 			<!-- 1 列表 -->
 			<div class="home-tuan-list" id="main"></div>
 		</div>
-		<div class="tcwrap" id="tcwrap">
-			<div class="tcmain" id="tcmain">
-				<button class="tcclose" onclick="closeTc()"></button>
-				<p>
-					数量
-				</p>
-				<div class="tcbtnz" id="tcbtn"></div>
-			</div>
-			<div class="success" id="tccg">
-				恭喜你，提交成功！
-			</div>
-		</div>
+
 	</body>
 </html>
 <script id="interpolationtmpl" type="text/x-dot-template">
@@ -56,14 +45,7 @@
 	{{?}}			</p>
 	</div>
 	</div>
-	<!--产品信息-->
-	<div class="cpxx" id="cpxx_{{=value.sku}}">
-	<div class="tcbtn">
-	<button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value.sku}}">+</button>
-	</div>
-	<div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.price}}"  packages="{{=value.num}}">加入购物车</div>
-	</div>
-	<!--产品信息结束--->
+
 	{{~}}
 </script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
@@ -80,14 +62,6 @@
 	var isDrop = false;
 	var OPENID;
 	apiready = function() {
-		$("#tcwrap").bind("touchend", function(e) {
-			var con = $("#tcbtn").html();
-			$("#cpxx_" + selectsku).html(con);
-			$("#tcwrap").hide();
-		});
-		$("#tcmain").bind("touchend", function(e) {
-			e.stopPropagation();
-		});
 		var params = api.pageParam;
 		cid = params.cid;
 		name = params.name;
@@ -107,25 +81,21 @@
 		});
 	}
 
-	var selectsku = "";
 	function addGoods(sku) {
-		$("#tcmain").show();
-		$("#tccg").hide();
-		selectsku = sku;
-		var con = $("#cpxx_" + sku).html();
-		$("#tcbtn").html(con);
-		wcart.init("gld");
-		$("#cpxx_" + sku).html("");
-		$("#tcwrap").show();
-		wcart.completeAddGoods = function() {
-			$("#tcwrap").hide();
-			$("#tcbtn").html("");
-			$("#cpxx_" + sku).html(con);
-			weui.toast("添加成功", {
-				duration : 500,
-				className : "bears"
-			});
-		}
+   var height=api.winHeight;
+	 var width=api.winWidth;
+		api.openFrame({
+			name: 'addcart',
+			url: './addcart.html',
+			pageParam: {
+				sku: sku
+			},
+			animation: {
+				type: "movein",
+				subType: "from_bottom",
+				duration: 200
+			}
+		});
 	}
 
 	function setDrop() {
