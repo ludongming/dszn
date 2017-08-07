@@ -167,9 +167,9 @@
 
         <div class="choosesize">
             定制框体： <br>
-            <a href="javascript:;" class="menu selected" sku="109965" onclick="addborder(this)" width="3" price="437">3米 双层铝墙板 波西米亚粗麻纹</a>
-            <a href="javascript:;" class="menu" sku="10996" onclick="addborder(this)" width="3" price="380">3米 木塑板 波西米亚粗麻纹</a>
-            <a href="javascript:;" class="menu" sku="110574" onclick="addborder(this)" width="2.6" price="330">2.6米 木塑板 波西米亚粗麻纹</a>
+            <a href="javascript:;" class="menu selected" sku="109965" onclick="addborder(this)" width="0.55" price="437">3米 双层铝墙板 波西米亚粗麻纹</a>
+            <a href="javascript:;" class="menu" sku="109966" onclick="addborder(this)" width="0.6" price="380">3米 木塑板 波西米亚粗麻纹</a>
+            <a href="javascript:;" class="menu" sku="110574" onclick="addborder(this)" width="0.6" price="330">2.6米 木塑板 波西米亚粗麻纹</a>
         </div>
         <div class="paintcustom">
             定制尺寸<br>
@@ -187,6 +187,7 @@
 <script src="../../script/doT.min.js"></script>
 <script src="../../script/weui.min.js"></script>
 <script type="text/javascript">
+  var OPENID;
     apiready = function() {
         setTopBar();
         var title = api.pageParam.title;
@@ -319,9 +320,7 @@
         remark += "/高度：" + height + "/宽度：" + width;
 
 
-
         var url = 'http://www.d-shang.com/index.php?appbuy/addpaintorder/?openid=' + OPENID;
-
 
         api.ajax({
             url: url,
