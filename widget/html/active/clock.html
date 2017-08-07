@@ -47,7 +47,7 @@
 			height: 20px;
 			background: #c1c2c6;
 			color: #666;
-			font-size:0.9em;
+			font-size: 0.9em;
 			margin-right: 20px;
 		}
 
@@ -91,11 +91,8 @@
 			<a style="background: #27ae61;color: #fff;" href="javascript:;" ontouchend="guize()">礼物规则</a>
 		</div>
 
-		<div class="parking">
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-				</div>
-			</div>
+		<div class="parking" onclick="flappybird();">
+			<img src="../../image/flppybird.png" width="100%;">
 		</div>
 
 		<div id="main"></div>
@@ -210,7 +207,7 @@
 		setTopBar();
 		loadGift();
 		//载入汽车
-		getLastCar();
+		//	getLastCar();
 		//载入当前金额
 		getData();
 		addlocation();
@@ -224,6 +221,15 @@
 			getData();
 		});
 	};
+
+
+function flappybird(){
+	api.openWin({
+	    name: 'flappybird',
+	    url: './flppybird.html'
+	});
+
+}
 
 	function lunbo() {
 		var mySwiper = new Swiper('.swiper-container', {
