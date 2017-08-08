@@ -1,99 +1,109 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>奇葩版Flappy Bird</title>
-  <link rel="stylesheet" href="../../css/header.css" />
-  <link rel="stylesheet" href="../../css/game.css" media="screen" type="text/css" />
+    <meta charset="UTF-8">
+    <title>顶上Flappy Bird</title>
+    <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/game.css" media="screen" type="text/css" />
 
 </head>
 
 <body>
-  <div id="canvasContainer"></div>
-  <span id="textInputSpan">
+    <div id="canvasContainer"></div>
+    <span id="textInputSpan">
   <img src="../../image/defaultimage.png" id="flower" alt="" style="width:60px; height:60px;display:none">
 
 </span>
+</body>
 
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script  type="text/javascript" src="../../script/game.js"></script>
 
-  <script type="text/javascript">
-  var OPENID;
-    apiready=function(){
-
-    OPENID = api.getPrefs({
-      sync : true,
-      key : 'openid'
-    });
-
-      getUserImg();
-
+<script type="text/javascript">
+    var OPENID;
+    apiready = function() {
+        OPENID = api.getPrefs({
+            sync: true,
+            key: 'openid'
+        });
+console.log(123);
+        getUserImg();
     }
+
+
+
     //获取用户头像,开始游戏
-    function getUserImg(){
-      url='http://www.d-shang.com/index.php?app/getuserinfo/?openid='+OPENID;
-      api.ajax({
-          url: url,
-          method: 'post',
-      }, function(ret, err) {
-          if (ret) {
-            imgurl=ret.data.weixin.headimgurl;
-            imgurl=imgurl.substring(0,imgurl.length-1);
-            imgurl+='64';
-            $('#flower').attr("src",imgurl);
-              init();
-          } else {
-              console.log(JSON.stringify(err));
-          }
-      });
+    function getUserImg() {
+        url = 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID;
+        api.ajax({
+            url: url,
+            method: 'post',
+        }, function(ret, err) {
+            if (ret) {
+                imgurl = ret.data.weixin.headimgurl;
+                imgurl = imgurl.substring(0, imgurl.length - 1);
+                imgurl += '64';
+                $('#flower').attr("src", imgurl);
+                init();
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
     }
     //游戏结束后提交分数
-    function subScore(score){
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?appgame/record',
-        method: 'post',
-        data: {
-            values: {
-            sno:'flappybird',
-            openid:OPENID,
-            score:score
-            },
+    function subScore(score) {
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?appgame/record',
+            method: 'post',
+            data: {
+                values: {
+                    sno: 'flappybird',
+                    openid: OPENID,
+                    score: score
+                },
 
-        }
-    }, function(ret, err) {
-      //api.alert({msg:ret.message});
-    });
+            }
+        }, function(ret, err) {
+            //api.alert({msg:ret.message});
+        });
     }
     //获取最好的成绩
-    function getBestScore(){
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?appgame/getrecordbysno/?sno=flappybird&num=50&openid='+OPENID,
-        method: 'post',
-    }, function(ret, err) {
-        if (ret.status) {
-            api.alert({ msg: JSON.stringify(ret) });
-        } else {
-            api.alert({ msg: JSON.stringify(err) });
-        }
-    });
+    function getBestScore() {
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?appgame/getrecordbysno/?sno=flappybird&num=50&openid=' + OPENID,
+            method: 'post',
+        }, function(ret, err) {
+            if (ret.status) {
+                api.alert({
+                    msg: JSON.stringify(ret)
+                });
+            } else {
+                api.alert({
+                    msg: JSON.stringify(err)
+                });
+            }
+        });
     }
 
     //获取历史记录
-    function getHistoryScore(){
-      api.ajax({
-          url: 'http://www.d-shang.com/index.php?appgame/gethistorybysno/?sno=flappybird&openid='+OPENID,
-          method: 'post',
-      }, function(ret, err) {
-          if (ret.status) {
-              api.alert({ msg: JSON.stringify(ret) });
-          } else {
-              api.alert({ msg: JSON.stringify(err) });
-          }
-      });
+    function getHistoryScore() {
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?appgame/gethistorybysno/?sno=flappybird&openid=' + OPENID,
+            method: 'post',
+        }, function(ret, err) {
+            if (ret.status) {
+                api.alert({
+                    msg: JSON.stringify(ret)
+                });
+            } else {
+                api.alert({
+                    msg: JSON.stringify(err)
+                });
+            }
+        });
 
     }
-  </script>
-</body>
-<script src="../../script/game.js"></script>
-<script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/zepto.min.js"></script>
-</html>
+</script>

@@ -352,8 +352,12 @@ function startDemo() {
     logoCanvas = document.createElement("canvas");
     logoCanvasBG = document.createElement("canvas");
   }
+<<<<<<< Updated upstream
   createLogo("Flappy Bird", logoCanvas, logoCanvasBG);
 
+=======
+  createLogo("飞翔的小鸟", logoCanvas, logoCanvasBG);
+>>>>>>> Stashed changes
   if (!gameOverCanvas) {
     gameOverCanvas = document.createElement("canvas");
     gameOverCanvasBG = document.createElement("canvas");
@@ -445,7 +449,11 @@ function renderGameOver() {
   //game over logo
   context.drawImage(gameOverCanvas, bounds.getCenterX() - logoCanvas.width / 2, canvas.height * .2);
 
+<<<<<<< Updated upstream
   var instruction = "再来一次";
+=======
+  var instruction = "点击屏幕，再来一次.";
+>>>>>>> Stashed changes
   context.font = "bold normal 24px sans-serif";
   context.fillStyle = "#FFFFFF";
   context.fillText(instruction, bounds.getCenterX() - context.measureText(instruction).width / 2, canvas.height * .25 + gameOverCanvas.height);
@@ -467,7 +475,11 @@ function renderLogo() {
 }
 
 function renderInstructions() {
+<<<<<<< Updated upstream
   var instruction = "";
+=======
+  var instruction = "点击屏幕开始";
+>>>>>>> Stashed changes
   context.font = "bold normal 24px sans-serif";
   context.fillStyle = "#FFFFFF";
   context.fillText(instruction, bounds.getCenterX() - context.measureText(instruction).width / 2, canvas.height * .2);
@@ -509,7 +521,7 @@ function createLogo(logoText, logoCanvas, logoCanvassBG) {
   logoDirection = 1;
   var logoContext = logoCanvas.getContext("2d");
   logoContext.textBaseline = "top";
-  var textRect = new Sakri.Geom.Rectangle(0, 0, logoCanvas.width * .8, logoCanvas.height);
+  var textRect = new Sakri.Geom.Rectangle(0, 0, logoCanvas.width * .65, logoCanvas.height);
   var logoFontProps = fontProperties.clone();
   logoFontProps.fontSize = Sakri.CanvasTextUtil.getFontSizeForRect(logoText, fontProperties, textRect);
 
@@ -581,12 +593,16 @@ function updateScore() {
 
 }
 
+//重绘制鸟
 function renderBird() {
+console.log(characters[0].y);
   context.drawImage(characters[0].image, characters[0].x, characters[0].y);
+  /*
   for (var i = 1; i < characters.length; i++) {
     characters[i].y = characters[i - 1].y - (characters[i - 1].y - characters[i].y) * .9;
     context.drawImage(characters[i].image, characters[i].x, characters[i].y);
   }
+  */
 }
 
 function removeCharacter() {
@@ -601,7 +617,9 @@ function removeCharacter() {
 }
 
 function checkTubesCollision() {
+
   for (var i = 0; i < tubes.length; i++) {
+
     if (checkTubeCollision(tubes[i])) {
       return true;
     }
@@ -942,7 +960,6 @@ function createGroundPattern() {
 
   groundContext.fillStyle = groundPattern;
   groundContext.fillRect(0, 0, groundPatternCanvas.width, 16);
-
 }
 
 function clearTimeoutsAndIntervals() {
