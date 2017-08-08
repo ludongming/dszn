@@ -336,7 +336,7 @@ var GAME_OVER = 2;
 var gameState;
 var scrollSpeed = 3;
 var score;
-var fontProperties = new Sakri.CanvasTextProperties(Sakri.CanvasTextProperties.BOLD, null, 70);
+var fontProperties = new Sakri.CanvasTextProperties(Sakri.CanvasTextProperties.BOLD, null, 75);
 
 var word = "SAKRI";
 //==============================================================
@@ -347,17 +347,18 @@ function startDemo() {
   canvas.addEventListener('touchstart', handleUserTap, false);
   canvas.addEventListener('mousedown', handleUserTap, false);
 
-  var logoText = "FLAPPY BIRD ";
+  var logoText = "Flappy Bird";
   if (!logoCanvas) {
     logoCanvas = document.createElement("canvas");
     logoCanvasBG = document.createElement("canvas");
   }
-  createLogo("FLAPPY TEXT", logoCanvas, logoCanvasBG);
+  createLogo("Flappy Bird", logoCanvas, logoCanvasBG);
+
   if (!gameOverCanvas) {
     gameOverCanvas = document.createElement("canvas");
     gameOverCanvasBG = document.createElement("canvas");
   }
-  createLogo("GAME OVER", gameOverCanvas, gameOverCanvasBG);
+  createLogo("游戏结束", gameOverCanvas, gameOverCanvasBG);
 
   createGroundPattern();
   createBird();
@@ -444,15 +445,17 @@ function renderGameOver() {
   //game over logo
   context.drawImage(gameOverCanvas, bounds.getCenterX() - logoCanvas.width / 2, canvas.height * .2);
 
-  var instruction = "Click or tap to flap again.";
+  var instruction = "再来一次";
   context.font = "bold normal 24px sans-serif";
   context.fillStyle = "#FFFFFF";
   context.fillText(instruction, bounds.getCenterX() - context.measureText(instruction).width / 2, canvas.height * .25 + gameOverCanvas.height);
   var a=renderScore();
-  console.log(a);//显示最后的成绩
+  //显示最后的成绩
   //提交分数
   subScore(a);
   //window.requestAnimationFrame(loop, canvas);
+  //显示排行榜
+
 }
 
 function renderLogo() {
@@ -464,7 +467,7 @@ function renderLogo() {
 }
 
 function renderInstructions() {
-  var instruction = "Click or tap to flap :)";
+  var instruction = "";
   context.font = "bold normal 24px sans-serif";
   context.fillStyle = "#FFFFFF";
   context.fillText(instruction, bounds.getCenterX() - context.measureText(instruction).width / 2, canvas.height * .2);
@@ -571,8 +574,6 @@ function updateScore() {
     index %= tubes.length;
     currentTube = tubes[index];
     ffScoreBugFix = 0;
-
-
   }
 
   ffScoreBugFix++;

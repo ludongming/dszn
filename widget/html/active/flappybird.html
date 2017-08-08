@@ -12,9 +12,9 @@
   <div id="canvasContainer"></div>
   <span id="textInputSpan">
   <img src="../../image/defaultimage.png" id="flower" alt="" style="width:60px; height:60px;display:none">
+
 </span>
-  <div style="text-align:center;clear:both">
-  </div>
+
 
   <script type="text/javascript">
   var OPENID;
@@ -24,7 +24,7 @@
       sync : true,
       key : 'openid'
     });
-    console.log(OPENID);
+
       getUserImg();
 
     }
@@ -76,19 +76,7 @@
         }
     });
     }
-    //获取排行榜
-    function showRank(){
-      api.ajax({
-          url: 'http://www.d-shang.com/index.php?appgame/getrankbysno/?sno=flappybird&num=50&openid='+OPENID,
-          method: 'post',
-      }, function(ret, err) {
-          if (ret.status) {
-              api.alert({ msg: JSON.stringify(ret) });
-          } else {
-              api.alert({ msg: JSON.stringify(err) });
-          }
-      });
-    }
+
     //获取历史记录
     function getHistoryScore(){
       api.ajax({
