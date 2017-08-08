@@ -352,12 +352,9 @@ function startDemo() {
     logoCanvas = document.createElement("canvas");
     logoCanvasBG = document.createElement("canvas");
   }
-<<<<<<< Updated upstream
-  createLogo("Flappy Bird", logoCanvas, logoCanvasBG);
 
-=======
   createLogo("飞翔的小鸟", logoCanvas, logoCanvasBG);
->>>>>>> Stashed changes
+
   if (!gameOverCanvas) {
     gameOverCanvas = document.createElement("canvas");
     gameOverCanvasBG = document.createElement("canvas");
@@ -449,11 +446,9 @@ function renderGameOver() {
   //game over logo
   context.drawImage(gameOverCanvas, bounds.getCenterX() - logoCanvas.width / 2, canvas.height * .2);
 
-<<<<<<< Updated upstream
-  var instruction = "再来一次";
-=======
+
   var instruction = "点击屏幕，再来一次.";
->>>>>>> Stashed changes
+
   context.font = "bold normal 24px sans-serif";
   context.fillStyle = "#FFFFFF";
   context.fillText(instruction, bounds.getCenterX() - context.measureText(instruction).width / 2, canvas.height * .25 + gameOverCanvas.height);
@@ -475,11 +470,9 @@ function renderLogo() {
 }
 
 function renderInstructions() {
-<<<<<<< Updated upstream
-  var instruction = "";
-=======
+
   var instruction = "点击屏幕开始";
->>>>>>> Stashed changes
+
   context.font = "bold normal 24px sans-serif";
   context.fillStyle = "#FFFFFF";
   context.fillText(instruction, bounds.getCenterX() - context.measureText(instruction).width / 2, canvas.height * .2);
@@ -595,7 +588,6 @@ function updateScore() {
 
 //重绘制鸟
 function renderBird() {
-console.log(characters[0].y);
   context.drawImage(characters[0].image, characters[0].x, characters[0].y);
   /*
   for (var i = 1; i < characters.length; i++) {

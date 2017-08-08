@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" href="../../css/weui.min.css">
-  <link rel="stylesheet" href="../../css/design.css">
-  <link rel="stylesheet" href="../../css/dropload.css">
   <link rel="stylesheet" href="../../css/header.css" />
   <style media="screen">
+  body{background: #fff;min-height:1000px;
+}
     img{
       width: 50px;
       height: 50px;
       margin-right: 20px;
     }
+    .rq{color:#666;font-size:0.8em;}
+
+    		.rank {
+    			display: inline-block;
+    			line-height: 20px;
+    			margin-left: 10px;
+    			text-align: center;
+    			margin-top: 20px;
+    			float: left;
+    			width: 25px;
+    			height: 20px;
+    			background: #c1c2c6;
+    			color: #666;
+    			font-size: 0.9em;
+    			margin-right: 20px;
+    		}
   </style>
 </head>
 
@@ -26,7 +41,7 @@
   </header>
   <div class="page_bd content" >
 
-    <div class="weui-cells" style="margin-top:65px;">
+    <div class="weui-cells">
 
     </div>
   </div>
@@ -39,11 +54,38 @@
 <script type="text/javascript" id="ranklist">
   {{~it:value:index}}
   <div class="weui-cell">
-    <div class="weui-cell__hd"><img src='{{=value.headimgurl}}' ></div>
+    <div class="weui-cell__hd">
+
+    {{?index<3}} <img src="../../image/rank{{=index+1}}.png" style="width:40px;height:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+      {{??}}
+      <span class="rank">{{=index+1}}</span> {{?}}
+    <img src='{{=value.headimgurl}}' ></div>
     <div class="weui-cell__bd"><p>{{=value.realname}}</p></div>
-    <div class="weui-cell__ft" style="fontSize:1.2em;color:#000;"><p>{{=value.score}}</p></div>
+    <div class="weui-cell__ft" style="fontSize:1.2em;color:#000;"><p>{{=value.score}}分<br>
+    <small class="rq">{{=value.rq}} 第{{=value.num}}次挑战</small></p></div>
   </div>
   {{~}}
+</script>
+
+
+<script type="text/javascript" id="history">
+  {{~it:value:index}}
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><img src='{{=value.headimgurl}}' ></div>
+    <div class="weui-cell__bd"><p>{{=value.realname}}</p></div>
+    <div class="weui-cell__ft" style="fontSize:1.2em;color:#000;"><p>{{=value.score}}分<br>
+    <small class="rq">{{=value.rq}} 第{{=value.num}}次挑战</small></p></div>
+  </div>
+  {{~}}
+</script>
+
+<script type="text/javascript" id="me">
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><img src='{{=it.headimgurl}}' ></div>
+    <div class="weui-cell__bd"><p>{{=it.realname}}</p></div>
+    <div class="weui-cell__ft" style="fontSize:1.2em;color:#000;"><p>{{=it.score}}分<br>
+    <small class="rq">{{=it.rq}} 第{{=it.num}}次挑战</small></p></div>
+  </div>
 </script>
 <script type="text/javascript">
 var OPENID;
@@ -53,7 +95,18 @@ apiready=function(){
     sync : true,
     key : 'openid'
   });
-  showRank();
+
+  var type=api.pageParam.type;
+  if(type=='rank'){
+    showRank();
+
+  }
+  if(type=='history'){
+getHistoryScore();
+  }
+  if(type=='me'){
+getBestScore();
+  }
 
 }
 //显示排行榜
@@ -66,11 +119,52 @@ function showRank() {
       var data=ret.data;
       var arrText = doT.template($("#ranklist").text());
       $(".weui-cells").html(arrText(data));
-
+$("#title").html("排行榜");
     } else {
     console.log(JSON.stringify(err));
     }
   });
+}
+
+//获取最好的成绩
+function getBestScore() {
+    api.ajax({
+        url: 'http://www.d-shang.com/index.php?appgame/getrecordbysno/?sno=flappybird&num=50&openid=' + OPENID,
+        method: 'post',
+    }, function(ret, err) {
+        if (ret.status) {
+          var data=ret.data;
+          var arrText = doT.template($("#me").text());
+          $(".weui-cells").html(arrText(data));
+          $("#title").html("我的战绩");
+
+        } else {
+            api.alert({
+                msg: JSON.stringify(err)
+            });
+        }
+    });
+}
+
+//获取历史记录
+function getHistoryScore() {
+    api.ajax({
+        url: 'http://www.d-shang.com/index.php?appgame/gethistorybysno/?sno=flappybird&openid=' + OPENID,
+        method: 'post',
+    }, function(ret, err) {
+        if (ret.status) {
+          var data=ret.data;
+          var arrText = doT.template($("#history").text());
+          $(".weui-cells").html(arrText(data));
+          $("#title").html("最近挑战");
+
+        } else {
+            api.alert({
+                msg: JSON.stringify(err)
+            });
+        }
+    });
+
 }
 </script>
 </html>

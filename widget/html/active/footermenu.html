@@ -2,178 +2,84 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="../../css/weui.min.css">
-  <link rel="stylesheet" href="../../css/design.css">
-  <link rel="stylesheet" href="../../css/dropload.css">
-  <link rel="stylesheet" href="../../css/header.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" href="../../css/design.css">
+    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" href="../../css/header.css" />
 
-  <style media="screen">
-    .weui-tabbar__item img {
-      width: 27px;
-      height: 27px;
-    }
-    .weui_tab_bd .weui_tab_bd_item{
-    display: none;
-  }
-.weui_tab_bd_item_active{
-  display: inline !important;
+    <style media="screen">
+        body,
+        html {
+            background-color:transparent !important;
+        }
 
-}
-.weui-cell__hd img{
-  width: 50px;
-  height: 50px;
-  margin-right: 20px;
-}
-  </style>
+
+        .footerbar{position: absolute;bottom:0px;width:100%;height:50px;}
+        .footerbar .bar{float:left;width:25%;display: inline-block;height:50px;text-align: center;position: relative;}
+        .footerbar img{width:30px;height:30px;display: inline-block;}
+        .footerbar .name{
+          color:#000;font-size:0.8em;display: inline-block;width:100%;bottom:0px;text-align: center;
+          position: absolute;left:0px;}
+
+
+    </style>
 </head>
 
 <body>
-  <header style="position: fixed;" class="page__bd page__bd_spacing">
-      <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
-      <span id="title" class="title" style="text-align: center; margin-left:40px;"></span>
+    <div class="page__bd content" id="contents">
 
-  </header>
-  <div class="page__bd content" id="contents">
-  <div class="weui-tab" >
-
-    <div class="weui_tab_bd" >
-        <div id="tab1" class="weui_tab_bd_item weui_tab_bd_item_active">
-          <div id="canvasContainer"></div>
-          <span id="textInputSpan">
-          <img src="../../image/defaultimage.png" id="flower" alt="" style="width:60px; height:60px;display:none">
-        </span>
-        </div>
-        <div id="tab2" class="weui_tab_bd_item">
-          <div class="weui-cells">
-
-          </div>
-        </div>
-        <div id="tab3" class="weui_tab_bd_item">
-            <h1>页面3fddsafsfsdfds</h1>
-        </div>
-        <div id="tab4" class="weui_tab_bd_item">
-            <h1>页面4fddsafsfsdfdsf</h1>
+      <div class="footerbar">
+            <a href="javascript:goback();" class="bar">
+         <img src="../../image/game/1.png" alt="">
+                <p class="name" >退出</p>
+            </a>
+            <a href="javascript:showrank('rank')"  class="bar">
+                <img src="../../image/game/2.png" alt="">
+                <span  class="name">榜单</span>
+            </a>
+            <a href="javascript:showrank('history')" class="bar">
+                <img src="../../image/game/4.png" alt="">
+                <p  class="name">最新</p>
+            </a>
+            <a href="javascript:showrank('me')" class="bar">
+                <img src="../../image/game/3.png" alt="">
+                <p  class="name">我</p>
+            </a>
         </div>
     </div>
-
-    <div class="weui-tabbar" style="position: fixed !important;bottom:0px;">
-      <a href="#tab1" class="weui-tabbar__item weui-bar__item_on">
-    <span style="display:inline-block; position:relative">
-      <img src="../../image/game/1.png" alt="">
-    </span>
-    <p class="weui-tabbar__label">游戏</p>
-  </a>
-      <a href="#tab2" class="weui-tabbar__item">
-    <span style="display:inline-block; position:relative"></span>
-    <img src="../../image/game/2.png" alt="">
-    <p class="weui-tabbar__label">排行榜</p>
-  </a>
-      <a href="#tab3" class="weui-tabbar__item">
-    <span style="display:inline-block; position:relative"></span>
-    <img src="../../image/game/4.png" alt="">
-    <p class="weui-tabbar__label">历史记录</p>
-  </a>
-      <a href="#tab4" class="weui-tabbar__item">
-    <span style="display:inline-block; position:relative"></span>
-    <img src="../../image/game/3.png" alt="">
-    <p class="weui-tabbar__label">最高成绩</p>
-  </a>
     </div>
-  </div>
-</div>
 
-<script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/wolf.js"></script>
-<script type="text/javascript" src="../../script/zepto.min.js"></script>
-<script type="text/javascript" src="../../script/weui.min.js"></script>
-<script type="text/javascript" src="../../script/doT.min.js"></script>
-<script type="text/javascript" src="../../script/game.js"></script>
-
-<script type="text/javascript" id="ranklist">
-  {{~it:value:index}}
-  <div class="weui-cell">
-    <div class="weui-cell__hd"><img src='{{=value.headimgurl}}' ></div>
-    <div class="weui-cell__bd"><p>{{=value.realname}}</p></div>
-    <div class="weui-cell__ft" style="fontSize:1.2em;color:#000;"><p>{{=value.score}}</p></div>
-  </div>
-  {{~}}
-</script>
+    <script type="text/javascript" src="../../script/api.js"></script>
 
 
-<script type="text/javascript">
-var OPENID;
-  apiready=function(){
-  setTopBar();
-  OPENID = api.getPrefs({
-    sync : true,
-    key : 'openid'
-  });
 
-    getUserImg();
-    showRank();
-  }
-  //获取用户头像,开始游戏
-  function getUserImg(){
-    url='http://www.d-shang.com/index.php?app/getuserinfo/?openid='+OPENID;
-    api.ajax({
-        url: url,
-        method: 'post',
-    }, function(ret, err) {
-        if (ret) {
-          imgurl=ret.data.weixin.headimgurl;
-          imgurl=imgurl.substring(0,imgurl.length-1);
-          imgurl+='64';
-          $('#flower').attr("src",imgurl);
-            init();
-        } else {
-            console.log(JSON.stringify(err));
+    <script type="text/javascript">
+        var OPENID;
+        apiready = function() {
+
         }
-    });
-  }
-  //游戏结束后提交分数
-  function subScore(score){
-  api.ajax({
-      url: 'http://www.d-shang.com/index.php?appgame/record',
-      method: 'post',
-      data: {
-          values: {
-          sno:'flappybird',
-          openid:OPENID,
-          score:score
-          },
 
-      }
-  }, function(ret, err) {
-    //api.alert({msg:ret.message});
-  });
-  }
-  $('.weui-tabbar__item').on('click', function() {
-  $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-    var tabId = $(this).attr("href");//点击取对应ID
-  console.log(  $('.weui_tab_bd').find(tabId).html());
-  $('.weui_tab_bd').find(tabId).addClass('weui_tab_bd_item_active').siblings().removeClass('weui_tab_bd_item_active');
+        function goback() {
+            api.closeWin({});
+        }
 
-  });
+        function showrank(type) {
+            api.openWin({
+                name: 'showrank',
+                url: './showrank.html',
+                pageParam: {
+                    type: type
+                },
+                  bounces: false
 
-  function showRank() {
-    api.ajax({
-      url: 'http://www.d-shang.com/index.php?appgame/getrankbysno/?sno=flappybird&num=50&openid=' + OPENID,
-      method: 'post',
-    }, function(ret, err) {
-      if (ret.status) {
-        var data=ret.data;
-        var arrText = doT.template($("#ranklist").text());
-        $(".weui-cells").html(arrText(data));
+            });
 
-      } else {
-      console.log(JSON.stringify(err));
-      }
-    });
-  }
-</script>
+        }
+    </script>
 </body>
+
 </html>
