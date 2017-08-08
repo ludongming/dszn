@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../css/weui.min.css">
+  <link rel="stylesheet" href="../../css/design.css">
+  <link rel="stylesheet" href="../../css/dropload.css">
+  <link rel="stylesheet" href="../../css/header.css" />
+  <style media="screen">
+    img{
+      width: 50px;
+      height: 50px;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header style="position: fixed;" class="page__bd page__bd_spacing">
+    <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
+    <span id="title" class="title" style="text-align: center;  margin-right:40px;">排行榜</span>
+  </header>
+  <div class="page_bd content" >
+
+    <div class="weui-cells" style="margin-top:65px;">
+
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" id="ranklist">
+  {{~it:value:index}}
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><img src='{{=value.headimgurl}}' ></div>
+    <div class="weui-cell__bd"><p>{{=value.realname}}</p></div>
+    <div class="weui-cell__ft" style="fontSize:1.2em;color:#000;"><p>{{=value.score}}</p></div>
+  </div>
+  {{~}}
+</script>
+<script type="text/javascript">
+var OPENID;
+apiready=function(){
+  setTopBar();
+  OPENID = api.getPrefs({
+    sync : true,
+    key : 'openid'
+  });
+  getBestScore();
+
+}
+
+function getBestScore(){
+api.ajax({
+    url: 'http://www.d-shang.com/index.php?appgame/getrecordbysno/?sno=flappybird&num=50&openid='+OPENID,
+    method: 'post',
+}, function(ret, err) {
+    if (ret.status) {
+        api.alert({ msg: JSON.stringify(ret) });
+    } else {
+        api.alert({ msg: JSON.stringify(err) });
+    }
+});
+}
+</script>
+</html>

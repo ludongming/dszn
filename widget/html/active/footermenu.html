@@ -154,7 +154,7 @@ var OPENID;
   $('.weui-tabbar__item').on('click', function() {
   $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
     var tabId = $(this).attr("href");//点击取对应ID
-  console.log(  $('.weui_tab_bd').find(tabId).html());
+
   $('.weui_tab_bd').find(tabId).addClass('weui_tab_bd_item_active').siblings().removeClass('weui_tab_bd_item_active');
 
   });
