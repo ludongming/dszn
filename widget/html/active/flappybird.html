@@ -17,10 +17,7 @@
 </span>
 </body>
 
-<<<<<<< HEAD
 </html>
-=======
->>>>>>> ce2d99090c3b04bdd2b952ec7b9e9a5ef2166201
 
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
@@ -81,6 +78,7 @@
     }
     //游戏结束后提交分数
     function subScore(score) {
+
         api.ajax({
             url: 'http://www.d-shang.com/index.php?appgame/record',
             method: 'post',
@@ -93,9 +91,11 @@
 
             }
         }, function(ret, err) {
-            //api.alert({msg:ret.message});
+      
         });
+        if(score>=20){
+          weui.alert("恭喜你获得宝马Z4皮肤！");
+        }
     }
 
 </script>
-</html>
