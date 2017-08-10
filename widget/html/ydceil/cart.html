@@ -1,160 +1,169 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>购物车</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link href="../../css/weui.min.css" rel="stylesheet"/>
-		<link href="../../css/header.css" rel="stylesheet" />
-		<link href="../../css/shoppingcart.css" rel="stylesheet"/>
-		<style>
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
-			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title">购物车</span>
-		</header>
-		<div class="content">
-			<div class="main">
-				<div id="main"></div>
-				<div class="wcart">
-					<p>
-						备注
-					</p>
-					<ul>
-						<input type="text" name="remark" id="remark" placeholder="如需自提及其他请备注说明" style="border:1px #ddd solid;height:2em;width:100%;"/>
-					</ul>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>购物车</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link href="../../css/weui.min.css" rel="stylesheet" />
+	<link href="../../css/header.css" rel="stylesheet" />
+	<link href="../../css/shoppingcart.css" rel="stylesheet" />
+	<style>
+
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title">购物车</span>
+	</header>
+	<div class="content">
+		<div class="main">
+			<div id="main"></div>
+
+			<div class="weui-cells">
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<p class="weui-label">备注</p>
+					</div>
+					<div class="weui-cell__bd">
+						<input type="text" class="weui-input" id="remark" name="remark" placeholder="如需自提及其他请备注说明">
+					</div>
 				</div>
-				<div class="wcart">
-					<p>
-						选择龙骨
-					</p>
-					<select class="weui-select" name="longgu" id="longgu">
+				<div class="weui-cell weui-cell_select">
+					<div class="weui-cell__hd">
+						<p class="weui-label">选择龙骨</p>
+					</div>
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="longgu" id="longgu">
 						<option value="2.7米镀锌">2.7米镀锌</option>
 						<option value="2.7米烤漆">2.7米烤漆</option>
-						<option value="3米镀锌">3米镀锌</option>
+						<option value="I">3米镀锌</option>
 						<option value="3米烤漆">3米烤漆</option>
 						<option value="4米镀锌">4米镀锌</option>
 						<option value="4米烤漆">4米烤漆</option>
 					</select>
-				</div>
-				<input type="hidden" name="token" id="token" value="">
-				<div class="heji">
-					<button class="jies" onclick="sub()">
-						提交
-					</button>
-					<div class="totalp">
-						合计:¥<span class="price wcart_price" id="totalp"></span>
 					</div>
 				</div>
 			</div>
+			<input type="hidden" name="token" id="token" value="">
+			<div class="heji">
+				<button class="jies" onclick="sub()">
+						提交
+					</button>
+				<div class="totalp">
+					合计:¥<span class="price wcart_price" id="totalp"></span>
+				</div>
+			</div>
 		</div>
-	</body>
-	<!--购物车列表模板-->
-	<script id="interpolationtpl" type="text/x-dot-template">
-		{{~it:value:index}}
-		<ul class="wcart_{{=value.sku}}">
+	</div>
+</body>
+<!--购物车列表模板-->
+<script id="interpolationtpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<ul class="wcart_{{=value.sku}}">
 		<li class="radios"></li>
 		<li class="img y_center"><img src="{{=value.image}}">
-		<a href="javascript:void(0)" sku="{{=value.sku}}" class="delet removewcart" style="display:inline-block;width:40px;color:#000">删除</a>
+			<a href="javascript:void(0)" sku="{{=value.sku}}" class="delet removewcart" style="display:inline-block;width:40px;color:#000">删除</a>
 
 		</li>
 		<li class="txt">
-		<p class="name">{{=value.goods_name}}</p>
-		<p class="guige">{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
-		<p class="price"> {{?value.discount_card<1}}vip ￥{{=value.price}}
-		<span style="text-decoration: line-through">(¥{{=value.origin_price}})</span>
-		{{??}}￥{{=value.price}}{{?}}</p>
-		<p class="change">
-		<a class="zenjian wcart_reduce" sku="{{=value.sku}}">-</a>
-		<input type="text" class="wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="{{=value.count}}">
-		<a  href="javascript:void(0)" class="zenjian wcart_add" sku="{{=value.sku}}">+</a>
-		</p>
+			<p class="name">{{=value.goods_name}}</p>
+			<p class="guige">{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
+			<p class="price"> {{?value.discount_card
+				<1}}vip ￥{{=value.price}} <span style="text-decoration: line-through">(¥{{=value.origin_price}})</span>
+					{{??}}￥{{=value.price}}{{?}}</p>
+			<p class="change">
+				<a class="zenjian wcart_reduce" sku="{{=value.sku}}">-</a>
+				<input type="text" class="wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="{{=value.count}}">
+				<a href="javascript:void(0)" class="zenjian wcart_add" sku="{{=value.sku}}">+</a>
+			</p>
 		</li>
-		</ul>
-		{{~}}
-	</script>
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../../script/wcart.js"></script>
-	<script type="text/javascript" src="../../script/wolf.js"></script>
-	<script type="text/javascript" src="../../script/doT.min.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		apiready = function() {
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			});
-			var height = $(".main").height();
-			var footerHeight = $(".heji").height();
-			$(".main").height(api.screenHeight - footerHeight);
-			setTopBar();
-			loadCart();
-		};
-		function loadCart() {
-			var cart = api.getPrefs({
-				sync : true,
-				key : 'factory'
-			});
-			api.ajax({
-				url : "http://www.d-shang.com/index.php?appbuy/cart/?openid=" + OPENID,
-				method : "post",
-				data : {
-					values : {
-						"cart" : cart
-					}
-				}
-			}, function(ret, err) {
-				var aa = doT.template($("#interpolationtpl").text());
-				$("#main").html(aa(ret.data.goods));
-				wcart.init('factory');
-				wcart.mode = 'cartModel';
-				$("#token").val(ret.data.token);
-			});
-		}
+	</ul>
+	{{~}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/wcart.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+		var height = $(".main").height();
+		var footerHeight = $(".heji").height();
+		$(".main").height(api.screenHeight - footerHeight);
+		setTopBar();
+		loadCart();
+	};
 
-		function addAddress() {
-			api.openWin({
-				name : 'address',
-				url : './address.html'
-			});
-		}
-
-		function sub() {
-			var cart = api.getPrefs({
-				sync : true,
-				key : 'factory'
-			});
-			var token = $("#token").val();
-			var remark = $("input[name='remark']").val();
-			var longgu = $("#longgu").val();
-			remark = remark + longgu;
-			$(".addOrder").hide();
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?appbuy/addorder/?openid=' + OPENID,
-				method : "post",
-				data : {
-					values : {
-						remark : remark,
-						token : token,
-						cart : cart
-					}
+	function loadCart() {
+		var cart = api.getPrefs({
+			sync: true,
+			key: 'factory'
+		});
+		api.ajax({
+			url: "http://www.d-shang.com/index.php?appbuy/cart/?openid=" + OPENID,
+			method: "post",
+			data: {
+				values: {
+					"cart": cart
 				}
-			}, function(ret, err) {
-				if (ret.status) {
-					wcart.emptyGoods();
-					order();
-				}
-				alert(ret.message);
-			});
-		}
+			}
+		}, function(ret, err) {
+			var aa = doT.template($("#interpolationtpl").text());
+			$("#main").html(aa(ret.data.goods));
+			wcart.init('factory');
+			wcart.mode = 'cartModel';
+			$("#token").val(ret.data.token);
+		});
+	}
 
-		function order() {
-			api.closeWin({
-			});
-		}
-	</script>
+	function addAddress() {
+		api.openWin({
+			name: 'address',
+			url: './address.html'
+		});
+	}
+
+	function sub() {
+		var cart = api.getPrefs({
+			sync: true,
+			key: 'factory'
+		});
+		var token = $("#token").val();
+		var remark = $("input[name='remark']").val();
+		var longgu = $("#longgu").val();
+		remark = remark + longgu;
+		$(".addOrder").hide();
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appbuy/addorder/?openid=' + OPENID,
+			method: "post",
+			data: {
+				values: {
+					remark: remark,
+					token: token,
+					cart: cart
+				}
+			}
+		}, function(ret, err) {
+			if (ret.status) {
+				wcart.emptyGoods();
+				order();
+			}
+			alert(ret.message);
+		});
+	}
+
+	function order() {
+		api.closeWin({});
+	}
+</script>
+
 </html>

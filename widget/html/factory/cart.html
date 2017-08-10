@@ -19,18 +19,21 @@
 		<div class="content">
 			<div class="main">
 				<div id="main"></div>
-				<div class="wcart">
-					<p>
-						备注
-					</p>
-					<ul>
-						<input type="text" name="remark" id="remark" placeholder="如需自提及其他请备注说明" style="border:1px #ddd solid;height:2em;width:100%;"/>
-					</ul>
+				
+				<div class="weui-cells">
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<p class="weui-label">备注</p>
+					</div>
+					<div class="weui-cell__bd">
+						<input type="text" id="remark" name="remark" class="weui-input" placeholder="如需自提及其他请备注说明">
+					</div>
 				</div>
-				<div class="wcart">
-					<p>
-						选择龙骨
-					</p>
+				<div class="weui-cell weui-cell_select">
+					<div class="weui-cell__hd">
+						<p class="weui-label">选择龙骨</p>
+					</div>
+					<div class="weui-cell__bd">
 					<select class="weui-select" name="longgu" id="longgu">
 						<option value="2.7米镀锌">2.7米镀锌</option>
 						<option value="2.7米烤漆">2.7米烤漆</option>
@@ -39,6 +42,8 @@
 						<option value="4米镀锌">4米镀锌</option>
 						<option value="4米烤漆">4米烤漆</option>
 					</select>
+				</div>
+				</div>
 				</div>
 				<input type="hidden" name="token" id="token" value="">
 				<div class="heji">

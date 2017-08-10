@@ -66,7 +66,7 @@
         function goback() {
             api.closeWin({});
         }
-<<<<<<< HEAD
+
 
         function showrank(type) {
             api.openWin({
@@ -81,51 +81,7 @@
 
         }
     </script>
-=======
-    });
-  }
-  //游戏结束后提交分数
-  function subScore(score){
-  api.ajax({
-      url: 'http://www.d-shang.com/index.php?appgame/record',
-      method: 'post',
-      data: {
-          values: {
-          sno:'flappybird',
-          openid:OPENID,
-          score:score
-          },
 
-      }
-  }, function(ret, err) {
-    //api.alert({msg:ret.message});
-  });
-  }
-  $('.weui-tabbar__item').on('click', function() {
-  $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-    var tabId = $(this).attr("href");//点击取对应ID
-
-  $('.weui_tab_bd').find(tabId).addClass('weui_tab_bd_item_active').siblings().removeClass('weui_tab_bd_item_active');
-
-  });
-
-  function showRank() {
-    api.ajax({
-      url: 'http://www.d-shang.com/index.php?appgame/getrankbysno/?sno=flappybird&num=50&openid=' + OPENID,
-      method: 'post',
-    }, function(ret, err) {
-      if (ret.status) {
-        var data=ret.data;
-        var arrText = doT.template($("#ranklist").text());
-        $(".weui-cells").html(arrText(data));
-
-      } else {
-      console.log(JSON.stringify(err));
-      }
-    });
-  }
-</script>
->>>>>>> ce2d99090c3b04bdd2b952ec7b9e9a5ef2166201
 </body>
 
 </html>

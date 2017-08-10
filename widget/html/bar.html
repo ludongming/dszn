@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/weui.min.css">
+  <link rel="stylesheet" href="../css/design.css">
+  <link rel="stylesheet" href="../css/dropload.css">
+  <link rel="stylesheet" href="../css/header.css" />
+
+  <style media="screen">
+    body {
+      background-color: #fff;
+    }
+
+    html {
+      background-color: transparent !important;
+    }
+
+
+    .footerbar {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      height: 50px;
+    }
+
+    .footerbar .bar {
+      float: left;
+      width: 25%;
+      display: inline-block;
+      height: 50px;
+      text-align: center;
+      position: relative;
+    }
+
+    .footerbar img {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+    }
+
+    .footerbar .name {
+      color: #000;
+      font-size: 0.8em;
+      display: inline-block;
+      width: 100%;
+      bottom: 0px;
+      text-align: center;
+      position: absolute;
+      left: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page__bd content" id="contents">
+
+    <div class="footerbar">
+      <a href="javascript:goback();" class="bar">
+         <img src="../image/game/1.png" alt="">
+                <p class="name" >退出</p>
+            </a>
+      <a href="javascript:showrank('rank')" class="bar">
+                <img src="../image/game/2.png" alt="">
+                <span  class="name">榜单</span>
+            </a>
+      <a href="javascript:showrank('history')" class="bar">
+                <img src="../image/game/4.png" alt="">
+                <p  class="name">最新</p>
+            </a>
+      <a href="javascript:showrank('me')" class="bar">
+                <img src="../image/game/3.png" alt="">
+                <p  class="name">我</p>
+            </a>
+    </div>
+  </div>
+  </div>
+
+  <script type="text/javascript" src="../script/api.js"></script>
+
+
+
+  <script type="text/javascript">
+    var OPENID;
+    apiready = function() {
+
+    }
+
+    function goback() {
+      api.closeWin({});
+    }
+
+
+    function showrank(type) {
+      api.openWin({
+        name: 'showrank',
+        url: './showrank.html',
+        pageParam: {
+          type: type
+        },
+        bounces: false
+
+      });
+
+    }
+  </script>
+
+</body>
+
+</html>
