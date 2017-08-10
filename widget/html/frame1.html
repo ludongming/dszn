@@ -45,16 +45,16 @@
 
 		.box .img {
 			margin-top: 15px;
-			margin-left:10px;
-			margin-right:10px;
+			margin-left: 10px;
+			margin-right: 10px;
 			border-radius: 15px;
 			width: 60px;
 			height: 30px;
 			text-align: center;
-line-height:30px;
-color:#fff;
-font-size:0.8em;
-background:#e67f22;
+			line-height: 30px;
+			color: #fff;
+			font-size: 0.8em;
+			background: #e67f22;
 			float: left;
 		}
 
@@ -106,20 +106,20 @@ background:#e67f22;
 		</div>
 		<div class="box" data-nodeid="1" data-url="./factory/index.html">
 			<div class="img" style="background:#27ae61">
-			环保
+				环保
 			</div>
 			<span>顶上工程定制</span>
 		</div>
 		<div class="box" data-nodeid="4" data-url="./ydqm/index.html">
 			<div class="img" style="background:#f39c11">
-			10大
+				10大
 			</div>
 			<span>移动集成背景·墙面</span>
 		</div>
 
 		<div class="box" data-nodeid="3" data-url="./ydceil/index.html">
 			<div class="img" style="background:#3598db">
-			定制
+				定制
 			</div>
 			<span>移动集成吊顶</span>
 		</div>
@@ -171,6 +171,15 @@ background:#e67f22;
 		NODE = $(this).attr("data-nodeid");
 		URL = $(this).attr("data-url");
 
+		//免密码
+		var ret = getLocalPassword();
+		if (ret.status == true) {
+			checkQX(ret.password, 0);
+			return false;
+		}
+
+
+
 		var isFinger = api.getPrefs({
 			sync: true,
 			key: 'fingerPrint'
@@ -217,6 +226,7 @@ background:#e67f22;
 
 		api.prompt({
 			title: '授权密码',
+			msg: '授权后1小时内免密码输入哦',
 			buttons: ['取消', '确定']
 		}, function(ret, err) {
 			var index = ret.buttonIndex;
@@ -267,7 +277,7 @@ background:#e67f22;
 			});
 			return false;
 		}
-		checkQX(password);
+		checkQX(password, 1);
 	}
 
 
@@ -295,7 +305,7 @@ background:#e67f22;
 	}
 
 
-	function checkQX(password) {
+	function checkQX(password, isAutoPwd) {
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?appbuy/authorize/?openid=' + OPENID,
 			method: "post",
@@ -307,6 +317,10 @@ background:#e67f22;
 			}
 		}, function(ret, err) {
 			if (ret.status) {
+				//授权成功记住密码
+				recordPassword(password, isAutoPwd);
+
+
 				jump();
 			} else {
 				api.toast({
@@ -346,13 +360,56 @@ background:#e67f22;
 		}
 
 
-				if (NODE == 4) {
-					api.openWin({
-						name: 'ydqm' + num,
-						url: URL,
-						slidBackEnabled: false
-					});
-				}
+		if (NODE == 4) {
+			api.openWin({
+				name: 'ydqm' + num,
+				url: URL,
+				slidBackEnabled: false
+			});
+		}
+	}
+
+	function recordPassword(password, isAutoPwd) {
+
+		if (isAutoPwd == 0) {
+			return false;
+		}
+
+		var add_time = new Date().getTime();
+		var obj = {
+			"password": password,
+			"add_time": add_time
+		};
+
+		var objString = JSON.stringify(obj);
+		api.setPrefs({
+			key: 'password',
+			value: obj
+		});
+	}
+
+	function getLocalPassword() {
+		var string = api.getPrefs({
+			key: 'password',
+			sync: true
+		});
+
+		var obj = $.parseJSON(string);
+		var currentTime = new Date().getTime();
+		var ret;
+		if ((currentTime - obj.add_time) > 3600000) {
+			ret = {
+				"status": false,
+				'password': ""
+			};
+		} else {
+			ret = {
+				"status": true,
+				"password": obj.password
+			};
+		}
+		return ret;
+
 	}
 </script>
 
