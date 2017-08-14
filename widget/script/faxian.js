@@ -12,6 +12,7 @@ function loadAdv() {
 }
 
 function switchBtn(index) {
+  closePlayer();
     backSwitchBtn(index);
     mySwiper.slideTo(index, 500, false); //切换到第一个slide，速度为1秒
 
@@ -202,7 +203,7 @@ function setBadgeNum(num) {
 function user(uid) {
     api.openWin({
         name: 'user',
-        url: './friends/user.html',
+        url: './video.html',
         pageParam: {
             uid: uid
         }

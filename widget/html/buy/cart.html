@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>购物车</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link href="../../css/weui.min.css" rel="stylesheet"/>
-		<link href="../../css/header.css" rel="stylesheet" />
-		<link href="../../css/shoppingcart.css" rel="stylesheet"/>
-		<style>
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
-			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title">购物车</span>
-		</header>
-		<div class="content">
-			<div class="main">
-				<div id="main"></div>
 
-				<div class="weui-cells">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>购物车</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link href="../../css/weui.min.css" rel="stylesheet" />
+	<link href="../../css/header.css" rel="stylesheet" />
+	<link href="../../css/shoppingcart.css" rel="stylesheet" />
+	<style>
+		#card {
+			height: 30px;
+			width: 80px;
+			border-radius: 5px;
+			background: red;
+			color: #fff;
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+			font-size: 0.8em;
+			text-align: center;
+			line-height: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title">购物车</span>
+	</header>
+	<div class="content">
+		<div class="main">
+			<div id="main"></div>
+
+			<div class="weui-cells">
 				<div class="weui-cell">
 					<div class="weui-cell__hd">
 						<p class="weui-label">备注</P>
@@ -30,12 +45,12 @@
 					</div>
 				</div>
 
-					<div class="weui-cell weui-cell_select">
-						<div class="weui-cell__hd">
-							<p class="weui-label">龙骨选择</p>
-						</div>
+				<div class="weui-cell weui-cell_select">
+					<div class="weui-cell__hd">
+						<p class="weui-label">选择龙骨</p>
+					</div>
 					<div class="weui-cell__bd">
-					<select class="weui-select" name="longgu" id="longgu">
+						<select class="weui-select" name="longgu" id="longgu">
 						<option value="2.7米镀锌">2.7米镀锌</option>
 						<option value="2.7米烤漆">2.7米烤漆</option>
 						<option value="3米镀锌">3米镀锌</option>
@@ -44,131 +59,174 @@
 						<option value="4米烤漆">4米烤漆</option>
 					</select>
 					</div>
-					</div>
+				</div>
+
+			</div>
+
+			<div class="heji">
+				<div id="card">
 
 				</div>
 
-				<div class="heji">
-					<button class="jies" onclick="sub()">
+				<button class="jies" onclick="sub()">
 						提交
 					</button>
-					<div class="totalp">
-						合计:¥<span class="price wcart_price" id="totalp"></span>
-					</div>
+				<div class="totalp">
+					合计:¥<span class="price wcart_price" id="totalp"></span>
 				</div>
-				<input type="hidden" name="token" id="token" value="">
 			</div>
+			<input type="hidden" name="token" id="token" value="">
 		</div>
-	</body>
-	<!--购物车列表模板-->
-	<script id="interpolationtpl" type="text/x-dot-template">
-		{{~it:value:index}}
-		<ul class="wcart_{{=value.sku}}">
+	</div>
+</body>
+<!--购物车列表模板-->
+<script id="interpolationtpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<ul class="wcart_{{=value.sku}}">
 		<li class="radios"></li>
 		<li class="img y_center"><img src="../../default.png" class="pic" data-original="{{=value.image}}">
-		<a href="javascript:void(0)" sku="{{=value.sku}}" class="delet removewcart" style="display:inline-block;width:40px;color:#000">删除</a>
+			<a href="javascript:void(0)" sku="{{=value.sku}}" class="delet removewcart" style="display:inline-block;width:40px;color:#000">删除</a>
 
 		</li>
 		<li class="txt">
-		<p class="name">{{=value.goods_name}}</p>
-		<p class="guige">{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
-		<p class="price"> {{?value.discount_card<1}}vip ￥{{=value.price}}
-		<span style="text-decoration: line-through">(¥{{=value.origin_price}})</span>
-		{{??}}￥{{=value.price}}{{?}}</p>
-		<p class="change">
-		<a class="zenjian wcart_reduce" sku="{{=value.sku}}">-</a>
-		<input type="text" class="wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="{{=value.count}}">
-		<a  href="javascript:void(0)" class="zenjian wcart_add" sku="{{=value.sku}}">+</a>
-		</p>
+			<p class="name">{{=value.goods_name}}</p>
+			<p class="guige">{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
+			<p class="price"> {{?value.discount_card!=1}}￥{{=value.price}}
+				<span style="text-decoration: line-through">(¥{{=value.origin_price}})</span> {{??}}￥{{=value.price}}{{?}}
+			</p>
+			<p class="change">
+				<a class="zenjian wcart_reduce" sku="{{=value.sku}}">-</a>
+				<input type="text" class="wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="{{=value.count}}">
+				<a href="javascript:void(0)" class="zenjian wcart_add" sku="{{=value.sku}}">+</a>
+			</p>
 		</li>
-		</ul>
-		{{~}}
-	</script>
+	</ul>
+	{{~}}
+</script>
 
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../../script/wcart.js"></script>
-	<script type="text/javascript" src="../../script/wolf.js"></script>
-	<script type="text/javascript" src="../../script/doT.min.js"></script>
-	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/wcart.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
 
-	<script type="text/javascript">
-		var OPENID;
-		apiready = function() {
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			});
-			var height = $(".main").height();
-			var footerHeight = $(".heji").height();
-			$(".main").height(api.screenHeight - footerHeight);
-			setTopBar();
-			loadCart();
-		};
-		function loadCart() {
-			var cart = api.getPrefs({
-				sync : true,
-				key : 'gld'
-			});
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 
-			api.ajax({
-				url : "http://www.d-shang.com/index.php?appbuy/cart/?openid=" + OPENID,
-				method : "post",
-				data : {
-					values : {
-						"cart" : cart
-					}
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+		var height = $(".main").height();
+		var footerHeight = $(".heji").height();
+		$(".main").height(api.screenHeight - footerHeight);
+		setTopBar();
+		loadCart();
+	};
+
+	function loadCart() {
+
+		var loading=weui.loading("加载中");
+		var cart = api.getPrefs({
+			sync: true,
+			key: 'gld'
+		});
+
+		api.ajax({
+			url: "http://www.d-shang.com/index.php?appbuy/cart/?openid=" + OPENID,
+			method: "post",
+			data: {
+				values: {
+					"cart": cart
 				}
-			}, function(ret, err) {
-				var aa = doT.template($("#interpolationtpl").text());
-				$("#main").html(aa(ret.data.goods));
-				$('.pic').picLazyLoad();
+			}
+		}, function(ret, err) {
+			loading.hide();
+			//将远程的cart替换到本地的cart 最新价格
+			var aa = doT.template($("#interpolationtpl").text());
+			$("#main").html(aa(ret.data.goods));
+			$('.pic').picLazyLoad();
 
-				wcart.init('gld');
-				wcart.mode = 'cartModel';
-				$("#token").val(ret.data.token);
-			});
+			wcart.init('gld');
+			wcart.emptyGoods();
+			changeLocalCookie(ret.data.goods);
+			wcart.statis();
+			wcart.mode = 'cartModel';
+			$("#card").html(ret.data.vip.vipname + "卡");
+			$("#token").val(ret.data.token);
+		});
+	}
+
+	function changeLocalCookie(goods) {
+		var str = wcart.getCookie();
+
+		if (goods.length < 1) {
+			return false;
 		}
 
-		function addAddress() {
-			api.openWin({
-				name : 'address',
-				url : './address.html'
-			});
+		var obj = [];
+		for (var i = 0; i < goods.length; i++) {
+			var temp = {};
+			temp.sku = goods[i].sku;
+			temp.price = goods[i].price;
+			temp.packages = goods[i].packages;
+			temp.num = goods[i].count;
+			obj.push(temp);
 		}
 
-		function sub() {
-			var cart = api.getPrefs({
-				sync : true,
-				key : 'gld'
-			});
-			var token = $("#token").val();
-			var remark = $("input[name='remark']").val();
-			var longgu=$("#longgu").val();
-			remark=remark+longgu;
-			$(".addOrder").hide();
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?appbuy/addorder/?openid=' + OPENID,
-				method : "post",
-				data : {
-					values : {
-						remark : remark,
-						token : token,
-						cart : cart
-					}
+		var str = JSON.stringify(obj);
+
+
+		api.setPrefs({
+			key: 'gld',
+			value: str
+		});
+
+
+	}
+
+	function addAddress() {
+		api.openWin({
+			name: 'address',
+			url: './address.html'
+		});
+	}
+
+	function sub() {
+		var cart = api.getPrefs({
+			sync: true,
+			key: 'gld'
+		});
+		var token = $("#token").val();
+		var remark = $("input[name='remark']").val();
+		var longgu = $("#longgu").val();
+		remark = remark + longgu;
+		$(".addOrder").hide();
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appbuy/addorder/?openid=' + OPENID,
+			method: "post",
+			data: {
+				values: {
+					remark: remark,
+					token: token,
+					cart: cart
 				}
-			}, function(ret, err) {
-				if (ret.status) {
-					wcart.emptyGoods();
-					order();
-				}
-				alert(ret.message);
-			});
-		}
+			}
+		}, function(ret, err) {
+			if (ret.status) {
+				wcart.emptyGoods();
+				order();
+			}
+			alert(ret.message);
+		});
+	}
 
-		function order(){
-		  api.closeWin({
-          });
-		}
-	</script>
+	function order() {
+		api.closeWin({});
+	}
+</script>
+
 </html>

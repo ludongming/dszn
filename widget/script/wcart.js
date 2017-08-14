@@ -96,7 +96,7 @@ var wcart={
          total+=Math.round(parseInt(obj[i].price*100)*parseInt(obj[i].num)*parseInt(obj[i].packages))/100;
     }
     $("."+wcart.cartNum).html(obj.length);
-    $("."+wcart.totalPrice).html(total);
+    $("."+wcart.totalPrice).html(total.toFixed(2));
     //显示代码
     if(wcart.debug){
       console.log(JSON.stringify(obj));
@@ -144,8 +144,6 @@ var wcart={
   changeNum:function(){
      var num=$(this).val();
      var sku=$(this).attr('sku');
-
-
 	  var mini=$(this).attr('mini');
       if(parseInt(num)<parseInt(mini)){
           alert("最少"+mini+"件起订!");

@@ -26,6 +26,8 @@
 			color: red;
 			height: 20px;
 		}
+		.image{position: relative;}
+		.videocontroll{vertical-align: middle;width:80px;height:80px;z-index:999;position: absolute;left:42%;top:32%;}
 	</style>
 </head>
 
@@ -117,9 +119,17 @@
 			</div>
 			<div class="pub_time">{{=value.rq}}</div>
 		</div>
-		<div class="image">
-			<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" width="100%;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+			{{?value.isvideo==1}}
+		<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
+		<img src="../image/play.png" class="videocontroll">
+		<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" width="100%;">
 		</div>
+
+{{??}}
+		<div class="image">
+<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" width="100%;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+</div>
+		{{?}}
 		<div class="message">{{=value.content}}</div>
 		<div class="tip">
 			<div class="dingwei">
@@ -208,10 +218,48 @@
 			longSwipesRatio:0.3,
 			touchAngle:30,
 			onSlideChangeEnd: function(swiper, even) {
+				closePlayer();
 				backSwitchBtn(mySwiper.activeIndex);
       }
 		})
+		var videoPlayer = api.require('videoPlayer');
+
 		addlocation();
+	}
+
+	function playVideo(obj) {
+		closePlayer();
+		var videoPlayer = api.require('videoPlayer');
+
+		var source = $(obj).attr("data-source");
+
+		var top = $(obj).offset().top;
+		var y = $(obj).height();
+		var width = api.winWidth;
+		videoPlayer.open({
+			path: source,
+			rect: {
+				x: 0,
+				y: top,
+				w: width,
+				h: y
+			},
+			fixedOn:api.frameName,
+			fixed:false
+		}, function(ret, err) {
+			if (ret.status) {
+
+				//alert(JSON.stringify(ret));
+			} else {
+				//	alert(JSON.stringify(err));
+			}
+		});
+
+	}
+
+	function closePlayer() {
+		var videoPlayer = api.require('videoPlayer');
+		videoPlayer.close();
 	}
 </script>
 
