@@ -66,6 +66,7 @@
 			margin-bottom: 5px;
 			padding-top: 5px;
 		}
+		.videocon{}
 	</style>
 </head>
 
@@ -86,8 +87,9 @@
 				</div>
 			</div>
 		</div>
-<video id="video" src="" width="200px;">
-
+		<div class="videocon">
+<video id="video" src="" style="width:200px;max-height:100px;">
+</div>
 		<div class="dingwei">
 			<img src="../../image/dingwei.png" style="vertical-align:middle;width:30px;margin-left:10px;"><span class="address" ontouchend="addlocation()">点击获取位置</span>
 		</div>
@@ -255,6 +257,7 @@ var video=document.getElementById("video");
 		video.setAttribute("src",ret.data);
 			video.load();
 				cancle();
+				$(".videocon").show();
 
 				return false;
 			}

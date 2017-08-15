@@ -44,7 +44,7 @@
 			最新
 		</a>
 		<a class="nav nav_2" href="javascript:void(0)" ontouchend="switchBtn(2)">
-		热门
+		 视频
 	</a>
 		  </span>
 
@@ -217,10 +217,13 @@
 			resistanceRatio : 0,
 			longSwipesRatio:0.3,
 			touchAngle:30,
-			onSlideChangeEnd: function(swiper, even) {
+			onSliderMove:function(swiper,event){
 				closePlayer();
+			},
+			onSlideChangeStart: function(swiper, even) {
 				backSwitchBtn(mySwiper.activeIndex);
-      }
+      },
+
 		})
 		var videoPlayer = api.require('videoPlayer');
 
@@ -247,11 +250,11 @@
 			fixedOn:api.frameName,
 			fixed:false
 		}, function(ret, err) {
+			console.log(JSON.stringify(ret));
 			if (ret.status) {
-
-				//alert(JSON.stringify(ret));
+				var time=Math.round(ret.duration*1000);
+        setTimeout(closePlayer,time);
 			} else {
-				//	alert(JSON.stringify(err));
 			}
 		});
 
