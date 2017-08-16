@@ -205,8 +205,8 @@
 			if (ret.status) {
 				api.hideProgress();
 				api.execScript({
-					name: 'home', //这里root代表index.html
-					frameName: 'frame0',
+					name: 'user', //这里root代表index.html
+					frameName: '',
 					script: 'refresh();'
 				});
 				api.closeWin({});

@@ -26,14 +26,13 @@
 			color: red;
 			height: 20px;
 		}
-		.image{position: relative;}
-		.videocontroll{vertical-align: middle;width:80px;height:80px;z-index:999;position: absolute;left:42%;top:32%;}
+
 	</style>
 </head>
 
 <body>
 	<header style="position: fixed;">
-		<img src="../image/xj.png" ontouchend="friend()" style="width:25px;margin-top:8px; margin-left:10px; vertical-align:middle;float:left;">
+		<img src="../image/xj.png" ontouchend="me()" style="width:25px;margin-top:8px; margin-left:10px; vertical-align:middle;float:left;">
 
 		<span class="tit">
 
@@ -122,18 +121,18 @@
 			{{?value.isvideo==1}}
 		<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
 		<img src="../image/play.png" class="videocontroll">
-		<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" width="100%;">
+		<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" style="vertical-align:middle;max-width:100%;margin:0 auto;max-height:400px;">
 		</div>
 
 {{??}}
 		<div class="image">
-<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" width="100%;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" style="width:100%;vertical-align:middle;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
 </div>
 		{{?}}
 		<div class="message">{{=value.content}}</div>
 		<div class="tip">
 			<div class="dingwei">
-				<img src="../image/dingwei.png" style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</a>
+				<img src="../image/dingwei.png" style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</span>
 		</div>
 		<div class="tool" style="position:relative;">
 		<span class="zan zan_{{=value.id}}" style="">{{?value.flower>0}} {{=value.flower}} {{?}}
@@ -147,9 +146,7 @@
 		</div>
 		{{?value.flower>0}}
 		<div class="comment">
-			<div class="commentlist">
-				<span class="commentfirst"></span> {{ for(var i=0,catlen=value.flowers.length; i
-				<catlen; i++) { }} <span> {{=value.flowers[i].real_name}} {{?i==value.flower-1}}{{??}},{{?}}
+			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}<span>{{=value.flowers[i].real_name}} {{?i==value.flower-1}}{{??}},{{?}}
 					</span>
 					{{ } }} 点赞了哦
 			</div>
@@ -201,6 +198,7 @@
 	var REPLYID = 0;
 	var ADDRESS;
 	var mySwiper;
+	var UID;
 	apiready = function() {
 		setTopBar();
 		OPENID = api.getPrefs({
@@ -230,40 +228,7 @@
 		addlocation();
 	}
 
-	function playVideo(obj) {
-		closePlayer();
-		var videoPlayer = api.require('videoPlayer');
 
-		var source = $(obj).attr("data-source");
-
-		var top = $(obj).offset().top;
-		var y = $(obj).height();
-		var width = api.winWidth;
-		videoPlayer.open({
-			path: source,
-			rect: {
-				x: 0,
-				y: top,
-				w: width,
-				h: y
-			},
-			fixedOn:api.frameName,
-			fixed:false
-		}, function(ret, err) {
-			console.log(JSON.stringify(ret));
-			if (ret.status) {
-				var time=Math.round(ret.duration*1000);
-        setTimeout(closePlayer,time);
-			} else {
-			}
-		});
-
-	}
-
-	function closePlayer() {
-		var videoPlayer = api.require('videoPlayer');
-		videoPlayer.close();
-	}
 </script>
 
 </html>

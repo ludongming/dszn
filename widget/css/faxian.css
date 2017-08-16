@@ -1,7 +1,8 @@
 body {
   background: #f5f5f5;
 }
-
+.image{position: relative;background:#000;text-align:center;}
+.videocontroll{vertical-align: middle;width:80px;height:80px;z-index:999;left:42%;top:35%;position: absolute;}
 .content {
   min-height: 400px;
 }
@@ -47,8 +48,7 @@ line-height: 20px;
 }
 .mp{
   display: block;
-  width:60px;
-  color:#666;
+  color:#ccc;
   font-size:0.9em;
 }
 
@@ -96,7 +96,7 @@ line-height: 20px;
 }
 
 .reply {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   border-radius: 4px;
   padding: 4px;
@@ -141,13 +141,13 @@ color:#415b76;
 }
 
 .commentlist {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   border-radius: 4px;
-  background: #f5f5f5;
   padding: 4px;
   font-size: 0.9em;
   color: #989898;
+  background:#f8f8f8;
   margin-bottom: 10px;
 }
 

@@ -203,7 +203,7 @@ function setBadgeNum(num) {
 function user(uid) {
     api.openWin({
         name: 'user',
-        url: './video.html',
+        url: './friends/user.html',
         pageParam: {
             uid: uid
         }
@@ -235,6 +235,51 @@ function bigImage(image) {
         }
 
     });
+}
+
+function me(){
+  api.openWin({
+      name: 'user',
+      url: './friends/user.html',
+      pageParam: {
+          uid: UID
+      }
+  });
+
+}
+
+function playVideo(obj) {
+  closePlayer();
+  var videoPlayer = api.require('videoPlayer');
+
+  var source = $(obj).attr("data-source");
+
+  var top = $(obj).offset().top;
+  var y = $(obj).height();
+  var width = api.winWidth;
+  videoPlayer.open({
+    path: source,
+    rect: {
+      x: 0,
+      y: top,
+      w: width,
+      h: y
+    },
+    fixedOn:api.frameName,
+    fixed:false
+  }, function(ret, err) {
+    if (ret.status) {
+      var time=Math.round(ret.duration*1000);
+      setTimeout(closePlayer,time);
+    } else {
+    }
+  });
+
+}
+
+function closePlayer() {
+  var videoPlayer = api.require('videoPlayer');
+  videoPlayer.close();
 }
 
 function saveImage(image) {

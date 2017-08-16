@@ -59,6 +59,7 @@ function getUserInfo() {
         url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
     }, function(ret, err) {
         var user = ret.data;
+        UID=user.uid;
         var money = Math.round(user.coupons);
         $(".money").html(money);
     });
