@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>电子书内容</title>
+  <link rel="stylesheet" href="../../css/weui.min.css">
+  <link rel="stylesheet" href="../../css/design.css">
+  <link rel="stylesheet" href="../../css/dropload.css">
+  <link rel="stylesheet" href="../../css/header.css" />
+  <style media="screen">
+    bod{
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+var url;
+  apiready=function(){
+    var url=api.pageParam.url;
+    console.log(url);
+    api.setScreenOrientation({
+    orientation: 'landscape_left'
+});
+api.addEventListener({
+    name: 'keyback'
+}, function(ret, err) {
+  api.setScreenOrientation({
+      orientation : 'auto_portrait'
+  });
+  api.setStatusBarStyle({
+      style : 'dark',
+      color : '#6ab494'
+  });
+  api.closeWin();
+});
+openFrame(url);
+}
+
+
+function openFrame(url){
+console.log(url);
+  api.openFrame({
+      name: 'ebook',
+      url: url,
+      rect: {
+          x: 0,
+          y: 0,
+          w: 'auto',
+          h: 'auto'
+      },
+      bounces: true,
+      bgColor: 'rgba(0,0,0,0)',
+      vScrollBarEnabled: true,
+      hScrollBarEnabled: true
+  });
+}
+
+</script>
+</html>

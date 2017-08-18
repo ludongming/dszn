@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>电子相册列表</title>
+  <link rel="stylesheet" href="../../css/weui.min.css">
+  <link rel="stylesheet" href="../../css/design.css">
+  <link rel="stylesheet" href="../../css/dropload.css">
+  <link rel="stylesheet" href="../../css/header.css" />
+  <style media="screen">
+    body {
+      background-color: #fff;
+    }
+    img{
+      width: 17px;
+    }
+  </style>
+</head>
+<body>
+  <header style="position: fixed;" class="page__bd page__bd_spacing">
+    <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
+    <span id="title" class="title" style="text-align: center; margin-right:40px;">电子相册</span>
+  </header>
+  <div class="page_bd content">
+    <div class="weui-cells">
+
+    </div>
+  </div>
+</body>
+<script type="text/javascript" id="list">
+{{~it:value:index}}
+<a href="javascript:detail('{{=value.subtitle}}');" class="weui-cell weui-cell_access">
+<div class="weui-cell__hd"><img src="../../image/ebook.png" alt=""/></div>
+<div class="weui-cell__bd">{{=value.title}}</div>
+<div class="weui-cell__ft"></div>
+</a>
+{{~}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript">
+  var OPENID;
+  var page=1;
+  apiready = function() {
+    setTopBar();
+    OPENID = api.getPrefs({
+      sync: true,
+      key: 'openid'
+    });
+    getDataList();
+  }
+
+  function getDataList() {
+    api.ajax({
+      url: 'http://www.d-shang.com/index.php?app/getnewslist/?cid=2217&p='+page+'&openid='+OPENID,
+      method: 'post',
+    }, function(ret, err) {
+      if (ret) {
+        var data=ret.data;
+        var arrText = doT.template($("#list").text());
+        $('.weui-cells').html(arrText(data));
+      } else {
+        console.log(JSON.stringify(ret));
+      }
+    });
+  }
+
+  function detail(url){
+
+    api.openWin({
+        name: 'detail',
+        url: './detail.html',
+        pageParam: {
+            url:url
+        }
+    });
+
+  }
+</script>
+
+</html>
