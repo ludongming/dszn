@@ -15,9 +15,10 @@
 				border-bottom: 1px #e7e7e7 solid;
 				width: 100%;
 				float: right;
+	      position: relative;
 			}
 			.list img{width:100%;}
-
+      .mp{position: absolute;bottom:0px;right:0px;background:#000;color:#fff;font-size:0.8em;padding:2px;}
 		</style>
 	</head>
 	<body>
@@ -26,52 +27,48 @@
 		</header>
 		<div class="page__bd content">
 			<div id="main">
-
 			<div class="list" data-url="./dszp/index.html" data-name="dszp" data-vip="1">
 						<img src="../image/dszp.png">
+						<span class="mp">门票:10金豆/天</span>
 			</div>
 
 				<div class="list" data-url="./3D/index.html" data-name="3D" data-vip="1">
 						<img src="../image/quanjing.jpg">
+						<span class="mp">门票:10金豆/天</span>
 			</div>
 
 
-				<div class="list" data-url="./goods/index.html" data-name="design" data-vip="0">
+				<div class="list" data-url="./goods/index.html" data-name="product" data-vip="1">
 						<img src="../image/chanpinku.png">
-
+						<span class="mp">门票:5金豆/天</span>
 				</div>
 
 
 			<div class="list" data-url="./design/hot.html" data-name="design" data-vip="1">
 						<img src="../image/diaodingqiangmian.png">
-
+						<span class="mp">门票:5金豆/天</span>
 				</div>
 
-				<div class="list"  data-url="./paint/serviceindex.html" data-name="program" data-vip="0">
+				<div class="list"  data-url="./paint/serviceindex.html" data-name="program" data-vip="1">
 						<img src="../image/qiangmianhua.png">
-
+						<span class="mp">门票:5金豆/天</span>
 				</div>
-
-
-
 
 					<div class="list" data-url="./sellpoint/hot.html" data-name="sellpoint" data-vip="1">
 						<img src="../image/zhinengxiaod.png">
-
+						<span class="mp">门票:5金豆/天</span>
 				</div>
 
 
-					<div class="list" data-url="./pdf/index.html" data-name="pdf" data-vip="0">
+					<div class="list" data-url="./pdf/index.html" data-name="pdf" data-vip="1">
 						<img src="../image/chuyang.png">
-
+						<span class="mp">门票:5金豆/天</span>
 				</div>
 
-
-				<div class="list" data-url="./news/newslist.html" data-name="news" data-vip="0">
+				<div class="list" data-url="./news/newslist.html" data-name="news" data-vip="1">
 						<img src="../image/dingshangxinwen.jpg">
-
+						<span class="mp">门票:5金豆/天</span>
 				</div>
-
 
 
 			</div>
@@ -111,13 +108,27 @@
 
 	function isVip(name,url) {
 		api.ajax({
-			url : 'http://www.d-shang.com/index.php?app/checkvip/?openid=' + OPENID
+			url : 'http://www.d-shang.com/index.php?app/checkvip/?openid=' + OPENID,
+			data:{
+				values:{
+					name:name
+				}
+			},
+			method:'post'
 		}, function(ret, err) {
+
 			if (ret.status) {
-				api.openWin({
-					name : name,
-					url : url
+				weui.toast(ret.message, {
+					duration : 1000,
+					className : "bears"
 				});
+				setTimeout(function(){
+					api.openWin({
+						name : name,
+						url : url
+					});
+
+				},1000);
 			} else {
 				weui.toast(ret.message, {
 					duration : 1000,

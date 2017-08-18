@@ -249,11 +249,34 @@ function me(){
 }
 
 function playVideo(obj) {
+
+var img=  $(obj).children(".videocontroll");
+
+ var source = $(obj).attr("data-source");
+
+api.download({
+    url: source,
+    savePath: '',
+    report: true,
+    cache: true,
+    allowResume: true
+},function(ret, err){
+    if(ret.state == 1){
+      loadPlayer(ret.savePath,obj);
+
+    }else{
+
+    }
+});
+
+
+
+
+}
+
+function loadPlayer(source,obj){
   closePlayer();
   var videoPlayer = api.require('videoPlayer');
-
-  var source = $(obj).attr("data-source");
-
   var top = $(obj).offset().top;
   var y = $(obj).height();
   var width = api.winWidth;
@@ -274,12 +297,39 @@ function playVideo(obj) {
     } else {
     }
   });
-
 }
+
 
 function closePlayer() {
   var videoPlayer = api.require('videoPlayer');
   videoPlayer.close();
+}
+
+//加载动画
+function circleloading(bfb) {
+    //10等分
+    var df=Math.floor(bfb/10)*0.2;
+
+    var percent = -0.5 + df;
+    percent = percent.toFixed(1); //只保留1位
+    if (percent > 1.5) {
+        return false;
+    }
+    var canvas = document.createElement("canvas");
+    context = canvas.getContext("2d"); //画布
+
+    context.beginPath();
+    //定位画布的起点坐标
+    context.translate(100, 100);
+    //起始连接点 直线链接
+    context.moveTo(0, 0);
+    //结束点的位置
+    context.arc(0, 0, 25, -0.5 * Math.PI, percent * Math.PI);
+    //填充颜色
+    context.fillStyle = "#ccc"; //填充颜色
+    context.fill();
+
+    return canvas.toDataURL("image/png");
 }
 
 function saveImage(image) {
@@ -384,7 +434,7 @@ function dropDownRecommend() {
 function loadRecommendData() {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
-        timeout: 5,
+        timeout: 15,
         report: false
     }, function(ret, err) {
         api.refreshHeaderLoadDone();
