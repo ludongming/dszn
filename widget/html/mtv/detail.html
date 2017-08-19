@@ -12,11 +12,15 @@
   <style media="screen">
     bod{
       background-color: #fff;
+
     }
   </style>
 </head>
 <body>
-
+  <header style="position: fixed;" class="page__bd page__bd_spacing">
+    <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" ></i>
+    <span id="title" class="title" style="text-align: center; margin-right:40px;">电子相册</span>
+  </header>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
@@ -27,6 +31,8 @@
 var url;
   apiready=function(){
     var url=api.pageParam.url;
+    var title=api.pageParam.title;
+    $('.title').html(title);
     console.log(url);
     api.setScreenOrientation({
     orientation: 'landscape_left'
@@ -43,18 +49,17 @@ api.addEventListener({
   });
   api.closeWin();
 });
-openFrame(url);
+openFrame(url)
 }
 
 
 function openFrame(url){
-console.log(url);
   api.openFrame({
       name: 'ebook',
       url: url,
       rect: {
           x: 0,
-          y: 0,
+          y: 40,
           w: 'auto',
           h: 'auto'
       },
@@ -63,6 +68,12 @@ console.log(url);
       vScrollBarEnabled: true,
       hScrollBarEnabled: true
   });
+}
+function goback(){
+  api.setScreenOrientation({
+      orientation : 'auto_portrait'
+  });
+    api.closeWin();
 }
 
 </script>

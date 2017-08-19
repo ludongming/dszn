@@ -1,19 +1,19 @@
 
-header{ 
-	width: 100%; 
-	height: 40px; 
-	background-color: #f3f3f3; 
-	position: fixed; top: 0; 
-	border-bottom: 1px solid #ccc; 
-	text-align: center; 
-	line-height: 35px; 
+header{
+	width: 100%;
+	height: 40px;
+	background-color: #f3f3f3;
+	position: fixed; top: 0;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+	line-height: 35px;
 	font-size: 18px;
 	z-index: 20;
 }
-.back{ 
-	width: 30px; 
-	height: 30px; 
-	position: absolute; 
+.back{
+	width: 30px;
+	height: 30px;
+	position: absolute;
 	top: 5px; left: 12px;
 }
 .backBtn{

@@ -32,7 +32,7 @@
 </body>
 <script type="text/javascript" id="list">
 {{~it:value:index}}
-<a href="javascript:detail('{{=value.subtitle}}');" class="weui-cell weui-cell_access">
+<a href="javascript:detail('{{=value.subtitle}}','{{=value.title}}');" class="weui-cell weui-cell_access">
 <div class="weui-cell__hd"><img src="../../image/ebook.png" alt=""/></div>
 <div class="weui-cell__bd">{{=value.title}}</div>
 <div class="weui-cell__ft"></div>
@@ -71,13 +71,14 @@
     });
   }
 
-  function detail(url){
+  function detail(url,title){
 
     api.openWin({
         name: 'detail',
         url: './detail.html',
         pageParam: {
-            url:url
+            url:url,
+            title:title
         }
     });
 
