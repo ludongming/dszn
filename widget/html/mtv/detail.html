@@ -21,8 +21,6 @@
 <body>
   <div class="back" onclick="goback();">返回</div>
     <iframe id="book" src="" width="100%" height="100%">
-
-
   </iframe>
 
 </body>
@@ -45,6 +43,7 @@
         api.setScreenOrientation({
             orientation: 'landscape_left'
         });
+        //监听安卓返回键
         api.addEventListener({
             name: 'keyback'
         }, function(ret, err) {
@@ -57,26 +56,6 @@
             });
             api.closeWin();
         });
-
-    }
-
-
-    function openFrame(url) {
-        api.openFrame({
-            name: 'ebook',
-            url: "",
-            rect: {
-                x: 0,
-                y: 40,
-                w: 'auto',
-                h: 'auto'
-            },
-            bounces: true,
-            bgColor: 'rgba(0,0,0,0)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: true
-        });
-
     }
 
     function goback() {
