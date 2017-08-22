@@ -12,23 +12,23 @@ function loadAdv() {
 }
 
 function switchBtn(index) {
-  closePlayer();
+    closePlayer();
     backSwitchBtn(index);
     mySwiper.slideTo(index, 500, false); //切换到第一个slide，速度为1秒
 
 }
 
-function backSwitchBtn(index){
-  var navArr = $(".nav");
-  navArr.each(function() {
-      $(this).css({
-          "color": "black"
-      });
-  })
+function backSwitchBtn(index) {
+    var navArr = $(".nav");
+    navArr.each(function() {
+        $(this).css({
+            "color": "black"
+        });
+    })
 
-  $(".nav_" + index).css({
-      "color": "red"
-  });
+    $(".nav_" + index).css({
+        "color": "red"
+    });
 }
 
 
@@ -237,78 +237,83 @@ function bigImage(image) {
     });
 }
 
-function me(){
-  api.openWin({
-      name: 'user',
-      url: './friends/user.html',
-      pageParam: {
-          uid: UID
-      }
-  });
+function me() {
+
+    api.openWin({
+        name: 'user',
+        url: './friends/user.html',
+        animation: {
+            type: "push", //动画类型（详见动画类型常量）
+            subType: "from_left", //动画子类型（详见动画子类型常量）
+            duration: 300 //动画过渡时间，默认300毫秒
+        },
+        pageParam: {
+            uid: UID
+        }
+    });
 
 }
 
 function playVideo(obj) {
 
-var img=  $(obj).children(".videocontroll");
+    var img = $(obj).children(".videocontroll");
 
- var source = $(obj).attr("data-source");
+    var source = $(obj).attr("data-source");
 
-api.download({
-    url: source,
-    savePath: '',
-    report: true,
-    cache: true,
-    allowResume: true
-},function(ret, err){
-    if(ret.state == 1){
-      loadPlayer(ret.savePath,obj);
+    api.download({
+        url: source,
+        savePath: '',
+        report: true,
+        cache: true,
+        allowResume: true
+    }, function(ret, err) {
+        if (ret.state == 1) {
+            loadPlayer(ret.savePath, obj);
 
-    }else{
+        } else {
 
-    }
-});
+        }
+    });
 
 
 
 
 }
 
-function loadPlayer(source,obj){
-  closePlayer();
-  var videoPlayer = api.require('videoPlayer');
-  var top = $(obj).offset().top;
-  var y = $(obj).height();
-  var width = api.winWidth;
-  videoPlayer.open({
-    path: source,
-    rect: {
-      x: 0,
-      y: top,
-      w: width,
-      h: y
-    },
-    fixedOn:api.frameName,
-    fixed:false
-  }, function(ret, err) {
-    if (ret.status) {
-      var time=Math.round(ret.duration*1000);
-      setTimeout(closePlayer,time);
-    } else {
-    }
-  });
+function loadPlayer(source, obj) {
+    closePlayer();
+    var videoPlayer = api.require('videoPlayer');
+    var top = $(obj).offset().top;
+    var y = $(obj).height();
+    var width = api.winWidth;
+    videoPlayer.open({
+        path: source,
+        rect: {
+            x: 0,
+            y: top,
+            w: width,
+            h: y
+        },
+        fixedOn: api.frameName,
+        fixed: false
+    }, function(ret, err) {
+        if (ret.status) {
+            var time = Math.round(ret.duration * 1000);
+            setTimeout(closePlayer, time);
+        } else {}
+    });
 }
 
 
 function closePlayer() {
-  var videoPlayer = api.require('videoPlayer');
-  videoPlayer.close();
+    var videoPlayer = api.require('videoPlayer');
+    videoPlayer.close();
 }
 
 //加载动画
 function circleloading(bfb) {
     //10等分
-    var df=Math.floor(bfb/10)*0.2;
+    var df = Math.floor(bfb / 10) * 0.2;
 
     var percent = -0.5 + df;
     percent = percent.toFixed(1); //只保留1位
@@ -450,7 +455,9 @@ function loadRecommendData() {
             $("#recommendmain").html(arrText(d.recommend));
             $("#allmain").html(arrText(d.all));
             $("#rankmain").html(arrText(d.rank));
-            $('.pic').picLazyLoad();
+            $('.pic').picLazyLoad({
+                threshold: 500
+            });
         }
 
 
