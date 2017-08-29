@@ -124,8 +124,41 @@
 		var footerHeight = $(".heji").height();
 		$(".main").height(api.screenHeight - footerHeight);
 		setTopBar();
+
+
+
+setlg();
+    $("#longgu").bind("change",lg);
+
 		loadCart();
+
 	};
+
+   //初始化龙骨
+	function setlg(){
+   api.getPrefs({
+       key: 'longgu'
+   }, function(ret, err){
+       if( ret ){
+				 $("#longgu").val(ret.value);
+       }else{
+            alert( JSON.stringify( err ) );
+       }
+   });
+
+
+	}
+
+	function lg(){
+		var value=$("#longgu").val();
+		api.setPrefs({
+		    key: 'longgu',
+		    value: value
+		});
+		console.log(value);
+
+
+	}
 
 	function loadCart() {
 
