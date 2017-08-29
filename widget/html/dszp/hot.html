@@ -39,8 +39,7 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox">
-			<a href="javascript:void(0)"><img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic" onclick="jump({{=value.id}},{{=value.cid}},{{=value.index}})">
-
+			<a href="javascript:void(0)"><img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic" onclick="bigImage('http://www.dszpvip.com/{{=value.pic}}',0)">
 
 			</a>
 			<div class="picname">
@@ -58,6 +57,8 @@
 <script src="../../script/doT.min.js"></script>
 <script src="../../script/weui.min.js"></script>
 <script src="../../script/wolf.js"></script>
+<script src="../../script/dszp.js"></script>
+
 <script type="text/javascript" src="../../script/dropload.min.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript">
@@ -203,32 +204,7 @@
 		api.closeWin();
 	}
 
-	function jump(id, cid, index2) {
-		if (SEARCH) {
-			var title = $("#searchInput").val();
-			api.openWin({
-				name: "bigImg",
-				url: "bigImg.html",
-				pageParam: {
-					search: true,
-					title: title,
-					index: index2
-				},
-				slidBackEnabled: false,
-			})
-		} else {
-			api.openWin({
-				name: "bigImg",
-				url: "bigImg.html",
-				pageParam: {
-					search: false,
-					id: id,
-					cid: cid
-				},
-				slidBackEnabled: false,
-			})
-		}
-	}
+
 
 	//获取图片
 	function phoneGetPic() {

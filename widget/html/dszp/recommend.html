@@ -100,7 +100,6 @@ openid:OPENID
             },
             timeout:5
         }, function(ret, err) {
-          console.log(JSON.stringify(err));
             if (ret) {
                 var d = ret.data;
                 var arrText = doT.template($("#interpolationtmpl").text());
