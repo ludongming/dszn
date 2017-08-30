@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" href="../../css/header.css" />
+  <link rel="stylesheet" href="../../css/gouwutc.css">
+  <link rel="stylesheet" href="../../css/buygoods.css">
+  <style>
+      .footer{
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        height: 50px;
+        border: 1px solid #ccc;
+
+        background-color: #fff;
+      }
+      .cart{
+        float: right !important;
+        height: 50px !important;
+        width: 40%;
+        color: #fff;
+
+        line-height: 50px !important;
+        text-align: center;
+        background-color: #f00;
+      }
+
+.pro{
+  width: 46%;
+float: left;
+  margin: 5px;
+}
+.proimg{
+  text-align: center;
+}
+.proimg img{
+  width: 170px;
+  margin: auto;
+  height: 170px;
+}
+.progoods_name{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.proprice{
+  text-align: center;
+  color:#f00;
+}
+.protype{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  color:#888;
+  font-size: 0.9em;
+  height: 16px;
+
+}
+.procart{
+  text-align: center;
+}
+.kblist{
+
+}
+.clear{
+  clear: both;
+}
+.title{
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.5em;
+}
+
+  </style>
+</head>
+<body>
+  <header style="position: fixed;">
+    <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span id="title" class="title" style="text-align: center; font-size:1em!important;">热销</span>
+  </header>
+  <div class="page__bd content">
+    <div class="wrap">
+      <div class="kb" >
+        <div class="title">扣板</div>
+        <div class="kblist"></div>
+        <div class="clear"></div>
+      </div>
+
+      <div class="LED" >
+            <div class="title">LED</div>
+          <div class="LEDlist"></div>
+          <div class="clear"></div>
+      </div>
+      <div class="qnq" >
+            <div class="title">取暖器</div>
+          <div class="qnqlist"></div>
+          <div class="clear"></div>
+      </div>
+      <div class="hqs" >
+          <div class="title">换气扇</div>
+          <div class="hqslist"></div>
+          <div class="clear"></div>
+      </div>
+      <div class="sbt" >
+          <div class="title">收边条</div>
+          <div class="sbtlist"></div>
+          <div class="clear"></div>
+      </div>
+      <div class="sd" >
+          <div class="title" >射灯</div>
+          <div class="sdlist"></div>
+          <div class="clear"></div>
+      </div>
+
+    </div>
+    <div class="tcwrap" id="tcwrap">
+      <div class="tcmain" id="tcmain">
+        <button class="tcclose" onclick="closeTc()"></button>
+        <p>
+          数量
+        </p>
+        <div class="tcbtnz" id="tcbtn"></div>
+      </div>
+      <div class="success" id="tccg">
+        恭喜你，提交成功！
+      </div>
+    </div>
+    <div class="progoods_name" style="height:50px !important; display:none"></div>
+    <div class="footer">
+      <div class="cart" onclick="cart()">购物车</div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../script/wcart.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" id="list">
+  {{~it:value:index}}
+
+  <div class="pro">
+  <div class="proimg"><img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com{{=value.image}}" onclick="jump({{=value.nid}},'{{=value.goods_name}}')" alt=""/></div>
+  <div class="progoods_name">{{=value.goods_name}}</div>
+  <div  class="proprice">{{=value.price}}</div>
+  <div class="protype">{{=value.type}}</div>
+  <div class="procart">
+  {{?value.status<0}} <a href="javascript:;" class="wuhuo">无货</a>
+    {{??}}
+    <a href="javascript:;" onclick="addGoods('{{=value.sku}}')">
+      <img src="../../image/buycart.png" width="30px;">
+    </a>
+    {{?}}
+  </div>
+  </div>
+
+  <div class="cpxx" id="cpxx_{{=value.sku}}">
+    <div class="tcbtn">
+      <button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value.sku}}">+</button>
+    </div>
+    <div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.price}}" packages="{{=value.num}}">加入购物车</div>
+  </div>
+  {{~}}
+</script>
+<script type="text/javascript">
+var OPENID;
+  apiready=function(){
+    OPENID = api.getPrefs({
+      sync: true,
+      key: 'openid'
+    });
+    setTopBar();
+    getAllData();
+    $("#tcwrap").bind("touchend", function(e) {
+      var con = $("#tcbtn").html();
+      $("#cpxx_" + selectsku).html(con);
+      $("#tcwrap").hide();
+    });
+    $("#tcmain").bind("touchend", function(e) {
+      e.stopPropagation();
+    });
+  }
+
+  function getAllData(){
+    api.ajax({
+        url: 'http://www.d-shang.com/index.php?appbuy/getgoodsgroup/?openid='+OPENID,
+        method: 'post',
+
+    }, function(ret, err) {
+        if (ret.status) {
+
+          var data=ret.data;
+
+          var ranklist=[];
+          var groupidArray=[];
+          var nameArray=[];
+          for (var i in data) {
+
+            var datalist = data[i]; //数据
+            groupid =data[i].groupid; //下标
+            name =data[i].name; //下标
+            if (!ranklist[groupid]) { //!undefined
+              ranklist[groupid] = [];
+              groupidArray.push(groupid);
+              nameArray.push(name);
+            }
+            ranklist[groupid].push(datalist);
+
+          }
+
+            var data=[];
+            for(var i=0; i<groupidArray.length;i++){
+                  data.push(ranklist[groupidArray[i]]);
+            }
+
+                var arrText = doT.template($("#list").text());//单品排行
+                $('.kblist').html(arrText(data[0]));//扣板
+                $('.sdlist').html(arrText(data[1]));//射灯
+                $('.qnqlist').html(arrText(data[4]));//取暖
+                $('.hqslist').html(arrText(data[3]));//换气扇
+                $('.LEDlist').html(arrText(data[2]));//LED
+                $('.sbtlist').html(arrText(data[5]));//收边条
+                  	$('.pic').picLazyLoad();
+        } else {
+            api.alert({ msg: JSON.stringify(err) });
+        }
+    });
+  }
+
+  var selectsku = "";
+
+  function addGoods(sku) {
+    selectsku = sku;
+    var con = $("#cpxx_" + sku).html();
+    $("#tcbtn").html(con);
+    wcart.init("gld");
+    $("#cpxx_" + sku).html("");
+    $("#tcwrap").show();
+    wcart.completeAddGoods = function() {
+      weui.toast("添加成功", {
+        duration: 500,
+        className: "bears"
+      });
+      $("#tcbtn").html("");
+      $("#cpxx_" + sku).html(con);
+      $("#tcwrap").hide();
+    }
+  }
+
+  	function cart() {
+  		api.openWin({
+  			name: 'cart',
+  			url: './cart.html'
+  		});
+  	}
+
+    function closeTc() {
+      var con = $("#tcbtn").html();
+      $("#cpxx_" + selectsku).html(con);
+      $("#tcwrap").hide();
+    }
+
+    function cart() {
+      api.openWin({
+        name: 'cart',
+        url: './cart.html'
+      });
+    }
+
+    	function jump(id, name) {
+    		api.openWin({
+    			name: 'mx',
+    			url: '../goods/productmx.html',
+    			pageParam: {
+    				id: id,
+    				name: name
+    			}
+    		});
+    	}
+
+</script>
+</html>
