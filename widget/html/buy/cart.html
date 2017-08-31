@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -120,7 +119,6 @@
 			sync: true,
 			key: 'openid'
 		});
-		console.log(OPENID);
 		var height = $(".main").height();
 		var footerHeight = $(".heji").height();
 		$(".main").height(api.screenHeight - footerHeight);
@@ -250,16 +248,24 @@ setlg();
 				}
 			}
 		}, function(ret, err) {
+			console.log(ret.status);
 			if (ret.status) {
 				wcart.emptyGoods();
+				alert(ret.message);
+
 				order();
 			}
-			alert(ret.message);
+
+
 		});
 	}
 
 	function order() {
-		api.closeWin({});
+			api.openWin({
+    name: 'order',
+    url: './order.html',
+
+});
 	}
 </script>
 

@@ -11,13 +11,13 @@
   <link rel="stylesheet" href="../../css/gouwutc.css">
   <link rel="stylesheet" href="../../css/buygoods.css">
   <style>
+
       .footer{
         position: fixed;
         bottom: 0px;
         width: 100%;
         height: 50px;
         border: 1px solid #ccc;
-
         background-color: #fff;
       }
       .cart{
@@ -25,24 +25,25 @@
         height: 50px !important;
         width: 40%;
         color: #fff;
-
+        font-size: 1em!important;
         line-height: 50px !important;
         text-align: center;
-        background-color: #f00;
+        background-color: #ff5000;
       }
-
 .pro{
-  width: 46%;
+  width: 47%;
 float: left;
   margin: 5px;
+  background-color: #fff;
+
 }
 .proimg{
   text-align: center;
 }
 .proimg img{
-  width: 170px;
-  margin: auto;
-  height: 170px;
+  width: 160px;
+  margin:2px auto;
+  height: 160px;
 }
 .progoods_name{
   white-space:nowrap;
@@ -73,10 +74,27 @@ float: left;
 .clear{
   clear: both;
 }
-.title{
-  height: 50px;
-  line-height: 50px;
-  font-size: 1.5em;
+.listtitle{
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  font-size: 1.2em;
+  margin-top: 5px;
+  text-align: center;
+  margin-bottom: 5px;
+  background-image: url(../../image/title1.png);
+  background-repeat: no-repeat;
+  background-size:  contain;
+  background-position: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  }
+.bannner{
+  margin: 3px;
+}
+.bannner img{
+  max-width:100%;
+
 }
 
   </style>
@@ -85,40 +103,42 @@ float: left;
   <header style="position: fixed;">
     <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span id="title" class="title" style="text-align: center; font-size:1em!important;">热销</span>
   </header>
-  <div class="page__bd content">
-    <div class="wrap">
+  <div class="page__bd content" >
+    <div class="wrap" style="margin-top:30px; background-color:#f3f3f3;">
       <div class="kb" >
-        <div class="title">扣板</div>
+        <div class="listtitle">扣板</div>
         <div class="kblist"></div>
         <div class="clear"></div>
       </div>
 
       <div class="LED" >
-            <div class="title">LED</div>
+            <div class="listtitle">LED</div>
           <div class="LEDlist"></div>
           <div class="clear"></div>
       </div>
       <div class="qnq" >
-            <div class="title">取暖器</div>
+            <div class="listtitle">取暖器</div>
           <div class="qnqlist"></div>
           <div class="clear"></div>
       </div>
       <div class="hqs" >
-          <div class="title">换气扇</div>
+          <div class="listtitle">换气扇</div>
           <div class="hqslist"></div>
           <div class="clear"></div>
       </div>
       <div class="sbt" >
-          <div class="title">收边条</div>
+          <div class="listtitle">收边条</div>
           <div class="sbtlist"></div>
           <div class="clear"></div>
       </div>
       <div class="sd" >
-          <div class="title" >射灯</div>
+          <div class="listtitle" >射灯</div>
           <div class="sdlist"></div>
           <div class="clear"></div>
       </div>
+      <div style="height:50px;">
 
+      </div>
     </div>
     <div class="tcwrap" id="tcwrap">
       <div class="tcmain" id="tcmain">
@@ -181,12 +201,12 @@ var OPENID;
     });
     setTopBar();
     getAllData();
-    $("#tcwrap").bind("touchend", function(e) {
+    $("#tcwrap").bind("onclick", function(e) {
       var con = $("#tcbtn").html();
       $("#cpxx_" + selectsku).html(con);
       $("#tcwrap").hide();
     });
-    $("#tcmain").bind("touchend", function(e) {
+    $("#tcmain").bind("onclick", function(e) {
       e.stopPropagation();
     });
   }
@@ -205,7 +225,6 @@ var OPENID;
           var groupidArray=[];
           var nameArray=[];
           for (var i in data) {
-
             var datalist = data[i]; //数据
             groupid =data[i].groupid; //下标
             name =data[i].name; //下标
@@ -257,12 +276,7 @@ var OPENID;
     }
   }
 
-  	function cart() {
-  		api.openWin({
-  			name: 'cart',
-  			url: './cart.html'
-  		});
-  	}
+
 
     function closeTc() {
       var con = $("#tcbtn").html();
