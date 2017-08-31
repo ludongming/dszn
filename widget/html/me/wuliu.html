@@ -5,10 +5,10 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/public.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/logistics.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/logistics.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/header.css"/>
     <style>
     	body{
     		background-color:white;
@@ -19,12 +19,12 @@
 
 <div class="wrap">
     <header style="position: fixed;height: 60px;">
-        <i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">物流</span>
+        <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">物流</span>
     </header>
     <div id="content" style="margin-top:60px;">
 
     </div>
-</div>	
+</div>
     <script id="interpolationtmpl" type="text/x-dot-template">
         {{~it:value:index}}
             <ul class="txt">
@@ -37,24 +37,24 @@
                     <span class="phone"> <a href="tel:{{=value.tel}}">{{=value.tel}}</a></span>
                 </li>
                 <li class="remark"> <span class="date">{{=value.remark}}</span></li>
-                
+
             </ul>
         {{~}}
     </script>
 </body>
-    <script src="../script/zepto.min.js"></script>
-    <script src="../script/api.js"></script>
-    <script src="../script/wolf.js"></script>
-    <script src="../script/doT.min.js"></script>
-    <script src="../script/weui.min.js"></script>
+    <script src="../../script/zepto.min.js"></script>
+    <script src="../../script/api.js"></script>
+    <script src="../../script/wolf.js"></script>
+    <script src="../../script/doT.min.js"></script>
+    <script src="../../script/weui.min.js"></script>
 <script type="text/javascript">
     var OPENID;
 	apiready = function(){
-        setTopBar();	
+        setTopBar();
         OPENID = api.getPrefs({
             sync : true,
             key : 'openid'
-        });        	
+        });
         api.ajax({
             url : 'http://www.d-shang.com/index.php?app/wuliu/?openid=' + OPENID
         }, function(ret, err) {
@@ -62,9 +62,9 @@
             if(ret.data.status){
                 var list = ret.data.list;
                 var text = doT.template($("#interpolationtmpl").text());
-                $("#content").html(text(list));                
+                $("#content").html(text(list));
             }
-        });        
+        });
 };
     function search(){
         name = $("#customer").val();
@@ -79,7 +79,7 @@
                 values : {
                     customer:name
                 },
-            }            
+            }
         }, function(ret, err) {
             console.log(JSON.stringify(ret));
             if(data.status == false){
@@ -101,6 +101,6 @@
             $("#content").html(str);
 
         });
-    }	
+    }
 </script>
 </html>

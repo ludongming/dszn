@@ -5,12 +5,12 @@
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../css/api.css" />
-		<link rel="stylesheet" type="text/css" href="../css/common.css" />
-		<link rel="stylesheet" href="../css/dropload.css">
-		<link rel="stylesheet" href="../css/weui.min.css"/>
-		<link rel="stylesheet" href="../css/goods.css">
-		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../css/dropload.css">
+		<link rel="stylesheet" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" href="../../css/goods.css">
+		<link rel="stylesheet" href="../../css/header.css" />
 		<style>
 			html, body {
 				background-color: white;
@@ -46,12 +46,12 @@
 	</head>
 	<body>
 		<header style="position: fixed;">
-			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">关于我们</span>
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">关于我们</span>
 		</header>
 		<div class="main">
 			<div class="audio">
 				<div class="arm">
-					<span id="record"><img src="../image/luyin.png" style="width:30px;vertical-align:middle;" ontouchend="read()"></span>
+					<span id="record"><img src="../../image/luyin.png" style="width:30px;vertical-align:middle;" ontouchend="read()"></span>
 					<span class="author">语音</span>
 				</div>
 			</div>
@@ -59,8 +59,8 @@
 		</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript">
 		var OPENID;
 		var isStop = 0;
@@ -108,21 +108,21 @@
 			var speechRecognizer = api.require('speechRecognizer');
 			var con;
 			if (isStop == 1) {
-				con = "<img src=\"../image/luyin.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
+				con = "<img src=\"../../image/luyin.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
 				speechRecognizer.pauseRead();
 				isStop = 2;
 				$("#record").html(con);
 				return;
 			}
 			if (isStop == 2) {
-				con = "<img src=\"../image/bofang.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
+				con = "<img src=\"../../image/bofang.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
 				isStop = 1;
 				speechRecognizer.resumeRead();
 				$("#record").html(con);
 				return;
 			}
 			if (isStop == 0) {
-				con = "<img src=\"../image/bofang.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
+				con = "<img src=\"../../image/bofang.png\" style=\"width:30px;vertical-align:middle;\" ontouchend=\"read()\">";
 				isStop = 1;
 				beginRead();
 				$("#record").html(con);

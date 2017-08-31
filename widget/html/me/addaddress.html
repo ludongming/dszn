@@ -5,11 +5,11 @@
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>收货地址</title>
-		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-		<link rel="stylesheet" href="../css/weui.min.css">
-		<link rel="stylesheet" href="../css/weui.css">
-		<link rel="stylesheet" href="../css/weui2.css">
-		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/weui.css">
+		<link rel="stylesheet" href="../../css/weui2.css">
+		<link rel="stylesheet" href="../../css/header.css" />
 		<style>
 			body {
 				background-color: white;
@@ -27,7 +27,7 @@
 	</head>
 	<body>
 		<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
-			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">收货地址</span>
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">收货地址</span>
 		</header>
 		<div class="weui_cells weui_cells_form content">
 			<div class="weui_cell">
@@ -67,12 +67,12 @@
 			<button type="submit" class="add" onclick="add()">增加</button>
 		</div>
 	</body>
-	<script type="text/javascript" src="../script/api.js"></script>
-	<script type="text/javascript" src="../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../script/zepto-weui.js"></script>
-	<script type="text/javascript" src="../script/picker.js"></script>
-	<script type="text/javascript" src="../script/picker-city.js"></script>
-	<script src="../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto-weui.js"></script>
+	<script type="text/javascript" src="../../script/picker.js"></script>
+	<script type="text/javascript" src="../../script/picker-city.js"></script>
+	<script src="../../script/wolf.js"></script>
 	<script type="text/javascript">
 		var OPENID;
 		apiready = function() {
@@ -82,10 +82,10 @@
 			});
 			setTopBar();
 		};
-		
+
 		$(function() {
 			$("select").bind("change", checked);
-			
+
 			$("#ssx").cityPicker({
 				title : "选择省市县"
 			});

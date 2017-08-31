@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" href="../../css/weui.min.css" />
+
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style>
+        html,
+        body {
+            background-color: white;
+        }
+
+        .box {
+            width: 100%;
+            height: 130px;
+            text-align: center;
+            border-bottom: 1px #f8f8f8 solid;
+        }
+
+        .simage {
+            width: 50%;
+            float: left;
+            overflow: hidden;
+        }
+        .sfz{max-height: 120px;
+              max-width: 200px;}
+        .name {
+            width: 100%;
+            line-height: 120px!important;
+        }
+        .title{font-size:0.9em;margin-top:20px;width:100%;text-indent: 1em;line-height: 25px;background:#f8f8f8;}
+    </style>
+</head>
+
+<body>
+    <header style="position: fixed;">
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">实名认证</span>
+    </header>
+    <div class="page__bd content">
+      <div class="title">1、个人签约</div>
+
+        <div class="box">
+            <div class="simage">
+                <img src="../../image/sfz1.jpg" id="sfz_face" class="sfz">
+            </div>
+            <div class="name"  id="action_face" style="line-height:120px;">
+                  <a href="javascript:showMenu('face')">上传身份证正面</a>
+            </div>
+        </div>
+
+
+        <div class="box">
+            <div class="simage">
+                <img src="../../image/sfz2.jpg" id="sfz_back" class="sfz">
+            </div>
+            <div class="name" id="action_back" style="line-height:120px;">
+                <a href="javascript:showMenu('back')">上传身份证反面</a>
+            </div>
+        </div>
+
+<div class="title">2、公司签约，非公司签约无需上传</div>
+
+        <div class="box">
+            <div class="simage">
+                <img src="../../image/yyzz.jpg" id="sfz_company" class="sfz">
+            </div>
+            <div class="name"  id="action_company" style="line-height:120px;">
+                  <a href="javascript:showMenu('company')">上传营业执照</a>
+            </div>
+        </div>
+
+
+<div class="box" style="width:95%;font-size:0.8em;color:#666;padding:10px;text-align:left;">
+  正常情况下5分钟之内，即可完成审核。<br>
+  拍摄要求:<br>
+  1、正对着拍摄身份证。<br>
+  2、能够清晰的看到身份证上面的字体。<br>
+  3、审核结果我们将会通过APP通知告诉给您<br>
+  4、如有问题，请联系0573-82696190<br>
+
+</div>
+
+    </div>
+</body>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+
+<script type="text/javascript" src="../../script/wolf.js"></script>
+
+<script type="text/javascript">
+    var OPENID;
+    apiready = function() {
+        setTopBar();
+        OPENID = api.getPrefs({
+    			sync: true,
+    			key: 'openid'
+    		});
+        loadCard();
+        $(".sfz").bind("click",bigImage);
+    };
+
+   function loadCard(){
+
+     api.ajax({
+         url: 'http://www.d-shang.com/index.php?aliyun/getcardbyuid/?openid='+OPENID,
+     },function(ret, err){
+       var d=ret.data;
+       console.log(JSON.stringify(d.length));
+
+        if(d.length<1){
+          return;
+        }
+        for(var i=0;i<d.length;i++){
+           $("#sfz_"+d[i].type).attr("src","http://www.d-shang.com/"+d[i].image);
+           if(d[i].status==1){
+             $("#action_"+d[i].type).html(d[i].statusname);
+           }else{
+             var con='<a href="javascript:showMenu(\''+d[i].type+'\')">'+d[i].statusname+'</a>';
+  con+=",点击修改";
+             $("#action_"+d[i].type).html(con);
+
+           }
+        }
+     });
+
+
+   }
+
+
+   function bigImage() {
+   var image=$(this).attr("src");
+     var photoBrowser = api.require('photoBrowser');
+     photoBrowser.open({
+       images: [image],
+       placeholderImg: 'widget://res/img/apicloud.png',
+       bgColor: '#000'
+     }, function(ret, err) {
+      if(ret.eventType=="click"){
+        photoBrowser.close();
+        
+      }
+
+     });
+   }
+
+
+    function showMenu(type) {
+        api.actionSheet({
+            cancelTitle: '取消',
+            buttons: ['拍摄', '从手机相册选择']
+        }, function(ret, err) {
+        if(ret.buttonIndex==3){
+          return false;
+        }
+          var  lx=ret.buttonIndex==1?"camera":"album";
+            getPic(lx,type);
+        });
+    }
+
+    function getPic(lx,type) {
+        api.getPicture({
+            sourceType:lx,
+            encodingType: 'jpg',
+            mediaValue: 'pic',
+            destinationType: 'url',
+            allowEdit: false,
+            quality: 90,
+            targetWidth: 2000,
+            targetHeight: 2000,
+            saveToPhotoAlbum: false
+        }, function(ret, err) {
+            if (ret) {
+              $("#sfz_"+type).attr("src",ret.data);
+              uploadImage(ret.data,type);
+            }
+        });
+    }
+
+
+    function uploadImage(image,type){
+var lodaing=weui.loading("正在上传");
+      api.ajax({
+          url: 'http://www.d-shang.com/index.php?aliyun/uploadidcard/?openid='+OPENID,
+          method: 'post',
+          data: {
+              values: {
+                  type: type
+              },
+              files: {
+                  idcard: image
+              }
+          }
+      },function(ret, err){
+        lodaing.hide();
+        if(ret.status){
+          loadCard();
+          alert(ret.message);
+        }
+      });
+
+    }
+</script>
+
+</html>
