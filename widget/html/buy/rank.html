@@ -31,9 +31,9 @@
         background-color: #ff5000;
       }
 .pro{
-  width: 47%;
+  width: 49%;
 float: left;
-  margin: 5px;
+  margin: 1px;
   background-color: #fff;
 
 }
@@ -41,9 +41,9 @@ float: left;
   text-align: center;
 }
 .proimg img{
-  width: 160px;
+  width: 170px;
   margin:2px auto;
-  height: 160px;
+  height: 170px;
 }
 .progoods_name{
   white-space:nowrap;
@@ -75,14 +75,14 @@ float: left;
   clear: both;
 }
 .listtitle{
-  height: 60px;
+  height: 40px;
   width: 100%;
-  line-height: 60px;
+  line-height: 40px;
   font-size: 1.2em;
   margin-top: 5px;
   text-align: center;
   margin-bottom: 5px;
-  background-image: url(../../image/title1.png);
+
   background-repeat: no-repeat;
   background-size:  contain;
   background-position: center;
@@ -106,33 +106,33 @@ float: left;
   <div class="page__bd content" >
     <div class="wrap" style="margin-top:30px; background-color:#f3f3f3;">
       <div class="kb" >
-        <div class="listtitle">扣板</div>
+        <div class="listtitle title0"></div>
         <div class="kblist"></div>
         <div class="clear"></div>
       </div>
 
-      <div class="LED" >
-            <div class="listtitle">LED</div>
+      <div class="product" >
+            <div class="listtitle title2"></div>
           <div class="LEDlist"></div>
           <div class="clear"></div>
       </div>
       <div class="qnq" >
-            <div class="listtitle">取暖器</div>
+            <div class="listtitle title4"></div>
           <div class="qnqlist"></div>
           <div class="clear"></div>
       </div>
       <div class="hqs" >
-          <div class="listtitle">换气扇</div>
+          <div class="listtitle title3"></div>
           <div class="hqslist"></div>
           <div class="clear"></div>
       </div>
       <div class="sbt" >
-          <div class="listtitle">收边条</div>
+          <div class="listtitle title5"></div>
           <div class="sbtlist"></div>
           <div class="clear"></div>
       </div>
       <div class="sd" >
-          <div class="listtitle" >射灯</div>
+          <div class="listtitle title1" ></div>
           <div class="sdlist"></div>
           <div class="clear"></div>
       </div>
@@ -218,28 +218,26 @@ var OPENID;
 
     }, function(ret, err) {
         if (ret.status) {
-
           var data=ret.data;
-
           var ranklist=[];
           var groupidArray=[];
           var nameArray=[];
           for (var i in data) {
             var datalist = data[i]; //数据
             groupid =data[i].groupid; //下标
-            name =data[i].name; //下标
+            name =data[i].name; //名字
             if (!ranklist[groupid]) { //!undefined
               ranklist[groupid] = [];
               groupidArray.push(groupid);
-              nameArray.push(name);
+              nameArray.push(name);//名字数组
             }
             ranklist[groupid].push(datalist);
 
           }
-
             var data=[];
             for(var i=0; i<groupidArray.length;i++){
                   data.push(ranklist[groupidArray[i]]);
+                  $('.title'+i).html(nameArray[i]);
             }
 
                 var arrText = doT.template($("#list").text());//单品排行
@@ -249,7 +247,7 @@ var OPENID;
                 $('.hqslist').html(arrText(data[3]));//换气扇
                 $('.LEDlist').html(arrText(data[2]));//LED
                 $('.sbtlist').html(arrText(data[5]));//收边条
-                  	$('.pic').picLazyLoad();
+                $('.pic').picLazyLoad();
         } else {
             api.alert({ msg: JSON.stringify(err) });
         }
