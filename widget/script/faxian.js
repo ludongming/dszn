@@ -457,8 +457,52 @@ function loadRecommendData() {
 
 
 
+        		$(".message").bind("click",setCopy);
+
+
     });
 }
+
+function setCopy(){
+  var obj=this;
+  var top=$(this).offset().top;
+   var arr=$(".message");
+   arr.each(function(){
+     $(this).removeClass("clipselect");
+   })
+   $(obj).addClass("clipselect");
+   t=top+30;
+   $("#clip").css({"top":t});
+   $("#clip").show();
+   $("#clip").on("click",copySelectText);
+}
+
+function copySelectText(){
+var text=$(".clipselect").html();
+  var clipBoard = api.require('clipBoard');
+clipBoard.set({
+   value: text
+}, function(ret, err) {
+   if (ret) {
+      api.toast({
+          msg: '复制成功',
+          duration: 2000,
+          location: 'middle'
+      });
+hideSelectText();
+   }
+});
+
+}
+
+function hideSelectText(){
+  $("#clip").hide();
+  var arr=$(".message");
+  arr.each(function(){
+    $(this).removeClass("clipselect");
+  })
+}
+
 
 function shareWxImg(image,id) {
     api.actionSheet({

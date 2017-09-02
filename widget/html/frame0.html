@@ -102,6 +102,13 @@
 	</div>
 </body>
 
+<!--剪贴板-->
+<div id="clip">
+<div id="cliparrow"></div>
+<div id="cliptext">
+	复制
+</div>
+</div>
 <!--地址模板-->
 <script id="interpolationtmpl" type="text/x-dot-template">
 	{{~it:value:index}}
@@ -222,6 +229,9 @@
 			onSliderMove:function(swiper,event){
 				closePlayer();
 			},
+			onTouchMove: function(swiper){
+				hideSelectText();
+    },
 			onSlideChangeStart: function(swiper, even) {
 				backSwitchBtn(mySwiper.activeIndex);
       },
@@ -230,15 +240,6 @@
 		var videoPlayer = api.require('videoPlayer');
 
 		addlocation();
-
-		//创建一个新的hammer对象并且在初始化时指定要处理的dom元素
-         var hammertime = new Hammer($(".message"));
-               hammertime.on("press", function (e) {
-console.log(123);
-						 //document.getElementById("result").innerHTML += "超过500ms了<br />";
-             //控制台输出
-              console.log(e);
-          });
 
 	}
 
