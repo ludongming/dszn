@@ -31,13 +31,11 @@
         background-color: #ff5000;
       }
 .pro{
-  width: 49.5%;
-float:left;
+  width: 49%;
+   float: left !important;
 margin-left:1px;
   background-color: #fff;
   text-align: center;
-
-
 }
 .proimg{
   text-align: center;
@@ -70,9 +68,7 @@ margin-left:1px;
 .procart{
   text-align: center;
 }
-.kblist{
 
-}
 .clear{
   clear: both;
 }
@@ -84,19 +80,23 @@ margin-left:1px;
   margin-top: 5px;
   text-align: center;
   margin-bottom: 5px;
-
   background-repeat: no-repeat;
   background-size:  contain;
   background-position: center;
   font-family: sans-serif;
   font-weight: bold;
   }
-.bannner{
-  margin: 3px;
-}
-.bannner img{
-  max-width:100%;
 
+.list{
+    width: 100%;
+
+}
+.rank{
+  width: 100%;
+
+}
+.product{
+    width: 100%;
 }
 
   </style>
@@ -107,37 +107,9 @@ margin-left:1px;
   </header>
   <div class="page__bd content" >
     <div class="wrap" style="margin-top:30px;">
-      <div class="kb" >
-        <div class="listtitle title0"></div>
-        <div class="kblist"></div>
-        <div class="clear"></div>
-      </div>
+          <div class="rank">
 
-      <div class="product" >
-            <div class="listtitle title2"></div>
-          <div class="LEDlist"></div>
-          <div class="clear"></div>
-      </div>
-      <div class="qnq" >
-            <div class="listtitle title4"></div>
-          <div class="qnqlist"></div>
-          <div class="clear"></div>
-      </div>
-      <div class="hqs" >
-          <div class="listtitle title3"></div>
-          <div class="hqslist"></div>
-          <div class="clear"></div>
-      </div>
-      <div class="sbt" >
-          <div class="listtitle title5"></div>
-          <div class="sbtlist"></div>
-          <div class="clear"></div>
-      </div>
-      <div class="sd" >
-          <div class="listtitle title1" ></div>
-          <div class="sdlist"></div>
-          <div class="clear"></div>
-      </div>
+          </div>
       <div style="height:50px;">
 
       </div>
@@ -170,28 +142,38 @@ margin-left:1px;
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript" id="list">
   {{~it:value:index}}
+  <div class="product">
+<div class="listtitle" id="title{{=index}}"></div>
+      {{for(i=0;i<value.length;i++){}}
+      <div class="list">
+        <div class="pro">
+        <div class="proimg"><img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com{{=value[i].image}}" onclick="jump({{=value[i].nid}},'{{=value[i].goods_name}}')" alt=""/></div>
+        <div class="progoods_name">{{=value[i].goods_name}}</div>
+        <div  class="proprice">￥{{=value[i].price}}</div>
+        <div class="protype">{{=value[i].type}}</div>
+        <div class="procart">
+        {{?value[i].status<0}} <a href="javascript:;" class="wuhuo">无货</a>
+          {{??}}
+          <a href="javascript:;" onclick="addGoods('{{=value[i].sku}}')">
+            <img src="../../image/buycart.png" width="30px;">
+          </a>
 
-  <div class="pro">
-  <div class="proimg"><img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com{{=value.image}}" onclick="jump({{=value.nid}},'{{=value.goods_name}}')" alt=""/></div>
-  <div class="progoods_name">{{=value.goods_name}}</div>
-  <div  class="proprice">{{=value.price}}</div>
-  <div class="protype">{{=value.type}}</div>
-  <div class="procart">
-  {{?value.status<0}} <a href="javascript:;" class="wuhuo">无货</a>
-    {{??}}
-    <a href="javascript:;" onclick="addGoods('{{=value.sku}}')">
-      <img src="../../image/buycart.png" width="30px;">
-    </a>
-    {{?}}
-  </div>
+        </div>
+        </div>
+        {{}}}
+      </div>
+
   </div>
 
-  <div class="cpxx" id="cpxx_{{=value.sku}}">
+
+  <div class="cpxx" id="cpxx_{{=value[i].sku}}">
     <div class="tcbtn">
-      <button class="wcart_reduce" sku="{{=value.sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value.sku}}" sku="{{=value.sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value.sku}}">+</button>
+      <button class="wcart_reduce" sku="{{=value[i].sku}}">-</button><input type="text" class="xz wcart_num" id="num_{{=value[i].sku}}" sku="{{=value[i].sku}}" name="num" value="1"><button class="wcart_add" sku="{{=value[i].sku}}">+</button>
     </div>
-    <div class="tcadd addwcart" sku="{{=value.sku}}" price="{{=value.price}}" packages="{{=value.num}}">加入购物车</div>
+    <div class="tcadd addwcart" sku="{{=value[i].sku}}" price="{{=value[i].price}}" packages="{{=value[i].num}}">加入购物车</div>
   </div>
+    {{?}}
+    <div class="clear"></div>
   {{~}}
 </script>
 <script type="text/javascript">
@@ -239,17 +221,16 @@ var OPENID;
             var data=[];
             for(var i=0; i<groupidArray.length;i++){
                   data.push(ranklist[groupidArray[i]]);
-                  $('.title'+i).html(nameArray[i]);
+                  $('#title'+i).html(nameArray[i]);
             }
 
                 var arrText = doT.template($("#list").text());//单品排行
-                $('.kblist').html(arrText(data[0]));//扣板
-                $('.sdlist').html(arrText(data[1]));//射灯
-                $('.qnqlist').html(arrText(data[4]));//取暖
-                $('.hqslist').html(arrText(data[3]));//换气扇
-                $('.LEDlist').html(arrText(data[2]));//LED
-                $('.sbtlist').html(arrText(data[5]));//收边条
+                $('.rank').html(arrText(data));
                 $('.pic').picLazyLoad();
+                for(var i=0; i<groupidArray.length;i++){
+                    
+                      $('#title'+i).html(nameArray[i]);
+                }
         } else {
             api.alert({ msg: JSON.stringify(err) });
         }
