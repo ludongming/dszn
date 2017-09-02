@@ -269,15 +269,10 @@ function playVideo(obj) {
     }, function(ret, err) {
         if (ret.state == 1) {
             loadPlayer(ret.savePath, obj);
-
         } else {
 
         }
     });
-
-
-
-
 }
 
 function loadPlayer(source, obj) {
@@ -463,4 +458,124 @@ function loadRecommendData() {
 
 
     });
+}
+
+function shareWxImg(image,id) {
+    api.actionSheet({
+        cancelTitle: '取消',
+        buttons: ['发给朋友', '发送到朋友圈']
+    }, function(ret, err) {
+        var index = ret.buttonIndex;
+        if (index == 3) {
+            return false;
+        }
+        var type = index == 1 ? "session" : "timeline";
+        downloadShareImage(image, type,id);
+
+    });
+}
+
+function shareWxVideo(image, video, desc) {
+    api.actionSheet({
+        cancelTitle: '取消',
+        buttons: ['发给朋友', '发送到朋友圈']
+    }, function(ret, err) {
+        var index = ret.buttonIndex;
+        if (index == 3) {
+            return false;
+        }
+        var type = index == 1 ? "session" : "timeline";
+        downloadShareVideo(type,image, video, desc);
+
+    });
+}
+
+function downloadShareVideo(type,image,video, desc) {
+
+    var url = "http://www.d-shang.com" + image;
+    api.download({
+        url: url,
+        savePath: 'fs://1.jpg',
+        report: true,
+        cache: true,
+        allowResume: true
+    }, function(ret, err) {
+        if (ret.state == 1) {
+            shareVideo(video,type, desc);
+        }
+    });
+}
+
+
+function downloadShareImage(image, type,id) {
+    var url = "http://www.d-shang.com" + image;
+    api.download({
+        url: url,
+        savePath: 'fs://1.jpg',
+        report: true,
+        cache: true,
+        allowResume: true
+    }, function(ret, err) {
+        if (ret.state == 1) {
+            shareImage(type,id);
+        }
+    });
+}
+
+function shareVideo(video, type, desc) {
+    var videoUrl = "http://www.d-shang.com" + video;
+    var wx = api.require('wx');
+    wx.shareVideo({
+        apiKey: 'wx062395c72d4d0732',
+        scene: type,
+        title: desc,
+        description: '顶上智能,上市公司 股票代码839431,国家高新技术企业,400多项国家专利',
+        thumb:'fs://1.jpg',
+        contentUrl: videoUrl
+    }, function(ret, err) {
+        if (ret.status) {
+            api.toast({
+                msg: '分享成功',
+                duration: 2000,
+                location: 'middle'
+            });
+        }
+    });
+}
+
+function addShareRecord(id,type){
+  api.ajax({
+      url: 'http://www.d-shang.com/index.php?blog/addsharerecord/?openid='+OPENID,
+      method: 'post',
+      data: {
+          values: {
+            type:type,
+            shareid: id
+          }
+      }
+  },function(ret, err){
+     console.log(JSON.stringify(ret));
+  });
+
+
+}
+
+function shareImage(type,id) {
+    var wx = api.require('wx');
+    wx.shareImage({
+        apiKey: 'wx062395c72d4d0732',
+        scene: type,
+        contentUrl: 'fs://1.jpg'
+    }, function(ret, err) {
+        if (ret.status) {
+          addShareRecord(id,type);
+            api.toast({
+                msg: '分享成功',
+                duration: 2000,
+                location: 'middle'
+            });
+
+        }
+    });
+
 }

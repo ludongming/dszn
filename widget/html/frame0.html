@@ -111,7 +111,7 @@
 				<img src="../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
 			</div>
 			<div class="username">{{=value.real_name}}
-				<span class="mp"><img src="../image/stones.png" style="vertical-align:middle;width:25px;">{{=value.mp}}</span>
+				<span class="mp">{{=value.address}}</span>
 			</div>
 			<div class="pub_time">{{=value.rq}}</div>
 		</div>
@@ -129,15 +129,21 @@
 		<div class="message">{{=value.content}}</div>
 		<div class="tip">
 			<div class="dingwei">
-				<img src="../image/dingwei.png" style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</span>
+			{{?value.flower>0}}
+
+			<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
 		</div>
 		<div class="tool" style="position:relative;">
-		<span class="zan zan_{{=value.id}}" style="">{{?value.flower>0}} {{=value.flower}} {{?}}
 
-</span>
-				<img src="../image/songli.png" class="toolimage" style="right:80px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
+		{{?value.isvideo==1}}
+		<img src="../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
+{{??}}
+<img src="../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
+{{?}}
 
-				<img src="../image/zan{{=value.isflower}}.png" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
+				<img src="../image/songli.png" class="toolimage" style="right:60px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
+
+				<img src="../image/zan{{=value.isflower}}.png" style="right:10px;" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
 
 			</div>
 		</div>
@@ -185,6 +191,7 @@
 <script type="text/javascript" src="../script/gift.js"></script>
 <script type="text/javascript" src="../script/fx.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/hammer-time.min.js"></script>
 <script type="text/javascript" src="../script/swiper-3.3.1.min.js"></script>
 
 <script type="text/javascript" src="../script/faxian.js"></script>
@@ -223,6 +230,16 @@
 		var videoPlayer = api.require('videoPlayer');
 
 		addlocation();
+
+		//创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+         var hammertime = new Hammer($(".message"));
+               hammertime.on("press", function (e) {
+console.log(123);
+						 //document.getElementById("result").innerHTML += "超过500ms了<br />";
+             //控制台输出
+              console.log(e);
+          });
+
 	}
 
 

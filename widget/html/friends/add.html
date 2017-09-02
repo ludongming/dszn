@@ -177,7 +177,7 @@
 
 	function send() {
 		if (FILE == undefined) {
-			weui.alert("请上传图片");
+			weui.alert("没有上传");
 			return false;
 		}
 		var con = $("#con").val();
@@ -216,7 +216,6 @@
 				weui.alert(ret.message);
 
 			}
-			//coding...
 		});
 	}
 
@@ -228,7 +227,7 @@
 			encodingType: 'jpg',
 			mediaValue: type,
 			destinationType: 'url',
-			allowEdit: true,
+			allowEdit: false,
 			quality: 80,
 			videoQuality: "high",
 			targetWidth: 1280,
@@ -253,12 +252,11 @@
 			if (type == "video") {
 				MEDIA_TYPE="video";
 
-var video=document.getElementById("video");
+    var video=document.getElementById("video");
 		video.setAttribute("src",ret.data);
 			video.load();
 				cancle();
 				$(".videocon").show();
-
 				return false;
 			}
 

@@ -27,41 +27,31 @@
     <script id="interpolationtmpl" type="text/x-dot-template">
         {{~it:value:index}}
         <div class="list">
-        <div class="tool">
-            <img src="../../image/default.png" style="margin-left:10px;margin-top:5px;width:40px;height:40px;border-radius:20px;vertical-align:center;" class="pic head" data-original="{{=value.headimgurl}}">
-            <span style="position:absolute;top:0px;display:inline-block;">&nbsp;{{=value.username}} </span><span style="text-align:right;display:inline-block;position:absolute;width:100px;font-size:0.8em;right:10px;color:#666;">{{=value.rq}}</span>
-        </div>
+            <div class="tool">
+                <img src="../../image/default.png" style="margin-left:10px;margin-top:5px;width:40px;height:40px;border-radius:20px;vertical-align:center;" class="pic head" data-original="{{=value.headimgurl}}">
+                <span style="position:absolute;top:0px;display:inline-block;">&nbsp;{{=value.username}} </span><span style="text-align:right;display:inline-block;position:absolute;width:100px;font-size:0.8em;right:10px;color:#666;">{{=value.rq}}</span>
+            </div>
             <div class="image">
-                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}"  onclick="bigImage('http://www.dszpvip.com/{{=value.mpic}}',0)">
+                <img src="../../image/defaultimage.png" class="pic" data-original="http://www.dszpvip.com/{{=value.mpic}}" onclick="bigImage('http://www.dszpvip.com/{{=value.mpic}}',0)">
 
             </div>
-<div class="tool" style="height:30px;">
-<span style="position:absolute;left:10px;line-height:20px;font-size:0.9em;color:#666;top:2px;display:inline-block;">{{=value.title}}</span>
+            <div class="tool" style="height:30px;">
+                <span style="position:absolute;left:10px;line-height:20px;font-size:0.9em;color:#666;top:2px;display:inline-block;">{{=value.title}}</span> {{? value.islove==true}}
 
-{{? value.islove==true}}
-
-<span style="display:inline-block;position:absolute;width:30px;right:20px;" id="love_{{=value.nid}}" ontouchend="love({{=value.nid}})" data-status="1"> <img src="../../image/love1.png" ></span>
-
-
-{{??}}
-<span style="display:inline-block;position:absolute;width:30px;right:20px;" id="love_{{=value.nid}}" ontouchend="love({{=value.nid}})" data-status="0"><img src="../../image/love0.png" ></span>
-{{?}}
-</div>
+                <span style="display:inline-block;position:absolute;width:30px;right:20px;" id="love_{{=value.nid}}" ontouchend="love({{=value.nid}})" data-status="1"> <img src="../../image/love1.png" ></span> {{??}}
+                <span style="display:inline-block;position:absolute;width:30px;right:20px;" id="love_{{=value.nid}}" ontouchend="love({{=value.nid}})" data-status="0"><img src="../../image/love0.png" ></span> {{?}}
+            </div>
 
             <div class="tool" style="height:auto;padding-bottom:10px;">
 
 
-<div class="mingdan">
-{{ for(var i=0, catlen=value.users.length; i<catlen; i++) { }}
+                <div class="mingdan">
+                    {{ for(var i=0, catlen=value.users.length; i
+                    <catlen; i++) { }} @{{=value.users[i].username}} {{}}} 喜欢 </div>
 
-@{{=value.users[i].username}}
-{{}}}
-喜欢
-</div>
-
+                </div>
             </div>
-        </div>
-        {{~}}
+            {{~}}
     </script>
 
 </body>
@@ -80,8 +70,8 @@
     apiready = function() {
         setTopBar();
         OPENID = api.getPrefs({
-          sync: true,
-          key: 'openid'
+            sync: true,
+            key: 'openid'
         });
         setDrop();
         loadLastDesgin();
@@ -91,14 +81,14 @@
 
         api.ajax({
             url: 'http://www.dszpvip.com/index.php?love/getlastlove',
-            method:'post',
-            data:{
-              values:{
-openid:OPENID
+            method: 'post',
+            data: {
+                values: {
+                    openid: OPENID
 
-              }
+                }
             },
-            timeout:5
+            timeout: 5
         }, function(ret, err) {
             if (ret) {
                 var d = ret.data;
@@ -124,61 +114,61 @@ openid:OPENID
     }
 
 
-    	function love(id) {
-    		var status = $("#love_" + id).attr("data-status");
-    		var con = "";
-    		if (status == 0) {
-    			weui.toast("收藏成功", {
-    				duration: 1000,
-    				className: "bears"
-    			});
-    			con = "<img src=\"../../image/love1.png\">";
-    			status = 1;
+    function love(id) {
+        var status = $("#love_" + id).attr("data-status");
+        var con = "";
+        if (status == 0) {
+            weui.toast("收藏成功", {
+                duration: 1000,
+                className: "bears"
+            });
+            con = "<img src=\"../../image/love1.png\">";
+            status = 1;
 
-    			api.ajax({
-    				url: 'http://www.dszpvip.com/index.php?love/addlove/',
-    				method: "post",
-    				data: {
-    					values: {
-    						nid: id,
-    						openid: OPENID
-    					}
-    				}
+            api.ajax({
+                url: 'http://www.dszpvip.com/index.php?love/addlove/',
+                method: "post",
+                data: {
+                    values: {
+                        nid: id,
+                        openid: OPENID
+                    }
+                }
 
-    			}, function(ret, err) {
+            }, function(ret, err) {
 
-    				if (ret) {} else {
-    					alert(JSON.stringify(err));
-    				}
-    			});
+                if (ret) {} else {
+                    alert(JSON.stringify(err));
+                }
+            });
 
-    		} else {
-    			con = "<img src=\"../../image/love0.png\">";
-    			status = 0;
-    			api.ajax({
-    				url: 'http://www.dszpvip.com/index.php?love/removelovebyuidandnid/',
-    				method:"post",
-    				data:{
-    					values:{
-    						nid:id,
-    						openid:OPENID
-    					}
-    				}
-    			}, function(ret, err) {
-    				if (ret) {
+        } else {
+            con = "<img src=\"../../image/love0.png\">";
+            status = 0;
+            api.ajax({
+                url: 'http://www.dszpvip.com/index.php?love/removelovebyuidandnid/',
+                method: "post",
+                data: {
+                    values: {
+                        nid: id,
+                        openid: OPENID
+                    }
+                }
+            }, function(ret, err) {
+                if (ret) {
 
-    				} else {
-    					alert(JSON.stringify(err));
-    				}
-    			});
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
 
 
 
-    		}
-    		$("#love_" + id).attr("data-status", status);
+        }
+        $("#love_" + id).attr("data-status", status);
 
-    		$("#love_" + id).html(con);
-    	}
+        $("#love_" + id).html(con);
+    }
 
 
 

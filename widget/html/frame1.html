@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -11,9 +12,8 @@
 	<link rel="stylesheet" href="../css/swiper.min.css" />
 	<style>
 		body {
-			background: #f5f5f5!important;
+			background: #f8f8f8!important;
 			width: 100%;
-
 		}
 
 		#password {
@@ -23,21 +23,6 @@
 		.weui-cells__title {
 			margin-bottom: 25px;
 		}
-
-
-
-		.swiper-slide {
-			width: 100%;
-			height: 120px;
-			text-align: center;
-				border-bottom: 1px solid #ccc;
-
-		}
-		.swiper-slide img{
-			max-width: 100%;
-			max-height: 120px;
-		}
-
 
 
 		.help {
@@ -53,88 +38,83 @@
 
 		.adv {
 			width: 100%;
-
-			margin-top: 34px;
 		}
 
 		.adv img {
-			height: 130px;
+			width:100%;
 			margin: auto;
 		}
-		.advimg{
-				width: 100% !important;
-				height: 130px!important;
-				}
-		.dswrap{
-			width: 100%;
 
-			margin-top:10px;
+
+
+		.dswrap {
+			width: 100%;
+			margin-top: 10px;
 			background-color: #fff;
 		}
-		.mobile{
-			color: #e9a43d;
+
+		.mobile {
+			color: #777;
 		}
-		.d_shang{
+
+		.d_shang {
 			color: #89be25;
 		}
-		.dswrap .dstitle{
-			width: 30%;
+
+		.dswrap .dstitle {
+			width: 49%;
 			height: 100px;
+			position: relative;
 			float: left;
-
-			margin: 5px;
-
-		border:1px solid #ccc;
-
-
-
-
+			margin-left: 10px;
+			margin-bottom: 10px;
+			border-radius: 4px;
 		}
-		.dswrap .dstitle img{
+
+		.dswrap .dstitle img {
 			width: 30px;
 			float: right;
-
 		}
-		 .ydtitle{
+
+		.ydtitle {
 			width: 46% !important;
-
 		}
-		.dswrap .dswraptitle{
 
-				height: 30px;
-				text-align: center;
-				line-height: 30px;
-				font-size: 1.2em;
-
-
-		}
-		.dswrap .dswraptitle img{
-				width: 20px;
-				margin-right: 5px;
-				vertical-align:middle;
-
-		}
-		.remark{
-			width: 50px;
-			height: 20px;
-			border-radius: 10px;
-		color:#fff;
+		.dswrap .dswraptitle {
+			height: 30px;
 			text-align: center;
-			line-height: 20px;
-			margin: 15px auto;
-
-
+			font-size: 1.2em;
 		}
-		.character{
-			margin: auto;
-			text-align: center;
-			margin: 3px;
 
+		.dswrap .dswraptitle img {
+			width: 20px;
+			margin-right: 5px;
 			vertical-align: middle;
-			margin-top: -5px;
-
 		}
-		.clear{
+
+		.remark {
+			width: 50px;
+			height: 30px;
+			color: #fff;
+			font-size:1em;
+			text-align: center;
+			line-height: 30px;
+			margin: 20px auto;
+		}
+
+		.character {
+			position: absolute;
+		  bottom:0px;
+			width:100%;
+			background: #fff;
+			opacity: 0.5;
+			height:33px;
+			font-size:0.9em;
+			text-align: center;
+			line-height: 33px;
+		}
+
+		.clear {
 			clear: both;
 		}
 	</style>
@@ -146,27 +126,46 @@
 	</header>
 	<div class="page__bd content">
 		<div class="adv">
-			<div class="advimg" data-nodeid="1"  data-url="./buy/rank.html" >
-					<div class="swiper-slide">
-						<img src="../image/ds/rank.png" class="pic" data-original=""></div>
-			</div>
+			<div class="advimg" data-nodeid="1" data-url="./buy/rank.html">
+					<img src="../image/ds/dinggouadv.jpg" id="adv"></div>
 		</div>
 
 		<div class="dswrap">
-			<div class="dswraptitle d_shang"><img src="../icon/icon150x150.png" alt="">顶上</div>
-			<div class="dstitle ydtitle" data-nodeid="1" data-url="./buy/index.html"><div class="remark" style="background-color:#e84c3d">上市</div><div class="character">集成吊顶产品库 /VIP产品</div></div>
-			<div class="dstitle ydtitle" data-nodeid="2" data-url="./qm/index.html"><div class="remark" style="background-color:#8d44ad">高新</div><div class="character">集成背景·墙面</div></div>
-			<div class="dstitle ydtitle" data-nodeid="1" data-url="./factory/index.html"><div class="remark" style="background-color:#27ae61">环保</div><div class="character">工程定制</div></div>
-			<div class="dstitle ydtitle" data-nodeid="1" data-url="./factory/index.html"><div class="remark" style="background-color:#27ae61">专利</div><div class="character">干衣装备/晾衣架</div></div>
+			<div class="dswraptitle mobile">DS顶上</div>
+			<div class="dstitle ydtitle" style="background:#76c6a9;" data-nodeid="1" data-url="./buy/index.html">
+				<div class="character">集成吊顶产品库 /VIP产品</div>
+				<div class="remark">上市</div>
+			</div>
+			<div class="dstitle ydtitle" style="background:#01a9ea;" data-nodeid="2" data-url="./qm/index.html">
+				<div class="character">集成背景·墙面</div>
+				<div class="remark">高新</div>
+			</div>
+			<div class="dstitle ydtitle" style="background:#f4b317;" data-nodeid="1" data-url="./factory/index.html">
+				<div class="character">工程定制</div>
+				<div class="remark">环保</div>
+			</div>
+			<div class="dstitle ydtitle" style="background:#72910f;" data-nodeid="5" data-url="./clothes/index.html">
+				<div class="character">干衣装备/晾衣架</div>
+				<div class="remark">专利</div>
+
+			</div>
 			<div class="clear"></div>
 		</div>
 		<div class="dswrap">
 			<div class="dswraptitle mobile">MOBILE 移动</div>
-			<div class="dstitle ydtitle" data-nodeid="4" data-url="./ydqm/index.html"><div class="remark" style="background-color:#f39c11">10大</div><div class="character">集成背景·墙面</div></div>
-			<div class="dstitle ydtitle" data-nodeid="3" data-url="./ydceil/index.html"><div class="remark" style="background-color:#3598dc">定制</div><div class="character">集成吊顶</div></div>
+			<div class="dstitle ydtitle" style="background:#2e8f64;" data-nodeid="4" data-url="./ydqm/index.html">
+				<div class="character">集成背景·墙面</div>
+				<div class="remark">10大</div>
+
+			</div>
+			<div class="dstitle ydtitle" style="background:#f256a0;" data-nodeid="3" data-url="./ydceil/index.html">
+				<div class="character">集成吊顶</div>
+				<div class="remark">定制</div>
+
+			</div>
 			<div class="clear"></div>
 		</div>
-<div style="height:50px;"></div>
+		<div style="height:50px;"></div>
 	</div>
 
 </body>
@@ -187,11 +186,10 @@
 			sync: true,
 			key: 'openid'
 		});
-
+loadAdv();
 		setTopBar();
 		$(".dstitle").bind("click", shows);
-	$(".advimg").bind("click", shows);
-	$('.pic').picLazyLoad();
+		$(".advimg").bind("click", shows);
 	};
 
 	function shows() {
@@ -247,6 +245,14 @@
 		}
 	}
 
+	function loadAdv() {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?app/getadv/?id=120&openid=' + OPENID
+		}, function(ret, err) {
+			//coding...
+			$("#adv").attr("src", "http://www.d-shang.com/" + ret.data.image);
+		});
+	}
 
 
 	function setPassword() {
@@ -378,6 +384,14 @@
 				slidBackEnabled: false
 			});
 		}
+
+		if (NODE == 5) {
+			api.openWin({
+				name: 'clothes' + num,
+				url: URL,
+				slidBackEnabled: false
+			});
+		}
 	}
 
 	function recordPassword(password, isAutoPwd) {
@@ -404,8 +418,11 @@
 			key: 'password',
 			sync: true
 		});
-    if(string==""){
-			return {"status":false,"password":""};
+		if (string == "") {
+			return {
+				"status": false,
+				"password": ""
+			};
 		}
 
 		var obj = $.parseJSON(string);

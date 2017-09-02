@@ -33,7 +33,8 @@
 		<div class="head">
 		<img src="../../image/default.jpg"  data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
 		</div>
-		<div class="username">{{=value.real_name}}</div>
+		<div class="username">{{=value.real_name}}
+		<span class="mp">{{=value.address}}</span></div>
 		<div class="pub_time">{{=value.rq}}</div>
 		</div>
 		{{?value.isvideo==1}}
@@ -50,10 +51,9 @@
 		<div class="message">{{=value.content}}</div>
 		<div class="tip">
 		<div class="dingwei">
-		<img src="../../image/dingwei.png"  style="width:25px;vertical-align:middle;"> <span class="zan">{{=value.address}}</a>
+		{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}
 		</div>
-		<div class="tool"><img src="../../image/zan0.png" style="width:25px;vertical-align:middle;" onclick="zan({{=value.id}})">
-		<span class="zan zan_{{=value.id}}">{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}</span>
+		<div class="tool">
 		</div>
 		</div>
 

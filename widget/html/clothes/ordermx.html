@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link href="../../css/weui.min.css" rel="stylesheet"/>
+		<link href="../../css/header.css" rel="stylesheet" />
+		<link href="../../css/shoppingcart.css" rel="stylesheet"/>
+		<style>
+			body {
+			}
+			.price {
+				color: orange
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title">订单详情</span>
+		</header>
+		<div class="content">
+			<div class="main"></div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="weui-cells">
+		{{~it:value:index}}
+		<div class="weui-cell">
+		<div class="weui-cell__hd"><img src="http://www.d-shang.com/{{=value.image}}" alt="" style="width:40px;margin-right:5px;display:block"></div>
+		<div class="weui-cell__bd">
+		<p>{{=value.goods_name}}</p>
+		<p>{{=value.type}} {{=value.num}}{{=value.unit}}/件</p>
+		</div>
+		<div class="weui-cell__ft"><p>¥{{=value.price}}</p>
+		<p>{{=value.count}}件</p>
+		</div>
+		</div>
+		{{~}}
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/dropload.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			setTopBar();
+			loadData();
+		};
+		function loadData() {
+			var param = api.pageParam;
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?appbuy/mobileorderdetail/?openid=' + OPENID + '&orderno=' + param.orderno
+			}, function(ret, err) {
+				var aa = doT.template($("#interpolationtmpl").text());
+				$(".main").html(aa(ret.data.goods));
+			});
+		}
+	</script>
+</html>
