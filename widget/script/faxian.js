@@ -537,15 +537,17 @@ function shareWxVideo(image, video, desc) {
 function downloadShareVideo(type,image,video, desc) {
 
     var url = "http://www.d-shang.com" + image;
+    var img=image.match(/\w+\.jpg/g);
+
     api.download({
         url: url,
-        savePath: 'fs://1.jpg',
+        savePath: 'fs://'+img,
         report: true,
         cache: true,
         allowResume: true
     }, function(ret, err) {
         if (ret.state == 1) {
-            shareVideo(video,type, desc);
+            shareVideo(img,video,type, desc);
         }
     });
 }
@@ -553,20 +555,21 @@ function downloadShareVideo(type,image,video, desc) {
 
 function downloadShareImage(image, type,id) {
     var url = "http://www.d-shang.com" + image;
+    var img=image.match(/\w+\.jpg/g);
     api.download({
         url: url,
-        savePath: 'fs://1.jpg',
+        savePath: 'fs://'+img,
         report: true,
         cache: true,
         allowResume: true
     }, function(ret, err) {
         if (ret.state == 1) {
-            shareImage(type,id);
+            shareImage(img,type,id);
         }
     });
 }
 
-function shareVideo(video, type, desc) {
+function shareVideo(img,video, type, desc) {
     var videoUrl = "http://www.d-shang.com" + video;
     var wx = api.require('wx');
     wx.shareVideo({
@@ -574,7 +577,7 @@ function shareVideo(video, type, desc) {
         scene: type,
         title: desc,
         description: '顶上智能,上市公司 股票代码839431,国家高新技术企业,400多项国家专利',
-        thumb:'fs://1.jpg',
+        thumb:'fs://'+img,
         contentUrl: videoUrl
     }, function(ret, err) {
         if (ret.status) {
@@ -604,12 +607,12 @@ function addShareRecord(id,type){
 
 }
 
-function shareImage(type,id) {
+function shareImage(img,type,id) {
     var wx = api.require('wx');
     wx.shareImage({
         apiKey: 'wx062395c72d4d0732',
         scene: type,
-        contentUrl: 'fs://1.jpg'
+        contentUrl: 'fs://'+img
     }, function(ret, err) {
         if (ret.status) {
           addShareRecord(id,type);

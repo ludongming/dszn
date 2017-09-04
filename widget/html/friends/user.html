@@ -28,7 +28,7 @@
 	<!--地址模板-->
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
-		<div class="list">
+		<div class="list" id="list_{{=value.id}}">
 		<div class="info">
 		<div class="head">
 		<img src="../../image/default.jpg"  data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
@@ -53,7 +53,8 @@
 		<div class="dingwei">
 		{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}
 		</div>
-		<div class="tool">
+		<div class="tool" style="position:relative;">
+		<img src="../../image/del.png" style="right:5px;width:25px;height:25px;position:absolute;" onclick="delblog({{=value.id}})">
 		</div>
 		</div>
 
@@ -86,7 +87,7 @@
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/doT.min.js"></script>
 	<script type="text/javascript" src="../../script/faxian.js"></script>
-
+	<script type="text/javascript" src="../script/fx.js"></script>
 	<script type="text/javascript" src="../../script/dropload.min.js"></script>
 	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 	<script type="text/javascript">
@@ -107,6 +108,44 @@
 			UID = params.uid;
 			setDrop();
 		};
+
+    function delblog(id){
+			api.confirm({
+			    title: '确认删除',
+			    msg: '删除后不可恢复',
+			    buttons: ['容我三思', '心意已决']
+			}, function(ret, err){
+			    if( ret.buttonIndex==1 ){
+			        return false;
+			    }
+					api.ajax({
+							url: 'http://www.d-shang.com/index.php?blog/removeblogbyid/?openid='+OPENID,
+							method: 'post',
+							data: {
+									values: {
+											id: id
+									}
+							}
+					},function(ret, err){
+
+							if (ret.status) {
+									 $("#list_"+id).remove();
+							}
+							api.toast({
+									msg: ret.message,
+									duration: 2000,
+									location: 'middle'
+							});
+
+					});
+
+			});
+
+
+
+
+		}
+
     function add(){
 			api.openWin({
 			    name: 'add',

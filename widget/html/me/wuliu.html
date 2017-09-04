@@ -58,7 +58,6 @@
         api.ajax({
             url : 'http://www.d-shang.com/index.php?app/wuliu/?openid=' + OPENID
         }, function(ret, err) {
-            console.log(JSON.stringify(ret));
             if(ret.data.status){
                 var list = ret.data.list;
                 var text = doT.template($("#interpolationtmpl").text());
