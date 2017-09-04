@@ -54,7 +54,9 @@
 		{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}
 		</div>
 		<div class="tool" style="position:relative;">
+		{{?value.isself==true}}
 		<img src="../../image/del.png" style="right:5px;width:25px;height:25px;position:absolute;" onclick="delblog({{=value.id}})">
+    {{?}}
 		</div>
 		</div>
 
