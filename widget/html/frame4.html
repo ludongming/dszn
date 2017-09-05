@@ -275,7 +275,7 @@
 			url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
 		}, function(ret, err) {
 			var user = ret.data;
-			//	bindPush(user.mobile_phone);
+			bindPush(user.mobile_phone);
 
 			USERDATA = JSON.stringify(user);
 			var weixin = user.weixin;
