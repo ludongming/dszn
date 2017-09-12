@@ -40,12 +40,12 @@
 		{{?value.isvideo==1}}
 	<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
 	<img src="../../image/play.png" class="videocontroll">
-	<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" style="vertical-align:middle;max-width:100%;margin:0 auto;max-height:400px;">
+	<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" >
 	</div>
 
 {{??}}
 	<div class="image">
-<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" style="vertical-align:middle;width:100%;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic"  onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
 </div>
 	{{?}}
 		<div class="message">{{=value.content}}</div>
@@ -108,7 +108,7 @@
 
 			var params = api.pageParam;
 			UID = params.uid;
-			setDrop();
+			loadData();
 		};
 
     function delblog(id){
@@ -244,38 +244,6 @@
 			});
 		}
 
-		function setDrop() {
-			if (isDrop == true) {
-				return false;
-			}
-			$('.content').dropload({
-				scrollArea : window,
-				autoLoad : true,
-				domDown : {
-					domClass : 'dropload-down',
-					domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
-					domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-					domNoData : '<div class="dropload-noData">没有更多数据</div>'
-				},
-				domUp : {
-					domClass : 'dropload-down',
-					domRefresh : '<div class="dropload-refresh">↑下拉更新</div>',
-					domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-					domNoData : '<div class="dropload-noData">已刷新</div>'
-				},
-				loadDownFn : function(mes) {
-					me = mes;
-					loadData();
-					page += 1;
-				},
-				loadUpFn : function(mes) {
-					me = mes;
-					page = 1;
-					refresh();
-				},
-				threshold : 50
-			});
-		}
 
 		function loadData() {
 
@@ -283,21 +251,10 @@
 				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=' + page + '&openid=' + OPENID + "&uid=" + UID
 			}, function(ret, err) {
 				var d = ret.data;
-
-				if (d.length == 0) {
-					me.lock();
-					me.noData();
-				} else {
 					var arrText = doT.template($("#interpolationtmpl").text());
 					$("#main").append(arrText(ret.data));
 					$('.pic').picLazyLoad();
-				}
-				//第一次加载数量不足的情况
-				if (d.length < 20) {
-					me.lock();
-					me.noData();
-				}
-				me.resetload();
+
 			});
 		}
 	</script>

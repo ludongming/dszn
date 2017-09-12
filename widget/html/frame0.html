@@ -57,9 +57,9 @@
 			<div class="swiper-wrapper">
 				<div class="swiper-slide">
 					<div class="recommendmain">
-						<div class="qd" onclick="clock()">
+						<div class="qd" onclick="daily()">
 							<img src="../mrqd1.png" id="qiandao">
-							<div style="width:80px;height:90px;line-height:40px;text-align:center;right:10%;top:20%;position:absolute;background:#000;opacity: 0.7;">
+							<div style="width:80px;height:90px;line-height:40px;text-align:center;right:10%;top:20%;position:absolute;background:#000;opacity: 0.7;" onclick="clock()">
 								<span style="font-size:0.9em;">每日签到</span>
 								<br>
 								<span class="rq"></span>
@@ -125,12 +125,12 @@
 			{{?value.isvideo==1}}
 		<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
 		<img src="../image/play.png" class="videocontroll">
-		<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" style="vertical-align:middle;max-width:100%;margin:0 auto;max-height:400px;">
+		<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic">
 		</div>
 
 {{??}}
 		<div class="image">
-<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" style="width:100%;vertical-align:middle;" onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+<img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic"  onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
 </div>
 		{{?}}
 		<div class="message">{{=value.content}}</div>

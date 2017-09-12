@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/header.css" />
+		<style>
+			body {
+			}
+			.thumb {
+				display: none;
+				border-top: 1px solid #f1f1f1;
+				position: absolute;
+				bottom: 0px;
+				height: 250px;
+				text-align: center;
+				background: #f1f1f1;
+				width: 100%;
+				line-height: 60px;
+				z-index: 2;
+			}
+			.thumb .l {
+				height: 60px;
+				width: 100%;
+				border-bottom: 1px #f5f5f5 solid;
+				background: #fff;
+			}
+			.thumb .cancle {
+				width: 100%;
+				margin-top: 8px;
+				height: 60px;
+				border-bottom: 1px #f1f1f1 solid;
+				background: #fff;
+			}
+			.warp {
+				position: fixed;
+				top: -60px;
+				height: 100%;
+				width: 100%;
+				background: #000;
+				opacity: 0.4;
+				display: none;
+				z-index: 1;
+			}
+			.dingwei {
+				width: 100%;
+			}
+			.address {
+				margin-left: 10px;
+			}
+			.cells {
+				width: 95%;
+				float: right;
+				border-bottom: 1px #f5f5f5 solid;
+				margin-bottom: 5px;
+				padding-top: 5px;
+			}
+			.videocon {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">上传视频</span>
+			<a href="javscript:;" ontouchend="send()" style="color:#27ae61;width:40px;margin-top:2px; margin-right:10px; vertical-align:middle;float:right;">上传 </a>
+		</header>
+		<div class="page__bd content">
+			<div class="cells">
+				<div class="weui-cell__bd">
+					<textarea class="weui-textarea" id="con" placeholder="填写视频内容" rows="3"></textarea>
+				</div>
+				<div class="weui-uploader">
+					<div class="weui-uploader__hd"></div>
+					<div class="weui-uploader__bd">
+						<div class="weui-uploader__input-box" onclick="pic()"></div>
+					</div>
+				</div>
+			</div>
+			<div class="videocon">
+				<video id="video" src="" style="width:200px;max-height:100px;">
+			</div>
+			<div class="dingwei">
+				<img src="../../image/dingwei.png" style="vertical-align:middle;width:30px;margin-left:10px;"><span class="address" ontouchend="addlocation()">点击获取位置</span>
+			</div>
+	</body>
+	</div>
+	<input type="file" name="file" id="files" multiple/>
+	<!--选择器结束-->
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script src="../../script/aliyun-sdk.min.js"></script>
+	<script src="../../script/vod-sdk-upload-1.0.6.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var FILE;
+		var MEDIA_TYPE;
+		var video, output;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			console.log(OPENID);
+			uploadVod();
+			getUploadTickets();
+			$("input[type='file']").change(function() {
+				var file = this.files[0];
+				//添加文件
+				var userData = '{"Vod":{"UserData":"{"IsShowWaterMark":"false","Priority":"7"}"}}';
+				uploader.addFile(file, null, null, null, userData);
+			})
+		};
+		function goback() {
+			api.closeWin({});
+		}
+
+		function pic() {
+			api.actionSheet({
+				cancelTitle : '取消',
+				buttons : ['上传视频']
+			}, function(ret, err) {
+				if (ret.buttonIndex != 1) {
+					return false;
+				}
+				getPic('video');
+			});
+		}
+
+		function send() {
+			console.log("startUpload");
+			var con = $("#con").val();
+			var address = $(".address").html();
+			uploader.startUpload();
+		}
+
+		//获取票据
+		var uploadAuth;
+		var uploadAddress;
+		function getUploadTickets() {
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?aliyun/createuploadvideo/?openid=' + OPENID,
+				method : 'post',
+				data : {
+					values : {
+						title : '测试上传',
+						filename : "ccc.MOV"
+					}
+				}
+			}, function(ret, err) {
+				console.log("tickets=" + JSON.stringify(ret));
+				if (ret) {
+					var d = ret.data;
+					uploadAddress= d.uploadAddress;
+					uploadAuth=d.uploadAuth;
+					uploader.setUploadAuthAndAddress(d.uploadAuth, d.uploadAddress);
+				} else {
+					console.log(JSON.stringify(err));
+				}
+			});
+		}
+
+    //初始化
+		function uploadVod() {
+			uploader = new VODUpload({
+				// 文件上传失败
+				'onUploadFailed' : function(uploadInfo, code, message) {
+					console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + message);
+				},
+				// 文件上传完成
+				'onUploadSucceed' : function(uploadInfo) {
+					console.log("onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
+				},
+				// 文件上传进度
+				'onUploadProgress' : function(uploadInfo, totalSize, uploadedSize) {
+					console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(uploadedSize * 100 / totalSize) + "%");
+				},
+				// STS临时账号会过期，过期时触发函数
+				'onUploadTokenExpired' : function() {
+					console.log("onUploadTokenExpired");
+				},
+				// 开始上传
+				'onUploadstarted' : function(uploadInfo) {
+
+				  var uploadAuth1="eyJTZWN1cml0eVRva2VuIjoiQ0FJU3NnUjFxNkZ0NUIyeWZTaklwSmZNZnNEODJKUnJnS2ZlVzEvM3FUWWhSTTFCcEpMZjBUejJJSHBLZVhkdUFlQVhzL28wbW1oWjcvWVlsclVxRWNBWUh4MmNNSkFndE1rSnIxejZKcGZadjh1ODRZQURpNUNqUWRKZC9mQjFuNTI4V2Y3d2FmK0FVSFBIQ1RtZDVLRVpvOWJUY1RHbFFDWVRXUC90b0pWN2I5TVJjeENsWkQ1ZGZybC9MUmRqcjhsb21CS3pVUEcyS1V6U24zYjNCa2hsc1JZZThtUms4dmFhMzhtQTZ3TFhsa0hIMHVzU3JvaVRVWisvZEp0Tk9wWmpVdDZwMGNscmNyYkF5Q2RLOXlWUzhLQi9nTTRpL2l6YzdPeUZCMTVZN3kyUEtmYTJpTnAwTjExRWZxdzlFcUo4cGVMZ3Z2cGdxNDZna0ovc21UMUtPUGxSWGpqU1laMmszTXJjRWZtMUM4NDljci8zV1FUS3ljdmRINVB5cVI4QmZIWUhOUnREWWNZY01udDNBQkJPT2piQk1mMkQrVXZXUnhxblY2bWQyYnNxN0lKeHlGems1cmp2SUVPVUVaR1l5am9nTTRVZ2REazhWWGdzMEhmbWI3VU5maUZWYmxwakhNejFkNGhvYXcxRW9xNmF0Vy9rWHlaN25IWk1wSys4TmJHRXU2WmFNOTJtQWNvWGlkZEVPTThkN3pGNkVBcXlHdXkxaFZ4SlpXdG1HL0ZJMGFYZ1B0amt1ZWJabXJqTVNLdWZWOTFaNGdRQ1dHejRoRy9VRXl3TmFIZWd2b0JtTWdyQ3ZwbVBrdk9YdGJaSExpbFd2NEFBVmwvYUlZczE4UVU4di9QdnNDNytxckd6RGlxWW1VTWo0Y1RkOG9WMTdrOXBRK3lwbWVmNnZFU0Y1aUxOUC9kaHlKYUtCall4R1VYdUt5Wmp2Tm1XaDJNYW9TNEduMXE5TWcwazkwK3IwbUs5YkR5MUpUcC9MYkV2R29BQmVzdkVNaGF5dEh6REQreDFOanpjWGJwdzFmeGJ1QmVQVXorV1JNVmNqbHJuRGNwSkQ3ODZuTXNhNFRYZ0dxbDBrM1cyNzZDSW5tbDB0eFU3VGJnUEU4MVRKdEJmS28xL3F2cEh6U0ZIa080Skw3SFhhR0tuUHRaeEMrWnBHODJPcS83YXkvY09hL3BWaHo4bWFEYmtnMnNjRE9TeEtkWGw0SGhDYUloc1UrQT0iLCJBY2Nlc3NLZXlJZCI6IlNUUy5FVHk1ekg1S0o3ZTVZeUZNNnRIQm1LV3QzIiwiQWNjZXNzS2V5U2VjcmV0IjoiQmtaNmI0RlphTTdyRjNpdVo2SEhwWDczUUxOeVdRa0FxNTg3VGtaVjhGY3EiLCJFeHBpcmF0aW9uIjoiMzYwMCJ9";
+				  var uploadAddress1=	"eyJFbmRwb2ludCI6Imh0dHBzOi8vb3NzLWNuLXNoYW5naGFpLmFsaXl1bmNzLmNvbSIsIkJ1Y2tldCI6ImluLTIwMTcwOTA1MTQzMzQyODc2LTk2c2dzNXlvazIiLCJGaWxlTmFtZSI6InZpZGVvLzM5MTQyNTdBLTE1RTYwOTBBNEFDLTEyNzUtMjkwNS0zODItNTY2NzMuTU9WIn0";
+						uploader.setUploadAuthAndAddress(uploadInfo, uploadAuth1, uploadAddress1);
+					  console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object);
+				}
+			});
+			// 点播上传。每次上传都是独立的鉴权，所以初始化时，不需要设置鉴权
+			uploader.init();
+		}
+
+		function getPic(type) {
+			var source = type == "camera" ? "camera" : "album";
+			api.getPicture({
+				sourceType : source,
+				encodingType : 'jpg',
+				mediaValue : type,
+				destinationType : 'url',
+				allowEdit : false,
+				quality : 80,
+				videoQuality : "high",
+				targetWidth : 1280,
+				targetHeight : 800,
+				saveToPhotoAlbum : false
+			}, function(ret, err) {
+				FILE = ret.data;
+				//如果是视频
+				if (type == "video") {
+					$(".videocon").show();
+					MEDIA_TYPE = "video";
+					var video = document.getElementById("video");
+					video.setAttribute("src", ret.data);
+					video.load();
+					cancle();
+					$(".videocon").show();
+					return false;
+				}
+			});
+		}
+	</script>
+</html>

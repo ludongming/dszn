@@ -34,62 +34,55 @@ function backSwitchBtn(index) {
 
 function showQDBox() {
     var dialogBox = api.require('dialogBox');
-    dialogBox.taskPlan({
-        rect: {
-            w: 300
-        },
+    var c = dialogBox.raffle({
         texts: {
-            mainTitle: '每日签到',
-            subTitle: '我跨过山海和大海，只为遇见你',
-            content: [{
-                text: '奖励+5金豆'
-            }, {
-                text: '刷礼物，获得跑车'
-            }],
-            btnTitle: '点击签到'
+            mainText: '+5枚豆子',
+            subText: '我离天空最近的一次\r\n是你把我高高地举过了你的肩头',
+            rightTitle: '点击签到'
         },
         styles: {
             bg: '#fff',
+            w: 300,
+            corner: 12,
+            title: {
+                size: 14,
+                color: '#000'
+            },
+            icon: {
+                marginT: 10,
+                w: 200,
+                h: 154,
+                iconPath: 'widget://image/zaoan.jpg'
+            },
             main: {
-                marginT: 20,
-                color: '#737373',
-                size: 18,
-                bold: true,
+                marginT: 10,
+                color: '#636363',
+                size: 13
             },
             sub: {
-                marginT: 8,
-                color: '#999999',
-                size: 16,
-            },
-            content: [{
-                bg: '#ffd249',
-                marginT: 10,
-                w: 280,
-                h: 30,
-                align: 'center',
-                color: '#bd6705',
-                size: 16
-            }, {
-                bg: '#ffeabf',
                 marginT: 0,
-                w: 280,
-                h: 30,
-                align: 'center',
-                color: '#efbb74',
-                size: 16
-            }],
-            ok: {
-                w: 280,
-                h: 40,
-                marginL: 10,
-                bg: '#ed1c43',
-                align: 'center',
+                color: '#999999',
+                size: 12
+            },
+            right: {
+                marginB: 20,
+                marginL: 50,
+                w: 200,
+                h: 35,
+                corner: 6,
+                bg: '#ff5555',
                 color: '#fff',
-                size: 16
+                size: 18
             }
         }
-    }, function(ret) {
-        if (ret.eventType == 'ok') {
+    }, function(ret, err) {
+      var dialogBox = api.require('dialogBox');
+
+        if (ret.eventType == 'right') {
+            dialogBox.close({
+                dialogName: 'raffle'
+            });
+   console.log(123);
 
             api.ajax({
                 url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
@@ -100,8 +93,7 @@ function showQDBox() {
                     }
                 }
             }, function(ret, err) {
-
-                clock();
+                daily();
             });
 
 
@@ -305,6 +297,17 @@ function closePlayer() {
     videoPlayer.close();
 }
 
+function daily() {
+    api.openWin({
+        name: 'daily',
+        url: './active/daily.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+
+}
+
 //加载动画
 function circleloading(bfb) {
     //10等分
@@ -457,54 +460,56 @@ function loadRecommendData() {
 
 
 
-        		$(".message").bind("click",setCopy);
+        $(".message").bind("click", setCopy);
 
 
     });
 }
 
-function setCopy(){
-  var obj=this;
-  var top=$(this).offset().top;
-   var arr=$(".message");
-   arr.each(function(){
-     $(this).removeClass("clipselect");
-   })
-   $(obj).addClass("clipselect");
-   t=top+30;
-   $("#clip").css({"top":t});
-   $("#clip").show();
-   $("#clip").on("click",copySelectText);
+function setCopy() {
+    var obj = this;
+    var top = $(this).offset().top;
+    var arr = $(".message");
+    arr.each(function() {
+        $(this).removeClass("clipselect");
+    })
+    $(obj).addClass("clipselect");
+    t = top + 30;
+    $("#clip").css({
+        "top": t
+    });
+    $("#clip").show();
+    $("#clip").on("click", copySelectText);
 }
 
-function copySelectText(){
-var text=$(".clipselect").html();
-  var clipBoard = api.require('clipBoard');
-clipBoard.set({
-   value: text
-}, function(ret, err) {
-   if (ret) {
-      api.toast({
-          msg: '复制成功',
-          duration: 2000,
-          location: 'middle'
-      });
-hideSelectText();
-   }
-});
+function copySelectText() {
+    var text = $(".clipselect").html();
+    var clipBoard = api.require('clipBoard');
+    clipBoard.set({
+        value: text
+    }, function(ret, err) {
+        if (ret) {
+            api.toast({
+                msg: '复制成功',
+                duration: 2000,
+                location: 'middle'
+            });
+            hideSelectText();
+        }
+    });
 
 }
 
-function hideSelectText(){
-  $("#clip").hide();
-  var arr=$(".message");
-  arr.each(function(){
-    $(this).removeClass("clipselect");
-  })
+function hideSelectText() {
+    $("#clip").hide();
+    var arr = $(".message");
+    arr.each(function() {
+        $(this).removeClass("clipselect");
+    })
 }
 
 
-function shareWxImg(image,id) {
+function shareWxImg(image, id) {
     api.actionSheet({
         cancelTitle: '取消',
         buttons: ['发给朋友', '发送到朋友圈']
@@ -514,7 +519,7 @@ function shareWxImg(image,id) {
             return false;
         }
         var type = index == 1 ? "session" : "timeline";
-        downloadShareImage(image, type,id);
+        downloadShareImage(image, type, id);
 
     });
 }
@@ -529,47 +534,47 @@ function shareWxVideo(image, video, desc) {
             return false;
         }
         var type = index == 1 ? "session" : "timeline";
-        downloadShareVideo(type,image, video, desc);
+        downloadShareVideo(type, image, video, desc);
 
     });
 }
 
-function downloadShareVideo(type,image,video, desc) {
+function downloadShareVideo(type, image, video, desc) {
 
     var url = "http://www.d-shang.com" + image;
-    var img=image.match(/\w+\.jpg/g);
+    var img = image.match(/\w+\.jpg/g);
 
     api.download({
         url: url,
-        savePath: 'fs://'+img,
+        savePath: 'fs://' + img,
         report: true,
         cache: true,
         allowResume: true
     }, function(ret, err) {
         if (ret.state == 1) {
-            shareVideo(img,video,type, desc);
+            shareVideo(img, video, type, desc);
         }
     });
 }
 
 
-function downloadShareImage(image, type,id) {
+function downloadShareImage(image, type, id) {
     var url = "http://www.d-shang.com" + image;
-    var img=image.match(/\w+\.jpg/g);
+    var img = image.match(/\w+\.jpg/g);
     api.download({
         url: url,
-        savePath: 'fs://'+img,
+        savePath: 'fs://' + img,
         report: true,
         cache: true,
         allowResume: true
     }, function(ret, err) {
         if (ret.state == 1) {
-            shareImage(img,type,id);
+            shareImage(img, type, id);
         }
     });
 }
 
-function shareVideo(img,video, type, desc) {
+function shareVideo(img, video, type, desc) {
     var videoUrl = "http://www.d-shang.com" + video;
     var wx = api.require('wx');
     wx.shareVideo({
@@ -577,7 +582,7 @@ function shareVideo(img,video, type, desc) {
         scene: type,
         title: desc,
         description: '顶上智能,上市公司 股票代码839431,国家高新技术企业,400多项国家专利',
-        thumb:'fs://'+img,
+        thumb: 'fs://' + img,
         contentUrl: videoUrl
     }, function(ret, err) {
         if (ret.status) {
@@ -590,32 +595,32 @@ function shareVideo(img,video, type, desc) {
     });
 }
 
-function addShareRecord(id,type){
-  api.ajax({
-      url: 'http://www.d-shang.com/index.php?blog/addsharerecord/?openid='+OPENID,
-      method: 'post',
-      data: {
-          values: {
-            type:type,
-            shareid: id
-          }
-      }
-  },function(ret, err){
-     console.log(JSON.stringify(ret));
-  });
+function addShareRecord(id, type) {
+    api.ajax({
+        url: 'http://www.d-shang.com/index.php?blog/addsharerecord/?openid=' + OPENID,
+        method: 'post',
+        data: {
+            values: {
+                type: type,
+                shareid: id
+            }
+        }
+    }, function(ret, err) {
+        console.log(JSON.stringify(ret));
+    });
 
 
 }
 
-function shareImage(img,type,id) {
+function shareImage(img, type, id) {
     var wx = api.require('wx');
     wx.shareImage({
         apiKey: 'wx062395c72d4d0732',
         scene: type,
-        contentUrl: 'fs://'+img
+        contentUrl: 'fs://' + img
     }, function(ret, err) {
         if (ret.status) {
-          addShareRecord(id,type);
+            addShareRecord(id, type);
             api.toast({
                 msg: '分享成功',
                 duration: 2000,

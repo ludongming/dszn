@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	<link rel="stylesheet" href="../../css/weui.min.css" />
+	<link rel="stylesheet" href="../../css/header.css" />
+	<style>
+		html,
+		body {
+			background-color: #fff;
+		}
+
+		.main {
+			width: 94%;
+			margin:0 auto;
+color:#454545;
+line-height:30px;
+background:#fff;
+		}
+
+		.title {
+			text-indent: 0;
+		}
+
+		.main img {
+			max-height: 500px;
+			width: 100%;
+		}
+		.biaoti{font-size:1.1em;font-weight: 700;color:#454545;border-bottom:1px #d9d9d9 solid;padding-bottom:10px;padding-top: 10px;}
+		.icon{margin-right:5px;color:#fff;font-size:0.8em;display: inline-block;padding-left:2px;padding-right:2px;line-height:16px;border-radius: 2px;}
+    .yuanchuang{background:#e74c3c;}
+		.jingxuan{background:#27ae60;}
+		.pic{border-radius: 5px;}
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;text-align:center;">
+		<div class="width:100%;text-align:center;border:1px #ccc solid;">
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i>
+	每日分享
+		<span style="display:inline-block;position:absolute;float:right;right:5px;width:50px;bottom:10px; "> <img src="../../image/qiandao1.png" ontouchend="clock()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>		</span>
+</div>
+	</header>
+	<div class="page__bd content main">
+    <div class="biaoti"><span class="icon yuanchuang">原创</span><span class="icon jingxuan">精选</span>
+<span id="biaoti"></span>
+		</div>
+		<div id="main"></div>
+	</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+    setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		})
+loadData();
+	};
+
+	function goback() {
+		api.closeWin({
+			name: 'content'
+		});
+	}
+
+	function clock(){
+		api.openWin({
+		    name: 'clock',
+		    url: './clock.html',
+		    pageParam: {
+		        name: 'test'
+		    }
+		});
+
+	}
+
+	function loadData() {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appdaily/getlastdaily/?openid=' + OPENID
+		}, function(ret, err) {
+			$("#biaoti").html(ret.data.title);
+			$("#main").html(ret.data.content);
+			$('.pic').picLazyLoad();
+			$(".pic").bind("click",bigImage);
+		});
+	}
+
+	function goback() {
+		api.closeWin({});
+	}
+
+	function bigImage() {
+
+   var image= $(this).attr("src");
+
+		var photoBrowser = api.require('photoBrowser');
+		photoBrowser.open({
+			images: [image],
+			placeholderImg: 'widget://res/img/apicloud.png',
+			bgColor: '#000'
+		}, function(ret, err) {
+			if (ret.eventType == "click") {
+
+
+				photoBrowser.close();
+			}
+
+
+			if (ret.eventType == "longPress") {
+				photoBrowser.getImage({
+					index: 0
+				}, function(ret, err) {
+					if (ret) {
+						saveImage(ret.path);
+					} else {
+						alert(JSON.stringify(err));
+					}
+				});
+
+			}
+
+		});
+	}
+
+
+	function saveImage(image) {
+		api.confirm({
+				title: '提示',
+				msg: '保存图片到手机,限时免费',
+				buttons: ['确定', '取消']
+		}, function(ret, err) {
+				var index = ret.buttonIndex;
+				if (index == 1) {
+saveImageGallery(image);
+				}
+		});
+
+	}
+
+	function saveImageGallery(image) {
+		api.saveMediaToAlbum({
+			path: image
+		}, function(ret, err) {
+			if (ret && ret.status) {
+				api.toast({
+					msg: '保存成功',
+					duration: 1000,
+					location: 'bottom'
+				});
+			} else {
+				alert('保存失败');
+			}
+		});
+	}
+</script>
+
+</html>

@@ -1,146 +1,246 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>服务</title>
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<link rel="stylesheet" href="../css/weui.min.css">
-		<link rel="stylesheet" href="../css/dropload.css">
-		<link rel="stylesheet" href="../css/header.css">
-		<style>
-			body {
-				background: #fff;
 
-			}
-			.list {
-				border-bottom: 1px #e7e7e7 solid;
-				width: 100%;
-				float: right;
-	      position: relative;
-			}
-			.list img{width:100%;}
-      .mp{position: absolute;bottom:0px;right:0px;background:#000;color:#fff;font-size:0.8em;padding:2px;}
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;">
-			<span style="text-align: center;">服务</span>
-		</header>
-		<div class="page__bd content">
-			<div id="main">
-			<div class="list" data-url="./dszp/index.html" data-name="dszp" data-vip="1">
-						<img src="../image/dszp.png">
-						<span class="mp">门票:10金豆/天</span>
-			</div>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/header.css" />
+	<link rel="stylesheet" href="../css/faxian.css">
+	<link rel="stylesheet" href="../css/prismplayer.css">
+	<link rel="stylesheet" href="../css/dropload.css">
 
-				<div class="list" data-url="./3D/index.html" data-name="3D" data-vip="1">
-						<img src="../image/quanjing.jpg">
-						<span class="mp">门票:10金豆/天</span>
-			</div>
+	<style>
+		#J_prismPlayer {
+			display: none;
+		}
+.content{margin-top: 60px;}
+.image{position:relative;}
+.pic{height:250px!important;}
+		.stopplayer {
+			display: none;
+		}
+		.videotitle{position: absolute;font-size:1.1em;left:5px;top:5px;color:#fff;font-size: 700;}
+		#main{margin-bottom:50px;}
+		.duration{font-size:0.8em;right:5px;bottom:10px;background:#0c1617;opacity: 0.8;width:50px;border-radius: 10px;position: absolute;color:#fff;}
+.menu{display: inline-block;font-size:0.8em;margin-right:10px;}
+.active{color:red;}
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;">
+	<span class="menu active" data-cid="474624369">产品解说</span>
+	<span class="menu" data-cid="99749893">现场安装</span>
+	<span class="menu" data-cid="811264942">云设计</span>
 
 
-				<div class="list" data-url="./goods/index.html" data-name="product" data-vip="1">
-						<img src="../image/chanpinku.png">
-						<span class="mp">门票:5金豆/天</span>
-				</div>
+		<span ontouchend="alert('更多惊喜即将开放')"  style="position:absolute;color:000;font-size:0.9em;display:inline-block;right:10px; vertical-align:middle;float:right;">
+		 <img src="../image/liwu.png" style="width:25px;height:25px;vertical-align:middle;">
+</span>
+	</header>
+	<div class="page__bd content">
+		<div id="main"></div>
+		<div class="prism-player" id="J_prismPlayer" style="position: absolute;left:0%;"></div>
 
+	</div>
+</body>
+<!--地址模板-->
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="list" id="list_{{=value.VideoId}}">
+		<div class="image" onclick="setVideo('{{=value.VideoId}}',this)">
+<span class="videotitle"></span>
+			<img src="../image/play.png" class="videocontroll startplayer" id="start{{=value.VideoId}}">
+			<img src="../image/stop1.png" class="videocontroll stopplayer" id="stop{{=value.VideoId}}">
+			<img src="../image/timg.jpg" data-original="{{=value.CoverURL}}" class="pic">
+			<span class="duration">{{=value.time}}</span>
 
-			<div class="list" data-url="./design/hot.html" data-name="design" data-vip="1">
-						<img src="../image/diaodingqiangmian.png">
-						<span class="mp">门票:5金豆/天</span>
-				</div>
-
-				<div class="list"  data-url="./paint/serviceindex.html" data-name="program" data-vip="1">
-						<img src="../image/qiangmianhua.png">
-						<span class="mp">门票:5金豆/天</span>
-				</div>
-
-					<div class="list" data-url="./sellpoint/hot.html" data-name="sellpoint" data-vip="1">
-						<img src="../image/zhinengxiaod.png">
-						<span class="mp">门票:5金豆/天</span>
-				</div>
-
-
-					<div class="list" data-url="./pdf/index.html" data-name="pdf" data-vip="1">
-						<img src="../image/chuyang.png">
-						<span class="mp">门票:5金豆/天</span>
-				</div>
-
-								<div class="list" data-url="./mtv/index.html" data-name="mtv" data-vip="1">
-										<img src="../image/iebook.jpg">
-										<span class="mp">门票:10金豆/天</span>
-								</div>
-
-
-				<div class="list" data-url="./news/newslist.html" data-name="news" data-vip="1">
-						<img src="../image/dingshangxinwen.jpg">
-						<span class="mp">门票:5金豆/天</span>
-				</div>
-
-			</div>
-			<div  class="list" style="height:50px;"></div>
 		</div>
-	</body>
-</html>
+
+
+		<div class="message">{{=value.Title}}</div>
+		<div class="tip">
+			<div class="dingwei">
+			</div>
+			<div class="tool" style="position:relative;">
+			</div>
+		</div>
+
+	</div>
+	{{~}}
+</script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/wolf.js"></script>
-<script type="text/javascript" src="../script/weui.min.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript" src="../script/weui.min.js"></script>
+<script type="text/javascript" src="../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
+
 <script type="text/javascript">
 	var OPENID;
+	var isDrop = false;
+	var me;
+	var page = 1;
+	var REPLYID = 0;
+	var CID = "474624369";
+	var player;
+	var currentVideoId=0;
 	apiready = function() {
-		OPENID = api.getPrefs({
-			sync : true,
-			key : 'openid'
-		});
 		setTopBar();
-		$(".list").bind("click", jump);
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+
+		var params = api.pageParam;
+		UID = params.uid;
+		loadPlayer();
+		loadData();
+		$(".menu").bind("click",switchMenu);
 	};
-	function jump() {
-		var vip = $(this).attr("data-vip");
-		var url = $(this).attr("data-url");
-		var name = $(this).attr("data-name");
-		if (vip == 0) {
-			api.openWin({
-				name : name,
-				url : url
-			});
-		} else {
-		  isVip(name,url);
+
+   function switchMenu(){
+		 player.pause();
+		 	$("#J_prismPlayer").hide();
+		  var obj=$(this);
+			CID=$(this).attr("data-cid");
+			loadData();
+		  var arr= $(".menu");
+			 arr.each(function(){
+			 $(this).removeClass("active");
+		 })
+		 obj.addClass("active");
+	 }
+	//获取视频地址
+	function setVideo(videoid, obj) {
+
+		if(currentVideoId==videoid){
+			$("#start" + videoid).hide();
+			player.play();
+			return false;
 		}
+
+		$("#start" + currentVideoId).show();
+
+
+		currentVideoId=videoid;
+		//先要暂停其他正在播放的视频
+		player.pause();
+		$("#start" + videoid).hide();
+		$("#stop" + videoid).on("click", function() {
+			player.pause();
+			$("#stop" + videoid).hide();
+			$("#start" + videoid).show();
+			return false;
+		})
+
+		var top = $(obj).offset().top;
+		$("#J_prismPlayer").css({
+			"top": top
+		});
+			$("#J_prismPlayer").on("click", function() {
+			$("#stop" + currentVideoId).show();
+			setTimeout(function(){
+				$("#stop" + currentVideoId).hide();
+			},3000);
+		})
+
+    //播放结束后隐藏播放器
+	  player.on("ended", function() {
+			$("#J_prismPlayer").hide();
+		})
+
+		$("#J_prismPlayer").show();
+
+		//获取凭证
+		var url = 'http://www.d-shang.com/index.php?aliyun/getvideobyid/?openid=' + OPENID + "&videoid=" + videoid;
+		api.ajax({
+			url: url
+		}, function(ret, err) {
+			var d = ret.data;
+			startPlay(d.PlayInfoList.PlayInfo[0].PlayURL);
+		});
 	}
 
-	function isVip(name,url) {
-		api.ajax({
-			url : 'http://www.d-shang.com/index.php?app/checkvip/?openid=' + OPENID,
-			data:{
-				values:{
-					name:name
-				}
+	function loadPlayer() {
+		player = new prismplayer({
+			id: "J_prismPlayer",
+			autoplay: false,
+			isLive: false,
+			playsinline: true,
+			showBuffer:true,
+			width: "100%",
+			height: "250px",
+			controlBarVisibility: "click",
+			useH5Prism: true,
+			useFlashPrism: false,
+			source: "",
+			cover: "",
+			skinLayout: [{
+				"name": "controlBar",
+				"align": "blabs",
+				"x": 0,
+				"y": 0,
+				"children": [{
+					"name": "fullScreenButton",
+					"align": "tr",
+					"x": 20,
+					"y": 25
+				}, {
+					"name": "progress",
+					"align": "tlabs",
+					"x": 0,
+					"y": 0
+				}]
+			}]
+		});
+	}
+
+	function startPlay(source) {
+		player.loadByUrl(source);
+		player.setPlayerSize();
+		player.play();
+	}
+
+
+	function add() {
+		api.openWin({
+			name: 'add',
+			url: './classroom/add.html',
+			pageParam: {
+				name: 'test'
 			},
-			method:'post'
+			animation: {
+				type: "movein", //动画类型（详见动画类型常量）
+				subType: "from_bottom", //动画子类型（详见动画子类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			},
+		});
+
+	}
+
+	function loadData() {
+
+		var loading=weui.loading("奋力加载中");
+		var url = 'http://www.d-shang.com/index.php?aliyun/getvideolistbycate/?p=' + page + '&openid=' + OPENID + "&cid=" + CID;
+
+		api.ajax({
+			url: url
 		}, function(ret, err) {
+			loading.hide();
+			var d = ret.data;
+			var arrText = doT.template($("#interpolationtmpl").text());
+			$("#main").html(arrText(d));
+			$('.pic').picLazyLoad();
 
-			if (ret.status) {
-				weui.toast(ret.message, {
-					duration : 1000,
-					className : "bears"
-				});
-				setTimeout(function(){
-					api.openWin({
-						name : name,
-						url : url
-					});
-
-				},1000);
-			} else {
-				weui.toast(ret.message, {
-					duration : 1000,
-					className : "bears"
-				});
-			}
+			me.resetload();
 		});
 	}
 </script>
+
+</html>

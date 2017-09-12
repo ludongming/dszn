@@ -1,84 +1,154 @@
-<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
+		<title>服务</title>
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" href="../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" href="../css/weui.min.css">
+		<link rel="stylesheet" href="../css/dropload.css">
+		<link rel="stylesheet" href="../css/header.css">
+
 		<style>
 			body {
 				background: #fff;
+
 			}
+			.list {
+				border-bottom: 1px #e7e7e7 solid;
+				width: 100%;
+				float: right;
+	      position: relative;
+			}
+			.list img{width:100%;}
+      .mp{position: absolute;bottom:0px;right:0px;background:#000;color:#fff;font-size:0.8em;padding:2px;}
 		</style>
 	</head>
 	<body>
 		<header style="position: fixed;">
-			<span style="text-align: center;">理客</span>
-									<span ontouchend="refresh()" style="width:40px; margin-right:10px; vertical-align:middle;float:right;">刷新</span>
-
+			<span style="text-align: center;">服务</span>
 		</header>
 		<div class="page__bd content">
-			<div class="weui-cells weui-cells_form">
-				<div class="weui-cells__title">
-					授权进度
-				</div>
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__bd">
-						正在权限检测....
-					</div>
-					<div class="weui-cell__ft weui-vcode-btn"></div>
-				</div>
-				<div class="weui-btn-area">
-					客服电话:0573-82696190
-				</div>
+			<div id="main">
+			<div class="list" data-url="./dszp/index.html" data-name="dszp" data-vip="1">
+						<img src="../image/dszp.png">
+						<span class="mp">门票:10金豆/天</span>
 			</div>
+
+			<div class="list" data-url="./crm/index.html" data-name="classroom" data-vip="1">
+					<img src="../image/like.png">
+					<span class="mp">门票:顶上专享</span>
+		</div>
+
+				<div class="list" data-url="./3D/index.html" data-name="3D" data-vip="1">
+						<img src="../image/quanjing.jpg">
+						<span class="mp">门票:10金豆/天</span>
+			</div>
+
+
+				<div class="list" data-url="./goods/index.html" data-name="product" data-vip="1">
+						<img src="../image/chanpinku.png">
+						<span class="mp">门票:5金豆/天</span>
+				</div>
+
+
+			<div class="list" data-url="./design/hot.html" data-name="design" data-vip="1">
+						<img src="../image/diaodingqiangmian.png">
+						<span class="mp">门票:5金豆/天</span>
+				</div>
+
+				<div class="list"  data-url="./paint/serviceindex.html" data-name="program" data-vip="1">
+						<img src="../image/qiangmianhua.png">
+						<span class="mp">门票:5金豆/天</span>
+				</div>
+
+					<div class="list" data-url="./sellpoint/hot.html" data-name="sellpoint" data-vip="1">
+						<img src="../image/zhinengxiaod.png">
+						<span class="mp">门票:5金豆/天</span>
+				</div>
+
+
+					<div class="list" data-url="./pdf/index.html" data-name="pdf" data-vip="1">
+						<img src="../image/chuyang.png">
+						<span class="mp">门票:5金豆/天</span>
+				</div>
+
+								<div class="list" data-url="./mtv/index.html" data-name="mtv" data-vip="1">
+										<img src="../image/iebook.jpg">
+										<span class="mp">门票:10金豆/天</span>
+								</div>
+
+
+				<div class="list" data-url="./news/newslist.html" data-name="news" data-vip="1">
+						<img src="../image/dingshangxinwen.jpg">
+						<span class="mp">门票:5金豆/天</span>
+				</div>
+
+			</div>
+			<div  class="list" style="height:50px;"></div>
 		</div>
 	</body>
-	<script type="text/javascript" src="../script/api.js"></script>
-	<script type="text/javascript" src="../script/weui.min.js"></script>
-	<script type="text/javascript" src="../script/wolf.js"></script>
-	<script type="text/javascript" src="../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../script/doT.min.js"></script>
-	<script type="text/javascript" src="../script/dropload.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		apiready = function() {
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			});
-			setTopBar();
-			checkAuthorize();
-		};
-		
-		function refresh(){
-			checkAuthorize();
-		}
-		
-		function checkAuthorize() {
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/checkauthrize/?openid=' + OPENID
-			}, function(ret, err) {
-				if (!ret.status) {
-					location.href = "./login.html";
-				}
-				var d = ret.data.data;
-				if (d == 0) {
-					location.href = "./crm/addmanager.html";
-				}
-				if (d == 2) {
-					location.href = "./crm/process.html";
-				}
-				if (d == 6) {
-					location.href = "./crm/employee.html";
-				}
-				if (d == 8) {
-					location.href = "./crm/vip.html";
-				}
-			});
-		}
-	</script>
 </html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/wolf.js"></script>
+<script type="text/javascript" src="../script/weui.min.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync : true,
+			key : 'openid'
+		});
+		setTopBar();
+		$(".list").bind("click", jump);
+	};
+	function jump() {
+		var vip = $(this).attr("data-vip");
+		var url = $(this).attr("data-url");
+		var name = $(this).attr("data-name");
+		if (vip == 0) {
+			api.openWin({
+				name : name,
+				url : url,
+				slidBackEnabled:false
+			});
+		} else {
+		  isVip(name,url);
+		}
+	}
+
+	function isVip(name,url) {
+		api.ajax({
+			url : 'http://www.d-shang.com/index.php?app/checkvip/?openid=' + OPENID,
+			data:{
+				values:{
+					name:name
+				}
+			},
+			method:'post'
+		}, function(ret, err) {
+
+			if (ret.status) {
+				weui.toast(ret.message, {
+					duration : 1000,
+					className : "bears"
+				});
+				setTimeout(function(){
+					api.openWin({
+						name : name,
+						url : url,
+						slidBackEnabled:false
+					});
+
+				},1000);
+			} else {
+				weui.toast(ret.message, {
+					duration : 1000,
+					className : "bears"
+				});
+			}
+		});
+	}
+</script>
