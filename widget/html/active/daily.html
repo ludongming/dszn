@@ -17,13 +17,14 @@
 		}
 
 		.main {
-			padding:5px;
+
 			border-radius: 10px;
-			width: 94%;
-			margin:0 auto;
-color:#000;
-line-height:30px;
-background:#fff0d1;
+			width: 100%;
+			margin: auto;
+			color: #000;
+			line-height: 30px;
+
+
 		}
 
 		.title {
@@ -35,32 +36,135 @@ background:#fff0d1;
 			width: 100%;
 			position: relative;
 		}
-		.topbg{width:100%;max-height:300px;position: absolute;top:10px;}
-		.biaoti{font-size:1.1em;font-weight: 700;color:#54130d;border-bottom:1px #d9d9d9 solid;padding-bottom:10px;padding-top: 10px;}
-		.icon{margin-right:5px;color:#fff;font-size:0.8em;display: inline-block;padding-left:2px;padding-right:2px;line-height:16px;border-radius: 2px;}
-    .yuanchuang{background:#e74c3c;}
-		.jingxuan{background:#27ae60;}
-		.pic{border-radius: 5px;}
-		.backbtn{width:100px;height:51px;}
+
+		.topbg {
+			width: 100%;
+			margin:auto;
+			text-align: center;
+
+
+		}
+
+		.topbg img {
+			width: 100%;
+			margin:auto;
+		}
+
+		.biaoti {
+			font-size: 1.1em;
+			font-weight: 700;
+			color: #54130d;
+			border-bottom: 1px #d9d9d9 solid;
+			margin-bottom: 10px;
+			margin-top: 10px;
+
+			width: 90%;
+			margin: auto;
+
+		}
+
+		.icon {
+			margin-right: 5px;
+			color: #888;
+			font-size: 0.7em;
+			display: inline-block;
+			padding-left: 2px;
+			padding-right: 2px;
+			line-height: 17px;
+			border-radius: 2px;
+		}
+
+		.yuanchuang {
+			background: #e74c3c;
+		}
+
+		.jingxuan {
+			background: #27ae60;
+		}
+
+		.pic {
+			border-radius: 5px;
+		}
+
+		.backbtn {
+			width: 100px;
+			height: 51px;
+		}
+		#main{
+			width: 90%;
+			margin: auto;
+
+
+		}
+		.content{
+			line-height: 21px;
+		}
+		.topcontent{
+			background-color: #fff0d1;
+			width: 88%;
+				margin: auto;
+ margin-top:-5px;
+		}
+		.clock{
+			position: absolute;
+			top: 25px;
+			right:10px;
+			line-height: 15px;
+			display: flex;
+			align-items: center;
+			color: #54130d;
+		}
+		.clock img{
+				max-width: 30px;
+		}
+		.back{
+			position: absolute;
+			top: 25px;
+			left:10px;
+
+
+
+		}
+		.back img{
+				max-width: 40px;
+		}
+		.biaoti img{
+			max-width: 25px;
+		}
+		.sign{
+			display: flex;
+			align-items: center;
+
+			margin-bottom: 10px;
+		}
 	</style>
 </head>
 
 <body>
-		<div class="width:100%;text-align:center;border:1px #ccc solid;">
-			<!--
+
+	<div class="width:100%;text-align:center;border:1px #ccc solid;">
+		<!--
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/backbtn.png" class="backbtn"/></i>		<span style="display:inline-block;position:absolute;float:right;right:5px;width:50px;bottom:10px; "> <img src="../../image/qiandao1.png" ontouchend="clock()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>		</span>
 -->
-</div>
+	</div>
+	<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
+	<div class="back"  ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
 
 	<div class="page__bd content main">
-		<div class="topbg">
-			<img src="../../image/dailytopbg.png" style="width:100%;">
-		 </div>
 
-    <div class="biaoti"><span class="icon yuanchuang">原创</span><span class="icon jingxuan">精选</span>
-<span id="biaoti"></span>
+		<div class="topbg">
+			<img src="../../image/dailytopbg.png">
+		</div>
+<div class="topcontent">
+		<div class="biaoti">
+			<span id="biaoti"></span>
+			<div class="sign"><img src="../../image/sign.png" alt=""><span class="icon">原创</span><span class="icon">精选</span></div>
 		</div>
 		<div id="main"></div>
+		</div>
+		<div class="topbg">
+			<img src="../../image/dailybottombg.png">
+		</div>
 	</div>
 	</div>
 </body>
@@ -73,12 +177,12 @@ background:#fff0d1;
 <script type="text/javascript">
 	var OPENID;
 	apiready = function() {
-    setTopBar();
+		setTopBar();
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'
 		})
-loadData();
+		loadData();
 	};
 
 	function goback() {
@@ -87,13 +191,13 @@ loadData();
 		});
 	}
 
-	function clock(){
+	function clock() {
 		api.openWin({
-		    name: 'clock',
-		    url: './clock.html',
-		    pageParam: {
-		        name: 'test'
-		    }
+			name: 'clock',
+			url: './clock.html',
+			pageParam: {
+				name: 'test'
+			}
 		});
 
 	}
@@ -105,7 +209,7 @@ loadData();
 			$("#biaoti").html(ret.data.title);
 			$("#main").html(ret.data.content);
 			$('.pic').picLazyLoad();
-			$(".pic").bind("click",bigImage);
+			$(".pic").bind("click", bigImage);
 		});
 	}
 
@@ -115,7 +219,7 @@ loadData();
 
 	function bigImage() {
 
-   var image= $(this).attr("src");
+		var image = $(this).attr("src");
 
 		var photoBrowser = api.require('photoBrowser');
 		photoBrowser.open({
@@ -149,14 +253,14 @@ loadData();
 
 	function saveImage(image) {
 		api.confirm({
-				title: '提示',
-				msg: '保存图片到手机,限时免费',
-				buttons: ['确定', '取消']
+			title: '提示',
+			msg: '保存图片到手机,限时免费',
+			buttons: ['确定', '取消']
 		}, function(ret, err) {
-				var index = ret.buttonIndex;
-				if (index == 1) {
-saveImageGallery(image);
-				}
+			var index = ret.buttonIndex;
+			if (index == 1) {
+				saveImageGallery(image);
+			}
 		});
 
 	}
