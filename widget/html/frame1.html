@@ -117,6 +117,12 @@
 		.clear {
 			clear: both;
 		}
+		.medal{background:url(../image/rankbg.png) no-repeat;width:100%;height:300px;}
+		.medal_list{width:100%;height:60px;margin-top:10px;}
+		.face{width:60px;height:60px;border-radius: 30px;float:left;}
+		.medalicon{width:60px;float:left;}
+    .info{color:#fff;float:left;margin-left:10px;}
+	  .btn{border-radius: 5px;margin:0 auto;margin-top:10px;display: block;background:#f99061;color:#fff;text-align: center;font-size:0.9em;width:100px;height:30px;line-height: 30px;}
 	</style>
 </head>
 
@@ -128,6 +134,17 @@
 		<div class="adv">
 			<div class="advimg" data-nodeid="1" data-url="./buy/rank.html">
 					<img src="../image/ds/dinggouadv.jpg" id="adv"></div>
+		</div>
+
+		<div class="medal">
+			<div class="medaltitle">本月订单达人</div>
+			<div class="medal_main">
+
+			</div>
+			<div class="medal_list">
+				<a href="" class="btn">查看更多</a>
+
+			</div>
 		</div>
 
 		<div class="dswrap">
@@ -170,6 +187,30 @@
 
 </body>
 
+
+<script id="rank1" type="text/x-dot-template">
+<div class="medal_list">
+<img src="../image/rank1.png" class="medalicon">
+ <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.headimgurl}}" class="pic face">
+ <div class="info">
+<span class="name">{{=it.real_name}}</span><br>
+<span class="address">{{=it.address}}</span>
+</div>
+</div>
+</script>
+
+<script id="rank2" type="text/x-dot-template">
+<div class="medal_list">
+<img src="../image/rank{{=it.rank}}.png" class="medalicon">
+ <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.headimgurl}}" class="pic face">
+ <div class="info">
+<span class="name">{{=it.real_name}}</span><br>
+<span class="address">{{=it.address}}</span>
+</div>
+</div>
+</script>
+
+
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/weui.min.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
@@ -187,6 +228,7 @@
 			key: 'openid'
 		});
 loadAdv();
+getRank();
 		setTopBar();
 		$(".dstitle").bind("click", shows);
 		$(".advimg").bind("click", shows);
@@ -251,6 +293,22 @@ loadAdv();
 		}, function(ret, err) {
 			//coding...
 			$("#adv").attr("src", "http://www.d-shang.com/" + ret.data.image);
+		});
+	}
+
+ function getRank(){
+		api.ajax({
+		    url: 'http://www.d-shang.com/index.php?appbuy/getrank/?openid=' + OPENID
+		},function(ret, err){
+			var d=ret.data;
+		  	var rank1 = doT.template($("#rank1").text());
+				var rank2 = doT.template($("#rank2").text());
+			$(".medal_main").append(rank1(d[0]));
+			d[1].rank=2;
+			d[2].rank=3;
+			$(".medal_main").append(rank2(d[1]));
+			$(".medal_main").append(rank2(d[2]));
+			$(".pic").picLazyLoad();
 		});
 	}
 
