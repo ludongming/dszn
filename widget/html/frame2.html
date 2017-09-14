@@ -234,7 +234,6 @@
 		}, function(ret, err) {
 			loading.hide();
 			var d = ret.data;
-			console.log(JSON.stringify(d));
 			var arrText = doT.template($("#interpolationtmpl").text());
 			$("#main").html(arrText(d));
 			$('.pic').picLazyLoad();
