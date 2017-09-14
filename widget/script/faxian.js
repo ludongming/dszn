@@ -462,8 +462,34 @@ function loadRecommendData() {
 
         $(".message").bind("click", setCopy);
 
-
     });
+}
+
+function menus(){
+   var content = document.querySelector('.recommendmain');
+   var duplicate = content.cloneNode(true);
+   var contentBlurred = document.createElement('div');
+   contentBlurred.className = 'content-blurred';
+   contentBlurred.appendChild(duplicate);
+
+   var footer = document.querySelector('.footer');
+   footer.appendChild(contentBlurred);
+   var contentWrapper = document.querySelector('.content');
+   var translation;
+   duplicate.style['-webkit-transform'] = "translate3d(0,'-500px',0)";
+
+   contentWrapper.addEventListener('scroll',function(){
+     console.log("滚动监听")
+     translation = 'translate3d(0,' + (-this.scrollTop + 'px') + ',0)';
+     console.log(translation);
+     duplicate.style['-webkit-transform'] = translation;
+     duplicate.style['-moz-transform'] = translation;
+     duplicate.style['transform'] = translation;
+   });
+
+   // offset to demo blurring
+   contentWrapper.scrollTop = 140;
+
 }
 
 function setCopy() {
@@ -510,30 +536,113 @@ function hideSelectText() {
 
 
 function shareWxImg(image, id) {
-    api.actionSheet({
-        cancelTitle: '取消',
-        buttons: ['发给朋友', '发送到朋友圈']
-    }, function(ret, err) {
-        var index = ret.buttonIndex;
-        if (index == 3) {
-            return false;
-        }
-        var type = index == 1 ? "session" : "timeline";
-        downloadShareImage(image, type, id);
+  var dialogBox = api.require('dialogBox');
+  dialogBox.actionMenu ({
+      rect:{
+          h: 150
+      },
+      texts:{
+           cancel: '取消'
+      },
+      items:[
+      {
+          text: '微信朋友圈',
+          icon: 'widget://image/timeline.png'
+      },
+      {
+          text: '微信好友',
+          icon: 'widget://image/friends.png'
+      }
 
-    });
+      ],
+      tapClose:true,
+      isCuttingLine:true,
+      styles:{
+          bg:'#FFF',
+          column: 2,
+          itemText: {
+              color: '#000',
+              size: 12,
+              marginT:8
+          },
+          itemIcon:{
+              size:60
+          },
+          cancel:{
+              bg: 'fs://icon.png',
+              color:'#000',
+              h: 50 ,
+              size: 14
+          }
+      }
+  }, function(ret){
+      if(ret.eventType=="cancel"){
+        var dialogBox = api.require('dialogBox');
+        dialogBox.close ({
+            dialogName: 'actionMenu'
+        });
+        return false;
+      }
+
+      var index = ret.index;
+      var type = index == 1 ? "session" : "timeline";
+      downloadShareImage(image, type, id);
+  });
+
+
 }
 
 function shareWxVideo(image, video, desc) {
-    api.actionSheet({
-        cancelTitle: '取消',
-        buttons: ['发给朋友', '发送到朋友圈']
-    }, function(ret, err) {
-        var index = ret.buttonIndex;
-        if (index == 3) {
-            return false;
-        }
-        var type = index == 1 ? "session" : "timeline";
+  var dialogBox = api.require('dialogBox');
+  dialogBox.actionMenu ({
+      rect:{
+          h: 150
+      },
+      texts:{
+           cancel: '取消'
+      },
+      items:[
+      {
+          text: '微信朋友圈',
+          icon: 'widget://image/timeline.png'
+      },
+      {
+          text: '微信好友',
+          icon: 'widget://image/friends.png'
+      }
+
+      ],
+      tapClose:true,
+      isCuttingLine:true,
+      styles:{
+          bg:'#FFF',
+          column: 2,
+          itemText: {
+              color: '#000',
+              size: 12,
+              marginT:8
+          },
+          itemIcon:{
+              size:60
+          },
+          cancel:{
+              bg: 'fs://icon.png',
+              color:'#000',
+              h: 50 ,
+              size: 14
+          }
+      }
+  }, function(ret){
+      if(ret.eventType=="cancel"){
+        var dialogBox = api.require('dialogBox');
+        dialogBox.close ({
+            dialogName: 'actionMenu'
+        });
+        return false;
+      }
+
+      var index = ret.index;
+      var type = index == 1 ? "session" : "timeline";
         downloadShareVideo(type, image, video, desc);
 
     });
