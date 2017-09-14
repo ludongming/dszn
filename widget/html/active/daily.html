@@ -44,12 +44,15 @@
 			background-color: #fff0d1;
 
 
+
 		}
 
 		.topbg img {
 			width: 100%;
 			margin:auto;
 			vertical-align: bottom;
+
+
 		}
 
 		.biaoti {
@@ -97,33 +100,27 @@
 		.topcontent{
 			background-color: #fff0d1;
 			width: 88%;
-
-
 				margin: auto;
 
 		}
 		.clock{
-			position: absolute;
-			top: 25px;
-			right:10px;
-			line-height: 15px;
-			display: flex;
-			align-items: center;
-			color: #54130d;
+				float: right;
+margin-right:15px; 
+margin-top: 8px;
 		}
 		.clock img{
 				max-width: 30px;
+
 		}
 		.back{
-			position: absolute;
-			top: 25px;
-			left:10px;
+			float: left;
 
 
 
 		}
 		.back img{
-				max-width: 40px;
+				max-width: 39px;
+				vertical-align: bottom;
 		}
 		.biaoti img{
 			max-width: 25px;
@@ -133,6 +130,14 @@
 			align-items: center;
 
 			margin-bottom: 10px;
+		}
+		.topnav{
+			height: 50px;
+
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			top:10px;
 		}
 	</style>
 </head>
@@ -144,12 +149,14 @@
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/backbtn.png" class="backbtn"/></i>		<span style="display:inline-block;position:absolute;float:right;right:5px;width:50px;bottom:10px; "> <img src="../../image/qiandao1.png" ontouchend="clock()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>		</span>
 -->
 	</div>
+	<div class="topnav" >
 	<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
 	<div class="back"  ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
-
+	<div class="clear"></div>
+</div>
 	<div class="page__bd content main">
 
-		<div class="topbg">
+		<div class="topbg"style="margin-top:50px!important;">
 			<img src="../../image/dailytopbg.png">
 		</div>
 <div class="topcontent">
@@ -174,7 +181,7 @@
 <script type="text/javascript">
 	var OPENID;
 	apiready = function() {
-		setTopBar();
+
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'

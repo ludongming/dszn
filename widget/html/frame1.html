@@ -85,6 +85,11 @@
 			text-align: center;
 			font-size: 1.2em;
 		}
+		.dswraptitle {
+			height: 30px;
+			text-align: center;
+			font-size: 1.2em;
+		}
 
 		.dswrap .dswraptitle img {
 			width: 20px;
@@ -117,12 +122,73 @@
 		.clear {
 			clear: both;
 		}
-		.medal{background:url(../image/rankbg.png) no-repeat;width:100%;height:300px;}
-		.medal_list{width:100%;height:60px;margin-top:10px;}
-		.face{width:60px;height:60px;border-radius: 30px;float:left;}
-		.medalicon{width:60px;float:left;}
-    .info{color:#fff;float:left;margin-left:10px;}
+		.medal{ background-color: #fff;width:100%;height:340px;}
+.face1{width:70px;height:70px;border-radius: 39px;border: 5px solid #FEE04E;  margin-top: 18px;}
+		.face2{width:60px;height:60px;border-radius: 34px;border: 5px solid #DFE3F1;  margin-top: 10px;}
+		.face3{width:60px;height:60px;border-radius: 34px;border: 5px solid #F9C374;  margin-top: 10px;}
+		.medalicon{width:100px; position: absolute;top:55px; left: 3px;z-index:1;}
+		.medalicon1{width:110px; position: absolute;top:74px; left: 3px;z-index:1;}
+    .info{color:#000; line-height: 15px;}
+		.name{
+			text-align: center;
+			overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+width:90%;
+font-weight: bold;
+
+margin: auto;
+font-size: 0.9em;
+margin-top: 10px;
+		}
+		.address{
+			text-align: center;
+
+font-size: 0.9em;
+			overflow: hidden;
+					text-overflow:ellipsis;
+					white-space: nowrap;
+					width: 90%;
+
+font-weight: bold;
+					margin: auto;
+
+		}
 	  .btn{border-radius: 5px;margin:0 auto;margin-top:10px;display: block;background:#f99061;color:#fff;text-align: center;font-size:0.9em;width:100px;height:30px;line-height: 30px;}
+		.ranklist{
+
+width: 100%;
+display: flex;
+align-items:  flex-end;
+justify-content:  center;
+			height: 180px;
+
+background-color: #fff;
+
+			margin-top: -25px;
+		}
+		.rank2 .rank1 .rank3{
+		}
+		.headimg{
+
+			text-align: center;
+			position: relative;
+
+		}
+		.rankbanner{
+
+			width: 99%;
+			max-height: 140px;
+
+			z-index: -5;
+			top:100px;
+			left: 5px;
+		}
+		.rankbanner img{
+			width: 99%;
+			margin: auto;
+		}
+
 	</style>
 </head>
 
@@ -137,17 +203,20 @@
 		</div>
 
 		<div class="medal">
-			<div class="medaltitle">本月订单达人</div>
+			<div class="dswraptitle mobile">本月订单达人</div>
 			<div class="medal_main">
+				<div class="rankbanner"><img src="../image/rank/rankbanner.png" alt=""></div>
+			<div class="ranklist">
 
+				<div class="rank2" style="   background-color:#f6f4ff;vertical-align:bottom;width:30%; height:160px;"></div>
+				<div class="rank1" style="background-color:#fff; vertical-align:bottom; height:180px;   width:33%;"></div>
+				<div class="rank3" style=" background-color:#f6f4ff; vertical-align:bottom;	 width:30%; height:160px;"></div>
+				<div class="clear"></div>
 			</div>
-			<div class="medal_list">
-				<a href="" class="btn">查看更多</a>
-
-			</div>
+			<a href="" class="btn">查看更多</a>
 		</div>
-
-		<div class="dswrap">
+</div>
+		<div class="dswrap" style="margin-top:10px;">
 			<div class="dswraptitle mobile">DS顶上</div>
 			<div class="dstitle ydtitle" style="background:#76c6a9;" data-nodeid="1" data-url="./buy/index.html">
 				<div class="character">上市企业</div>
@@ -188,26 +257,28 @@
 </body>
 
 
-<script id="rank1" type="text/x-dot-template">
-<div class="medal_list">
-<img src="../image/rank1.png" class="medalicon">
- <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.headimgurl}}" class="pic face">
+<script id="rankone" type="text/x-dot-template">
+<div class="headimg">
+ <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.face}}" class="pic face1">
+ <img src="../image/rank/1.png" class="medalicon1">
+ </div>
  <div class="info">
-<span class="name">{{=it.real_name}}</span><br>
-<span class="address">{{=it.address}}</span>
+<div class="name">{{=it.real_name}}</div><br>
+<div class="address">{{=it.address}}</div>
 </div>
-</div>
+
 </script>
 
-<script id="rank2" type="text/x-dot-template">
-<div class="medal_list">
-<img src="../image/rank{{=it.rank}}.png" class="medalicon">
- <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.headimgurl}}" class="pic face">
+<script id="ranktwo" type="text/x-dot-template">
+<div class="headimg">
+ <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.face}}" class="pic face{{=it.rank}}">
+ <img src="../image/rank/{{=it.rank}}.png" class="medalicon">
+ </div>
  <div class="info">
-<span class="name">{{=it.real_name}}</span><br>
-<span class="address">{{=it.address}}</span>
+<div class="name">{{=it.real_name}}</div><br>
+<div class="address">{{=it.address}}</div>
 </div>
-</div>
+
 </script>
 
 
@@ -232,6 +303,7 @@ getRank();
 		setTopBar();
 		$(".dstitle").bind("click", shows);
 		$(".advimg").bind("click", shows);
+		console.log(OPENID);
 	};
 
 	function shows() {
@@ -301,13 +373,14 @@ getRank();
 		    url: 'http://www.d-shang.com/index.php?appbuy/getrank/?openid=' + OPENID
 		},function(ret, err){
 			var d=ret.data;
-		  	var rank1 = doT.template($("#rank1").text());
-				var rank2 = doT.template($("#rank2").text());
-			$(".medal_main").append(rank1(d[0]));
+
+		  	var rank1 = doT.template($("#rankone").text());
+				var rank2 = doT.template($("#ranktwo").text());
+			$(".rank1").html(rank1(d[0]));
 			d[1].rank=2;
 			d[2].rank=3;
-			$(".medal_main").append(rank2(d[1]));
-			$(".medal_main").append(rank2(d[2]));
+			$(".rank2").html(rank2(d[1]));
+			$(".rank3").html(rank2(d[2]));
 			$(".pic").picLazyLoad();
 		});
 	}
