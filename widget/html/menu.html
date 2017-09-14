@@ -13,13 +13,13 @@ background-color: transparent !important;
 		}
 
 .bg{
-	background: #f8f8f8;
-	position:fixed;height:50px;width:100%;bottom:0px;
-	opacity: 0.5;
+	background:url(../image/menubg.png) repeat-x;
+	opacity: 0.97;
+position:fixed;height:50px;width:100%;bottom:0px;
 }
 
-
 			#footer {
+				border-top:1px #f1f1f1 solid;
 position: absolute;
 left:0px;
 width:100%;
@@ -104,7 +104,11 @@ overflow-y: hidden;
 		</div>
 	</body>
 </html>
-
+<svg id="svg-image-blur">
+	<filter id="blur-effect">
+		<feGaussianBlur stdDeviation="5" />
+	</filter>
+</svg>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
 

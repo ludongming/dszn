@@ -457,40 +457,12 @@ function loadRecommendData() {
                 threshold: 500
             });
         }
-
-
-
         $(".message").bind("click", setCopy);
 
     });
 }
 
-function menus(){
-   var content = document.querySelector('.recommendmain');
-   var duplicate = content.cloneNode(true);
-   var contentBlurred = document.createElement('div');
-   contentBlurred.className = 'content-blurred';
-   contentBlurred.appendChild(duplicate);
 
-   var footer = document.querySelector('.footer');
-   footer.appendChild(contentBlurred);
-   var contentWrapper = document.querySelector('.content');
-   var translation;
-   duplicate.style['-webkit-transform'] = "translate3d(0,'-500px',0)";
-
-   contentWrapper.addEventListener('scroll',function(){
-     console.log("滚动监听")
-     translation = 'translate3d(0,' + (-this.scrollTop + 'px') + ',0)';
-     console.log(translation);
-     duplicate.style['-webkit-transform'] = translation;
-     duplicate.style['-moz-transform'] = translation;
-     duplicate.style['transform'] = translation;
-   });
-
-   // offset to demo blurring
-   contentWrapper.scrollTop = 140;
-
-}
 
 function setCopy() {
     var obj = this;

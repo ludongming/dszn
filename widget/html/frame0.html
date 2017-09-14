@@ -27,26 +27,6 @@
 			height: 20px;
 		}
 
-.footer{
-	background:#fff;
-	overflow:scroll;
-	z-index:2;
-	position: fixed;
-	bottom:0px;width:100%;
-	height:50px;
-overflow-y: hidden;
-}
-.content-blurred {
-	position:absolute;
-	top:0;
-	left:0;
-	right:0;
-	-webkit-filter:blur(10px);
-	filter:url(#blur-effect);
-	opacity:.8;
-  z-index: 1;
-}
-
 	</style>
 </head>
 
@@ -57,7 +37,7 @@ overflow-y: hidden;
 		<span class="tit">
 
 			<a class="nav  nav_0" href="javascript:void(0)" style="color:red;" ontouchend="switchBtn(0)">
-		 精选
+		 推荐
 		</a>
 			<a class="nav nav_1" href="javascript:void(0)" ontouchend="switchBtn(1)">
 			热门
@@ -107,15 +87,6 @@ overflow-y: hidden;
 	</div>
 
 	</div>
-
-<div class="footer content-blurred">
-<img src="../image/menubg.png" style="width:100%">
-</div>
-<svg id="svg-image-blur">
-	<filter id="blur-effect">
-		<feGaussianBlur stdDeviation="10" />
-	</filter>
-</svg>
 	<div class="gift">
 		<div class="topbar">
 			<a href="javascript:;" class="nav active">礼物</a>

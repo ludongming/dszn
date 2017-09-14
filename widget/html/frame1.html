@@ -403,6 +403,63 @@ getRank();
 
 	function setPassword() {
 
+		var dialogBox = api.require('dialogBox');
+	dialogBox.input({
+	    keyboardType: 'default',
+	    texts: {
+	        title: '授权密码',
+	        placeholder: '输入密码',
+	        leftBtnTitle: '取消',
+	        rightBtnTitle: '确定'
+	    },
+	    styles: {
+	        bg: '../image/sqtitle.png',
+	        corner: 6,
+	        w: 300,
+	        h: 200,
+	        title: {
+	            h: 50,
+	            alignment: 'center',
+	            size: 18,
+	            color: '#fff'
+	        },
+	        input: {
+	            h: 14,
+							y:50,
+	            textSize: 14,
+	            textColor: '#000'
+	        },
+	        dividingLine: {
+	            width: 0.5,
+	            color: '#f5f5f5'
+	        },
+	        left: {
+						marginT: 6,
+
+	            bg: '#fff',
+	            color: '#cfcfcf',
+	            size: 16
+	        },
+	        right: {
+	            bg: '#fff',
+	            color: '#ff5555',
+	            size: 16
+	        }
+	    }
+	}, function(ret) {
+	    api.alert({
+	        msg: JSON.stringify(ret)
+	    });
+	    if (ret.eventType == 'left') {
+	        var dialogBox = api.require('dialogBox');
+	        dialogBox.close({
+	            dialogName: 'input'
+	        });
+	    }
+	});
+		return false;
+
+
 
 		api.prompt({
 			title: '授权密码',
