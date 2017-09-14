@@ -117,12 +117,13 @@
 		.clear {
 			clear: both;
 		}
-		.medal{background:url(../image/rankbg.png) no-repeat;width:100%;height:300px;}
+		.medal{background:#f6b517;width:100%;height:320px;}
 		.medal_list{width:100%;height:60px;margin-top:10px;}
 		.face{width:60px;height:60px;border-radius: 30px;float:left;}
 		.medalicon{width:60px;float:left;}
     .info{color:#fff;float:left;margin-left:10px;}
-	  .btn{border-radius: 5px;margin:0 auto;margin-top:10px;display: block;background:#f99061;color:#fff;text-align: center;font-size:0.9em;width:100px;height:30px;line-height: 30px;}
+	  .btn{border-radius: 5px;margin:0 auto;margin-top:10px;display: block;background:#f39c12;color:#fff;text-align: center;font-size:0.9em;width:100px;height:30px;line-height: 30px;}
+.medaltitle{color:#fff;font-size:1.1em;font-weight: 700;width:100%;text-align: center;height:50px;line-height:50px;}
 	</style>
 </head>
 
@@ -142,8 +143,7 @@
 
 			</div>
 			<div class="medal_list">
-				<a href="" class="btn">查看更多</a>
-
+				<a href="javascript:topUser();" class="btn">查看更多</a>
 			</div>
 		</div>
 
@@ -191,7 +191,7 @@
 <script id="rank1" type="text/x-dot-template">
 <div class="medal_list">
 <img src="../image/rank1.png" class="medalicon">
- <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.headimgurl}}" class="pic face">
+ <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.face}}" class="pic face">
  <div class="info">
 <span class="name">{{=it.real_name}}</span><br>
 <span class="address">{{=it.address}}</span>
@@ -202,7 +202,7 @@
 <script id="rank2" type="text/x-dot-template">
 <div class="medal_list">
 <img src="../image/rank{{=it.rank}}.png" class="medalicon">
- <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.headimgurl}}" class="pic face">
+ <img src="../image/default.png" data-original="http://www.d-shang.com{{=it.face}}" class="pic face">
  <div class="info">
 <span class="name">{{=it.real_name}}</span><br>
 <span class="address">{{=it.address}}</span>
@@ -233,6 +233,17 @@ getRank();
 		$(".dstitle").bind("click", shows);
 		$(".advimg").bind("click", shows);
 	};
+
+	function topUser(){
+		api.openWin({
+		    name: 'topuser',
+		    url: './buy/topuser.html',
+		    pageParam: {
+		        name: 'test'
+		    }
+		});
+
+	}
 
 	function shows() {
 		NODE = $(this).attr("data-nodeid");

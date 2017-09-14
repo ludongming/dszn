@@ -27,6 +27,26 @@
 			height: 20px;
 		}
 
+.footer{
+	background:#fff;
+	overflow:scroll;
+	z-index:2;
+	position: fixed;
+	bottom:0px;width:100%;
+	height:50px;
+overflow-y: hidden;
+}
+.content-blurred {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	-webkit-filter:blur(10px);
+	filter:url(#blur-effect);
+	opacity:.8;
+  z-index: 1;
+}
+
 	</style>
 </head>
 
@@ -87,6 +107,15 @@
 	</div>
 
 	</div>
+
+<div class="footer content-blurred">
+<img src="../image/menubg.png" style="width:100%">
+</div>
+<svg id="svg-image-blur">
+	<filter id="blur-effect">
+		<feGaussianBlur stdDeviation="10" />
+	</filter>
+</svg>
 	<div class="gift">
 		<div class="topbar">
 			<a href="javascript:;" class="nav active">礼物</a>
@@ -215,6 +244,7 @@
 			sync: true,
 			key: 'openid'
 		});
+
 		loadGift();
 		dropDownRecommend();
 		rq();
@@ -230,17 +260,19 @@
 			},
 			onTouchMove: function(swiper){
 				hideSelectText();
+
     },
 			onSlideChangeStart: function(swiper, even) {
 				backSwitchBtn(mySwiper.activeIndex);
       },
 
 		})
+
 		var videoPlayer = api.require('videoPlayer');
-
 		addlocation();
-
 	}
+
+
 
 
 </script>
