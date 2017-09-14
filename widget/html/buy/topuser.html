@@ -81,25 +81,17 @@
 			margin: auto;
 		}
 .backBtn{
-	margin-top: 10px;
-}
-.topnav{
-	background-color: #6305d8;
-	position:fixed;
-	top: 0px;
-	width: 100%;
-	height:40px;
-	z-index: 9999;
 
 }
+
 	</style>
 </head>
 
 <body>
-<div class="topnav" >
-		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/back.png" class="back" /></i>
-</div>
-	<div class="page__bd content">
+<header style="background-color: #6305d8;border-bottom:1px solid #6305d8;">
+		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/backbuttom.png" class="back" /></i>
+</header>
+	<div class="page__bd content" style="margin-top:30px;">
 			<div class="topbanner"style="margin-top:40px;">
 				<img src="../../image/rank/rankbanner.png" alt="">
 			</div>
@@ -108,7 +100,7 @@
 	</div>
 </body>
 <script id="interpolationtmpl" type="text/x-dot-template">
-	<div class="weui-cells__title">本月订单排名(实时更新)</div>
+	<div class="weui-cells__title">本月订单累计排名(实时更新)</div>
 	{{~it:value:index}}
 	<div class="weui-cell">
 		<div class="weui-cell__hd" style="position:relative;">
@@ -142,12 +134,13 @@
 <script type="text/javascript">
 	var OPENID;
 	var ADDRESS;
+
 	apiready = function() {
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'
 		});
-
+	setTopBar();
 
 		getData();
 	};
