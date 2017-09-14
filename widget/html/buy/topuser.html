@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" href="../../css/header.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/gift.css" />
+
+	<style>
+		body {
+			background: #fff;
+		}
+
+		.clock {
+			width: 100%;
+			height: 40px;
+			background: #f0f5f9;
+		}
+
+		.clock a {
+			float: right;
+			display: inline-block;
+			width: 25%;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+		}
+
+		.address {
+			color: #ccc;
+		}
+
+		.rank {
+			display: inline-block;
+			line-height: 20px;
+			margin-left: 10px;
+			text-align: center;
+			margin-top: 20px;
+			float: left;
+			width: 25px;
+			height: 20px;
+			background: #c1c2c6;
+			color: #666;
+			font-size: 0.9em;
+			margin-right: 20px;
+		}
+
+		.level {
+			position: absolute;
+			color: red;
+			top: -5px;
+			right: 0px;
+			font-size: 0.8em;
+		}
+
+		.cartitle {
+			width: 100%;
+			text-indent: 1em;
+		}
+
+		.parking {
+			height: 150px;
+		}
+
+		.swiper-slide {
+			height: 150px;
+		}
+		.topbanner{
+			width: 100%;
+			margin: auto;
+			margin-top: 20px;
+		}
+		.topbanner img{
+			width: 100%;
+			margin: auto;
+		}
+.backBtn{
+	margin-top: 10px;
+}
+.topnav{
+	background-color: #6305d8;
+	position:fixed;
+	top: 0px;
+	width: 100%;
+	height:40px;
+	z-index: 9999;
+
+}
+	</style>
+</head>
+
+<body>
+<div class="topnav" >
+		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/back.png" class="back" /></i>
+</div>
+	<div class="page__bd content">
+			<div class="topbanner"style="margin-top:40px;">
+				<img src="../../image/rank/rankbanner.png" alt="">
+			</div>
+		<div id="main"></div>
+
+	</div>
+</body>
+<script id="interpolationtmpl" type="text/x-dot-template">
+	<div class="weui-cells__title">本月订单排名(实时更新)</div>
+	{{~it:value:index}}
+	<div class="weui-cell">
+		<div class="weui-cell__hd" style="position:relative;">
+
+			{{?index<3}}
+			<img src="../../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+				{{??}}
+				<span class="rank">{{=index+1}}</span>
+				 {{?}}
+				<img src="../../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block">
+		</div>
+		<div class="weui-cell__bd">
+			<p style="display:inline-block;width:200px;height:20px;overflow:hidden;word-break:none;">{{=value.real_name}} </p>
+			<p class="address">{{=value.address}}</p>
+		</div>
+		<div class="weui-cell__ft">
+		</div>
+	</div>
+	{{~}}
+</script>
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/gift.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	var ADDRESS;
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+
+
+		getData();
+	};
+
+	function goback() {
+		api.closeWin({});
+	}
+
+
+	function getData() {
+		var loading = weui.loading("正在拼命加载中...")
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appbuy/getrank/?openid=' + OPENID
+		}, function(ret, err) {
+			loading.hide();
+			var arrText = doT.template($("#interpolationtmpl").text());
+			var a = arrText(ret.data);
+
+		//	var c = a.replace(/\/0/g, "/132");
+			$("#main").html(a);
+			$('.pic').picLazyLoad();
+		});
+	}
+</script>
+
+</html>

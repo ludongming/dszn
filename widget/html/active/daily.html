@@ -104,9 +104,11 @@
 
 		}
 		.clock{
+			width:100px;
+text-align: right;
 				float: right;
 margin-right:15px;
-margin-top: 20px;
+margin-top: 10px;
 		}
 		.clock img{
 				max-width: 30px;
@@ -114,9 +116,13 @@ margin-top: 20px;
 		}
 		.back{
 			float: left;
+width:100px;
+text-align: left;
+
+
 		}
 		.back img{
-			margin-top: 13px;
+			margin-top: 3px;
 				max-width: 39px;
 				vertical-align: bottom;
 		}
@@ -141,17 +147,11 @@ margin-top: 20px;
 </head>
 
 <body>
+  <header style="background:#ffec6f!important;border-bottom:1px #ffec6f solid;">
+		<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
+		<div class="back"  ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
+	</header>
 
-	<div class="width:100%;text-align:center;border:1px #ccc solid;">
-		<!--
-		<i class="backBtn" ontouchend="goback()"><img src="../../image/backbtn.png" class="backbtn"/></i>		<span style="display:inline-block;position:absolute;float:right;right:5px;width:50px;bottom:10px; "> <img src="../../image/qiandao1.png" ontouchend="clock()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>		</span>
--->
-	</div>
-	<div class="topnav" >
-	<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
-	<div class="back"  ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
-	<div class="clear"></div>
-</div>
 	<div class="page__bd content main">
 
 		<div class="topbg"style="margin-top:50px!important;">
@@ -179,7 +179,7 @@ margin-top: 20px;
 <script type="text/javascript">
 	var OPENID;
 	apiready = function() {
-
+setTopBar();
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'
