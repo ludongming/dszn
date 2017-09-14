@@ -71,15 +71,30 @@
 		.swiper-slide {
 			height: 150px;
 		}
+		.topbanner{
+			width: 100%;
+			margin: auto;
+			margin-top: 20px;
+		}
+		.topbanner img{
+			width: 100%;
+			margin: auto;
+		}
+.backBtn{
+	position: absolute;
+	top:20px;
+}
 	</style>
 </head>
 
 <body>
-	<header style="position: fixed;">
-		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">订单达人</span>
-	</header>
-	<div class="page__bd content">
 
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
+
+	<div class="page__bd content">
+			<div class="topbanner">
+				<img src="../../image/rank/rankbanner.png" alt="">
+			</div>
 		<div id="main"></div>
 
 	</div>
@@ -124,7 +139,7 @@
 			sync: true,
 			key: 'openid'
 		});
-		setTopBar();
+
 
 		getData();
 	};
@@ -142,7 +157,7 @@
 			loading.hide();
 			var arrText = doT.template($("#interpolationtmpl").text());
 			var a = arrText(ret.data);
-			console.log("a="+JSON.stringify(ret.data));
+
 		//	var c = a.replace(/\/0/g, "/132");
 			$("#main").html(a);
 			$('.pic').picLazyLoad();
