@@ -26,7 +26,7 @@
 		.videotitle{position: absolute;font-size:1.1em;left:5px;top:5px;color:#fff;font-size: 700;}
 		#main{margin-bottom:50px;}
 		.duration{font-size:0.8em;right:5px;bottom:10px;background:#0c1617;opacity: 0.8;width:50px;border-radius: 10px;position: absolute;color:#fff;}
-.menu{display: inline-block;font-size:0.8em;margin-right:10px;}
+.menu{display: inline-block;font-size:0.9em;margin-right:10px;}
 .active{color:red;}
 	</style>
 </head>
@@ -76,6 +76,8 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/wolf.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/fx.js"></script>
+
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript" src="../script/weui.min.js"></script>
 <script type="text/javascript" src="../script/zepto.picLazyLoad.min.js"></script>
@@ -115,6 +117,8 @@
 			 $(this).removeClass("active");
 		 })
 		 obj.addClass("active");
+		 $("#main").html("");
+		 $("body").scrollTop(0);
 	 }
 	//获取视频地址
 	function setVideo(videoid, obj) {
