@@ -38,7 +38,7 @@
 			width: 100%;
 			margin: auto;
 			text-align: center;
-			background-color: #fff0d1;
+
 		}
 
 		.topbg img {
@@ -123,13 +123,14 @@
 			display: flex;
 			align-items: center;
 			margin-bottom: 10px;
+
 		}
 	</style>
 </head>
 
 <body>
 
-	<header style="background-color: #ffec6f; border-bottom:1px solid #ffec6f!important;  box-shadow:0px 1px 0px #ffec6f !important;">
+	<header style="background-color: #ffec6f; border-bottom:1px solid #ffec6f!important;  box-shadow:0px 1px 0px #ffec6f !important; 			opacity: 1;">
 		<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
 		<div class="back" ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
 	</header>
@@ -137,17 +138,20 @@
 	<div class="page__bd content main">
 
 		<div class="topbg" style="margin-top:50px!important;">
-			<img src="../../image/dailytopbg.png">
+			<img src="../../image/toptop.png" style="position:fixed;top:65px; z-index:55;">
+			<img src="../../image/topbanner.png" style="margin-top:20px!important;">
 		</div>
 		<div class="topcontent">
 			<div class="biaoti">
 				<span id="biaoti"></span>
 				<div class="sign"><img src="../../image/sign.png" alt=""><span class="icon">原创</span><span class="icon">精选</span></div>
 			</div>
-			<div id="main"></div>
+			<div id="main" ></div>
 		</div>
-		<div class="topbg">
-			<img src="../../image/dailybottombg.png">
+		<div class="topbg" style="position:fixed;bottom:0px; z-index:55;">
+			<img src="../../image/dailybottombg.png" >
+
+
 		</div>
 	</div>
 	</div>
