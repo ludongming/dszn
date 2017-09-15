@@ -133,7 +133,7 @@
             api.ajax({
                 url : 'http://www.d-shang.com/index.php?phone/getaddress/?openid=' + OPENID,
             }, function(ret, err) {
-              console.log(JSON.stringify(ret));
+              
                 var arrText = doT.template($("#addtpl").text());
                 $("#main").html(arrText(ret.data));
             });
