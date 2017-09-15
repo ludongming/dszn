@@ -153,6 +153,12 @@
 			}, function(data) {
 				if (data.status) {
 					alert("添加成功!");
+					api.execScript({
+			 name : 'address', //这里root代表index.html
+
+			 script : 'loadUserAddress();'
+		 });
+		 console.log(name);
 					api.closeWin({});
 				} else {
 					alert(data.message);

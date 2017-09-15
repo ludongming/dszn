@@ -6,81 +6,107 @@
         <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
         <title>收货地址管理</title>
         <link rel="stylesheet" href="../../css/weui.min.css">
+        <link rel="stylesheet" href="../../css/style.css">
+
         <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
         <link rel="stylesheet" href="../../css/header.css" />
         <style>
             body {
                 background-color: white;
                 overflow-x: hidden;
+                font-size: 1.1em;
+                    background-color: #f1f1f1;
             }
-            .add {
-                margin-top: 1px;
-                margin-right:10px;
-                float:right;
-                background-color:lightskyblue;
-                padding: 10px;
-            }
-            #main{
-            	margin-top: 40px;
-            }
-            .ui-border-t{
-            	width: 100%;
-            	height: 100px;
-            	border-bottom: 1px solid #ccc;
-            	position: relative;
-            }
-            .ui-list-info{
-            	margin-left: 3%;
-            	width: 70%;
-            }
-            .ui-list-info p{
-            	margin-top: 10px;
-            	overflow: hidden;
-			 	text-overflow: ellipsis;
-			 	display: -webkit-box;
-			 	-webkit-line-clamp: 2;
-			 	-webkit-box-orient: vertical;
-            }
-            .ui-btn{
-            	width: 20%;
-            	height: 30px;
-            	position: absolute;
-            	top: 25px;
-            	right: 20px;
-            	text-align: center;
-            	line-height: 30px;
-            	border-radius: 5px;
-            	border: 1px solid deepskyblue;
-            	color: deepskyblue;
-            }
+        .nametel{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+              height: 50px;
+              font-size: 1.1em;
+        }
+        .addresss{
+            height: 30px;
+            font-size: 1em;
+
+        }
+        .info{
+          display: flex;
+          flex-direction: column;
+            width: 90%;
+            margin: auto;
+
+
+        }
+        .operation{
+          border-top: 1px solid #f1f1f1;
+          height: 40px;
+          line-height: 40px;
+            text-align: right;
+        }
+      .addresscard{
+        background-color: #fff;
+      }
+      .del img{
+        width: 30px;
+        vertical-align: middle;
+      }
+      .del{
+        margin-right: 20px;
+      }
+      .del a{
+        color: #000;
+      }
+      .fenge{
+        height: 30px;
+            background-color: #f1f1f1;
+      }
         </style>
     </head>
     <body>
         <header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
             <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">收货地址</span>
-            <button class="add" ontouchend="address();" >新增 </button>
+            <div class="add" ontouchend="address();"  style="float:right;line-height:30px; margin-right:5%;">新增 </div>
         </header>
-        <div class="page__bd content" id="contents">
-            <div id="main"></div>
-            <div class="fenge"></div>
+        <div class="page__bd content" id="contents" style="margin-top:68px!important;" >
+
+
+                <div id="main">
+            </div>
+
         </div>
     </body>
     <!--地址模板-->
     <script id="addtpl" type="text/x-dot-template">
+
         {{~it:value:index}}
-        <div class="ui-border-t" id="address{{=value.id}}">
-	        <div class="ui-list-info">
-		        <p class="ui-wrap">{{=value.address}}</p>
-		        <p>{{=value.contact}}&nbsp;&nbsp;{{=value.tel}}</p>
-	        </div>
-	        <div class="ui-btn" onclick="del({{=value.id}})">删除</div>
+
+        <div class="addresscard"  id="address{{=value.id}}">
+          <div class="info">
+                <div class="nametel">
+                      <div class="name">{{=value.contact}}</div>
+                      <div class="tel">{{=value.tel}}</div>
+                </div>
+          <div class="address">{{=value.address}}</div>
         </div>
+        <div class="operation">
+          <div class="del" onclick="del({{=value.id}})">
+            <img src="../../image/delete.png" alt=""><a>删除</a>
+
+          </div>
+        </div>
+        <div class="fenge"></div>
+
+        </div>
+
+
         {{~}}
     </script>
+        <script src="../../script/weui.min.js"></script>
     <script type="text/javascript" src="../../script/api.js"></script>
     <script type="text/javascript" src="../../script/zepto.min.js"></script>
     <script type="text/javascript" src="../../script/doT.min.js"></script>
     <script src="../../script/wolf.js"></script>
+
     <script type="text/javascript">
         var OPENID;
         apiready = function() {
@@ -107,6 +133,7 @@
             api.ajax({
                 url : 'http://www.d-shang.com/index.php?phone/getaddress/?openid=' + OPENID,
             }, function(ret, err) {
+              console.log(JSON.stringify(ret));
                 var arrText = doT.template($("#addtpl").text());
                 $("#main").html(arrText(ret.data));
             });
