@@ -76,13 +76,13 @@ function showQDBox() {
             }
         }
     }, function(ret, err) {
-      var dialogBox = api.require('dialogBox');
+        var dialogBox = api.require('dialogBox');
 
         if (ret.eventType == 'right') {
             dialogBox.close({
                 dialogName: 'raffle'
             });
-   console.log(123);
+            console.log(123);
 
             api.ajax({
                 url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
@@ -508,113 +508,110 @@ function hideSelectText() {
 
 
 function shareWxImg(image, id) {
-  var dialogBox = api.require('dialogBox');
-  dialogBox.actionMenu ({
-      rect:{
-          h: 150
-      },
-      texts:{
-           cancel: '取消'
-      },
-      items:[
-      {
-          text: '微信朋友圈',
-          icon: 'widget://image/timeline.png'
-      },
-      {
-          text: '微信好友',
-          icon: 'widget://image/friends.png'
-      }
+    var dialogBox = api.require('dialogBox');
+    dialogBox.actionMenu({
+        rect: {
+            h: 150
+        },
+        texts: {
+            cancel: '取消'
+        },
+        items: [{
+                text: '微信朋友圈',
+                icon: 'widget://image/timeline.png'
+            }, {
+                text: '微信好友',
+                icon: 'widget://image/friends.png'
+            }
 
-      ],
-      tapClose:true,
-      isCuttingLine:true,
-      styles:{
-          bg:'#FFF',
-          column: 2,
-          itemText: {
-              color: '#000',
-              size: 12,
-              marginT:8
-          },
-          itemIcon:{
-              size:60
-          },
-          cancel:{
-              bg: 'fs://icon.png',
-              color:'#000',
-              h: 50 ,
-              size: 14
-          }
-      }
-  }, function(ret){
-      if(ret.eventType=="cancel"){
+        ],
+        tapClose: true,
+        isCuttingLine: true,
+        styles: {
+            bg: '#FFF',
+            column: 2,
+            itemText: {
+                color: '#000',
+                size: 12,
+                marginT: 8
+            },
+            itemIcon: {
+                size: 60
+            },
+            cancel: {
+                bg: 'fs://icon.png',
+                color: '#000',
+                h: 50,
+                size: 14
+            }
+        }
+    }, function(ret) {
+
         var dialogBox = api.require('dialogBox');
-        dialogBox.close ({
+        dialogBox.close({
             dialogName: 'actionMenu'
         });
-        return false;
-      }
+        if (ret.eventType == "cancel") {
+            return false;
+        }
 
-      var index = ret.index;
-      var type = index == 1 ? "session" : "timeline";
-      downloadShareImage(image, type, id);
-  });
+        var index = ret.index;
+        var type = index == 1 ? "session" : "timeline";
+        downloadShareImage(image, type, id);
+    });
 
 
 }
 
 function shareWxVideo(image, video, desc) {
-  var dialogBox = api.require('dialogBox');
-  dialogBox.actionMenu ({
-      rect:{
-          h: 150
-      },
-      texts:{
-           cancel: '取消'
-      },
-      items:[
-      {
-          text: '微信朋友圈',
-          icon: 'widget://image/timeline.png'
-      },
-      {
-          text: '微信好友',
-          icon: 'widget://image/friends.png'
-      }
+    var dialogBox = api.require('dialogBox');
+    dialogBox.actionMenu({
+        rect: {
+            h: 150
+        },
+        texts: {
+            cancel: '取消'
+        },
+        items: [{
+                text: '微信朋友圈',
+                icon: 'widget://image/timeline.png'
+            }, {
+                text: '微信好友',
+                icon: 'widget://image/friends.png'
+            }
 
-      ],
-      tapClose:true,
-      isCuttingLine:true,
-      styles:{
-          bg:'#FFF',
-          column: 2,
-          itemText: {
-              color: '#000',
-              size: 12,
-              marginT:8
-          },
-          itemIcon:{
-              size:60
-          },
-          cancel:{
-              bg: 'fs://icon.png',
-              color:'#000',
-              h: 50 ,
-              size: 14
-          }
-      }
-  }, function(ret){
-      if(ret.eventType=="cancel"){
+        ],
+        tapClose: true,
+        isCuttingLine: true,
+        styles: {
+            bg: '#FFF',
+            column: 2,
+            itemText: {
+                color: '#000',
+                size: 12,
+                marginT: 8
+            },
+            itemIcon: {
+                size: 60
+            },
+            cancel: {
+                bg: 'fs://icon.png',
+                color: '#000',
+                h: 50,
+                size: 14
+            }
+        }
+    }, function(ret) {
         var dialogBox = api.require('dialogBox');
-        dialogBox.close ({
+        dialogBox.close({
             dialogName: 'actionMenu'
         });
-        return false;
-      }
+        if (ret.eventType == "cancel") {
+            return false;
+        }
 
-      var index = ret.index;
-      var type = index == 1 ? "session" : "timeline";
+        var index = ret.index;
+        var type = index == 1 ? "session" : "timeline";
         downloadShareVideo(type, image, video, desc);
 
     });

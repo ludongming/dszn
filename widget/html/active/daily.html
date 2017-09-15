@@ -17,14 +17,11 @@
 		}
 
 		.main {
-
 			border-radius: 10px;
 			width: 100%;
 			margin: auto;
 			color: #000;
 			line-height: 30px;
-
-
 		}
 
 		.title {
@@ -39,20 +36,15 @@
 
 		.topbg {
 			width: 100%;
-			margin:auto;
+			margin: auto;
 			text-align: center;
 			background-color: #fff0d1;
-
-
-
 		}
 
 		.topbg img {
 			width: 100%;
-			margin:auto;
+			margin: auto;
 			vertical-align: bottom;
-
-
 		}
 
 		.biaoti {
@@ -60,12 +52,8 @@
 			font-weight: 700;
 			color: #54130d;
 			border-bottom: 1px #d9d9d9 solid;
-
-
-
 			width: 90%;
 			margin: auto;
-
 		}
 
 		.icon {
@@ -79,7 +67,6 @@
 			border-radius: 2px;
 		}
 
-
 		.pic {
 			border-radius: 5px;
 		}
@@ -88,72 +75,76 @@
 			width: 100px;
 			height: 51px;
 		}
-		#main{
+
+		#main {
 			width: 90%;
 			margin: auto;
-
-
 		}
-		.content{
+
+		.content {
 			line-height: 30px;
 		}
-		.topcontent{
+
+		.topcontent {
 			background-color: #fff0d1;
 			width: 88%;
-				margin: auto;
+			margin: auto;
 		}
-		.clock{
-			width:100px;
-text-align: right;
-				float: right;
-margin-right:15px;
-margin-top: 10px;
-		}
-		.clock img{
-				max-width: 30px;
-		}
-		.back{
-			float: left;
 
+		.clock {
+			width: 100px;
+			text-align: right;
+			float: right;
+			margin-right: 15px;
+			margin-top: 10px;
+		}
+
+		.clock img {
+			max-width: 30px;
+		}
+
+		.back {
+			float: left;
 			width: 100px;
 			text-align: left;
 		}
-		.back img{
+
+		.back img {
 			margin-top: 3px;
-				max-width: 39px;
-				vertical-align: bottom;
+			max-width: 39px;
+			vertical-align: bottom;
 		}
-		.biaoti img{
+
+		.biaoti img {
 			max-width: 25px;
 		}
-		.sign{
+
+		.sign {
 			display: flex;
 			align-items: center;
-
 			margin-bottom: 10px;
 		}
-
 	</style>
 </head>
 
 <body>
 
-<header style="background-color: #ffec6f; border-bottom:1px solid #ffec6f; ">
-	<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
-	<div class="back"  ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
-</header>
+	<header style="background-color: #ffec6f; border-bottom:1px solid #ffec6f; ">
+		<div class="clock" ontouchend="clock()"><img src="../../image/qiandao1.png" alt=""></div>
+		<div class="back" ontouchend="goback()"><img src="../../image/backbutton.png" alt=""></div>
+	</header>
 
 	<div class="page__bd content main">
 
-		<div class="topbg"style="margin-top:50px!important;">
+		<div class="topbg" style="margin-top:50px!important;">
 			<img src="../../image/dailytopbg.png">
 		</div>
-<div class="topcontent">
-		<div class="biaoti">
-			<span id="biaoti"></span>
-			<div class="sign"><img src="../../image/sign.png" alt=""><span class="icon">原创</span><span class="icon">精选</span></div>
-		</div>
-		<div id="main"></div>
+		<div class="topcontent">
+			<div class="biaoti">
+				<span id="biaoti"></span>
+				<div class="sign"><img src="../../image/sign.png" alt=""><span class="icon">原创</span><span class="icon">精选</span></div>
+			</div>
+			<div id="main"></div>
 		</div>
 		<div class="topbg">
 			<img src="../../image/dailybottombg.png">
@@ -170,7 +161,7 @@ margin-top: 10px;
 <script type="text/javascript">
 	var OPENID;
 	apiready = function() {
-setTopBar();
+		setTopBar();
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'
@@ -211,7 +202,6 @@ setTopBar();
 	}
 
 	function bigImage() {
-
 		var image = $(this).attr("src");
 
 		var photoBrowser = api.require('photoBrowser');
@@ -221,8 +211,6 @@ setTopBar();
 			bgColor: '#000'
 		}, function(ret, err) {
 			if (ret.eventType == "click") {
-
-
 				photoBrowser.close();
 			}
 
@@ -237,9 +225,7 @@ setTopBar();
 						alert(JSON.stringify(err));
 					}
 				});
-
 			}
-
 		});
 	}
 

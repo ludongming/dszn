@@ -32,7 +32,10 @@
 
 <body>
 	<header style="position: fixed;">
-		<img src="../image/xj.png" ontouchend="me()" style="width:25px;margin-top:8px; margin-left:10px; vertical-align:middle;float:left;">
+		<div style="position:relative;">
+		 <div ontouchend="me()" style="width:80px;position:absolute;left:10px;text-align:left;">
+		<img src="../image/xj.png" style="width:28px;vertical-align:middle;">
+	</div>
 
 		<span class="tit">
 
@@ -48,7 +51,12 @@
 		  </span>
 
 
-		<span style="display:inline-block;position:relative;float:right;margin-right:5px;width:50px; "> <img src="../image/laba.png" ontouchend="notice()"  style="width:25px; margin-top:8px; vertical-align:middle;"> <span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>		</span>
+		<div ontouchend="notice()" style="top:0px;text-align:right;position:absolute;width:80px;right:10px;">
+			<img src="../image/laba.png"  style="width:28px;vertical-align:middle;">
+			<span class="weui-badge" style="display:none;position: absolute;bottom: -2px;right:2px;">0</span>
+		</div>
+
+	</div>
 	</header>
 	<div class="page__bd content">
 
@@ -136,9 +144,7 @@
 		<div class="message">{{=value.content}}</div>
 		<div class="tip">
 			<div class="dingwei">
-			{{?value.flower>0}}
-
-			<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
+			{{?value.flower>0}}	<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
 		</div>
 		<div class="tool" style="position:relative;">
 
