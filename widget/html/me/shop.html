@@ -32,7 +32,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border:1px solid #ccc;
+      border-bottom:1px solid #f3f3f3;
       background-color: #fff;
     }
 .exchange_img img{
@@ -40,7 +40,7 @@
 
 }
 .exchange_img{
-width: 25%;
+width:35%;
 
   height: 100px;
 align-items: center;
@@ -57,7 +57,7 @@ width: 25%;
   justify-content:  space-around;
 }
 .exchange_btn{
-      width: 49%;
+      width: 39%;
 text-align: right;
       height: 100px;
 display: flex;
@@ -79,32 +79,39 @@ justify-content: flex-end;
   text-align: left;
 }
 .btn{
-  margin-right: 5px;
-  padding: 3px 5px 3px 5px;
-  border:1px solid #888;
+  margin-right: 10px;
+  padding: 5px 8px 5px 8px;
+  background-color: #ff5555;
+  color:#fff;
   border-radius: 3px;
   height: 20px;
   vertical-align: middle;
   color: #000;
+  line-height: 20px;
 
+}
+.exchange_btn a{
+  color: #fff;
 }
 .fenge{
   width: 100%;
-  height: 10px;
+  height: 5px;
   	background-color: #f8f8f8;
+
 }
 
 	</style>
 </head>
 
 <body>
-<header>
-		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/backbuttom.png" class="back" /></i>
-		  <span id="title" class="title" style="text-align: center;   color:#00;">礼物兑换</span>
+<header style="background-color: #26426a; border-bottom:1px solid #26426a!important;  box-shadow:0px 1px 0px #26426a !important;	opacity: 1;">
+		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/backwhite.png" class="back" /></i>
+		  <span id="title" class="title" style="text-align: center;   color:#fff;">礼物兑换</span>
+      	<img src="../../image/record.png" ontouchend="record()" style="width:25px;margin-top:5px; margin-right:10px; vertical-align:middle;float:right;">
 </header>
 	<div class="page__bd content" style="margin-top:30px;">
 			<div class="topbanner"style="margin-top:40px;">
-				<img src="../../image/shop/shopbanner.png" alt="">
+				<img src="../../image/exchangebanner.png" alt="">
 			</div>
 		<div id="main">
 
@@ -120,11 +127,11 @@ justify-content: flex-end;
     <div class="exchange_img"> <img data-original="http://www.d-shang.com/{{=value.image}}" alt="" class="pic"> </div>
     <div class="exchange_price_name">
       <div class="name">{{=value.name}}</div>
-      <div class="price">单价：{{=value.money}}</div>
+      <div class="price">{{=value.money}}金豆</div>
     </div>
     <div class="exchange_btn"><a href="javascript:;"  onclick="exchange({{=value.bagid}})" class="btn">兑换</a></div>
   </div>
-  <div class="fenge"></div>
+
 </div>
 
 	{{~}}
@@ -153,6 +160,8 @@ justify-content: flex-end;
 		getData();
 	};
 
+
+
 	function goback() {
 		api.closeWin({});
 	}
@@ -170,7 +179,7 @@ justify-content: flex-end;
       var  str=data[i].image;
 
       data.image=str.substring(5);
-        console.log(data.image);
+
       }
 
       var arrText = doT.template($("#interpolationtmpl").text());
@@ -199,6 +208,13 @@ justify-content: flex-end;
               api.alert({ msg: JSON.stringify(ret) });
           }
       });
+  }
+
+  function record(){
+    api.openWin({
+      name: 'bean',
+      url: '../active/bean.html'
+    });
   }
 </script>
 
