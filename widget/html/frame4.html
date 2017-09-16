@@ -68,6 +68,7 @@
 
 <body>
 	<header style="position: fixed;">
+		  <i class="backBtn" ontouchend="shop()" ><img src="../image/shop2.png" class="back" style="max-width:30px; margin-top:8px;" /></i>
 		<span class="tit" style="text-align: center;">我</span>
 
 		<img src="../image/shezhi.png" ontouchend="set()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
@@ -183,7 +184,7 @@
 		})
 		loadData();
 		setTopBar();
-
+console.log(OPENID);
 		api.addEventListener({
 			name: 'viewappear'
 		}, function(ret, err) {
@@ -226,6 +227,12 @@
 		api.openWin({
 			name: 'set',
 			url: './me/set.html'
+		});
+	}
+	function shop(){
+		api.openWin({
+			name: 'shop',
+			url: './me/shop.html'
 		});
 	}
 

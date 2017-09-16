@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" href="../../css/header.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/gift.css" />
+
+	<style>
+		body {
+			background-color: #f8f8f8 !important;
+		}
+
+		.topbanner{
+			width: 100%;
+			margin: auto;
+			margin-top: 20px;
+		}
+		.topbanner img{
+			width: 100%;
+			margin: auto;
+		}
+    .exchange{
+      height: 100px;
+      width:100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border:1px solid #ccc;
+      background-color: #fff;
+    }
+.exchange_img img{
+       max-height:80px;
+
+}
+.exchange_img{
+width: 25%;
+
+  height: 100px;
+align-items: center;
+justify-content: center;
+  display: flex;
+}
+.exchange_price_name{
+width: 25%;
+
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items:  flex-start;
+  justify-content:  space-around;
+}
+.exchange_btn{
+      width: 49%;
+text-align: right;
+      height: 100px;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+}
+
+.price{
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+  color:red;
+}
+.name{
+  height: 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 40px;
+  text-align: left;
+}
+.btn{
+  margin-right: 5px;
+  padding: 3px 5px 3px 5px;
+  border:1px solid #888;
+  border-radius: 3px;
+  height: 20px;
+  vertical-align: middle;
+  color: #000;
+
+}
+.fenge{
+  width: 100%;
+  height: 10px;
+  	background-color: #f8f8f8;
+}
+
+	</style>
+</head>
+
+<body>
+<header>
+		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/backbuttom.png" class="back" /></i>
+		  <span id="title" class="title" style="text-align: center;   color:#00;">礼物兑换</span>
+</header>
+	<div class="page__bd content" style="margin-top:30px;">
+			<div class="topbanner"style="margin-top:40px;">
+				<img src="../../image/shop/shopbanner.png" alt="">
+			</div>
+		<div id="main">
+
+		</div>
+
+	</div>
+</body>
+<script id="interpolationtmpl" type="text/x-dot-template">
+
+	{{~it:value:index}}
+  <div class="one"  id="{{=value.bagid}}">
+  <div class="exchange">
+    <div class="exchange_img"> <img data-original="http://www.d-shang.com/{{=value.image}}" alt="" class="pic"> </div>
+    <div class="exchange_price_name">
+      <div class="name">{{=value.name}}</div>
+      <div class="price">单价：{{=value.money}}</div>
+    </div>
+    <div class="exchange_btn"><a href="javascript:;"  onclick="exchange({{=value.bagid}})" class="btn">兑换</a></div>
+  </div>
+  <div class="fenge"></div>
+</div>
+
+	{{~}}
+</script>
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/gift.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	var ADDRESS;
+
+	apiready = function() {
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+	setTopBar();
+
+		getData();
+	};
+
+	function goback() {
+		api.closeWin({});
+	}
+
+
+	function getData() {
+		var loading = weui.loading("正在拼命加载中...")
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?appgift/getmygift/?openid=' + OPENID
+		}, function(ret, err) {
+			loading.hide();
+
+      var data=ret.data;
+      for( var i in data){
+      var  str=data[i].image;
+
+      data.image=str.substring(5);
+        console.log(data.image);
+      }
+
+      var arrText = doT.template($("#interpolationtmpl").text());
+      $("#main").html(arrText(ret.data));
+
+    $('.pic').picLazyLoad();
+		});
+	}
+
+  function exchange(bagid){
+      api.ajax({
+          url: 'http://www.d-shang.com/index.php?appgift/exchangegiftbyid/?openid='+OPENID,
+          method: 'post',
+          data: {
+              values: {
+                bagid:bagid
+              },
+
+          }
+      }, function(ret, err) {
+          if (ret.status) {
+              api.alert({ msg: "兑换成功"});
+                  $('#'+bagid).remove();
+          }
+          else{
+              api.alert({ msg: JSON.stringify(ret) });
+          }
+      });
+  }
+</script>
+
+</html>
