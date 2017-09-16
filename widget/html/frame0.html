@@ -124,7 +124,7 @@
 			<div class="head" onclick="user({{=value.uid}})">
 				<img src="../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
 			</div>
-			<div class="username">{{=value.real_name}}
+			<div class="username" style="display:inline-block;max-width:100px;overflow:hidden; white-space:nowrap; ">{{=value.real_name}}
 				<span class="mp">{{=value.address}}</span>
 			</div>
 			<div class="pub_time">{{=value.rq}}</div>
@@ -178,8 +178,9 @@
 		</div>
 		{{?value.flower>0}}
 		<div class="comment">
-			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}<span>{{=value.flowers[i].real_name}} {{?i==value.flower-1}}{{??}},{{?}}
-					</span>
+			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}
+			<span style="display:inline-block;max-width:40px;overflow:hidden; white-space:nowrap; ">{{=value.flowers[i].real_name}} 	</span>{{?i==value.flower-1}}{{??}},{{?}}
+
 					{{ } }} 点赞了哦
 			</div>
 		</div>
