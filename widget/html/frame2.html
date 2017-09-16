@@ -166,8 +166,9 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
+			console.log(JSON.stringify(ret));
 			var d = ret.data;
-			startPlay(d.PlayInfoList.PlayInfo[0].PlayURL);
+			startPlay(d.PlayURL);
 		});
 	}
 
@@ -236,6 +237,7 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
+			console.log(JSON.stringify(err));
 			loading.hide();
 			var d = ret.data;
 			var arrText = doT.template($("#interpolationtmpl").text());
