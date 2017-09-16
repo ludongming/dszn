@@ -62,11 +62,18 @@
 		</div>
 
 
-		<div class="message">{{=value.Title}}</div>
 		<div class="tip">
-			<div class="dingwei">
+			<div class="dingwei" style="font-size:1em;">
+			{{=value.Title}}
 			</div>
-			<div class="tool" style="position:relative;">
+			<div class="tool" style="position:relative;float:right;">
+			<span style="display:inline-block;width:80px;text-align:right;font-size:0.8em;position:absolute;right:0px;">
+      {{?value.money==0}}
+			限时免费
+			{{??}}
+	{{=value.money}}豆/天
+			{{?}}
+		</span>
 			</div>
 		</div>
 
@@ -166,9 +173,18 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
-			console.log(JSON.stringify(ret));
-			var d = ret.data;
-			startPlay(d.PlayURL);
+		  if(ret.status==false){
+				api.alert({
+				    title: '提示',
+				    msg: ret.message,
+				}, function(ret, err){
+				});
+
+			}else{
+				var d = ret.data;
+				startPlay(d.PlayURL);
+			}
+
 		});
 	}
 
@@ -237,7 +253,6 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
-			console.log(JSON.stringify(err));
 			loading.hide();
 			var d = ret.data;
 			var arrText = doT.template($("#interpolationtmpl").text());

@@ -179,7 +179,9 @@
 		{{?value.flower>0}}
 		<div class="comment">
 			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}
-			<span style="display:inline-block;max-width:40px;overflow:hidden; white-space:nowrap; ">{{=value.flowers[i].real_name}} 	</span>{{?i==value.flower-1}}{{??}},{{?}}
+			<span style="display:inline-block;max-width:56px;overflow:hidden; white-space:nowrap; ">
+			{{?i>0}},{{?}}
+			{{=value.flowers[i].real_name}}</span>
 
 					{{ } }} 点赞了哦
 			</div>
