@@ -53,7 +53,7 @@
 
 		<div ontouchend="notice()" style="top:0px;text-align:right;position:absolute;width:80px;right:10px;">
 			<img src="../image/xiaoxi.png"  style="width:28px;vertical-align:middle;">
-			<span class="weui-badge" style="position: absolute;top: 2px;left:45px;">1</span>
+			<span class="weui-badge" style="position: absolute;top: 2px;left:45px;background:#ff4439;">1</span>
 		</div>
 
 	</div>
@@ -129,6 +129,7 @@
 			</div>
 			<div class="pub_time">{{=value.rq}}</div>
 		</div>
+		<div class="imagebg">
 			{{?value.isvideo==1}}
 		<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
 		<img src="../image/play.png" class="videocontroll">
@@ -140,7 +141,23 @@
 <img src="../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic"  onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
 </div>
 		{{?}}
+		</div>
 		<div class="message">{{=value.content}}</div>
+<!--礼物-->
+		{{?value.giftnum>0}}
+		<div class="reply">
+			{{ for(var i=0, catlen=value.giftnum; i
+			<catlen; i++) { }} <div class="replylist">
+
+				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}MP
+		</div>
+		{{ } }}
+	</div>
+	{{?}}
+
+	<div style="border-bottom:1px #f5f5f5 solid;width:95%;margin:0 auto;height:2px;margin-bottom:10px;">
+	</div>
+
 		<div class="tip">
 			<div class="dingwei">
 			{{?value.flower>0}}	<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
@@ -166,17 +183,9 @@
 					{{ } }} 点赞了哦
 			</div>
 		</div>
-		{{?}} {{?value.giftnum>0}}
-		<div class="reply">
-			{{ for(var i=0, catlen=value.giftnum; i
-			<catlen; i++) { }} <div class="replylist">
+		{{?}}
 
-				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}MP
-		</div>
 
-		{{ } }}
-	</div>
-	{{?}}
 	</div>
 	{{~}}
 </script>
