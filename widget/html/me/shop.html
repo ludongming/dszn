@@ -99,6 +99,13 @@ justify-content: flex-end;
   	background-color: #f8f8f8;
 
 }
+.title{
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+	font-size: 1.1em;
+	color:#888;
+}
 
 	</style>
 </head>
@@ -106,28 +113,29 @@ justify-content: flex-end;
 <body>
 <header style="background-color: #26426a; border-bottom:1px solid #26426a!important;  box-shadow:0px 1px 0px #26426a !important;	opacity: 1;">
 		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/backwhite.png" class="back" /></i>
-		  <span id="title" class="title" style="text-align: center;   color:#fff;">礼物兑换</span>
-      	<img src="../../image/record.png" ontouchend="record()" style="width:25px;margin-top:5px; margin-right:10px; vertical-align:middle;float:right;">
+		 	<span class="tit" style="text-align: right; color:#fff;">嫦娥工坊</span>
+      	<span ontouchend="record()" style="width:40px;margin-top:5px; margin-right:10px; vertical-align:middle;float:right;text-align:right; color:#fff;">明细</span>
 </header>
 	<div class="page__bd content" style="margin-top:30px;">
-			<div class="topbanner"style="margin-top:40px;">
+			<div class="topbanner"style="position:fixed; top:40px; ">
 				<img src="../../image/exchangebanner.png" alt="">
 			</div>
-		<div id="main">
+			<div class="beancount" style="position:fixed; top:195px; right:30px; z-index:99; color:#fff; font-size:1.1em;"></div>
+		<div id="main" style="margin-top:230px;">
 
 		</div>
 
 	</div>
 </body>
 <script id="interpolationtmpl" type="text/x-dot-template">
-
+<div class="title">拥有的礼物如下：</div>
 	{{~it:value:index}}
   <div class="one"  id="{{=value.bagid}}">
   <div class="exchange">
     <div class="exchange_img"> <img data-original="http://www.d-shang.com/{{=value.image}}" alt="" class="pic"> </div>
     <div class="exchange_price_name">
       <div class="name">{{=value.name}}</div>
-      <div class="price">{{=value.money}}金豆</div>
+      <div class="price">可换{{=value.money}}金豆</div>
     </div>
     <div class="exchange_btn"><a href="javascript:;"  onclick="exchange({{=value.bagid}})" class="btn">兑换</a></div>
   </div>
@@ -156,7 +164,7 @@ justify-content: flex-end;
 			key: 'openid'
 		});
 	setTopBar();
-
+bean();
 		getData();
 	};
 
@@ -203,12 +211,25 @@ justify-content: flex-end;
           if (ret.status) {
               api.alert({ msg: "兑换成功"});
                   $('#'+bagid).remove();
+									bean();
           }
           else{
               api.alert({ msg: JSON.stringify(ret) });
           }
       });
   }
+
+		function bean(){
+				api.ajax({
+					url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+				}, function(ret, err) {
+					var user = ret.data;
+					console.log(JSON.stringify(ret));
+					var coupons = parseInt(user.coupons);
+					$(".beancount").html("金豆" + coupons + "个");
+				});
+
+		}
 
   function record(){
     api.openWin({
