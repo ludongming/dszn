@@ -48,7 +48,7 @@ justify-content: center;
   display: flex;
 }
 .exchange_price_name{
-width: 25%;
+width: 28%;
 
   height: 100px;
   display: flex;
@@ -99,7 +99,7 @@ justify-content: flex-end;
   	background-color: #f8f8f8;
 
 }
-.title{
+.exchangetitle{
   height: 40px;
   line-height: 40px;
   text-align: left;
@@ -112,23 +112,22 @@ justify-content: flex-end;
 
 <body>
 <header style="background-color: #26426a; border-bottom:1px solid #26426a!important;  box-shadow:0px 1px 0px #26426a !important;	opacity: 1;">
-		<i class="backBtn" ontouchend="goback()" style="vertical-align:middle"><img src="../../image/backwhite.png" class="back" /></i>
-		 	<span class="tit" style="text-align: right; color:#fff;">嫦娥工坊</span>
-      	<span ontouchend="record()" style="width:40px;margin-top:5px; margin-right:10px; vertical-align:middle;float:right;text-align:right; color:#fff;">明细</span>
+	<i class="backBtn" ontouchend="goback()"><img src="../../image/backwhite.png" class="back" /></i><span style="text-align: right;  margin-left:60px;color:#fff;" id="title">购物车</span>
+      	<span ontouchend="record()" style="width:40px; margin-right:10px;  vertical-align:middle;float:right;text-align:right; color:#fff;">明细</span>
 </header>
 	<div class="page__bd content" style="margin-top:30px;">
 			<div class="topbanner"style="position:fixed; top:40px; ">
 				<img src="../../image/exchangebanner.png" alt="">
 			</div>
-			<div class="beancount" style="position:fixed; top:195px; right:30px; z-index:99; color:#fff; font-size:1.1em;"></div>
-		<div id="main" style="margin-top:230px;">
+			<div class="beanall" style="position:fixed; top:200px; right:50px; z-index:99; color:#fff; font-size:1.1em;">金豆<span class="beancount"></span>个</div>
+		<div id="main" style="margin-top:260px;">
 
 		</div>
 
 	</div>
 </body>
 <script id="interpolationtmpl" type="text/x-dot-template">
-<div class="title">拥有的礼物如下：</div>
+<div class="exchangetitle">拥有的礼物如下：</div>
 	{{~it:value:index}}
   <div class="one"  id="{{=value.bagid}}">
   <div class="exchange">
@@ -164,7 +163,7 @@ justify-content: flex-end;
 			key: 'openid'
 		});
 	setTopBar();
-bean();
+nowbean();
 		getData();
 	};
 
@@ -173,6 +172,7 @@ bean();
 	function goback() {
 		api.closeWin({});
 	}
+
 
 
 	function getData() {
@@ -209,9 +209,11 @@ bean();
           }
       }, function(ret, err) {
           if (ret.status) {
-              api.alert({ msg: "兑换成功"});
+					 var a1=$(".beancount").html();//没兑换金豆时候的数量
+              api.toast({ msg: "兑换成功"});
                   $('#'+bagid).remove();
-									bean();
+							bean(a1);
+
           }
           else{
               api.alert({ msg: JSON.stringify(ret) });
@@ -219,17 +221,47 @@ bean();
       });
   }
 
+	function nowbean(){
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+		}, function(ret, err) {
+			var user = ret.data;
+			var  coupons = parseInt(user.coupons);
+	console.log(coupons);
+			$(".beancount").html(coupons);
+
+
+		});
+	}
+
+
 		function bean(){
+						 var prebean=$(".beancount").html()
 				api.ajax({
 					url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
 				}, function(ret, err) {
 					var user = ret.data;
-					console.log(JSON.stringify(ret));
-					var coupons = parseInt(user.coupons);
-					$(".beancount").html("金豆" + coupons + "个");
+
+					var  coupons = parseInt(user.coupons);
+					var newbean=coupons;
+
+						var inter=setInterval(function(){
+														prebean++;
+											$(".beancount").html(prebean);
+											if(prebean>=newbean){
+												clearInterval(inter);
+												return;
+											}
+							},300);
+
+
 				});
 
 		}
+
+
+
+
 
   function record(){
     api.openWin({
