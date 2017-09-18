@@ -112,16 +112,15 @@ justify-content: flex-end;
 
 <body>
 <header style="background-color: #26426a; border-bottom:1px solid #26426a!important;  box-shadow:0px 1px 0px #26426a !important;	opacity: 1;">
-	<i class="backBtn" ontouchend="goback()"><img src="../../image/backwhite.png" class="back" /></i><span style="text-align: right;  margin-left:60px;color:#fff;" id="title">嫦娥工坊</span>
+	<i class="backBtn" ontouchend="goback()"><img src="../../image/backwhite.png" class="back" /></i><span style="text-align: right;  margin-left:60px;color:#fff;" id="title">购物车</span>
       	<span ontouchend="record()" style="width:40px; margin-right:10px;  vertical-align:middle;float:right;text-align:right; color:#fff;">明细</span>
 </header>
 	<div class="page__bd content" style="margin-top:30px;">
 			<div class="topbanner"style="position:fixed; top:40px; ">
 				<img src="../../image/exchangebanner.png" alt="">
 			</div>
-			<div class="beanall" style="position:fixed; top:205px; right:50px; z-index:99; color:#fff; font-size:1.1em;">金豆<span class="beancount"></span>个</div>
+			<div class="beanall" style="position:absolute; top:205px; background-color:#fff; right:0px; z-index:99; color:#000; padding:5px 15px 5px 15px;font-size:1.1em;">金豆<span class="beancount"></span>个</div>
 		<div id="main" style="margin-top:260px;">
-
 		</div>
 
 	</div>
@@ -227,7 +226,7 @@ nowbean();
 		}, function(ret, err) {
 			var user = ret.data;
 			var  coupons = parseInt(user.coupons);
-
+	console.log(coupons);
 			$(".beancount").html(coupons);
 
 
@@ -244,9 +243,11 @@ nowbean();
 
 					var  coupons = parseInt(user.coupons);
 					var newbean=coupons;
-										setintertime=1000/(newbean-prebean);
+										setintertime=10000/(newbean-prebean);
+
 						var inter=setInterval(function(){
 														prebean++;
+
 											$(".beancount").html(prebean);
 											if(prebean>=newbean){
 												clearInterval(inter);
