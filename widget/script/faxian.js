@@ -82,7 +82,6 @@ function showQDBox() {
             dialogBox.close({
                 dialogName: 'raffle'
             });
-            console.log(123);
 
             api.ajax({
                 url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
@@ -230,20 +229,15 @@ function bigImage(image) {
 }
 
 function me() {
-
     api.openWin({
         name: 'user',
-        url: './friends/user.html',
+        url: './friends/add.html',
         animation: {
-            type: "push", //动画类型（详见动画类型常量）
-            subType: "from_left", //动画子类型（详见动画子类型常量）
-            duration: 300 //动画过渡时间，默认300毫秒
-        },
-        pageParam: {
-            uid: UID
+          type: "movein", //动画类型（详见动画类型常量）
+          subType: "from_bottom", //动画子类型（详见动画子类型常量）
+          duration: 300 //动画过渡时间，默认300毫秒
         }
     });
-
 }
 
 function playVideo(obj) {

@@ -31,6 +31,24 @@ margin:0 auto;border-radius: 5px;max-height:500px;overflow-y: hidden;}
 .list .info {
   height: 50px;
 }
+.list .info .head{
+  width:55px;
+  height:55px;
+  float:left;
+  position: relative;
+  margin-left: 10px;
+}
+.list .info .head .global{
+  position: absolute;
+  bottom:0px;
+  height:12px;
+  left:0px;
+  width:100%;
+  font-size:0.5em;
+  background:url(../image/global.png) no-repeat;
+  text-align: center;
+  color:#fff;
+}
 
 .list .info .head img {
   margin-top: 4px;
@@ -38,7 +56,6 @@ margin:0 auto;border-radius: 5px;max-height:500px;overflow-y: hidden;}
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  margin-left: 10px;
   vertical-align: middle;
 }
 

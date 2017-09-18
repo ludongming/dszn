@@ -18,6 +18,7 @@
 			display: none;
 		}
 .content{margin-top: 60px;}
+.list{padding-top:5px; }
 .image{position:relative;}
 .pic{height:250px!important;}
 		.stopplayer {
@@ -173,6 +174,8 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
+			console.log(JSON.stringify(err));
+
 		  if(ret.status==false){
 				api.alert({
 				    title: '提示',
@@ -182,7 +185,7 @@
 
 			}else{
 				var d = ret.data;
-				startPlay(d.PlayURL);
+				startPlay(d.PlayInfoList.PlayInfo[0].PlayURL);
 			}
 
 		});

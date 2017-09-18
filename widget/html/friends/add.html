@@ -56,97 +56,211 @@
 		}
 
 		.address {
-			margin-left: 10px;
+			color: #ccc;
+			font-size: 0.8em;
+			padding: 3px;
+			border-radius: 3px;
 		}
 
 		.cells {
 			width: 95%;
-			float: right;
+			margin: 0 auto;
 			border-bottom: 1px #f5f5f5 solid;
+			height: 200px;
 			margin-bottom: 5px;
 			padding-top: 5px;
+			position: relative;
 		}
-		.videocon{display: none;}
+
+		.camera {
+			background: #efefef;
+			width: 100px;
+			height: 100px;
+			overflow: hidden;
+			text-align: center;
+			line-height: 100px;
+			position: absolute;
+			left: 0px;
+			bottom: 10px;
+		}
+
+		.videocon {
+			display: none;
+		}
+
+		.back {
+			width: 25px;
+			height: 25px;
+			margin-top: 5px;
+		}
+
+		.footer {
+			box-shadow: 0px -1px 1px #ccc;
+			position: fixed;
+			bottom: 0px;
+			height: 50px;
+			width: 100%;
+			background: #f8f8f8;
+		}
+
+		.menu {
+			width: 33%;
+			float: left;
+			height: 50px;
+			text-align: center;
+			font-size: 0.8em;
+			color: #333;
+		}
+
+		.menu .img {
+			width: 100%;
+			height: 30px;
+			text-align: center;
+			padding-top: 2px;
+		}
 	</style>
 </head>
 
 <body>
 	<header style="position: fixed;">
-		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">足迹</span>
-		<a href="javscript:;" ontouchend="send()" style="color:#27ae61;width:40px;margin-top:2px; margin-right:10px; vertical-align:middle;float:right;">发送 </a>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/quxiao.png" class="back"/></i><span class="tit" style="line-height:45px;">动态</span>
+		<span ontouchend="send()" style="text-align:right;position:absolute;right:10px;bottom:0px;color:#27ae61;width:80px;">发布</span>
 	</header>
 	<div class="page__bd content">
 		<div class="cells">
-			<div class="weui-cell__bd">
-				<textarea class="weui-textarea" id="con" placeholder="这一刻的想法..." rows="3"></textarea>
+			<textarea class="weui-textarea" id="con" placeholder="发布你手机中最棒，最Hi的照片" rows="3"></textarea>
+			<div class="camera" onclick="pic()">
+				<img src="../../image/paizhao.png" style="width:50px;vertical-align:middle;">
 			</div>
-			<div class="weui-uploader">
-				<div class="weui-uploader__hd"></div>
-				<div class="weui-uploader__bd">
-					<div class="weui-uploader__input-box" onclick="pic()"></div>
-				</div>
+			<div class="dingwei" style="position:absolute;bottom:-30px;height:20px;">
+				<img src="../../image/dingwei.png" style="vertical-align:middle;width:30px;"><span class="address" ontouchend="addlocation()">点击获取位置</span>
 			</div>
 		</div>
-		<div class="videocon">
-<video id="video" src="" style="width:200px;max-height:100px;">
-</div>
-		<div class="dingwei">
-			<img src="../../image/dingwei.png" style="vertical-align:middle;width:30px;margin-left:10px;"><span class="address" ontouchend="addlocation()">点击获取位置</span>
+	</div>
+
+
+	<!--选择器-->
+
+	<div class="footer">
+
+		<div class="menu" onclick="bag()">
+			<div class="img">
+				<img src="../../image/baobao.png" width="30px;">
+			</div>
+			我的包包
 		</div>
+
+
+		<div class="menu" onclick="alert('马不停蹄开发中')">
+			<div class="img">
+				<img src="../../image/souchang.png" width="30px;">
+			</div>
+			我的收藏
+		</div>
+
+		<div class="menu" onclick="user()">
+			<div class="img">
+				<img src="../../image/feiji.png" width="30px;">
+			</div>
+			我的动态
+		</div>
+
+
+	</div>
+
+
 </body>
-</div>
-<!--选择器-->
-<div class="warp"></div>
-<div class="thumb">
-	<div class="list">
-		<div class="l" onclick="getPic('camera')">
-			拍摄照片
-		</div>
-		<div class="l" onclick="getPic('album')">
-			从手机相册选择
-		</div>
-		<div class="l" onclick="getPic('video')">
-			上传短视频(10s)
-		</div>
-	</div>
-	<div class="cancle" ontouchend="cancle()">
-		取消
-	</div>
-</div>
+
 <!--选择器结束-->
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/weui.min.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
-<script type="text/javascript" src="../../script/dropload.min.js"></script>
 <script type="text/javascript">
 	var OPENID;
 	var FILE;
 	var MEDIA_TYPE;
-	var video,output;
+	var video, output;
+	var UID;
 	apiready = function() {
 		setTopBar();
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'
 		});
-
+		loadUser();
 		addlocation();
 	};
+
+	function user() {
+		api.openWin({
+			name: 'me',
+			url: './me.html',
+			pageParam: {
+				uid: UID
+			},
+			animation: {
+				type: "push", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			}
+		});
+	}
+
+	function bag() {
+		api.openWin({
+			name: 'bag',
+			url: '../me/shop.html',
+			pageParam: {
+				uid: UID
+			},
+			animation: {
+				type: "push", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			}
+		});
+	}
+
+	function loadUser() {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID,
+		}, function(ret, err) {
+			UID = ret.data.uid;
+		});
+
+	}
 
 
 	function goback() {
 		api.closeWin({});
 	}
 
-	function cancle() {
-		$(".warp").hide();
-		$(".thumb").hide();
-	}
 
 	function pic() {
-		$(".warp").show();
-		$(".thumb").show();
+		api.actionSheet({
+			cancelTitle: '取消',
+			buttons: ['拍摄照片', '从手机相册选择', '上传短视频(10s)']
+		}, function(ret, err) {
+			if (ret.buttonIndex == 4) {
+				return false;
+			}
+
+			var type = "camera";
+			if (ret.buttonIndex == 1) {
+				type = "camera";
+			}
+			if (ret.buttonIndex == 2) {
+				type = "album";
+			}
+
+			if (ret.buttonIndex == 3) {
+				type = "video";
+			}
+
+			getPic(type);
+
+		});
 	}
 
 	function addlocation() {
@@ -192,7 +306,7 @@
 			method: 'post',
 			data: {
 				values: {
-					mediatype:MEDIA_TYPE,
+					mediatype: MEDIA_TYPE,
 					content: con,
 					address: address
 				},
@@ -204,12 +318,10 @@
 		}, function(ret, err) {
 			if (ret.status) {
 				api.hideProgress();
-				api.execScript({
-					name: 'user', //这里root代表index.html
-					frameName: '',
-					script: 'refresh();'
-				});
-				api.closeWin({});
+				$("#con").val("");
+				var con="	<img src=\"../../image/paizhao.png\" style=\"width:50px;vertical-align:middle;\">";
+				$(".camera").html(con);
+				user();
 			} else {
 				api.hideProgress();
 
@@ -220,7 +332,6 @@
 	}
 
 	function getPic(type) {
-
 		var source = type == "camera" ? "camera" : "album";
 		api.getPicture({
 			sourceType: source,
@@ -251,30 +362,22 @@
 			//如果是视频
 			if (type == "video") {
 				$(".videocon").show();
-				MEDIA_TYPE="video";
+				MEDIA_TYPE = "video";
 
-    var video=document.getElementById("video");
-		video.setAttribute("src",ret.data);
-			video.load();
-				cancle();
-				$(".videocon").show();
+				var con = "<video id=\"video\" src=\"" + ret.data + "\" style=\"max-width:100px;max-height:100px;vertical-align:middle;\"></video>";
+				$(".camera").html(con);
+				var video = document.getElementById("video");
+				video.load();
 				return false;
 			}
 
 			if (ret) {
-				MEDIA_TYPE="image";
-
-				var con = '<li class="weui-uploader__file"  onclick="pic()" style="background-image:url(' + ret.data + ')"></li>';
-				$(".weui-uploader__bd").html(con);
-				cancle();
-			} else {
-				//alert(JSON.stringify(err));
+				MEDIA_TYPE = "image";
+				var con = "<img src='" + ret.data + "' style='max-width:100px;max-height:100px;vertical-align:middle;'>";
+				$(".camera").html(con);
 			}
 		});
 	}
-
-
-
 </script>
 
 </html>
