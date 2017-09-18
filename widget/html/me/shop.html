@@ -119,7 +119,7 @@ justify-content: flex-end;
 			<div class="topbanner"style="position:fixed; top:40px; ">
 				<img src="../../image/exchangebanner.png" alt="">
 			</div>
-			<div class="beanall" style="position:fixed; top:200px; right:50px; z-index:99; color:#fff; font-size:1.1em;">金豆<span class="beancount"></span>个</div>
+			<div class="beanall" style="position:fixed; top:205px; right:50px; z-index:99; color:#fff; font-size:1.1em;">金豆<span class="beancount"></span>个</div>
 		<div id="main" style="margin-top:260px;">
 
 		</div>
@@ -244,7 +244,7 @@ nowbean();
 
 					var  coupons = parseInt(user.coupons);
 					var newbean=coupons;
-
+										setintertime=1000/(newbean-prebean);
 						var inter=setInterval(function(){
 														prebean++;
 											$(".beancount").html(prebean);
@@ -252,7 +252,7 @@ nowbean();
 												clearInterval(inter);
 												return;
 											}
-							},300);
+							},setintertime);
 
 
 				});
