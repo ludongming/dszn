@@ -106,7 +106,17 @@ justify-content: flex-end;
 	font-size: 1.1em;
 	color:#888;
 }
+.beanall{
+	position:fixed;top:33%; background-color:#fff; right:0px; z-index:99; color:#000; padding:3px 15px 3px 15px;font-size:1.1em;
+}
+.topbanner{
+	width: 100%;
 
+}
+.topbanner img{
+			width: 100%;
+			margin: auto;
+}
 	</style>
 </head>
 
@@ -115,14 +125,14 @@ justify-content: flex-end;
 	<i class="backBtn" ontouchend="goback()"><img src="../../image/backwhite.png" class="back" /></i><span style="text-align: right;  margin-left:60px;color:#fff;" id="title">嫦娥工坊</span>
       	<span ontouchend="record()" style="width:40px; margin-right:10px;  vertical-align:middle;float:right;text-align:right; color:#fff;">明细</span>
 </header>
-	<div class="page__bd content" style="margin-top:30px;">
+	<div class="page__bd content" style="position: absolute;left:0px;top:61px;overflow-y:scroll;height:100%;width:100%;-webkit-overflow-scrolling: touch;">
 
-			<div class="topbanner"style="position:fixed; top:40px; ">
+			<div class="topbanner"style="position: fixed;top:40px; ">
 				<img src="../../image/exchangebanner.png" alt="">
 			</div>
-			<div class="beanall" style="position:fixed;top:210px; background-color:#fff; right:0px; z-index:99;  color:#ff5555;padding:3px 15px 3px 15px;font-size:1.1em;">金豆<span class="beancount"></span>个</div>
+			<div class="beanall" style="">金豆<span class="beancount"></span>个</div>
 
-		<div id="main" style="margin-top:235px;">
+		<div id="main" style="margin-top:180px;">
 		</div>
 	</div>
 </body>
@@ -165,6 +175,8 @@ justify-content: flex-end;
 	setTopBar();
 nowbean();
 		getData();
+		var h=$('.topbanner').height();
+
 
 	};
 
@@ -228,6 +240,7 @@ nowbean();
 		}, function(ret, err) {
 			var user = ret.data;
 			var  coupons = parseInt(user.coupons);
+
 			$(".beancount").html(coupons);
 
 
@@ -244,7 +257,7 @@ nowbean();
 
 					var  coupons = parseInt(user.coupons);
 					var newbean=coupons;
-										setintertime=1000/(newbean-prebean);
+										setintertime=10000/(newbean-prebean);
 
 						var inter=setInterval(function(){
 														prebean++;
