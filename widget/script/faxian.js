@@ -184,7 +184,7 @@ function cleanBadge() {
 function clock() {
     api.openWin({
         name: 'clock',
-        url: './active/clock.html'
+        url: '../active/clock.html'
     });
 }
 
@@ -297,7 +297,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: './active/daily.html',
+        url: '../active/daily.html',
         pageParam: {
             name: 'test'
         }
@@ -375,11 +375,11 @@ function zan(nid) {
     if (isZan == 1) {
         flower = parseInt(flower) - 1;
         $("#zanimage" + nid).attr("data", 0);
-        $("#zanimage" + nid).attr("src", "../image/zan0.png");
+        $("#zanimage" + nid).attr("src", "../../image/zan0.png");
     } else {
         flower = parseInt(flower) + 1;
         $("#zanimage" + nid).attr("data", 1);
-        $("#zanimage" + nid).attr("src", "../image/zan1.png");
+        $("#zanimage" + nid).attr("src", "../../image/zan1.png");
         $("#zanimage" + nid).css({
             height: "30px",
             width: "30px"

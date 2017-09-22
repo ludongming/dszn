@@ -43,7 +43,7 @@ background:#fff;
 	apiready = function() {
 
 		funIniGroup();
-	//	setMenu();
+		setMenu();
 	   initJPPush();
 
 	}
@@ -69,10 +69,31 @@ background:#fff;
 			},
 			index : 0,
 			frames : frames,
+			preload:0
 		}, function(ret, err) {
 		});
 	}
 
 
+	function setMenu(){
+	  api.openFrame({
+	      name: 'menu',
+	      url: './html/menu.html',
+	      rect: {
+	          x: 0,
+	          y: api.winHeight-51,
+	          w: api.winWidth,
+	          h: 51
+	      },
+	      pageParam: {
+	          name: 'test'
+	      },
+				allowEdit:false,
+	      bounces: false,
+	      bgColor: 'rgba(255,255,255,0)',
+	      vScrollBarEnabled: false,
+	      hScrollBarEnabled: false
+	  });
+	}
 
 </script>

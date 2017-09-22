@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/header.css" />
+	<link rel="stylesheet" href="../../css/faxian.css">
+	<link rel="stylesheet" href="../../css/prismplayer.css">
+	<link rel="stylesheet" href="../../css/dropload.css">
+
+	<style>
+	html,body{height:100%;}
+  .prism-controlbar	{display: block!important;}
+
+		#J_prismPlayer {
+			display: none;
+		}
+.list{padding-top:5px; }
+.image{position:relative;}
+.pic{height:250px!important;}
+		.stopplayer {
+			display: none;
+		}
+		.videotitle{position: absolute;font-size:1.1em;left:5px;top:5px;color:#fff;font-size: 700;}
+		#main{margin-bottom:50px;}
+		.duration{font-size:0.8em;right:5px;bottom:10px;background:#0c1617;opacity: 0.8;width:50px;border-radius: 10px;position: absolute;color:#fff;}
+.menu{display: inline-block;font-size:0.9em;margin-right:10px;}
+.active{color:red;}
+	</style>
+</head>
+
+<body>
+	<div>
+		<div id="main"></div>
+		<div class="prism-player" id="J_prismPlayer" style="position: absolute;left:0%;"></div>
+	</div>
+</body>
+<!--地址模板-->
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="list" id="list_{{=value.VideoId}}">
+		<div class="image" onclick="setVideo('{{=value.VideoId}}',this)">
+<span class="videotitle"></span>
+			<img src="../../image/play.png" class="videocontroll startplayer" id="start{{=value.VideoId}}">
+			<img src="../../image/stop1.png" class="videocontroll stopplayer" id="stop{{=value.VideoId}}">
+			<img src="../../image/timg.jpg" data-original="{{=value.CoverURL}}" class="pic">
+			<span class="duration">{{=value.time}}</span>
+
+		</div>
+
+
+		<div class="tip">
+			<div class="dingwei" style="font-size:1em;">
+			{{=value.Title}}
+			</div>
+			<div class="tool" style="position:relative;float:right;">
+			<span style="display:inline-block;width:80px;text-align:right;font-size:0.8em;position:absolute;right:0px;">
+      {{?value.money==0}}
+			限时免费
+			{{??}}
+	{{=value.money}}豆/天
+			{{?}}
+		</span>
+			</div>
+		</div>
+	</div>
+	{{~}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/fx.js"></script>
+
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
+
+<script type="text/javascript">
+	var OPENID;
+	var isDrop = false;
+	var me;
+	var page = 1;
+	var REPLYID = 0;
+	var player;
+	var currentVideoId=0;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+
+		var params = api.pageParam;
+		var cid = params.cid;
+		loadPlayer();
+		loadData(cid);
+	};
+
+
+	//获取视频地址
+	function setVideo(videoid, obj) {
+
+		if(currentVideoId==videoid){
+			$("#start" + videoid).hide();
+			player.play();
+			return false;
+		}
+
+		$("#start" + currentVideoId).show();
+
+
+		currentVideoId=videoid;
+		//先要暂停其他正在播放的视频
+		player.pause();
+		$("#start" + videoid).hide();
+		$("#stop" + videoid).on("click", function() {
+			player.pause();
+			$("#stop" + videoid).hide();
+			$("#start" + videoid).show();
+			return false;
+		})
+
+		var top = $(obj).offset().top;
+
+		$("#J_prismPlayer").css({
+			"top": top
+		});
+
+			$("#J_prismPlayer").on("click", function() {
+			$("#stop" + currentVideoId).show();
+			setTimeout(function(){
+				$("#stop" + currentVideoId).hide();
+			},3000);
+		})
+
+    //播放结束后隐藏播放器
+	  player.on("ended", function() {
+			$("#J_prismPlayer").hide();
+		})
+
+		$("#J_prismPlayer").show();
+
+		//获取凭证
+		var url = 'http://www.d-shang.com/index.php?aliyun/getvideobyid/?openid=' + OPENID + "&videoid=" + videoid;
+		api.ajax({
+			url: url
+		}, function(ret, err) {
+		  if(ret.status==false){
+				api.alert({
+				    title: '提示',
+				    msg: ret.message,
+				}, function(ret, err){
+				});
+
+			}else{
+				var d = ret.data;
+				startPlay(d.PlayInfoList.PlayInfo[0].PlayURL);
+			}
+
+		});
+	}
+
+	function loadPlayer() {
+		player = new prismplayer({
+			id: "J_prismPlayer",
+			autoplay: false,
+			isLive: false,
+			playsinline: true,
+			showBuffer:true,
+			width: "100%",
+			height: "250px",
+			controlBarVisibility: "click",
+			useH5Prism: true,
+			useFlashPrism: false,
+			source: "",
+			cover: "",
+			skinLayout: [{
+				"name": "controlBar",
+				"align": "blabs",
+				"x": 0,
+				"y": 0,
+				"children": [{
+					"name": "fullScreenButton",
+					"align": "tr",
+					"x": 20,
+					"y": 25
+				}, {
+					"name": "progress",
+					"align": "tlabs",
+					"x": 0,
+					"y": 0
+				}]
+			}]
+		});
+	}
+
+	function startPlay(source) {
+		player.loadByUrl(source);
+		player.setPlayerSize();
+		player.play();
+	}
+
+
+	function add() {
+		api.openWin({
+			name: 'add',
+			url: './classroom/add.html',
+			pageParam: {
+				name: 'test'
+			},
+			animation: {
+				type: "movein", //动画类型（详见动画类型常量）
+				subType: "from_bottom", //动画子类型（详见动画子类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			},
+		});
+
+	}
+
+	function loadData(cid) {
+    	player.pause();
+      $("#J_prismPlayer").hide();
+
+		var loading=weui.loading("奋力加载中");
+		var url = 'http://www.d-shang.com/index.php?aliyun/getvideolistbycate/?p=' + page + '&openid=' + OPENID + "&cid=" + cid;
+
+		api.ajax({
+			url: url
+		}, function(ret, err) {
+			loading.hide();
+			var d = ret.data;
+			var arrText = doT.template($("#interpolationtmpl").text());
+			$("#main").html(arrText(d));
+			$('.pic').picLazyLoad();
+		});
+	}
+</script>
+
+</html>

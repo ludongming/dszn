@@ -4,9 +4,8 @@
 
 function setTopBar() {
 	var systemType = api.systemType;
-		$(".back").css("top", "23px");
-
-			$(".page__bd").css("top", "60px");
+	$(".back").css("top", "23px");
+  $(".page__bd").css("top", "61px");
 
 	$api.fixStatusBar($api.dom('header'));
 	api.setStatusBarStyle({

@@ -107,7 +107,7 @@ var h=api.winHeight;
 		         x: 0,
 		         y: 61,
 		         w: w,
-		         h: h-61
+		         h: h-61-51
 		    },
 		    index: 0,
 				preload:2,
@@ -119,32 +119,10 @@ var h=api.winHeight;
 		    }
 		});
 
-
-setMenu();
 		addlocation();
 	}
 
 
-	function setMenu(){
-	  api.openFrame({
-	      name: 'menu',
-	      url: 'menu.html',
-	      rect: {
-	          x: 0,
-	          y: api.winHeight-52,
-	          w: api.winWidth,
-	          h: 52
-	      },
-	      pageParam: {
-	          name: 'test'
-	      },
-				allowEdit:false,
-	      bounces: false,
-	      bgColor: 'rgba(255,255,255,0)',
-	      vScrollBarEnabled: false,
-	      hScrollBarEnabled: false
-	  });
-	}
 
 
 </script>
