@@ -1,6 +1,8 @@
 body {
   background: #f5f5f5;
 }
+.prism-controlbar	{display: none!important;}
+.prism-player{z-index:1;position: absolute;left:0%;display:none;}
 .image{position: relative;background:#000;border:1px #f1f1f1 solid;text-align:center;width:96%;
 margin:0 auto;border-radius: 5px;max-height:500px;overflow-y: hidden;}
 .pic{vertical-align:middle;max-width:100%;margin:0 auto;border-radius: 0px;}

@@ -7,7 +7,6 @@
 		<title>title</title>
 		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/weui2.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/header.css"/>
 		<style>
 			body {
@@ -24,7 +23,7 @@
 		</style>
 	</head>
 	<body>
-		<header style="position: fixed;">
+		<header>
 			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back" /></i><span style="text-align: center;">消息</span>
 		</header>
 		<div class="page__bd content">
@@ -32,7 +31,7 @@
 		</div>
 	</body>
 	<script id="interpolationtmpl" type="text/x-dot-template">
-		<div class="weui-cells">
+		<div class="weui-cells" style="margin-top:0px;background:#fff;">
 		{{~it:value:index}}
 		<a class="weui-cell" href="javascript:;" id="del_{{=value.id}}">
 		<div class="weui-cell__bd">
@@ -40,7 +39,7 @@
 		{{?value.status==0}}<span class="weui-badge">新</span> {{?}}
 		{{=value.message}}</p>
 		</div>
-		<div class="weui-cell__ft">{{=value.rq}} </div>
+		<div class="weui-cell__ft">{{=value.rq}}</div>
 		</a>
 		{{~}}
 		</div>
@@ -50,7 +49,6 @@
 	<script type="text/javascript" src="../script/jpush.js"></script>
 	<script type="text/javascript" src="../script/wolf.js"></script>
 	<script type="text/javascript" src="../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../script/dropload.min.js"></script>
 	<script type="text/javascript">
 		var OPENID;
 		var page = 1;

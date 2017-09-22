@@ -14,7 +14,11 @@ function loadAdv() {
 function switchBtn(index) {
     closePlayer();
     backSwitchBtn(index);
-    mySwiper.slideTo(index, 500, false); //切换到第一个slide，速度为1秒
+    api.setFrameGroupIndex({
+        name: 'explore',
+        index: index,
+        scroll: true
+    });
 
 }
 
@@ -246,49 +250,48 @@ function playVideo(obj) {
 
     var source = $(obj).attr("data-source");
 
-    api.download({
-        url: source,
-        savePath: '',
-        report: true,
-        cache: true,
-        allowResume: true
-    }, function(ret, err) {
-        if (ret.state == 1) {
-            loadPlayer(ret.savePath, obj);
-        } else {
+    loadPlayer(source, obj);
 
-        }
+}
+var  player;
+function initPlayer(){
+  player= new prismplayer({
+      id: "J_prismPlayer",
+      autoplay: false,
+      isLive: false,
+      playsinline: true,
+      showBuffer:true,
+      width: "100%",
+      height: "40px",
+      controlBarVisibility: "click",
+      useH5Prism: true,
+      useFlashPrism: false,
+      source: "",
+      cover: "",
     });
 }
 
+
 function loadPlayer(source, obj) {
-    closePlayer();
-    var videoPlayer = api.require('videoPlayer');
-    var top = $(obj).offset().top;
-    var y = $(obj).height();
-    var width = api.winWidth;
-    videoPlayer.open({
-        path: source,
-        rect: {
-            x: 0,
-            y: top,
-            w: width,
-            h: y
-        },
-        fixedOn: api.frameName,
-        fixed: false
-    }, function(ret, err) {
-        if (ret.status) {
-            var time = Math.round(ret.duration * 1000);
-            setTimeout(closePlayer, time);
-        } else {}
-    });
+  var top = $(obj).offset().top;
+  var y = $(obj).height();
+  var width = api.winWidth;
+    $("#J_prismPlayer").show();
+  $("#J_prismPlayer").css({"top":top});
+  player.loadByUrl(source);
+  player.setPlayerSize(width+"px",y+"px");
+
+player.play();
+
+player.on('ended',function(e) {
+  $("#J_prismPlayer").hide();
+});
+
 }
 
 
 function closePlayer() {
-    var videoPlayer = api.require('videoPlayer');
-    videoPlayer.close();
+
 }
 
 function daily() {
@@ -408,49 +411,54 @@ function refresh() {
 }
 
 
-function dropDownRecommend() {
-
-    api.setRefreshHeaderInfo({
-        loadingImg: 'widget://image/refresh.png',
-        bgColor: '#ccc',
-        textColor: '#fff',
-        textDown: '下拉刷新...',
-        textUp: '松开刷新...'
-    }, function(ret, err) {
-        //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-        loadRecommendData();
-        rq();
-
-    });
-
+function dropDownRecommend(type) {
+  	var	 mescroll= new MeScroll("mescroll", {
+  				down: {
+            offset:100,
+            outOffsetRate:0.1,
+            isLock:false,
+  					callback: function(mm){
+              loadRecommendData(mescroll,type);
+            }
+        	}
+  			});
 }
 
-
-
-
-function loadRecommendData() {
+function loadRecommendData(mescroll,type) {
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
         timeout: 15,
         report: false
     }, function(ret, err) {
-        api.refreshHeaderLoadDone();
-
+       mescroll.endSuccess();
         if (typeof(err) == "object") {
             weui.alert("网络请求超时，请稍后再试");
             return false;
         }
 
-        if (ret.status) {
-            var d = ret.data;
-            var arrText = doT.template($("#interpolationtmpl").text());
-            $("#recommendmain").html(arrText(d.recommend));
-            $("#allmain").html(arrText(d.all));
-            $("#rankmain").html(arrText(d.rank));
-            $('.pic').picLazyLoad({
-                threshold: 500
-            });
+        if (!ret.status) {
+          alert(ret.message);
+           return false;
         }
+
+        var d = ret.data;
+        var arrText = doT.template($("#interpolationtmpl").text());
+
+        if(type=="recommend"){
+          $("#recommendmain").html(arrText(d.recommend));
+        }
+
+        if(type=="all"){
+          $("#recommendmain").html(arrText(d.all));
+        }
+
+        if(type=="rank"){
+          $("#recommendmain").html(arrText(d.rank));
+        }
+
+        $('.pic').picLazyLoad({
+            threshold: 300
+        });
         $(".message").bind("click", setCopy);
 
     });

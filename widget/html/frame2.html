@@ -17,7 +17,6 @@
 		#J_prismPlayer {
 			display: none;
 		}
-.content{margin-top: 60px;}
 .list{padding-top:5px; }
 .image{position:relative;}
 .pic{height:250px!important;}
@@ -100,12 +99,14 @@
 	var CID = "474624369";
 	var player;
 	var currentVideoId=0;
+	var frameTop;
 	apiready = function() {
 		setTopBar();
 		OPENID = api.getPrefs({
 			sync: true,
 			key: 'openid'
 		});
+		frameTop=$(".page__bd").offset().top;
 
 		var params = api.pageParam;
 		UID = params.uid;
@@ -152,9 +153,12 @@
 		})
 
 		var top = $(obj).offset().top;
+
+		console.log(top);
 		$("#J_prismPlayer").css({
-			"top": top
+			"top": top-60
 		});
+
 			$("#J_prismPlayer").on("click", function() {
 			$("#stop" + currentVideoId).show();
 			setTimeout(function(){
@@ -174,8 +178,6 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
-			console.log(JSON.stringify(err));
-
 		  if(ret.status==false){
 				api.alert({
 				    title: '提示',

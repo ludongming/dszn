@@ -43,32 +43,10 @@ background:#fff;
 	apiready = function() {
 
 		funIniGroup();
-		setMenu();
+	//	setMenu();
 	   initJPPush();
 
 	}
-
-
-function setMenu(){
-  api.openFrame({
-      name: 'menu',
-      url: './html/menu.html',
-      rect: {
-          x: 0,
-          y: api.winHeight-52,
-          w: api.winWidth,
-          h: 52
-      },
-      pageParam: {
-          name: 'test'
-      },
-			allowEdit:false,
-      bounces: false,
-      bgColor: 'rgba(255,255,255,0)',
-      vScrollBarEnabled: false,
-      hScrollBarEnabled: false
-  });
-}
 
 	function funIniGroup() {
 		var frames=new Array();

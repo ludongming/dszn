@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<meta name="full-screen" content="yes">
+	<meta name="x5-fullscreen" content="true">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/header.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mescroll.min.css" />
+	<link rel="stylesheet" href="../../css/prismplayer.css">
+
+	<link rel="stylesheet" href="../../css/faxian.css">
+	<link rel="stylesheet" href="../../css/gift.css">
+
+	<style>
+	html,body{ height:100%; }
+		.gift {
+			bottom: 50px;
+		}
+
+		.nav .active {
+			color: red;
+			height: 20px;
+		}
+			/*避免mescroll设置padding的时候出现两个滚动条*/
+
+	</style>
+</head>
+
+<body  class="mescroll" id="mescroll">
+	<div class="prism-player" id="J_prismPlayer"></div>
+
+					<div class="recommendmain">
+
+						<div id="recommendmain"></div>
+
+		</div>
+
+
+
+	</div>
+	<div class="gift">
+		<div class="topbar">
+			<a href="javascript:;" class="nav active">礼物</a>
+			<span class="zf">送给 <span id="zfname"></span></span>
+
+			<a href="javascript:;" class="nav" onclick="closeGift()" style="float:right;margin-right:10px;font-size:1.2em;">X</a>
+
+		</div>
+		<div id="giftcon"></div>
+		<div class="tools">
+			<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金豆</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
+		</div>
+	</div>
+</body>
+
+<!--剪贴板-->
+<div id="clip">
+<div id="cliparrow"></div>
+<div id="cliptext">
+	复制
+</div>
+</div>
+<!--地址模板-->
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="list">
+		<div class="info">
+			<div class="head" onclick="user({{=value.uid}})">
+				<img src="../../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
+{{?value.global!=""}}
+<div class="global">{{=value.global}}</div>
+{{?}}
+			</div>
+			<div class="username" style="display:inline-block;max-width:100px;overflow:hidden; white-space:nowrap; ">{{=value.real_name}}
+				<span class="mp">{{=value.address}}</span>
+			</div>
+			<div class="pub_time">{{=value.rq}}</div>
+		</div>
+		<div class="imagebg">
+			{{?value.isvideo==1}}
+		<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
+		<img src="../../image/play.png" class="videocontroll">
+		<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic">
+		</div>
+
+{{??}}
+		<div class="image">
+<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic"  onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
+</div>
+		{{?}}
+		</div>
+		<div class="message">{{=value.content}}</div>
+<!--礼物-->
+		{{?value.giftnum>0}}
+		<div class="reply">
+			{{ for(var i=0, catlen=value.giftnum; i
+			<catlen; i++) { }} <div class="replylist">
+
+				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}豆子
+		</div>
+		{{ } }}
+	</div>
+	{{?}}
+
+	<div style="border-bottom:1px #f5f5f5 solid;width:95%;margin:0 auto;height:2px;margin-bottom:10px;">
+	</div>
+
+		<div class="tip">
+			<div class="dingwei">
+			{{?value.flower>0}}	<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
+		</div>
+		<div class="tool" style="position:relative;">
+
+		{{?value.isvideo==1}}
+		<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
+{{??}}
+<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
+{{?}}
+
+				<img src="../../image/songli.png" class="toolimage" style="right:60px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
+
+				<img src="../../image/zan{{=value.isflower}}.png" style="right:10px;" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
+
+			</div>
+		</div>
+		{{?value.flower>0}}
+		<div class="comment">
+			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}
+			{{?i>0}},{{?}}
+			{{=value.flowers[i].real_name}}
+
+					{{ } }} 点赞了哦
+			</div>
+		</div>
+		{{?}}
+
+
+	</div>
+	{{~}}
+</script>
+<!--礼物-->
+<script id="giftlist" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
+		<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
+		<span class="boxname">{{=value.name}}</span>
+		<span class="boxmoney">{{=value.money}}金豆</span>
+	</div>
+	{{~}}
+</script>
+
+
+
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/mescroll.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/gift.js"></script>
+<script type="text/javascript" src="../../script/fx.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
+<script type="text/javascript" src="../../script/faxian.js"></script>
+
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	var REPLYID = 0;
+	var ADDRESS;
+	var mySwiper;
+	var UID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+
+    initPlayer();
+		loadGift();
+		dropDownRecommend("all");
+	}
+
+
+
+
+</script>
+
+</html>
