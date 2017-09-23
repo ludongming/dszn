@@ -341,8 +341,6 @@
 			allowEdit: false,
 			quality: 80,
 			videoQuality: "high",
-			targetWidth: 1280,
-			targetHeight: 800,
 			saveToPhotoAlbum: false
 		}, function(ret, err) {
 
@@ -370,7 +368,6 @@
 				video.load();
 				return false;
 			}
-
 			if (ret) {
 				MEDIA_TYPE = "image";
 				var con = "<img src='" + ret.data + "' style='max-width:100px;max-height:100px;vertical-align:middle;'>";
