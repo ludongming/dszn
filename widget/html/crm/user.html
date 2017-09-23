@@ -105,15 +105,15 @@
 	</style>
 </head>
 
-<body ontouchstart="">
-	<header style="position: fixed;">
+<body>
+	<header>
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i><span class="title" style="text-align: center;">我的客户</span>
 		<span style="float:right;margin-right:10px;" id="showPicker">状态</span>
 
 	</header>
 	<div class="page__bd content">
 		<form action="#" onsubmit="return false;">
-			<div class="page__bd content">
+			<div class="content">
 				<div class="weui-search-bar" id="searchBar">
 					<div class="weui-search-bar__form">
 						<div class="weui-search-bar__box">
@@ -185,7 +185,6 @@
 		function change() {
 			page = 1;
 			$("#main").html("");
-
 			loadDataByStatus();
 		}
 

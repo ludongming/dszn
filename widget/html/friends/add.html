@@ -339,7 +339,7 @@
 			mediaValue: type,
 			destinationType: 'url',
 			allowEdit: false,
-			quality: 80,
+			quality: 90,
 			videoQuality: "high",
 			saveToPhotoAlbum: false
 		}, function(ret, err) {
@@ -368,6 +368,7 @@
 				video.load();
 				return false;
 			}
+
 			if (ret) {
 				MEDIA_TYPE = "image";
 				var con = "<img src='" + ret.data + "' style='max-width:100px;max-height:100px;vertical-align:middle;'>";

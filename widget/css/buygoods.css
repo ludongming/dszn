@@ -70,6 +70,7 @@
 				font-size: 1em !important;
 			}
 			.cpxx {
+				z-index:1;
 				display: none;
 			}
 			.footer {

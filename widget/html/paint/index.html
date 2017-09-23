@@ -14,10 +14,6 @@
 	body {
 		background-color: white;
 	}
-	.content {
-		width: 100%;
-		margin-top: 50px;
-	}
 	.picbox {
 		width: 50%;
 		height: 220px;
@@ -47,7 +43,7 @@
 
 <body>
 
-	<header style="position: fixed;" class="page__bd page__bd_spacing">
+	<header>
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
 		<span style="text-align: center; margin-left:50px;" class="title">定制画</span>
 		<span id="showPicker" style="float:right;margin-right:10px;" onclick="openPaintChoose()">分类</span>
@@ -72,7 +68,7 @@
 	<script src="../../script/doT.min.js"></script>
 	<script src="../../script/weui.min.js"></script>
 	<script type="text/javascript" src="../../script/dropload.min.js"></script>
-	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
 	<script type="text/javascript">
 		var picArr;
 		var OPENID;

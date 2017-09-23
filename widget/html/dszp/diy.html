@@ -73,7 +73,7 @@
 <script src="../../script/dszp.js"></script>
 
 <script type="text/javascript" src="../../script/dropload.min.js"></script>
-<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
 <script type="text/javascript">
     var me;
     var OPENID;
@@ -83,7 +83,6 @@
           sync: true,
           key: 'openid'
         });
-        setDrop();
         loadLastDesgin();
     }
 
@@ -183,24 +182,6 @@ openid:OPENID
 
 
 
-    function setDrop() {
-        $('.content').dropload({
-            scrollArea: window,
-            autoLoad: true,
-            domUp: {
-                domClass: 'dropload-down',
-                domRefresh: '<div class="dropload-refresh">↑下拉更新</div>',
-                domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-                domNoData: '<div class="dropload-noData">已刷新</div>'
-            },
-            loadUpFn: function(mes) {
-                me = mes;
-                loadLastDesgin();
-            },
-            threshold: 50
-        });
-
-    }
 </script>
 
 </html>

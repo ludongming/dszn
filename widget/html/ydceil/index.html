@@ -11,10 +11,12 @@
 		<link rel="stylesheet" href="../../css/gouwutc.css">
 		<link rel="stylesheet" href="../../css/buygoods.css">
 		<style>
+		.tcmain{bottom:50px!important;}
+
 		</style>
 	</head>
 	<body>
-		<header style="position: fixed;">
+		<header>
 			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i>
 			<span style="text-align: center; margin-left: 15%;">移动集成吊顶</span>
 			<img src="../../image/search1.png" ontouchend="showSearch()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
@@ -86,7 +88,6 @@
 		{{~}}
 		<div class="cnt"></div>
 		<div class="cnt"></div>
-
 		</div>
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
@@ -95,16 +96,13 @@
 	<script type="text/javascript" src="../../script/wolf.js"></script>
 	<script type="text/javascript" src="../../script/doT.min.js"></script>
 	<script type="text/javascript" src="../../script/weui.min.js"></script>
-	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
 
 	<script type="text/javascript">
 		var OPENID;
 		apiready = function() {
 			var systemType = api.systemType;
-			if (systemType == "ios") {
-				$(".back").css("top", "23px");
-				$(".content").css("top", "60px");
-			}
+
 			OPENID = api.getPrefs({
 				sync : true,
 				key : 'openid'

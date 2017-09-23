@@ -33,14 +33,13 @@
         </style>
     </head>
     <body>
-        <header style="position: fixed;" class="page__bd page__bd_spacing">
+        <header>
             <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">3D全景</span>
          <span    id="showPicker"  style="width:40px; margin-right:10px; float:right;">场景</span>
 
         </header>
         <div class="page__bd content" id="contents">
             <div class="picarr"></div>
-            <div class="fenge"></div>
         </div>
         <script id="interpolationtmpl" type="text/x-dot-template">
             {{~it:value:index}}
@@ -59,7 +58,7 @@
     <script src="../../script/weui.min.js"></script>
     <script src="../../script/wolf.js"></script>
     <script type="text/javascript" src="../../script/dropload.min.js"></script>
-    <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+    <script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
     <script type="text/javascript">
         var OPENID;
         var isDrop = false;
@@ -77,24 +76,7 @@
             initPicker();
             loadLastPic();
         }
-        function setDrop() {
-            $('.content').dropload({
-                scrollArea : window,
-                autoLoad : true,
-                domDown : {
-                    domClass : 'dropload-down',
-                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
-                    domLoad : '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-                    domNoData : '<div class="dropload-noData">没有更多数据</div>'
-                },
-                loadDownFn : function(mes) {
-                    me = mes;
-                    phoneGetPic(me);
-                    PAGE++;
-                },
-                threshold : 50
-            });
-        }
+
 
         function initPicker() {
             $('#showPicker').on('click', function() {
@@ -171,24 +153,29 @@
         }
 
         function loadLastPic(){
+          var loading=weui.loading("加载中");
           api.ajax({
               url: 'http://www.d-shang.com/index.php?app/getlastquanjing/?openid='+OPENID,
           },function(ret, err){
+            loading.hide();
             var arrText = doT.template($("#interpolationtmpl").text());
-            $(".picarr").append(arrText(ret.data));
-            $('.pic').picLazyLoad();
+            $(".picarr").html(arrText(ret.data));
+            $(".pic").picLazyLoad();
           });
 
         }
 
         //获取图片
         function phoneGetPic() {
+          var loading=weui.loading("加载中");
+
             var url = "http://www.d-shang.com/index.php?app/getnewslist/?cid=" + CID + "&p=" + PAGE + "&openid=" + OPENID
             api.ajax({
                 url : url
             }, function(ret, err) {
+                loading.hide();
                 var arrText = doT.template($("#interpolationtmpl").text());
-                $(".picarr").append(arrText(ret.data));
+                $(".picarr").html(arrText(ret.data));
                 $('.pic').picLazyLoad();
             });
         }

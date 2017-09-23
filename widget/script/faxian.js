@@ -198,7 +198,7 @@ function setBadgeNum(num) {
 function user(uid) {
     api.openWin({
         name: 'user',
-        url: './friends/user.html',
+        url: '../friends/user.html',
         pageParam: {
             uid: uid
         }

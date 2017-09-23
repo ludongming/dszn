@@ -49,7 +49,7 @@
 <script src="../../script/wolf.js"></script>
 <script src="../../script/dszp.js"></script>
 <script type="text/javascript" src="../../script/dropload.min.js"></script>
-<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
 <script type="text/javascript">
 	var OPENID;
 	var isDrop = false;
@@ -64,8 +64,7 @@
 			key: 'openid'
 		});
 
-		setDrop();
-
+     phoneGetPic();
 
 	}
 
@@ -109,25 +108,6 @@
 
 	}
 
-	function setDrop() {
-		$('.content').dropload({
-			scrollArea: window,
-			autoLoad: true,
-			domDown: {
-				domClass: 'dropload-down',
-				domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
-				domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-				domNoData: '<div class="dropload-noData">没有更多数据</div>'
-			},
-			loadDownFn: function(mes) {
-				me = mes;
-				phoneGetPic(me);
-				PAGE++;
-			},
-			threshold: 50
-		});
-
-	}
 
 
 
@@ -150,26 +130,12 @@
 				}
 			}
 		}, function(ret, err) {
-			console.log(JSON.stringify(err));
 			var d = ret.data;
-			if (d.length == 0) {
-				me.lock();
-				me.noData();
-			} else {
+
 				var arrText = doT.template($("#interpolationtmpl").text());
 				$(".picarr").append(arrText(d));
 				$('.pic').picLazyLoad();
-			}
-			//第一次加载数量不足的情况
-			if (d.length < 12) {
-				me.lock();
-				me.noData();
-			}
-			if (PAGE > 20) {
-				me.lock();
-				me.noData();
-			}
-			me.resetload();
+		
 		});
 	}
 </script>

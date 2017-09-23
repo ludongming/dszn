@@ -41,7 +41,7 @@
 		</style>
 	</head>
 	<body>
-		<header style="position: fixed;">
+		<header>
 			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span style="text-align: center;">产品</span>
 		</header>
 		<div class="page__bd content">
@@ -85,7 +85,7 @@
 			});
 			setTopBar();
 		}
-	
+
 		function cate(cid, name) {
 			api.openWin({
 				name : 'factorygoods',
@@ -96,7 +96,7 @@
 				}
 			});
 		}
-		
+
 		function remark(name) {
 			api.openWin({
 				name : 'remark',

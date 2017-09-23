@@ -11,10 +11,13 @@
 	<link rel="stylesheet" href="../../css/header.css">
 	<link rel="stylesheet" href="../../css/gouwutc.css">
 	<link rel="stylesheet" href="../../css/buygoods.css">
+	<link rel="stylesheet" href="../../css/mescroll.min.css">
+
 	<style>
 		.footer .share {
 			width: 15%!important
 		}
+		.tcmain{bottom:50px!important;}
 	</style>
 </head>
 
@@ -27,13 +30,14 @@
 		<img src="../../image/search1.png" ontouchend="showSearch()" style="width:25px;margin-top:8px; margin-right:10px; vertical-align:middle;float:right;">
 	</header>
 	<div class="page__bd content">
-		<div>
+		<div class="mescroll">
 			<div class="guanggao">
 				<img src="" class="adv" id="adv">
 			</div>
 			<div id="main">
-				数据加载中
+
 			</div>
+		</div>
 			<div class="tcwrap" id="tcwrap">
 				<div class="tcmain" id="tcmain">
 					<button class="tcclose" onclick="closeTc()"></button>
@@ -95,10 +99,6 @@
 		</div>
 		<!--产品信息结束--->
 		{{~}}
-
-		<div class="cnt"></div>
-		<div class="cnt"></div>
-
 	</div>
 
 </script>
@@ -109,7 +109,7 @@
 <script type="text/javascript" src="../../script/iscroll.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/weui.min.js"></script>
-<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="../../script/dszp.picLazyLoad.min.js"></script>
 <script type="text/javascript">
 	var OPENID;
 	apiready = function() {
@@ -119,6 +119,8 @@
 			key: 'openid'
 		});
 
+    var height=api.winHeight-50;
+    $(".mescroll").height(height);
 		$("#tcwrap").bind("touchend", function(e) {
 			var con = $("#tcbtn").html();
 			$("#cpxx_" + selectsku).html(con);
@@ -283,12 +285,11 @@
 	}
 
 	function loadData() {
+		var loading=weui.loading("加载中");
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?app/recommend/?node=1&openid=' + OPENID
 		}, function(ret, err) {
-			if (ret.data.length < 1) {
-				return false;
-			}
+		loading.hide();
 			var arrText = doT.template($("#interpolationtmpl").text());
 			$("#main").html(arrText(ret.data));
 			$('.pic').picLazyLoad();

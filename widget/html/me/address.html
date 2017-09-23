@@ -63,11 +63,11 @@
         </style>
     </head>
     <body>
-        <header style="position: fixed;" id="showPicker" class="page__bd page__bd_spacing">
+        <header>
             <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">收货地址</span>
             <div class="add" ontouchend="address();"  style="float:right;line-height:30px; margin-right:5%;">新增 </div>
         </header>
-        <div class="page__bd content" id="contents" style="margin-top:68px!important;" >
+        <div class="page__bd content" id="contents" >
 
 
                 <div id="main">
@@ -133,7 +133,7 @@
             api.ajax({
                 url : 'http://www.d-shang.com/index.php?phone/getaddress/?openid=' + OPENID,
             }, function(ret, err) {
-              
+
                 var arrText = doT.template($("#addtpl").text());
                 $("#main").html(arrText(ret.data));
             });

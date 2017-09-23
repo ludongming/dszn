@@ -8,10 +8,12 @@
     <title>顶上宅配</title>
     <link rel="stylesheet" href="../../css/weui.min.css">
     <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" type="text/css" href="../../css/mescroll.min.css" />
     <link rel="stylesheet" href="../../css/header.css" />
     <link rel="stylesheet" href="../../css/dszp.css" />
+<style>
 
+</style>
 </head>
 
 <body>
@@ -19,11 +21,12 @@
         <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span id="title" class="title" style="text-align: center;">顶上宅配</span>
     </header>
     <div class="page__bd content" id="content">
+      <div class="mescroll" id="mescroll">
 
         <div id="main"></div>
 
-
     </div>
+</div>
     <script id="interpolationtmpl" type="text/x-dot-template">
         {{~it:value:index}}
         <div class="list">
@@ -62,8 +65,8 @@
 <script src="../../script/wolf.js"></script>
 <script src="../../script/dszp.js"></script>
 
-<script type="text/javascript" src="../../script/dropload.min.js"></script>
-<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="../../script/mescroll.js"></script>
+<script type="text/javascript" src="../../script/dszp.picLazyLoad.min.js"></script>
 <script type="text/javascript">
     var me;
     var OPENID;
@@ -74,10 +77,9 @@
             key: 'openid'
         });
         setDrop();
-        loadLastDesgin();
     }
 
-    function loadLastDesgin() {
+    function loadLastDesgin(mescroll) {
 
         api.ajax({
             url: 'http://www.dszpvip.com/index.php?love/getlastlove',
@@ -90,6 +92,7 @@
             },
             timeout: 5
         }, function(ret, err) {
+            mescroll.endSuccess();
             if (ret) {
                 var d = ret.data;
                 var arrText = doT.template($("#interpolationtmpl").text());
@@ -99,10 +102,7 @@
                 alert(JSON.stringify(err));
             }
 
-            if (me != undefined) {
-                me.resetload();
 
-            }
 
         });
 
@@ -175,22 +175,17 @@
 
 
     function setDrop() {
-        $('.content').dropload({
-            scrollArea: window,
-            autoLoad: true,
-            domUp: {
-                domClass: 'dropload-down',
-                domRefresh: '<div class="dropload-refresh">↑下拉更新</div>',
-                domLoad: '<div class="dropload-load"><span class="loading"></span>数据加载中</div>',
-                domNoData: '<div class="dropload-noData">已刷新</div>'
-            },
-            loadUpFn: function(mes) {
-                me = mes;
-                loadLastDesgin();
-            },
-            threshold: 50
-        });
 
+      var	 mescroll= new MeScroll("mescroll", {
+    				down: {
+              offset:100,
+              outOffsetRate:0.1,
+              isLock:false,
+    					callback: function(mm){
+                loadLastDesgin(mescroll);
+              }
+          	}
+    			});
     }
 </script>
 

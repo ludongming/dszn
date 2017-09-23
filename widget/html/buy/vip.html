@@ -10,6 +10,8 @@
 		<link rel="stylesheet" href="../../css/header.css">
 		<link rel="stylesheet" href="../../css/gouwutc.css">
 		<link rel="stylesheet" href="../../css/buygoods.css">
+		<link rel="stylesheet" href="../../css/mescroll.min.css">
+
 		<style>
 		</style>
 	</head>
@@ -19,10 +21,10 @@
 			<span style="text-align: center; margin-left: 15%;">VIP</span>
 		</header>
 		<div class="page__bd content">
-			<div>
+			<div class="mescroll">
 				<div id="main">
-					数据加载中
 				</div>
+			</div>
 				<div class="tcwrap" id="tcwrap">
 					<div class="tcmain" id="tcmain">
 						<button class="tcclose" onclick="closeTc()"></button>
@@ -76,15 +78,11 @@
 	<script type="text/javascript" src="../../script/wolf.js"></script>
 	<script type="text/javascript" src="../../script/doT.min.js"></script>
 	<script type="text/javascript" src="../../script/weui.min.js"></script>
-	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript" src="../../script/dszp.picLazyLoad.min.js"></script>
 	<script type="text/javascript">
 		var OPENID;
 		apiready = function() {
-			var systemType = api.systemType;
-			if (systemType == "ios") {
-				$(".back").css("top", "23px");
-				$(".content").css("top", "60px");
-			}
+
 			OPENID = api.getPrefs({
 				sync : true,
 				key : 'openid'
@@ -99,12 +97,12 @@
 			vip();
 		};
 		function vip() {
+			var loading=weui.loading("加载中");
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?appbuy/getgoodsbyremark/?remark=vip&openid=' + OPENID
 			}, function(ret, err) {
-				if (ret.data.length < 1) {
-					return false;
-				}
+
+      	loading.hide();
 				var arrText = doT.template($("#interpolationtmpl").text());
 				$("#main").html(arrText(ret.data));
 				$('.pic').picLazyLoad();
