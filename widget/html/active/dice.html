@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" href="../../css/weui.min.css">
+		<link rel="stylesheet" href="../../css/header.css" />
+		<style>
+			body {
+				background: #fff;
+			}
+    .desk{
+    	border:6px solid #855124;
+			background:#075639;
+			width:95%;
+			margin:0 auto;
+			height:300px;
+			text-align: center;
+			position: relative;
+    }
+
+
+    .kuai{position: absolute;
+			left:50px;
+			bottom:30px;border-radius: 10px;width:80%;margin:0 auto;margin-top:30px;border:2px solid #649a67;height:120px;text-align: center;}
+		.gezi{
+			color:#b4c842;
+			width:49%;
+			float:left;
+			height: 120px;
+			line-height: 116px;
+			font-size:2em;
+			font-weight: 700;
+		}
+
+    .ziti{
+
+    }
+		</style>
+	</head>
+
+  <body>
+    <header>
+      <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">押宝房</span>
+    </header>
+    <div class="page__bd content">
+<div id="main">
+<div class="desk">
+<img src="../../image/heguan.png" style="width:150px;">
+	<div class="kuai">
+	<div class="gezi xiao" style="border-right:2px solid #649a67;">小</div>
+	<div class="gezi da">大</div>
+   </div>
+
+</div>
+<div style="width:100%;">
+1、点击小或者大进行投注。<br>
+2、最大投注为30金豆。<br>
+3、每10人投注自动开奖。<br>
+</div>
+
+
+</div>
+    </div>
+
+
+  </body>
+  </html>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/weui.min.js"></script>
+  <script type="text/javascript" src="../../script/wolf.js"></script>
+  <script type="text/javascript" src="../../script/zepto.min.js"></script>
+  <script type="text/javascript" src="../../script/doT.min.js"></script>
+  <script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../../script/dropload.js"></script>
+  <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script>
+var OPENID;
+
+apiready=function(){
+setTopBar();
+  OPENID = api.getPrefs({
+    sync : true,
+    key : 'openid'
+  });
+
+}
+
+function setPirce(price){
+
+
+}
+</script>
