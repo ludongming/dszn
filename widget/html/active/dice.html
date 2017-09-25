@@ -1,96 +1,195 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link rel="stylesheet" href="../../css/weui.min.css">
-		<link rel="stylesheet" href="../../css/header.css" />
-		<style>
-			body {
-				background: #fff;
-			}
-    .desk{
-    	border:6px solid #855124;
-			background:#075639;
-			width:95%;
-			margin:0 auto;
-			height:300px;
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" href="../../css/weui.min.css">
+	<link rel="stylesheet" href="../../css/header.css" />
+	<style>
+		body {
+			background: #fff;
+		}
+
+		.desk {
+			border: 6px solid #855124;
+			background: #075639;
+			width: 95%;
+			margin: 0 auto;
+			height: 300px;
 			text-align: center;
 			position: relative;
-    }
+		}
 
 
-    .kuai{position: absolute;
-			left:50px;
-			bottom:30px;border-radius: 10px;width:80%;margin:0 auto;margin-top:30px;border:2px solid #649a67;height:120px;text-align: center;}
-		.gezi{
-			color:#b4c842;
-			width:49%;
-			float:left;
+		.kuai {
+			left: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 10px;
+			width: 80%;
+			margin: 0 auto;
+			border: 2px solid #649a67;
 			height: 120px;
-			line-height: 116px;
-			font-size:2em;
+			text-align: center;
+		}
+
+		.gezi {
+			color: #b4c842;
+			width: 49%;
+			float: left;
+			height: 120px;
+
+			font-size: 2em;
 			font-weight: 700;
 		}
 
-    .ziti{
+		.score a {
+			color: #fff;
+			margin: 2px;
+			border: 1px solid #fff;
+		}
+		.titlebtn{
+			width: 100%;
+		}
+		.titlebtn a{
+			float: left;
+			color:#000;
+			margin: 3px;
+			font-size: 1.2em;
+		}
+	</style>
+</head>
 
-    }
-		</style>
-	</head>
+<body>
+	<header>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">押宝房</span>
+	</header>
+	<div class="page__bd content">
+		<div id="main">
+			<div class="desk">
+				<img src="../../image/heguan.png" style="width:150px;">
+				<div class="kuai">
+					<div class="gezi xiao" style="border-right:2px solid #649a67;">小
+						<div class="score"><a href="javascript:confirmScore(1,10);" class="select">10</a><a href="javascript:confirmScore(1,20);" class="select">20</a><a href="javascript:confirmScore(1,30);" class="select">30</a></div>
+					</div>
+					<div class="gezi da">大
+						<div class="score"><a href="javascript:confirmScore(6,10);" class="select">10</a><a href="javascript:confirmScore(6,20);" class="select">20</a><a href="javascript:confirmScore(6,30);" class="select">30</a></div>
+					</div>
+				</div>
 
-  <body>
-    <header>
-      <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">押宝房</span>
-    </header>
-    <div class="page__bd content">
-<div id="main">
-<div class="desk">
-<img src="../../image/heguan.png" style="width:150px;">
-	<div class="kuai">
-	<div class="gezi xiao" style="border-right:2px solid #649a67;">小</div>
-	<div class="gezi da">大</div>
-   </div>
+			</div>
+			<div class="titlebtn">
+				<a href="javascript:newRank();">最新押注</a>
+				<a href="javascript:winRank();">押注结果</a>
+				<a href="javascript:selfRank();">押注历史</a>
+			</div>
+			<div  class="rank" style="width:100%;">
 
-</div>
-<div style="width:100%;">
-1、点击小或者大进行投注。<br>
-2、最大投注为30金豆。<br>
-3、每10人投注自动开奖。<br>
-</div>
+			</div>
 
 
-</div>
-    </div>
+		</div>
+	</div>
 
 
-  </body>
-  </html>
-  <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript" src="../../script/weui.min.js"></script>
-  <script type="text/javascript" src="../../script/wolf.js"></script>
-  <script type="text/javascript" src="../../script/zepto.min.js"></script>
-  <script type="text/javascript" src="../../script/doT.min.js"></script>
-  <script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
-  <script type="text/javascript" src="../../script/dropload.js"></script>
-  <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+</body>
+
+</html>
+<script type="text/javascript" id="new_rank">
+
+</script>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/dropload.js"></script>
+<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script>
-var OPENID;
+	var OPENID;
 
-apiready=function(){
-setTopBar();
-  OPENID = api.getPrefs({
-    sync : true,
-    key : 'openid'
-  });
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
 
+	}
+
+	function confirmScore(code,money) {
+		api.confirm({
+			title: '确定',
+			msg: '买定离手？',
+			buttons: ['确定', '取消']
+		}, function(ret, err) {
+			var index = ret.buttonIndex;
+			if(index==1){
+				api.ajax({
+					url: 'http://www.d-shang.com/index.php?appdice/addtickets',
+					method: "post",
+					data: {
+						values: {
+							openid:OPENID,
+							code: code,
+							money: money
+						}
+					}
+				}, function(ret) {
+
+				api.toast({msg:ret.message})
+				});
+			}
+		});
+	}
+
+function newRank(){
+api.ajax({
+    url: 'http://www.d-shang.com/index.php?appdice/getlastdice/?openid='+OPENID,
+    method: 'post',
+
+}, function(ret, err) {
+    if (ret) {
+      console.log(JSON.stringify(ret));
+    } else {
+        api.alert({ msg: JSON.stringify(err) });
+    }
+});
+}
+function winRank(){
+	api.ajax({
+	    url: 'http://www.d-shang.com/index.php?appdice/getalldicebystatus/?openid='+OPENID,
+	    method: 'post',
+
+	}, function(ret, err) {
+	    if (ret) {
+	        console.log(JSON.stringify(ret));
+	    } else {
+	        api.alert({ msg: JSON.stringify(err) });
+	    }
+	});
+}
+function selfRank(){
+	api.ajax({
+	    url: 'http://www.d-shang.com/index.php?appdice/getalldicebyuid/?openid='+OPENID,
+	    method: 'post',
+
+	}, function(ret, err) {
+	    if (ret) {
+	      console.log(JSON.stringify(ret));
+	    } else {
+	        api.alert({ msg: JSON.stringify(err) });
+	    }
+	});
 }
 
-function setPirce(price){
 
 
-}
 </script>
