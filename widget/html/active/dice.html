@@ -82,6 +82,7 @@ line-height: 30px;
 		.beanall{
 			position:absolute;top:5px; right:0px; z-index:99; color:#fff; padding:3px 15px 3px 15px;font-size:1.1em;
 		}
+
 	</style>
 </head>
 
@@ -104,10 +105,16 @@ line-height: 30px;
 				</div>
 
 			</div>
-			<div class="titlebtn">
+			<div class="explain" style="border-bottom: 1px solid #888;">
+				1、点击小或者大进行投注。<br>
+				2、最大投注为30金豆。<br>
+				3、每10人投注自动开奖。<br>
+			</div>
+			<div class="titlebtn" style="margin-top:10px;">
 				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">最新押注</a>
-				<a href="javascript:winRank();" class="select " onclick="addBorder(this)">押注结果</a>
-				<a href="javascript:selfRank();" class="select " onclick="addBorder(this)">押注历史</a>
+					<a href="javascript:selfRank();" class="select " onclick="addBorder(this)">我的押注</a>
+				<a href="javascript:winRank();" class="select " onclick="addBorder(this)">赌王</a>
+
 				<div class="clear"></div>
 			</div>
 
@@ -143,7 +150,7 @@ line-height: 30px;
 	<div class="weui-cell__hd"><img src="{{=value.headimgurl}}" alt="" class="pic"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
-		<p style="color: red; font-style: bold;">{{=value.status}}</p>
+		<p style="color: red; font-style: bold;">{{=value.money}}</p>
 		<div class="detial"><p>{{=value.code}}</p></div>
 	</div>
 </div>
@@ -175,8 +182,8 @@ nowbean();
 
 	function confirmScore(code,money) {
 		api.confirm({
-			title: '确定',
-			msg: '买定离手？',
+			title: '买定离手',
+			msg: '确认下押'+money+'金豆？',
 			buttons: ['确定', '取消']
 		}, function(ret, err) {
 			var index = ret.buttonIndex;
@@ -193,13 +200,13 @@ nowbean();
 					}
 				}, function(ret) {
 
-				api.toast({msg:ret.message})
+				api.toast({msg:ret.message});
+				newRank();
+				nowbean();
 				});
 			}
 		});
 	}
-
-
 
 
 //最新排行
@@ -216,7 +223,7 @@ api.ajax({
 		for(var i=0;i<data.length;i++){
 				var imgurl = data[i].headimgurl;
 				if(imgurl){
-					console.log(imgurl);
+
 					imgurl = imgurl.substring(0, imgurl.length - 1);
 					imgurl += '64';
 					data[i].headimgurl=imgurl;
@@ -247,6 +254,7 @@ function winRank(){
 			loading.hide();
 	    if (ret) {
 				var data=ret.data;
+				console.log(JSON.stringify(data));
 				for(var i=0;i<data.length;i++){
 				var imgurl = data[i].headimgurl;
 				if(imgurl){
