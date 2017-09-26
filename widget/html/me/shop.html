@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="../../css/header.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/gift.css" />
-
 	<style>
 		body {
 			background-color: #f8f8f8 !important;
@@ -240,10 +239,7 @@ nowbean();
 		}, function(ret, err) {
 			var user = ret.data;
 			var  coupons = parseInt(user.coupons);
-
 			$(".beancount").html(coupons);
-
-
 		});
 	}
 

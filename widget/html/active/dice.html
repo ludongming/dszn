@@ -55,17 +55,32 @@
 		}
 		.titlebtn{
 			width: 100%;
+text-align: center;
+margin: auto;
+line-height: 30px;
+
 		}
 		.titlebtn a{
 			float: left;
 			color:#000;
-			margin: 3px;
+			margin: 5px;
 			font-size: 1.2em;
+			line-height:30px;
+
+
+		}
+		.clear{
+			clear: both;
 		}
 		.detial{
 			font-size: 0.7em;
 			color: #626262;
-
+		}
+		.checked{
+			color:#f00 !important;
+		}
+		.beanall{
+			position:absolute;top:5px; right:0px; z-index:99; color:#fff; padding:3px 15px 3px 15px;font-size:1.1em;
 		}
 	</style>
 </head>
@@ -77,6 +92,7 @@
 	<div class="page__bd content">
 		<div id="main">
 			<div class="desk">
+				<div class="beanall" style="">金豆<span class="beancount"></span>个</div>
 				<img src="../../image/heguan.png" style="width:150px;">
 				<div class="kuai">
 					<div class="gezi xiao" style="border-right:2px solid #649a67;">小
@@ -89,11 +105,13 @@
 
 			</div>
 			<div class="titlebtn">
-				<a href="javascript:newRank();">最新押注</a>
-				<a href="javascript:winRank();">押注结果</a>
-				<a href="javascript:selfRank();">押注历史</a>
+				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">最新押注</a>
+				<a href="javascript:winRank();" class="select " onclick="addBorder(this)">押注结果</a>
+				<a href="javascript:selfRank();" class="select " onclick="addBorder(this)">押注历史</a>
+				<div class="clear"></div>
 			</div>
-			<div  class="rank" style="width:100%;">
+
+			<div class="rank" style="width:100%;">
 						<div class="weui-cells">
 
 						</div>
@@ -107,17 +125,33 @@
 </body>
 
 </html>
-<script type="text/javascript" id="rank">
+<script type="text/javascript" id="newrank">
+{{~it:value:index}}
 <div class="weui-cell">
-	<div class="weui-cell__hd"><img src="" alt=""></div>
-	<div class="weui-cell__bd"><p>标题文字</p></div>
+	<div class="weui-cell__hd"><img src="{{=value.headimgurl}}" alt="" class="pic"></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
-		<p style="color: red; font-style: bold;">押注</p>
-		<div class="detial"><p>金豆数量</p></div>
+		<p style="color: red; font-style: bold;">{{=value.code}}({{=value.status}})</p>
+		<div class="detial"><p>{{=value.money}}个金豆</p></div>
 	</div>
 </div>
+{{~}}
+</script>
+<script type="text/javascript" id="winrank">
+{{~it:value:index}}
+<div class="weui-cell">
+	<div class="weui-cell__hd"><img src="{{=value.headimgurl}}" alt="" class="pic"></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
+	<div class="weui-cell__ft">
+		<p style="color: red; font-style: bold;">{{=value.status}}</p>
+		<div class="detial"><p>{{=value.code}}</p></div>
+	</div>
+</div>
+{{~}}
 </script>
 
+{{~}}
+</script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/weui.min.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
@@ -135,7 +169,8 @@
 			sync: true,
 			key: 'openid'
 		});
-
+newRank();
+nowbean();
 	}
 
 	function confirmScore(code,money) {
@@ -164,46 +199,129 @@
 		});
 	}
 
+
+
+
+//最新排行
 function newRank(){
+	var loading = weui.loading("拼命加载中...");
 api.ajax({
     url: 'http://www.d-shang.com/index.php?appdice/getlastdice/?openid='+OPENID,
     method: 'post',
 
 }, function(ret, err) {
+		loading.hide();
     if (ret) {
-      console.log(JSON.stringify(ret));
+					var data=ret.data;
+		for(var i=0;i<data.length;i++){
+				var imgurl = data[i].headimgurl;
+				if(imgurl){
+					console.log(imgurl);
+					imgurl = imgurl.substring(0, imgurl.length - 1);
+					imgurl += '64';
+					data[i].headimgurl=imgurl;
+				}
+				if(data[i].code==1){
+					data[i].code="小";
+				}else{
+						data[i].code="大";
+				}
+				data[i].money=parseInt(data[i].money);
+		}
+		var arrText = doT.template($("#newrank").text());
+		$(".weui-cells").html(arrText(data));
+	$('.pic').picLazyLoad();
     } else {
         api.alert({ msg: JSON.stringify(err) });
     }
 });
 }
+
 function winRank(){
+	var loading = weui.loading("拼命加载中...");
 	api.ajax({
 	    url: 'http://www.d-shang.com/index.php?appdice/getalldicebystatus/?openid='+OPENID,
 	    method: 'post',
 
 	}, function(ret, err) {
+			loading.hide();
 	    if (ret) {
-	        console.log(JSON.stringify(ret));
+				var data=ret.data;
+				for(var i=0;i<data.length;i++){
+				var imgurl = data[i].headimgurl;
+				if(imgurl){
+				console.log(imgurl);
+				imgurl = imgurl.substring(0, imgurl.length - 1);
+				imgurl += '64';
+				data[i].headimgurl=imgurl;
+				}
+				if(data[i].code==1){
+				data[i].code="小";
+				}else{
+					data[i].code="大";
+				}
+				}
+
+
+				var arrText = doT.template($("#winrank").text());
+				$(".weui-cells").html(arrText(data));
+	$('.pic').picLazyLoad();
+
 	    } else {
 	        api.alert({ msg: JSON.stringify(err) });
 	    }
 	});
 }
 function selfRank(){
+	var loading = weui.loading("拼命加载中...");
 	api.ajax({
 	    url: 'http://www.d-shang.com/index.php?appdice/getalldicebyuid/?openid='+OPENID,
 	    method: 'post',
-
 	}, function(ret, err) {
+			loading.hide();
 	    if (ret) {
-	      console.log(JSON.stringify(ret));
+				var data=ret.data;
+
+				for(var i=0;i<data.length;i++){
+				var imgurl = data[i].headimgurl;
+				if(imgurl){
+				console.log(imgurl);
+				imgurl = imgurl.substring(0, imgurl.length - 1);
+				imgurl += '64';
+				data[i].headimgurl=imgurl;
+				}
+				if(data[i].code==1){
+				data[i].code="小";
+				}else{
+					data[i].code="大";
+				}
+					data[i].money=parseInt(data[i].money);
+				}
+				var arrText = doT.template($("#newrank").text());
+				$(".weui-cells").html(arrText(data));
+				$('.pic').picLazyLoad();
+
 	    } else {
 	        api.alert({ msg: JSON.stringify(err) });
 	    }
 	});
 }
-
+function addBorder(obj) {
+		var a = $(".select");
+		$.each(a, function() {
+				$(this).removeClass("checked");
+		});
+		$(obj).addClass("checked");
+}
+function nowbean(){
+	api.ajax({
+		url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+	}, function(ret, err) {
+		var user = ret.data;
+		var  coupons = parseInt(user.coupons);
+		$(".beancount").html(coupons);
+	});
+}
 
 
 </script>
