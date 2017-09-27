@@ -40,8 +40,4 @@
     <param name="android_api_key" value="cda44ddd75abc6effc0f5d1d804a6f56"/>
     <param name="ios_api_key" value="b4d6b2f6dd1ef2e1f74ea4eae8ad4618"/>
   </feature>
-  <feature name="hanvonCloudBcardReader ">
-    <param name="androidkey" value="be0ccb10-d63c-4c98-bd10-2b9a6648f779"/>
-    <param name="iOSkey" value="71498490-6023-4f84-adb5-c35e543934d4"/>
-  </feature>
 </widget>
