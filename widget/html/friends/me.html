@@ -175,7 +175,7 @@
 		}
 
 		function bigImage(image) {
-			console.log(image);
+
 			var photoBrowser = api.require('photoBrowser');
 			photoBrowser.open({
 				images : [image],
@@ -247,6 +247,7 @@
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=' + page + '&openid=' + OPENID + "&uid=" + UID
 			}, function(ret, err) {
+				
 				var d = ret.data;
 					var arrText = doT.template($("#interpolationtmpl").text());
 					$("#main").append(arrText(ret.data));
