@@ -1,258 +1,211 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
-		<link rel="stylesheet" href="../../css/faxian.css">
-		<link rel="stylesheet" href="../../css/dropload.css">
 
-		<style>
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;">
-	<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i>			<span class="tit" style="text-align: center;">动态</span>
-		</header>
-		<div class="page__bd content">
-			<div id="main"></div>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<meta name="full-screen" content="yes">
+	<meta name="x5-fullscreen" content="true">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/header.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mescroll.min.css" />
+	<link rel="stylesheet" href="../../css/prismplayer.css">
+
+	<link rel="stylesheet" href="../../css/faxian.css">
+	<link rel="stylesheet" href="../../css/gift.css">
+
+	<style>
+	html,body{ height:100%; }
+		.gift {
+			bottom: 0;
+		}
+
+		.nav .active {
+			color: red;
+			height: 20px;
+		}
+			/*避免mescroll设置padding的时候出现两个滚动条*/
+
+	</style>
+</head>
+<header style="position: fixed;">
+<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i>			<span class="tit" style="text-align: center;">我的动态</span>
+</header>
+<div class="page__bd content">
+	<div class="prism-player" id="J_prismPlayer"></div>
+
+					<div class="recommendmain">
+
+						<div id="recommendmain"></div>
+
 		</div>
-	</body>
-	<!--地址模板-->
-	<script id="interpolationtmpl" type="text/x-dot-template">
-		{{~it:value:index}}
-		<div class="list" id="list_{{=value.id}}">
-		<div class="info">
-		<div class="head">
-		<img src="../../image/default.jpg"  data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
-		</div>
-		<div class="username">{{=value.real_name}}
-		<span class="mp">{{=value.address}}</span></div>
-		<div class="pub_time">{{=value.rq}}</div>
-		</div>
-		{{?value.isvideo==1}}
-	<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
-	<img src="../../image/play.png" class="videocontroll">
-	<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic" >
+
+
+
 	</div>
+	<div class="gift">
+		<div class="topbar">
+			<a href="javascript:;" class="nav active">礼物</a>
+			<span class="zf">送给 <span id="zfname"></span></span>
+
+			<a href="javascript:;" class="nav" onclick="closeGift()" style="float:right;margin-right:10px;font-size:1.2em;">X</a>
+
+		</div>
+		<div id="giftcon"></div>
+		<div class="tools">
+			<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金豆</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
+		</div>
+	</div>
+</body>
+
+<!--剪贴板-->
+<div id="clip">
+<div id="cliparrow"></div>
+<div id="cliptext">
+	复制
+</div>
+</div>
+<!--地址模板-->
+<script id="interpolationtmpl" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="list">
+		<div class="info">
+			<div class="head" onclick="user({{=value.uid}})">
+				<img src="../../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
+{{?value.global!=""}}
+<div class="global">{{=value.global}}</div>
+{{?}}
+			</div>
+			<div class="username" style="display:inline-block;max-width:100px;overflow:hidden; white-space:nowrap; ">{{=value.real_name}}
+				<span class="mp">{{=value.address}}</span>
+			</div>
+			<div class="pub_time">{{=value.rq}}</div>
+		</div>
+		<div class="imagebg">
+			{{?value.isvideo==1}}
+		<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com{{=value.video}}">
+		<img src="../../image/play.png" class="videocontroll">
+		<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic">
+		</div>
 
 {{??}}
-	<div class="image">
+		<div class="image">
 <img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic"  onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
 </div>
-	{{?}}
-		<div class="message">{{=value.content}}</div>
-		<div class="tip">
-		<div class="dingwei">
-		{{?value.flower>0}} {{=value.flower}}人点赞 {{?}}
-		</div>
-		<div class="tool" style="position:relative;">
-		{{?value.isself==true}}
-		<img src="../../image/del.png" style="right:5px;width:25px;height:25px;position:absolute;" onclick="delblog({{=value.id}})">
-    {{?}}
-		</div>
-		</div>
-
-
-		{{?value.flower>0}}
-		<div class="comment">
-			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}<span>
-			{{=value.flowers[i].real_name}}{{?i==value.flower-1}}{{??}},{{?}}
-					</span>
-					{{ } }} 点赞了哦
-			</div>
-		</div>
 		{{?}}
+		</div>
+		<div class="message">{{=value.content}}</div>
+<!--礼物-->
 		{{?value.giftnum>0}}
 		<div class="reply">
 			{{ for(var i=0, catlen=value.giftnum; i
 			<catlen; i++) { }} <div class="replylist">
 
-				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}MP
+				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}豆子
 		</div>
-
 		{{ } }}
+	</div>
+	{{?}}
+
+	<div style="border-bottom:1px #f5f5f5 solid;width:95%;margin:0 auto;height:2px;margin-bottom:10px;">
+	</div>
+
+		<div class="tip">
+			<div class="dingwei">
+			{{?value.flower>0}}	<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
+		</div>
+		<div class="tool" style="position:relative;">
+
+		{{?value.isvideo==1}}
+		<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
+{{??}}
+<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
+{{?}}
+
+				<img src="../../image/songli.png" class="toolimage" style="right:60px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
+
+				<img src="../../image/zan{{=value.isflower}}.png" style="right:10px;" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
+
+			</div>
+		</div>
+		{{?value.flower>0}}
+		<div class="comment">
+			<div class="commentlist"><span class="commentfirst"></span>{{ for(var i=0,catlen=value.flowers.length; i<catlen; i++) { }}
+			{{?i>0}},{{?}}
+			{{=value.flowers[i].real_name}}
+
+					{{ } }} 点赞了哦
+			</div>
 		</div>
 		{{?}}
-		</div>
-		{{~}}
-	</script>
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript" src="../../script/wolf.js"></script>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../../script/doT.min.js"></script>
-	<script type="text/javascript" src="../../script/faxian.js"></script>
-	<script type="text/javascript" src="../script/fx.js"></script>
-	<script type="text/javascript" src="../../script/dropload.min.js"></script>
-	<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		var isDrop = false;
-		var me;
-		var page = 1;
-		var REPLYID = 0;
-		var UID;
-		apiready = function() {
-			setTopBar();
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			});
 
-			var params = api.pageParam;
-			UID = params.uid;
-			loadData();
-		};
 
-    function delblog(id){
-			api.confirm({
-			    title: '确认删除',
-			    msg: '删除后不可恢复',
-			    buttons: ['容我三思', '心意已决']
-			}, function(ret, err){
-			    if( ret.buttonIndex==1 ){
-			        return false;
-			    }
-					api.ajax({
-							url: 'http://www.d-shang.com/index.php?blog/removeblogbyid/?openid='+OPENID,
-							method: 'post',
-							data: {
-									values: {
-											id: id
-									}
-							}
-					},function(ret, err){
-
-							if (ret.status) {
-									 $("#list_"+id).remove();
-							}
-							api.toast({
-									msg: ret.message,
-									duration: 2000,
-									location: 'middle'
-							});
-
-					});
-
-			});
+	</div>
+	{{~}}
+</script>
+<!--礼物-->
+<script id="giftlist" type="text/x-dot-template">
+	{{~it:value:index}}
+	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
+		<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
+		<span class="boxname">{{=value.name}}</span>
+		<span class="boxmoney">{{=value.money}}金豆</span>
+	</div>
+	{{~}}
+</script>
 
 
 
 
-		}
 
-    function add(){
-			api.openWin({
-			    name: 'add',
-			    url: './add.html',
-			    pageParam: {
-			        name: 'test'
-			    },
-					animation: {
-							type: "movein", //动画类型（详见动画类型常量）
-							subType: "from_bottom", //动画子类型（详见动画子类型常量）
-							duration: 300 //动画过渡时间，默认300毫秒
-					},
-			});
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/mescroll.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/gift.js"></script>
+<script type="text/javascript" src="../../script/fx.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
+<script type="text/javascript" src="../../script/faxian.js"></script>
 
-		}
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	var REPLYID = 0;
+	var ADDRESS;
+	var mySwiper;
+	var UID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+  UID=api.pageParam.uid;
+    initPlayer();
+		loadGift();
+	  refresh();
+	}
 
-		function goback(){
-		 api.closeWin({
-         });
-		}
-		function pinglun(id) {
-			if (REPLYID > 0) {
-				$(".pl" + REPLYID).hide();
-			}
-			REPLYID = id;
-			$(".pl" + id).show();
-			$("#text" + id).focus();
-		}
+	function refresh() {
 
-		function bigImage(image) {
-			console.log(image);
-			var photoBrowser = api.require('photoBrowser');
-			photoBrowser.open({
-				images : [image],
-				placeholderImg : 'widget://res/img/apicloud.png',
-				bgColor : '#000'
-			}, function(ret, err) {
-				if (ret.eventType == "click") {
-					photoBrowser.close();
-				}
-			});
-		}
-
-		function addComment() {
-			var comment = $("#text" + REPLYID).val();
-			if (comment == "") {
-				alert("不能为空，写点什么吧!");
-				return false;
-			}
-			$("#text" + REPLYID).val("");
-			$(".pl" + REPLYID).hide();
 			api.ajax({
-				url : 'http://www.d-shang.com/index.php?blog/addcomment/?openid=' + OPENID,
-				data : {
-					values : {
-						nid : REPLYID,
-						comment : comment
-					}
-				},
-				method : "post"
-			}, function(ret, err) {
-				if (!ret.status) {
-					alert(ret.message);
-				} else {
-					$(".commentfirst").before(ret.data + ":" + comment + "<br>");
-				}
-			});
-		}
-
-		function refresh() {
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=' + page + '&openid=' + OPENID + "&uid=" + UID
+				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=1&openid=' + OPENID + "&uid=" + UID
 			}, function(ret, err) {
 				var d = ret.data;
 				var arrText = doT.template($("#interpolationtmpl").text());
-				$("#main").html(arrText(ret.data));
+				$("#recommendmain").html(arrText(ret.data));
 				$('.pic').picLazyLoad();
-				me.resetload();
-			});
-		}
-
-		function zan(nid) {
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?blog/flower/?openid=' + OPENID + "&nid=" + nid
-			}, function(ret, err) {
-				$(".zan_" + nid).html(ret.data.flower + "人点赞");
-			});
-		}
-
-		function friend() {
-			api.openWin({
-				name : 'friend',
-				url : './friends/add.html'
 			});
 		}
 
 
-		function loadData() {
 
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?blog/getblogbyuid/?p=' + page + '&openid=' + OPENID + "&uid=" + UID
-			}, function(ret, err) {
-				var d = ret.data;
-					var arrText = doT.template($("#interpolationtmpl").text());
-					$("#main").append(arrText(ret.data));
-					$('.pic').picLazyLoad();
+</script>
 
-			});
-		}
-	</script>
 </html>

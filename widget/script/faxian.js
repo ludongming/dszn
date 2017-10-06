@@ -412,6 +412,7 @@ function refresh() {
 
 
 function dropDownRecommend(type) {
+    rq();
   	var	 mescroll= new MeScroll("mescroll", {
   				down: {
             offset:100,

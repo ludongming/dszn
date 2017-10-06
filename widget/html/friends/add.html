@@ -294,6 +294,8 @@
 			weui.alert("没有上传");
 			return false;
 		}
+
+
 		var con = $("#con").val();
 		var address = $(".address").html();
 		api.showProgress({
@@ -311,11 +313,12 @@
 					address: address
 				},
 				files: {
-					file: FILE
-				}
-			},
-			report: false
+					"file": FILE
+				},
+				report:false
+			}
 		}, function(ret, err) {
+
 			if (ret.status) {
 				api.hideProgress();
 				$("#con").val("");
@@ -339,7 +342,7 @@
 			mediaValue: type,
 			destinationType: 'url',
 			allowEdit: false,
-			quality: 90,
+			quality: 80,
 			videoQuality: "high",
 			saveToPhotoAlbum: false
 		}, function(ret, err) {
@@ -370,6 +373,7 @@
 			}
 
 			if (ret) {
+				console.log("xuanzetup"+FILE);
 				MEDIA_TYPE = "image";
 				var con = "<img src='" + ret.data + "' style='max-width:100px;max-height:100px;vertical-align:middle;'>";
 				$(".camera").html(con);
