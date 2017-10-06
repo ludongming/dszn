@@ -264,6 +264,7 @@
 	}
 
 	function addlocation() {
+
 		var aMapLBS = api.require('aMapLBS');
 		aMapLBS.configManager({
 			accuracy: 'hundredMeters',
@@ -318,7 +319,6 @@
 				report:false
 			}
 		}, function(ret, err) {
-
 			if (ret.status) {
 				api.hideProgress();
 				$("#con").val("");
@@ -327,11 +327,10 @@
 				user();
 			} else {
 				api.hideProgress();
-
-				weui.alert(ret.message);
-
+				weui.alert(JSON.stringify(ret.msg));
 			}
 		});
+
 	}
 
 	function getPic(type) {
@@ -346,7 +345,7 @@
 			videoQuality: "high",
 			saveToPhotoAlbum: false
 		}, function(ret, err) {
-
+					console.log(JSON.stringify(ret));
 			//判断视频是否超过10s
 			if (type == 'video' && ret.duration > 10) {
 
@@ -377,6 +376,7 @@
 				MEDIA_TYPE = "image";
 				var con = "<img src='" + ret.data + "' style='max-width:100px;max-height:100px;vertical-align:middle;'>";
 				$(".camera").html(con);
+
 			}
 		});
 	}

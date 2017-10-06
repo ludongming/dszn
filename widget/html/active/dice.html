@@ -135,7 +135,7 @@ line-height: 30px;
 <script type="text/javascript" id="newrank">
 {{~it:value:index}}
 <div class="weui-cell">
-	<div class="weui-cell__hd"><img src="{{=value.headimgurl}}" alt="" class="pic" style="border-radius:64px;"></div>
+	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/default.png"  class="pic" style="border-radius:64px; width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
@@ -156,7 +156,7 @@ line-height: 30px;
 <script type="text/javascript" id="winrank">
 {{~it:value:index}}
 <div class="weui-cell">
-	<div class="weui-cell__hd"><img src="{{=value.headimgurl}}" alt="" class="pic" style="border-radius:64px;"></div>
+	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/default.png" class="pic" style="border-radius:64px;  width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
 		<p style="color: red; font-style: bold;">{{=value.money}}豆</p>
