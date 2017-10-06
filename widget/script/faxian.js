@@ -232,6 +232,30 @@ function bigImage(image) {
     });
 }
 
+function fans(uid,id){
+  $("#fans_"+id).html("已关注");
+  api.toast({
+      msg: '关注成功',
+      duration: 2000,
+      location: 'middle'
+  });
+
+  api.ajax({
+      url: 'http://www.d-shang.com/index.php?appfans/addfans',
+      method: 'post',
+      data: {
+          values: {
+              openid: OPENID,
+              uid:uid
+          }
+      }
+  },function(ret, err){
+
+  });
+
+}
+
+
 function me() {
     api.openWin({
         name: 'user',

@@ -151,11 +151,11 @@
 		</div>
 
 
-		<div class="menu" onclick="alert('马不停蹄开发中')">
+		<div class="menu" onclick="fensi()">
 			<div class="img">
 				<img src="../../image/souchang.png" width="30px;">
 			</div>
-			我的收藏
+			我的粉丝
 		</div>
 
 		<div class="menu" onclick="user()">
@@ -196,6 +196,21 @@
 		api.openWin({
 			name: 'me',
 			url: './me.html',
+			pageParam: {
+				uid: UID
+			},
+			animation: {
+				type: "push", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			}
+		});
+	}
+
+	function fensi() {
+		api.openWin({
+			name: 'fans',
+			url: './fans.html',
 			pageParam: {
 				uid: UID
 			},

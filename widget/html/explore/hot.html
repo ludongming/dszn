@@ -77,10 +77,10 @@
 <div class="global">{{=value.global}}</div>
 {{?}}
 			</div>
-			<div class="username" style="display:inline-block;max-width:100px;overflow:hidden; white-space:nowrap; ">{{=value.real_name}}
-				<span class="mp">{{=value.address}}</span>
+			<div class="username">{{=value.real_name}}
+				<span class="mp">{{=value.rq}} {{=value.address}}</span>
 			</div>
-			<div class="pub_time">{{=value.rq}}</div>
+			<div class="pub_time" onclick="fans({{=value.uid}},{{=value.id}})" id="fans_{{=value.id}}">{{=value.fans}}</div>
 		</div>
 		<div class="imagebg">
 			{{?value.isvideo==1}}
