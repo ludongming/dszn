@@ -236,7 +236,7 @@ line-height: 30px;
 			key: 'openid'
 		});
 
-		$(".box").bind("click",notice);
+
 newRank();
 nowbean();
 	}
@@ -268,9 +268,11 @@ nowbean();
 			}
 		});
 	}
-function notice(){
-	var a=$(this);
-	console.log(a);
+
+
+	$(".box").bind("click", function(){
+      var code=$(this).children(".sz").text()
+
 	var dialogBox = api.require('dialogBox');
 dialogBox.share({
     rect: {
@@ -304,19 +306,21 @@ dialogBox.share({
     }
 }, function(ret) {
 	var bean=ret.index+1;
-	if(bean<5){
-		money=5*bean;
-	}else if(bean==5){
-		money=30;
+
+	if(bean==1){
+		 var money=10;
+	}else if(bean==2){
+	 var	money=20;
 	}
 	else{
-		money=50;
+	 var	money=30;
 	}
 		confirmScore(code,money);
 
 		dialogBox.close();
+
 });
-}
+});
 
 
 //最新排行
