@@ -15,35 +15,36 @@
 		}
 
 		.desk {
-			border: 6px solid #855124;
+			border-top: 6px solid #855124;
+			border-bottom: 6px solid #855124;
 			background: #075639;
-			width: 95%;
+			width: 100%;
 			margin: 0 auto;
-			height: 350px;
+			height: 420px;
 			text-align: center;
 			position: relative;
 		}
 
 
 		.kuai {
-			left: 50px;
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-			flex-wrap: wrap;
 			border-radius: 10px;
-			width: 90%;
+			width: 95%;
 			margin: 0 auto;
 			border: 2px solid #649a67;
-			height: 185px;
+			height: 200px;
 			text-align: center;
 		}
-			.kuai a{
-				width: 20%;
+			.box{
+				margin-left:10px;
+				margin-top:5px;
+				width: 40px;
+				height:80px;
+				line-height: 40px;
 				border:1px solid #fff;
-				color: #fff;
+				float:left;
 			}
-
+			.sz{width:100%;text-align: center;color:#fff;font-size:1.3em;font-weight: 700}
+			.bl{color:yellow!important;}
 		.titlebtn{
 			width: 100%;
 text-align: center;
@@ -72,12 +73,10 @@ line-height: 30px;
 		}
 		.beanall{
 			position:absolute;top:5px; right:0px; z-index:99; color:#fff; padding:3px 15px 3px 15px;font-size:1.1em;
-					border-radius: 15px;
 					border:1px solid #cb885e;
 					display: flex;
 					align-items: center;
 					justify-content: center;
-
 		}
 		.beancount{
 
@@ -92,51 +91,86 @@ line-height: 30px;
 	<div class="page__bd content">
 		<div id="main">
 			<div class="desk">
-				<div class="beanall">		<img src="../../image/num/chouma.png" style="width:25px; "><div class="beancount"></div>个</div>
+				<div class="beanall">
+					<img src="../../image/num/chouma.png" style="width:25px; "><div class="beancount"></div>个</div>
 				<img src="../../image/shaizi.png" style="width:170px; margin-top:30px;">
 				<div class="kuai">
-						<a href="javascript:notice(11)">11</a>
-						<a href="javascript:notice(111)">111</a>
-						<a href="javascript:notice(1111)">1111</a>
-						<a href="javascript:notice(11111)">11111</a>
-						<a href="javascript:notice(22)">22</a>
-						<a href="javascript:notice(222)">222</a>
-						<a href="javascript:notice(2222)">2222</a>
-						<a href="javascript:notice(22222)">22222</a>
-						<a href="javascript:notice(33)">33</a>
-						<a href="javascript:notice(333)">333</a>
-						<a href="javascript:notice(3333)">3333</a>
-						<a href="javascript:notice(33333)">33333</a>
-						<a href="javascript:notice(44)">44</a>
-						<a href="javascript:notice(444)">444</a>
-						<a href="javascript:notice(4444)">4444</a>
-						<a href="javascript:notice(44444)">44444</a>
-						<a href="javascript:notice(55)">55</a>
-						<a href="javascript:notice(555)">555</a>
-						<a href="javascript:notice(5555)">5555</a>
-						<a href="javascript:notice(55555)">55555</a>
-						<a href="javascript:notice()" style="color:yellow">×2倍</a>
-						<a href="javascript:notice()" style="color:yellow">×3倍</a>
-						<a href="javascript:notice()" style="color:yellow">×4倍</a>
-						<a href="javascript:notice()" style="color:yellow">×5倍</a>
+						<div class="box">
+							<span class="sz">4</span>
+             <span class="bl">1:50</span>
+					 </div>
+					 <div class="box">
+						<span class="sz">5</span>
+						<span class="bl">1:18</span>
+					</div>
+					<div class="box">
+						<span class="sz">6</span>
+					 <span class="bl">1:14</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">7</span>
+					 <span class="bl">1:12</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">8</span>
+					 <span class="bl">1:8</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">9</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">10</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">11</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">12</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">13</span>
+					 <span class="bl">1:8</span>
+				 </div>
+				 <div class="box">
+					 <span class="sz">14</span>
+					<span class="bl">1:12</span>
+				</div>
+				<div class="box">
+					 <span class="sz">15</span>
+					<span class="bl">1:14</span>
+				</div>
+				<div class="box">
+					 <span class="sz">16</span>
+					<span class="bl">1:18</span>
+				</div>
+				<div class="box">
+					 <span class="sz">17</span>
+					<span class="bl">1:50</span>
 				</div>
 
+				</div>
 			</div>
 			<div class="explain" style="border-bottom: 1px solid #888;">
-				1、点击小或者大进行投注。<br>
-				2、最大投注为50金豆。<br>
-				3、每10人投注自动开奖。<br>
+				1、你压的和三个骰子的和比较<br>
+				2、相同则按照点数下方的赔率给你<br>
+				3、如你压了30金豆17点，三个筛子的和是17点，那么将赔付给你1500金豆<br>
+				4、每10人开奖<br>
+				5、金豆必须要大于50才能玩<br>
+
 			</div>
 			<div class="titlebtn" style="margin-top:10px;">
 				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">最新押注</a>
-					<a href="javascript:selfRank();" class="select " onclick="addBorder(this)">我的押注</a>
-				<a href="javascript:winRank();" class="select " onclick="addBorder(this)">赌王</a>
+					<a href="javascript:selfRank();" class="select" onclick="addBorder(this)">我的押注</a>
+				<a href="javascript:winRank();" class="select" onclick="addBorder(this)">赌王</a>
 				<div class="clear"></div>
 			</div>
 
 			<div class="rank" style="width:100%;">
 						<div class="weui-cells">
-
 						</div>
 			</div>
 
@@ -191,7 +225,7 @@ line-height: 30px;
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
 <script type="text/javascript" src="../../script/dropload.js"></script>
-<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
 <script>
 	var OPENID;
 
@@ -201,6 +235,8 @@ line-height: 30px;
 			sync: true,
 			key: 'openid'
 		});
+
+		$(".box").bind("click",notice);
 newRank();
 nowbean();
 	}
@@ -232,35 +268,28 @@ nowbean();
 			}
 		});
 	}
-function notice(code){
+function notice(){
+	var a=$(this);
+	console.log(a);
 	var dialogBox = api.require('dialogBox');
 dialogBox.share({
     rect: {
         w: 250,
-        h: 250
+        h: 150
     },
     items: [{
-        text: '押5金豆',
+        text: '押10金豆',
         icon: 'widget://image/num/1.png'
     }, {
-        text: '押10金豆',
+        text: '押20金豆',
         icon: 'widget://image/num/21.png'
     }, {
-        text: '押15金豆',
-        icon: 'widget://image/num/31.png'
-    }, {
-        text: '押20金豆',
-        icon: 'widget://image/num/3.png'
-    }, {
         text: '押30金豆',
-        icon: 'widget://image/num/3.png'
-    }, {
-        text: '押50金豆',
-        icon: 'widget://image/num/61.png'
+        icon: 'widget://image/num/31.png'
     }],
 		tapClose:true,
     styles: {
-        bg: '#FFF',
+        bg: '#fff',
         column: 3,
         horizontalSpace: 15,
         verticalSpace: 30,
