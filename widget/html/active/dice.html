@@ -31,7 +31,7 @@
 			width: 95%;
 			margin: 0 auto;
 			border: 2px solid #649a67;
-			height: 200px;
+
 			text-align: center;
 		}
 			.box{
@@ -151,7 +151,7 @@ line-height: 30px;
 					 <span class="sz">17</span>
 					<span class="bl">1:50</span>
 				</div>
-
+<div class="clear"></div>
 				</div>
 			</div>
 			<div class="explain" style="border-bottom: 1px solid #888;">
@@ -336,11 +336,7 @@ api.ajax({
 		for(var i=0;i<data.length;i++){
 
 
-				if(data[i].code==1){
-					data[i].code="小";
-				}else{
-						data[i].code="大";
-				}
+
 				data[i].money=parseInt(data[i].money);
 		}
 		var arrText = doT.template($("#newrank").text());
@@ -385,11 +381,7 @@ function selfRank(){
 				for(var i=0;i<data.length;i++){
 
 
-				if(data[i].code==1){
-				data[i].code="小";
-				}else{
-					data[i].code="大";
-				}
+				
 					data[i].money=parseInt(data[i].money);
 				}
 				var arrText = doT.template($("#newrank").text());
