@@ -187,7 +187,7 @@ line-height: 30px;
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
-		<p style="color: orange; font-style: bold;">{{=value.status}}({{=value.result}})</p>
+		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
 		{{?}}
 		{{?value.status=="中奖"}}
 			<p style="color: red; font-style: bold;">{{=value.status}}({{=value.result}})</p>
@@ -314,8 +314,11 @@ dialogBox.share({
 	 var	money=30;
 	}
 		confirmScore(code,money);
+		var dialogBox = api.require('dialogBox');
 
-		dialogBox.close();
+		dialogBox.close({
+	    dialogName: 'share'
+	});
 
 });
 });
@@ -335,11 +338,7 @@ api.ajax({
 		for(var i=0;i<data.length;i++){
 
 
-				if(data[i].code==1){
-					data[i].code="小";
-				}else{
-						data[i].code="大";
-				}
+
 				data[i].money=parseInt(data[i].money);
 		}
 		var arrText = doT.template($("#newrank").text());
@@ -384,11 +383,7 @@ function selfRank(){
 				for(var i=0;i<data.length;i++){
 
 
-				if(data[i].code==1){
-				data[i].code="小";
-				}else{
-					data[i].code="大";
-				}
+
 					data[i].money=parseInt(data[i].money);
 				}
 				var arrText = doT.template($("#newrank").text());
