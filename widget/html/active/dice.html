@@ -155,11 +155,9 @@ line-height: 30px;
 				</div>
 			</div>
 			<div class="explain" style="border-bottom: 1px solid #888;">
-				1、你压的和三个骰子的和比较<br>
-				2、相同则按照点数下方的赔率给你<br>
-				3、如你压了30金豆17点，三个筛子的和是17点，那么将赔付给你1500金豆<br>
-				4、每10人开奖<br>
-				5、金豆必须要大于50才能玩<br>
+				玩法提示：你压30金豆在17，开奖后三个骰子点数相加和正好是17，那么将赔付50倍金豆，你能获得1500金豆<br>
+				玩法提示：每10人开奖<br>
+				玩法提示：金豆必须要大于50才能玩<br>
 
 			</div>
 			<div class="titlebtn" style="margin-top:10px;">
@@ -189,14 +187,14 @@ line-height: 30px;
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
-		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
+		<p style="color: orange; font-style: bold;">{{=value.status}}({{=value.result}})</p>
 		{{?}}
 		{{?value.status=="中奖"}}
-			<p style="color: red; font-style: bold;">{{=value.status}}</p>
+			<p style="color: red; font-style: bold;">{{=value.status}}({{=value.result}})</p>
 			{{?}}
 
 			{{?value.status=="未中奖"}}
-				<p style="color: #666; font-style: bold;">{{=value.status}}</p>
+				<p style="color: #666; font-style: bold;">{{=value.status}}({{=value.result}})</p>
 				{{?}}
 		<div class="detial"><p>{{=value.money}}金豆(押{{=value.code}})</p></div>
 	</div>
@@ -363,16 +361,6 @@ function winRank(){
 			loading.hide();
 	    if (ret) {
 				var data=ret.data;
-				for(var i=0;i<data.length;i++){
-
-
-				if(data[i].code==1){
-				data[i].code="小";
-				}else{
-					data[i].code="大";
-				}
-				}
-
 
 				var arrText = doT.template($("#winrank").text());
 				$(".weui-cells").html(arrText(data));
