@@ -248,7 +248,7 @@ width: 47%;
 			<div class="explain" style="border-bottom: 1px solid #888;">
 				玩法提示：你压30金豆在17，开奖后三个骰子点数相加和正好是17，那么将赔付50倍金豆，你能获得1500金豆<br>
 				玩法提示：每10人开奖<br>
-				玩法提示：金豆必须要大于50才能玩<br>
+				玩法提示：喊麦需要10金豆<br>
 			</div>
 			<div class="titlebtn" style="margin-top:10px;">
 				<a href="javascript:history();" class="select checked" onclick="addBorder(this)">中奖结果</a>
@@ -611,12 +611,14 @@ function callFriend(uid){
 			    }
 			}, function(ret, err) {
 			    if (ret) {
-						api.toast({msg:ret.message});
 			      nowbean();
 			    } else {
-			        api.alert({ msg: JSON.stringify(err) });
+			      api.toast({msg:ret.message});
 			    }
 			});
+
+			api.toast({msg:"喊麦成功"});
+
 		}
 	});
 
