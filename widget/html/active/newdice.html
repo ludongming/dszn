@@ -240,7 +240,7 @@ width: 47%;
 				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">本局押注</a>
 				<a href="javascript:history();" class="select" onclick="addBorder(this)">中奖结果</a>
 					<a href="javascript:selfRank();" class="select" onclick="addBorder(this)">我的押注</a>
-				<a href="javascript:winRank();" class="select" onclick="addBorder(this)">赌王</a>
+				<a href="javascript:winRank();" class="select" onclick="addBorder(this)">土豪榜</a>
 				<div class="clear"></div>
 			</div>
 
@@ -274,13 +274,22 @@ width: 47%;
 <div class="weui-cell">
 	<div class="weui-cell__hd">	<span class="rank1">{{=index+1}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
-	<img src="../../image/num/{{=value.money}}.png" width="40px" alt=""/>
+	<img src="../../image/num/{{=value.money}}.png" width="50px" alt=""/>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
 		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
 		{{?}}
+		{{?value.status=="中奖"}}
+			<p style="color: red; font-style: bold;">{{=value.status}}({{=value.result}})</p>
+		{{?value.percent}}
+			<div class="winning" style="transform:rotate(-10deg)"><div class="winning_small">{{=value.percent}}倍</div></div>
+			{{?}}
+			{{?}}
 
-		<div class="detial"><p>{{=value.money}}金豆(押{{=value.code}})</p></div>
+			{{?value.status=="未中奖"}}
+				<p style="color: #666; font-style: bold;">{{=value.status}}({{=value.result}})</p>
+				{{?}}
+		<div class="detial"><p>{{=value.level}}(押{{=value.code}})</p></div>
 	</div>
 </div>
 {{~}}
@@ -292,7 +301,7 @@ width: 47%;
 <script type="text/javascript" id="history">
 {{~it:value:index}}
 <div class="weui-cell">
-	<div class="weui-cell__hd">	<span class="rank1">{{=index+1}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
+	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
@@ -317,7 +326,7 @@ width: 47%;
 <script type="text/javascript" id="winrank">
 {{~it:value:index}}
 <div class="weui-cell">
-	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png" class="pic" style="border-radius:64px;  width:64px;"></div>
+	<div class="weui-cell__hd">	<span class="rank1">{{=index+1}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png" class="pic" style="border-radius:64px;  width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p style="color:#888;font-size:0.8em;">{{=value.level}}</p></div>
 
 <img src="../../image/hanmai.png" onclick="callFriend({{=value.uid}})" style="width:50px; float:left;" alt="" />
@@ -326,7 +335,7 @@ width: 47%;
 	<div class="weui-cell__ft">
 
 		<p style="color: red; font-style: bold;">{{=value.money}}豆</p>
-		<div class="detial"><p>第{{=index+1}}名</p></div>
+		<div class="detial"></div>
 	</div>
 </div>
 {{~}}
@@ -565,7 +574,7 @@ function getDiceRecord(){
 function callFriend(uid){
 	api.confirm({
 		title: '提示',
-		msg: '每次喊麦需要10金豆',
+		msg: '邀请朋友一起玩',
 		buttons: ['确定', '取消']
 	}, function(ret, err) {
 		var index = ret.buttonIndex;
@@ -574,8 +583,10 @@ function callFriend(uid){
 			    url: 'http://www.d-shang.com/index.php?appdice/callfriend/?openid='+OPENID,
 			    method: 'post',
 			    data: {
-			        openid:OPENID,
-							touid:uid
+			       values:{
+							 openid:OPENID,
+							 touid:uid
+						 }
 			    }
 			}, function(ret, err) {
 			    if (ret) {
@@ -599,6 +610,7 @@ function callFriend(uid){
 
 
 function addBorder(obj) {
+
 		var a = $(".select");
 		$.each(a, function() {
 				$(this).removeClass("checked");
