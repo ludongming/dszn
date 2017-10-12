@@ -29,19 +29,18 @@
 			width: 95%;
 			display: flex;
 			align-items: center;
-			justify-content: flex-start;
+			justify-content:  space-between;
 			border: 2px solid #649a67;
 			flex-wrap: wrap;
 			text-align: center;
 			margin: 0 auto;
 		}
-		
-			.box{
 
+			.box{
 				margin:3px;
-				width: 40px;
-				height:80px;
-				line-height: 40px;
+        border-radius: 5px;
+				height:50px;
+				line-height: 25px;
 				border:1px solid #fff;
 
 			}
@@ -52,10 +51,12 @@
 text-align: center;
 margin: auto;
 line-height: 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
 
 		}
 		.titlebtn a{
-			float: left;
 			color:#000;
 			margin: 5px;
 			font-size: 1.2em;
@@ -74,11 +75,14 @@ line-height: 30px;
 			color:#f00 !important;
 		}
 		.beanall{
-			position:absolute;top:5px; right:0px; z-index:99; color:#fff; padding:3px 15px 3px 15px;font-size:1.1em;
-					border:1px solid #cb885e;
+			position:absolute;top:0px;  z-index:9; color:#fff;
+
+			font-size:1.1em;
 					display: flex;
 					align-items: center;
-					justify-content: center;
+					justify-content:flex-start;
+          background-color: #649a67;
+          width: 100%;
 		}
 		.beancount{
 
@@ -112,6 +116,30 @@ font-size: 1.5em;
 			z-index: 2;
 		}
 
+.big{
+width: 47%;
+}
+
+.small{
+    width: 17%;
+}
+.middle{
+  width: 33%;
+}
+
+.shaizi{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.shaizi img{
+	width:50px;
+}
+
+.end{
+	color: #fff;
+}
+
 	</style>
 </head>
 
@@ -123,77 +151,94 @@ font-size: 1.5em;
 		<div id="main">
 			<div class="desk">
 				<div class="beanall">
-					<img src="../../image/num/chouma.png" style="width:25px; "><div class="beancount"></div>个</div>
-				<img src="../../image/shaizi.png" style="width:170px; margin-top:30px;">
-				<div class="kuai">
-						<div class="box">
+					<img src="../../image/chouma.png" style="width:25px; "><div class="beancount"></div>个
+        </div>
+				<!--<img src="../../image/shaizi.png" style="width:170px; margin-top:30px;">-->
+				<div class="kuai" style="margin-top:80px;">
+						<div class="box big">
 							<span class="sz">4</span>
-             <span class="bl">1:50</span>
+             <span class="bl">1赔50</span>
 					 </div>
-					 <div class="box">
-						<span class="sz">5</span>
-						<span class="bl">1:18</span>
-					</div>
-					<div class="box">
-						<span class="sz">6</span>
-					 <span class="bl">1:14</span>
-				 </div>
-				 <div class="box">
-						<span class="sz">7</span>
-					 <span class="bl">1:12</span>
-				 </div>
-				 <div class="box">
-						<span class="sz">8</span>
-					 <span class="bl">1:8</span>
-				 </div>
-				 <div class="box">
+           <div class="box big">
+   					 <span class="sz">17</span>
+   					<span class="bl">1赔50</span>
+   				</div>
+
+
+
+
+				 <div class="box small">
 						<span class="sz">9</span>
-					 <span class="bl">1:6</span>
+					 <span class="bl">1赔6</span>
 				 </div>
-				 <div class="box">
+				 <div class="box small">
 						<span class="sz">10</span>
-					 <span class="bl">1:6</span>
+					 <span class="bl">1赔6</span>
 				 </div>
-				 <div class="box">
+				 <div class="box small">
 						<span class="sz">11</span>
-					 <span class="bl">1:6</span>
+					 <span class="bl">1赔6</span>
 				 </div>
-				 <div class="box">
+				 <div class="box small">
 						<span class="sz">12</span>
-					 <span class="bl">1:6</span>
+					 <span class="bl">1赔6</span>
 				 </div>
-				 <div class="box">
+         <div class="box small">
+           <span class="sz">8</span>
+          <span class="bl">1赔8</span>
+        </div>
+				 <div class="box small">
 						<span class="sz">13</span>
-					 <span class="bl">1:8</span>
+					 <span class="bl">1赔8</span>
 				 </div>
-				 <div class="box">
+         <div class="box small">
+           <span class="sz">7</span>
+          <span class="bl">1赔12</span>
+        </div>
+				 <div class="box small">
 					 <span class="sz">14</span>
-					<span class="bl">1:12</span>
+					<span class="bl">1赔12</span>
 				</div>
-				<div class="box">
+        <div class="box small">
+          <span class="sz">6</span>
+         <span class="bl">1赔14</span>
+       </div>
+				<div class="box small">
 					 <span class="sz">15</span>
-					<span class="bl">1:14</span>
+					<span class="bl">1赔14</span>
 				</div>
-				<div class="box">
+        <div class="box big">
+         <span class="sz">5</span>
+         <span class="bl">1赔18</span>
+       </div>
+				<div class="box big">
 					 <span class="sz">16</span>
-					<span class="bl">1:18</span>
+					<span class="bl">1赔18</span>
 				</div>
-				<div class="box">
-					 <span class="sz">17</span>
-					<span class="bl">1:50</span>
-				</div>
+
 <div class="clear"></div>
 				</div>
+
+<div class="endshow"></div>
+
+</div>
+
 			</div>
+
+
+
+
+
+
+
 			<div class="explain" style="border-bottom: 1px solid #888;">
 				玩法提示：你压30金豆在17，开奖后三个骰子点数相加和正好是17，那么将赔付50倍金豆，你能获得1500金豆<br>
 				玩法提示：每10人开奖<br>
 				玩法提示：金豆必须要大于50才能玩<br>
-
 			</div>
 			<div class="titlebtn" style="margin-top:10px;">
-				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">最新押注</a>
-				<a href="javascript:history();" class="select" onclick="addBorder(this)">历史结果</a>
+				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">本局押注</a>
+				<a href="javascript:history();" class="select" onclick="addBorder(this)">中奖结果</a>
 					<a href="javascript:selfRank();" class="select" onclick="addBorder(this)">我的押注</a>
 				<a href="javascript:winRank();" class="select" onclick="addBorder(this)">赌王</a>
 				<div class="clear"></div>
@@ -212,28 +257,37 @@ font-size: 1.5em;
 </body>
 
 </html>
+<script type="text/javascript" id="end">
+<div class="end">
+	<div class="title">{{=it[0]}}</div>
+	<div class="shaizi">
+		<img src="../../image/shaizi/{{=it[2].split("")[0]}}.png" alt=""/>
+		<img src="../../image/shaizi/{{=it[2].split("")[1]}}.png" alt=""/>
+		<img src="../../image/shaizi/{{=it[2].split("")[2]}}.png" alt=""/>
+	</div>
+</div>
+</script>
+
+
 <script type="text/javascript" id="newrank">
 {{~it:value:index}}
 <div class="weui-cell">
 	<div class="weui-cell__hd">	<span class="rank1">{{=index+1}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
+	<img src="../../image/num/{{=value.money}}.png" width="40px" alt=""/>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
 		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
 		{{?}}
-		{{?value.status=="中奖"}}
-			<p style="color: red; font-style: bold;">{{=value.status}}({{=value.result}})</p>
-			<div class="winning" style="transform:rotate(-10deg)"><div class="winning_small">{{=value.percent}}倍</div></div>
-			{{?}}
 
-			{{?value.status=="未中奖"}}
-				<p style="color: #666; font-style: bold;">{{=value.status}}({{=value.result}})</p>
-				{{?}}
 		<div class="detial"><p>{{=value.money}}金豆(押{{=value.code}})</p></div>
 	</div>
 </div>
 {{~}}
 </script>
+
+
+
 
 <script type="text/javascript" id="history">
 {{~it:value:index}}
@@ -246,7 +300,9 @@ font-size: 1.5em;
 		{{?}}
 		{{?value.status=="中奖"}}
 			<p style="color: red; font-style: bold;">{{=value.status}}({{=value.result}})</p>
+	{{?value.percent}}
 			<div class="winning" style="transform:rotate(-10deg)"><div class="winning_small">{{=value.percent}}倍</div></div>
+			{{?}}
 			{{?}}
 
 			{{?value.status=="未中奖"}}
@@ -262,8 +318,13 @@ font-size: 1.5em;
 {{~it:value:index}}
 <div class="weui-cell">
 	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png" class="pic" style="border-radius:64px;  width:64px;"></div>
-	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p style="color:#888;font-size:0.8em;">{{=value.level}}</p></div>
+
+<img src="../../image/hanmai.png" onclick="callFriend({{=value.uid}})" style="width:50px; float:left;" alt="" />
+
+
 	<div class="weui-cell__ft">
+
 		<p style="color: red; font-style: bold;">{{=value.money}}豆</p>
 		<div class="detial"><p>第{{=index+1}}名</p></div>
 	</div>
@@ -291,7 +352,7 @@ font-size: 1.5em;
 			key: 'openid'
 		});
 
-
+getDiceRecord();
 newRank();
 nowbean();
 	}
@@ -315,7 +376,6 @@ nowbean();
 						}
 					}
 				}, function(ret) {
-
 				api.toast({msg:ret.message});
 				newRank();
 				nowbean();
@@ -336,13 +396,13 @@ dialogBox.share({
     },
     items: [{
         text: '押10金豆',
-        icon: 'widget://image/num/1.png'
+        icon: 'widget://image/num/10.png'
     }, {
         text: '押20金豆',
-        icon: 'widget://image/num/21.png'
+        icon: 'widget://image/num/20.png'
     }, {
         text: '押30金豆',
-        icon: 'widget://image/num/31.png'
+        icon: 'widget://image/num/30.png'
     }],
 		tapClose:true,
     styles: {
@@ -412,7 +472,7 @@ api.ajax({
 function history(){
 	var loading = weui.loading("拼命加载中...");
 api.ajax({
-    url: 'http://www.d-shang.com/index.php?appdice/getlastdice/?openid='+OPENID,
+    url: 'http://www.d-shang.com/index.php?appdice/getdicebystatus/?openid='+OPENID,
     method: 'post',
 }, function(ret, err) {
 		loading.hide();
@@ -450,6 +510,7 @@ function winRank(){
 			loading.hide();
 	    if (ret) {
 				var data=ret.data;
+
 				var arrText = doT.template($("#winrank").text());
 				$(".weui-cells").html(arrText(data));
 	$('.pic').picLazyLoad();
@@ -481,6 +542,62 @@ function selfRank(){
 	    }
 	});
 }
+
+function getDiceRecord(){
+	var loading = weui.loading("拼命加载中...");
+	api.ajax({
+	    url: 'http://www.d-shang.com/index.php?appdice/getdicerecord/?openid='+OPENID,
+	    method: 'post',
+	}, function(ret, err) {
+			loading.hide();
+	    if (ret) {
+			var data=ret.data;
+			var arrText = doT.template($("#end").text());
+			$(".endshow").html(arrText(data));
+			$('.pic').picLazyLoad();
+
+	    } else {
+	        api.alert({ msg: JSON.stringify(err) });
+	    }
+	});
+}
+
+function callFriend(uid){
+	api.confirm({
+		title: '提示',
+		msg: '每次喊麦需要10金豆',
+		buttons: ['确定', '取消']
+	}, function(ret, err) {
+		var index = ret.buttonIndex;
+		if(index==1){
+			api.ajax({
+			    url: 'http://www.d-shang.com/index.php?appdice/callfriend/?openid='+OPENID,
+			    method: 'post',
+			    data: {
+			        openid:OPENID,
+							touid:uid
+			    }
+			}, function(ret, err) {
+			    if (ret) {
+						api.toast({msg:ret.message});
+			      nowbean();
+			    } else {
+			        api.alert({ msg: JSON.stringify(err) });
+			    }
+			});
+		}
+	});
+
+
+
+
+
+
+
+}
+
+
+
 function addBorder(obj) {
 		var a = $(".select");
 		$.each(a, function() {
@@ -497,6 +614,4 @@ function nowbean(){
 		$(".beancount").html(coupons);
 	});
 }
-
-
 </script>
