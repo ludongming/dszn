@@ -41,7 +41,7 @@ function showQDBox() {
     var c = dialogBox.raffle({
         texts: {
             mainText: '+5枚豆子',
-            subText: '我离天空最近的一次\r\n是你把我高高地举过了你的肩头',
+            subText: '喜欢这种东西，捂住嘴巴\r\n也会从眼睛里跑出来。',
             rightTitle: '点击签到'
         },
         styles: {
@@ -56,7 +56,7 @@ function showQDBox() {
                 marginT: 10,
                 w: 200,
                 h: 154,
-                iconPath: 'widget://image/zaoan.jpg'
+                iconPath: 'widget://image/zaoan/zaoan2.jpg'
             },
             main: {
                 marginT: 10,
@@ -80,12 +80,8 @@ function showQDBox() {
             }
         }
     }, function(ret, err) {
-        var dialogBox = api.require('dialogBox');
-
+console.log(JSON.stringify(ret));
         if (ret.eventType == 'right') {
-            dialogBox.close({
-                dialogName: 'raffle'
-            });
 
             api.ajax({
                 url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
@@ -99,18 +95,16 @@ function showQDBox() {
                 daily();
             });
 
-
+            var dialogBox = api.require('dialogBox');
+            dialogBox.close({
+                dialogName: 'raffle'
+            });
             api.toast({
                 msg: '签到成功',
                 duration: 2000,
                 location: 'middle'
             });
 
-
-            var dialogBox = api.require('dialogBox');
-            dialogBox.close({
-                dialogName: 'taskPlan'
-            });
 
         }
     });
@@ -321,7 +315,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: '../active/daily.html',
+        url: '../active/clock.html',
         pageParam: {
             name: 'test'
         }
@@ -436,7 +430,9 @@ function refresh() {
 
 
 function dropDownRecommend(type) {
-    rq();
+
+
+
   	var	 mescroll= new MeScroll("mescroll", {
   				down: {
             offset:100,
@@ -450,6 +446,11 @@ function dropDownRecommend(type) {
 }
 
 function loadRecommendData(mescroll,type) {
+
+   if(type=="recommend"){
+       rq();
+   }
+
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
         timeout: 15,
