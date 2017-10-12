@@ -308,7 +308,31 @@ width: 47%;
 </div>
 {{~}}
 </script>
+<script type="text/javascript" id="selfRank">
+{{~it:value:index}}
+<div class="weui-cell">
+	<div class="weui-cell__hd">	<span class="rank2">{{=value.rq}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p style="color:#888;font-size:0.8em;">{{=value.level}}</p></div>
+	<img src="../../image/num/{{=value.money}}.png" width="50px" alt=""/>
+	<div class="weui-cell__ft">
+	{{?value.status=="等待开奖"}}
+		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
+		{{?}}
+		{{?value.status=="中奖"}}
+			<p style="color: red; font-style: bold;">{{=value.status}}({{=value.result}})</p>
+		{{?value.percent}}
+			<div class="winning" style="transform:rotate(-10deg)"><div class="winning_small">{{=value.percent}}倍</div></div>
+			{{?}}
+			{{?}}
 
+			{{?value.status=="未中奖"}}
+				<p style="color: #666; font-style: bold;">{{=value.status}}({{=value.result}})</p>
+				{{?}}
+		<div class="detial"><p>押{{=value.code}}</p></div>
+	</div>
+</div>
+{{~}}
+</script>
 
 
 
@@ -563,7 +587,7 @@ function selfRank(){
 				for(var i=0;i<data.length;i++){
 					data[i].money=parseInt(data[i].money);
 				}
-				var arrText = doT.template($("#newrank").text());
+				var arrText = doT.template($("#selfRank").text());
 				$(".weui-cells").html(arrText(data));
 				$('.pic').picLazyLoad();
 
