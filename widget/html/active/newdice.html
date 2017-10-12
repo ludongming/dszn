@@ -317,7 +317,7 @@ width: 47%;
 {{~it:value:index}}
 <div class="weui-cell">
 	<div class="weui-cell__hd"><span class="rank2">{{=value.rq}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
-	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p>{{=value.level}}</p></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p style="color:#888;font-size:0.8em;">{{=value.level}}</p></div>
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
 		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
