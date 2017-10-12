@@ -251,8 +251,8 @@ width: 47%;
 				玩法提示：金豆必须要大于50才能玩<br>
 			</div>
 			<div class="titlebtn" style="margin-top:10px;">
-				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">本局押注</a>
-				<a href="javascript:history();" class="select" onclick="addBorder(this)">中奖结果</a>
+				<a href="javascript:history();" class="select checked" onclick="addBorder(this)">中奖结果</a>
+				<a href="javascript:newRank();" class="select" onclick="addBorder(this)">本局押注</a>
 					<a href="javascript:selfRank();" class="select" onclick="addBorder(this)">我的押注</a>
 				<a href="javascript:winRank();" class="select" onclick="addBorder(this)">土豪榜</a>
 				<div class="clear"></div>
@@ -318,6 +318,8 @@ width: 47%;
 <div class="weui-cell">
 	<div class="weui-cell__hd"><span class="rank2">{{=value.rq}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p style="color:#888;font-size:0.8em;">{{=value.level}}</p></div>
+
+	<img src="../../image/hanmai.png" onclick="callFriend({{=value.uid}})" style="width:50px; float:left;" alt="" />
 	<div class="weui-cell__ft">
 	{{?value.status=="等待开奖"}}
 		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
@@ -381,7 +383,7 @@ width: 47%;
 		});
 
 getDiceRecord();
-newRank();
+history();
 nowbean();
 	}
 
