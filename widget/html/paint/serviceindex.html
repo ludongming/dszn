@@ -61,9 +61,9 @@
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		{{~it:value:index}}
 		<div class="picbox">
-			<a href="javascript:jump({{=value.id}},{{=value.cid}}) ">
-			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" class="pic">
-			</a>
+
+			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" onclick="bigImage('http://www.dszpvip.com/{{=value.thumb}}',0)" class="pic">
+
 			<div class="picname">{{=value.title}}</div>
 		</div>
 		{{~}}
@@ -73,6 +73,7 @@
 	<script src="../../script/wolf.js"></script>
 	<script src="../../script/doT.min.js"></script>
 	<script src="../../script/weui.min.js"></script>
+	<script src="../../script/dszp.js"></script>
 	<script type="text/javascript" src="../../script/dropload.min.js"></script>
 	<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
 	<script type="text/javascript">
@@ -122,6 +123,7 @@
 			api.ajax({
 				url: url
 			}, function(ret, err) {
+				console.log(JSON.stringify( ret.data.newslist));
 				var d = ret.data.newslist;
 				if (d.length == 0) {
 					me.lock();

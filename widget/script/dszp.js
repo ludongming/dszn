@@ -30,6 +30,7 @@ function bigImage(image,index) {
       photoBrowser.getImage({
           index: 0
       }, function(ret, err) {
+        console.log(JSON.stringify(ret));
           if (ret) {
               saveImage(ret.path);
           } else {
