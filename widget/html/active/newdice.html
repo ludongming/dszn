@@ -20,7 +20,7 @@
 			background: #075639;
 			width: 100%;
 			margin: 0 auto;
-			height: 420px;
+			height: 450px;
 			text-align: center;
 			position: relative;
 		}
@@ -167,8 +167,8 @@ width: 47%;
 				<div class="beanall">
 					<img src="../../image/chouma.png" style="width:25px; "><div class="beancount"></div>个
         </div>
-				<!--<img src="../../image/shaizi.png" style="width:170px; margin-top:30px;">-->
-				<div class="kuai" style="margin-top:80px;">
+				<img src="../../image/22.png" style="width:80%; margin-top:40px;">
+				<div class="kuai" style="margin-top:5px;">
 						<div class="box big">
 							<span class="sz">4</span>
              <span class="bl">1赔50</span>
@@ -288,9 +288,15 @@ width: 47%;
 <div class="weui-cell">
 
 
-	<div class="weui-cell__hd">	<span class="rank1">{{=index+1}}</span><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
+	<div class="weui-cell__hd">	<span class="rank1">{{=index+1}}</span>
+
+  <img data-original="{{=value.headimgurl}}" alt=""   class="pic" style=" border:1px solid #000;border-radius:64px; width:64px;">
+
+  </div>
 	<div class="weui-cell__bd"><p>{{=value.real_name}}</p><p style="color:#888;font-size:0.8em;">{{=value.level}}</p></div>
-	<img src="../../image/num/{{=value.money}}.png" width="50px" alt=""/>
+{{?value.money}}
+  <img src="../../image/num/{{=value.money}}.png" width="50px" alt=""/>
+  {{?}}
 	<div class="weui-cell__ft">
 
 		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
@@ -496,7 +502,7 @@ api.ajax({
         jiqiren.level="";
         jiqiren.headimgurl="";
         jiqiren.status="等待加入";
-        jiqiren.money=1;
+
       newArray.push(jiqiren);
 
 
