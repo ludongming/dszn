@@ -46,13 +46,13 @@
 
 				<div class="list" data-url="./goods/index.html" data-name="product" data-vip="1">
 						<img src="../image/chanpinku.png">
-						<span class="mp">门票:5金豆/天</span>
+						<span class="mp">门票:10金豆/天</span>
 				</div>
 
 
 			<div class="list" data-url="./design/hot.html" data-name="design" data-vip="1">
 						<img src="../image/diaodingqiangmian.png">
-						<span class="mp">门票:5金豆/天</span>
+						<span class="mp">门票:15金豆/天</span>
 				</div>
 
 				<div class="list"  data-url="./paint/serviceindex.html" data-name="program" data-vip="1">
@@ -123,7 +123,7 @@
 			},
 			method:'post'
 		}, function(ret, err) {
-console.log(JSON.stringify(ret));
+
 			if (ret.status) {
 				weui.toast(ret.message, {
 					duration : 1000,

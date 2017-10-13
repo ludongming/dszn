@@ -15,10 +15,6 @@
 		background-color: white;
 	}
 
-	.content {
-		width: 100%;
-		margin-top: 50px;
-	}
 
 	.picbox {
 		width: 50%;
@@ -62,7 +58,7 @@
 		{{~it:value:index}}
 		<div class="picbox">
 
-			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" onclick="bigImage('http://www.dszpvip.com/{{=value.thumb}}',0)" class="pic">
+			<img src="../../image/defaultimage.png" data-original="http://www.dszpvip.com/{{=value.thumb}}" onclick="bigImage('http://www.dszpvip.com/{{=value.pic}}',0)" class="pic">
 
 			<div class="picname">{{=value.title}}</div>
 		</div>
