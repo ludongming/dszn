@@ -62,6 +62,8 @@ function saveImageGallery(image){
   api.ajax({
       url: 'http://www.d-shang.com/index.php?app/downloadpic/?openid='+OPENID,
   },function(ret, err){
+    console.log(JSON.stringify(ret));
+
       if (ret.status) {
 
         api.saveMediaToAlbum({
@@ -79,8 +81,6 @@ function saveImageGallery(image){
         });
 
 
-      } else {
-        alert( ret.message);
       }
   });
 

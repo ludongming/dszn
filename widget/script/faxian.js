@@ -315,7 +315,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: '../active/daily.html',
+        url: '../active/clock.html',
         pageParam: {
             name: 'test'
         }
@@ -353,26 +353,40 @@ function circleloading(bfb) {
 function saveImage(image) {
     api.confirm({
         title: '提示',
-        msg: '保存图片到手机',
+        msg: '保存图片到手机20金豆',
         buttons: ['确定', '取消']
     }, function(ret, err) {
         var index = ret.buttonIndex;
         if (index == 1) {
-            api.saveMediaToAlbum({
-                path: image
-            }, function(ret, err) {
-                if (ret && ret.status) {
-                    api.toast({
-                        msg: '保存成功',
-                        duration: 1000,
-                        location: 'bottom'
-                    });
-                } else {
-                    alert('保存失败');
-                }
-            });
+saveImageMoney(image);
         }
     });
+
+}
+
+function saveImageMoney(image){
+  api.ajax({
+      url: 'http://www.d-shang.com/index.php?app/downloadpic/?openid='+OPENID,
+  },function(ret, err){
+      if (ret.status) {
+
+        api.saveMediaToAlbum({
+            path: image
+        }, function(ret, err) {
+            if (ret && ret.status) {
+                api.toast({
+                    msg: '保存成功',
+                    duration: 1000,
+                    location: 'bottom'
+                });
+            } else {
+                alert('保存失败');
+            }
+        });
+
+
+      }
+  });
 
 }
 
