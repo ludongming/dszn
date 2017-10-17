@@ -315,7 +315,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: '../active/daily.html',
+        url: '../active/buy.html',
         pageParam: {
             name: 'test'
         }
