@@ -41,12 +41,39 @@ background:#fff;
 <script type="text/javascript">
 	var jpush = null;
 	apiready = function() {
-
+		exitApp();
 		funIniGroup();
 		setMenu();
 	   initJPPush();
 
 	}
+
+	function exitApp() {
+	        api.addEventListener({
+	                name: 'keyback'
+	        }, function(ret, err) {
+	                api.toast({
+	                        msg: '再按一次返回键退出',
+	                        duration: 2000,
+	                        location: 'bottom'
+	                });
+
+	                api.addEventListener({
+	                        name: 'keyback'
+	                }, function(ret, err) {
+	                        api.closeWidget({
+	                                silent: true
+	                        });
+	                });
+
+	                setTimeout(function() {
+	                        exitApp();
+	                }, 2000)
+	        });
+	}
+
+
+
 
 	function funIniGroup() {
 		var frames=new Array();
