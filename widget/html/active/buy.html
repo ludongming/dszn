@@ -13,10 +13,55 @@
 
 	<style>
 		body {
-			background: #fff;
+			background-color: #f7f7f7!important;
 		}
 
-	.floor{width:100%;height:100px;}
+		.floor {
+			width: 100%;
+			height: 80px;
+		}
+
+		.floor {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			border: 1px solid #ccc;
+			font-size: 0.9em;
+			background-color: #fff;
+		}
+
+		.floor img {
+			width: 15%;
+			margin: 5px;
+		}
+
+		.price {
+			color: rgb(255,81,0);
+border:1px solid rgb(255,81,0);
+font-size: 0.8em;
+border-radius:3px;
+margin-left: 5px;
+		}
+
+		.js {
+			width: 60%;
+		}
+
+		.money {
+			width: 15%;
+		}
+
+		.money a {
+			color: #000;
+			display: block;
+			border: 1px solid #ccc;
+			text-align: center;
+			border-radius: 5px;
+		}
+		.title{
+			margin-top: 10px;
+			font-size: 1.1em;
+		}
 	</style>
 </head>
 
@@ -25,93 +70,90 @@
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">24小时</span>
 	</header>
 	<div class="page__bd content">
+		<div class="task">
 
+			<div class="title picbag"></div>
+			<span class="price">￥1299金豆</span>
+		<div class="floor red">
+			<img src="../../image/zaoan/1.jpg">
+			<div class="js">餐厅、厨房、卫生间、客厅、活动等9大分类，2300张精选图片
+			</div>
+			<div class="money">
+				<a href="javascript:buy('pic')">订购></a>
 
-  <div class="floor red">
-		<img src="../../image/zaoan/1.jpg" style="width:80px;">
-		<div class="js">
-    9月照片数据包
-	<br>(餐厅、厨房、卫生间、客厅、活动等9大分类，2300张精选图片)
+			</div>
+		</div>
 </div>
-<div class="money">
-	仅售399金豆。
-<a  href="javascript:void(1)">订购</a>
+
+		<div class="task">
+			<div class="title videobag"></div>
+			<span class="price">￥1199金豆</span>
+			<div class="floor">
+				<img src="../../image/zaoan/2.jpg">
+				<div class="js">198个短视频，朗逸喷水，滴油实验，泡水实验等视频
+				</div>
+				<div class="money">
+					<a href="javascript:buy('video')">订购></a>
+
+				</div>
+			</div>
+		</div>
+
+
+<div class="task">
+	<div class="title">每日分享</div>
+	<span class="price">限时免费</span>
+		<div class="floor">
+			<img src="../../image/zaoan/3.jpg">
+			<div class="js">客户私人定制案例，详细介绍风格、特色、布局
+			</div>
+			<div class="money">
+				<a href="javascript:openDaily()">进入></a>
+
+			</div>
+		</div>
 </div>
-	</div>
 
-	<div class="floor">
-		<img src="../../image/zaoan/2.jpg" style="width:80px;">
 
-		<div class="js">
-			9月微拍数据包
-	<br>  (198个短视频，朗逸喷水，滴油实验，泡水实验等视频)
-	</div>
 
-		<div class="money">
-			仅售599金豆。
-		<a  href="javascript:void(1)">订购</a>
+<div class="task">
+	<div class="title">点赞礼包</div>
+		<div class="floor">
+			<img src="../../image/zaoan/4.jpg">
+
+			<div class="js">每天给他人点5个赞，额外可获得20金豆。
+			</div>
+
+			<div class="money">
+				<a href="javascript:receive('zan')">领取></a>
+			</div>
 		</div>
-  </div>
+</div>
 
-
-	<div class="floor">
-		<img src="../../image/zaoan/3.jpg" style="width:80px;">
-
-		<div class="js">
-			每日分享
-	<br>  客户私人定制案例，详细介绍风格、特色、布局
-	</div>
-
-		<div class="money">
-			限时免费
-		<a  href="javascript:void(1)">进入</a>
+<div class="task">
+	<div class="title">送礼物</div>
+		<div class="floor">
+			<img src="../../image/zaoan/4.jpg">
+			<div class="js">每天给他人点2朵鲜花，额外可获得20金豆。
+			</div>
+			<div class="money">
+				<a href="javascript:receive('flower')">领取></a>
+			</div>
 		</div>
-  </div>
+</div>
 
 
-	<div class="floor">
-		<img src="../../image/zaoan/4.jpg" style="width:80px;">
-
-		<div class="js">
-			点赞礼包
-	<br>  每天给他人点5个赞，额外可获得20金豆。
-	</div>
-
-		<div class="money">
-		<a  href="javascript:void(1)">领取</a>
+<div class="task">
+	<div class="title">发图奖励</div>
+		<div class="floor">
+			<img src="../../image/zaoan/4.jpg">
+			<div class="js">每天发一张图，额外可获得20金豆。
+			</div>
+			<div class="money">
+				<a href="javascript:receive('share')">领取></a>
+			</div>
 		</div>
-	</div>
-
-	</div>
-
-	<div class="floor">
-		<img src="../../image/zaoan/4.jpg" style="width:80px;">
-
-		<div class="js">
-			送礼物
-	<br>  每天给他人点2朵鲜花，额外可获得20金豆。
-	</div>
-
-		<div class="money">
-		<a  href="javascript:void(1)">领取</a>
-		</div>
-	</div>
-
-	</div>
-
-
-	<div class="floor">
-		<img src="../../image/zaoan/4.jpg" style="width:80px;">
-
-		<div class="js">
-			发图奖励
-	<br>  每天发一张图，额外可获得20金豆。
-	</div>
-
-		<div class="money">
-		<a  href="javascript:void(1)">领取</a>
-		</div>
-	</div>
+</diV>
 
 	</div>
 
@@ -127,17 +169,83 @@
 <script type="text/javascript" src="../../script/dropload.js"></script>
 <script type="text/javascript" src="../../script/dszp.picLazyLoad.min.js"></script>
 <script>
-var OPENID;
-apiready = function() {
-	setTopBar();
-	OPENID = api.getPrefs({
-		sync: true,
-		key: 'openid'
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+		nowDate();
+	}
+
+	function buy(type) {
+		api.confirm({
+			title: '确认',
+			msg: '确定订购礼包？',
+			buttons: ['确定', '取消']
+		}, function(ret, err) {
+			var index = ret.buttonIndex;
+			if(index==1){
+				api.ajax({
+				    url: 'http://www.d-shang.com/index.php?appgift/buyresourcebundle',
+				    method: 'post',
+				    data: {
+				        values: {
+				            openid:OPENID,
+										type:type
+				        }
+				    }
+				}, function(ret, err) {
+				    if (ret) {
+				        api.toast({ msg: JSON.stringify(ret.message) });
+				    } else {
+				        api.toast({ msg: JSON.stringify(err) });
+				    }
+				});
+
+			}
+		});
+
+	}
+
+
+	function openDaily(){
+		api.openWin({
+		    name: 'daily',
+		    url: './daily.html'
+		});
+	}
+
+
+
+	function nowDate(){
+		var nowdata=new Date();
+		var month=nowdata.getMonth();
+		$('.picbag').html((month+1)+"月照片数据包");
+		$('.videobag').html((month+1)+"月微拍数据包");
+	}
+
+function receive(name){
+
+	api.ajax({
+			url: 'http://www.d-shang.com/index.php?appgift/task',
+			method: 'post',
+			data: {
+					values: {
+							openid:OPENID,
+							name:name
+					}
+			}
+	}, function(ret, err) {
+			if (ret) {
+					api.alert({ msg: JSON.stringify(ret) });
+			} else {
+					api.alert({ msg: JSON.stringify(err) });
+			}
 	});
 }
 
-function buy(){
 
 
-}
 </script>
