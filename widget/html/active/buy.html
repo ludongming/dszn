@@ -18,29 +18,28 @@
 
 		.floor {
 			width: 100%;
-			height: 80px;
+			height: 140px;
 		}
 
 		.floor {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
-			border: 1px solid #ccc;
+font-size: 0.9em;
 			font-size: 0.9em;
-			background-color: #fff;
+
+
 		}
 
 		.floor img {
-			width: 15%;
-			margin: 5px;
+			width: 20%;
+			margin: 10px;
 		}
 
 		.price {
 			color: rgb(255,81,0);
-border:1px solid rgb(255,81,0);
-font-size: 0.8em;
-border-radius:3px;
-margin-left: 5px;
+			font-size: 0.9em;
+			margin-left: 5px;
 		}
 
 		.js {
@@ -48,19 +47,23 @@ margin-left: 5px;
 		}
 
 		.money {
-			width: 15%;
+			width: 18%;
 		}
 
 		.money a {
-			color: #000;
+			color: #fff;
 			display: block;
-			border: 1px solid #ccc;
+			background-color: #f99061;
 			text-align: center;
 			border-radius: 5px;
 		}
 		.title{
-			margin-top: 10px;
-			font-size: 1.1em;
+			text-align: center;
+			font-size: 1.2em;
+			display:flex;
+			align-items: center;
+			justify-content: space-between;
+
 		}
 	</style>
 </head>
@@ -70,86 +73,94 @@ margin-left: 5px;
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">24小时</span>
 	</header>
 	<div class="page__bd content">
-		<div class="task">
+		<div class="buy">
 
-			<div class="title picbag"></div>
-			<span class="price">￥1299金豆</span>
-		<div class="floor red">
-			<img src="../../image/zaoan/1.jpg">
-			<div class="js">餐厅、厨房、卫生间、客厅、活动等9大分类，2300张精选图片
+		<div class="task"style="background-color:#9ed6e7;color:#000;">
+
+		<div class="floor" >
+			<img src="../../image/zaoan/1.png">
+			<div class="js">
+	<div class="title"><div class="picbag"></div></div>
+				餐厅、厨房、卫生间、客厅、活动等9大分类，2300张精选图片
 			</div>
 			<div class="money">
-				<a href="javascript:buy('pic')">订购></a>
-
+				<span class="price">1199金豆</span>
+				<a href="javascript:buy('pic',1199)">进入></a>
 			</div>
 		</div>
 </div>
 
-		<div class="task">
-			<div class="title videobag"></div>
-			<span class="price">￥1199金豆</span>
-			<div class="floor">
-				<img src="../../image/zaoan/2.jpg">
-				<div class="js">198个短视频，朗逸喷水，滴油实验，泡水实验等视频
-				</div>
-				<div class="money">
-					<a href="javascript:buy('video')">订购></a>
-
-				</div>
-			</div>
+<div class="task" style="background-color:#e7cf5d;color:#000;">
+	<div class="floor">
+		<img src="../../image/zaoan/1.png">
+		<div class="js">
+<div class="title"><div class="videobag"></div></div>
+			198个短视频，朗逸喷水，滴油实验，泡水实验等视频
 		</div>
+		<div class="money">
+			<span class="price">1299金豆</span>
+			<a href="javascript:buy('video',1199)">进入></a>
+		</div>
+	</div>
+</div>
 
 
-<div class="task">
-	<div class="title">每日分享</div>
-	<span class="price">限时免费</span>
+<div class="task" style="background-color:#bfa2df;color:#000;">
 		<div class="floor">
-			<img src="../../image/zaoan/3.jpg">
-			<div class="js">客户私人定制案例，详细介绍风格、特色、布局
+			<img src="../../image/zaoan/3.png">
+			<div class="js">
+	<div class="title"><div>每日分享</div></div>
+				客户私人定制案例，详细介绍风格、特色、布局
 			</div>
 			<div class="money">
+				<span class="price">限时免费</span>
 				<a href="javascript:openDaily()">进入></a>
 
 			</div>
 		</div>
 </div>
+</div>
 
-
-
-<div class="task">
-	<div class="title">点赞礼包</div>
+<div class="task" style="background-color:#bae3f9;color:#000;">
 		<div class="floor">
-			<img src="../../image/zaoan/4.jpg">
-
-			<div class="js">每天给他人点5个赞，额外可获得20金豆。
+			<img src="../../image/zaoan/4.png">
+			<div class="js">
+				<div class="title">点赞就送</div>
+				每天给他人点5个赞
 			</div>
-
 			<div class="money">
+				<span class="price">+20金豆</span>
 				<a href="javascript:receive('zan')">领取></a>
 			</div>
 		</div>
 </div>
 
-<div class="task">
-	<div class="title">送礼物</div>
-		<div class="floor">
-			<img src="../../image/zaoan/4.jpg">
-			<div class="js">每天给他人点2朵鲜花，额外可获得20金豆。
+<div class="task" style="background-color:#e7cf5d;color:#000;">
+		<div class="floor" >
+			<img src="../../image/zaoan/4.png">
+			<div class="js">
+				<div class="title">送礼物</div>
+
+				每天给他人点2朵鲜花
 			</div>
 			<div class="money">
+				<span class="price">+20金豆</span>
 				<a href="javascript:receive('flower')">领取></a>
 			</div>
 		</div>
 </div>
 
 
-<div class="task">
-	<div class="title">发图奖励</div>
+<div class="task" style="background-color:#bfa2df;color:#000;">
 		<div class="floor">
-			<img src="../../image/zaoan/4.jpg">
-			<div class="js">每天发一张图，额外可获得20金豆。
+			<img src="../../image/zaoan/4.png">
+			<div class="js">
+				<div class="title">发图奖励</div>
+
+				每天发一张图
 			</div>
 			<div class="money">
+				<span class="price">+20金豆</span>
 				<a href="javascript:receive('share')">领取></a>
 			</div>
 		</div>
@@ -179,10 +190,10 @@ margin-left: 5px;
 		nowDate();
 	}
 
-	function buy(type) {
+	function buy(type,bean) {
 		api.confirm({
 			title: '确认',
-			msg: '确定订购礼包？',
+			msg: '确定订购礼包？需要花费'+bean+'金豆',
 			buttons: ['确定', '取消']
 		}, function(ret, err) {
 			var index = ret.buttonIndex;
@@ -198,7 +209,19 @@ margin-left: 5px;
 				    }
 				}, function(ret, err) {
 				    if (ret) {
-				        api.toast({ msg: JSON.stringify(ret.message) });
+				       if(type=="pic"){
+								 api.openWin({
+						 		    name: 'vip',
+						 		    url: '../explore/viprecommend.html'
+						 		});
+							 }
+
+							 else if (type=="video") {
+								 api.openWin({
+										name: 'vip',
+										url: '../explore/vipvideo.html'
+								});
+							 }
 				    } else {
 				        api.toast({ msg: JSON.stringify(err) });
 				    }
@@ -218,7 +241,6 @@ margin-left: 5px;
 	}
 
 
-
 	function nowDate(){
 		var nowdata=new Date();
 		var month=nowdata.getMonth();
@@ -227,7 +249,6 @@ margin-left: 5px;
 	}
 
 function receive(name){
-
 	api.ajax({
 			url: 'http://www.d-shang.com/index.php?appgift/task',
 			method: 'post',
@@ -239,13 +260,11 @@ function receive(name){
 			}
 	}, function(ret, err) {
 			if (ret) {
-					api.alert({ msg: JSON.stringify(ret) });
+			    api.toast({ msg: JSON.stringify(ret.message),location: 'middle' });
 			} else {
-					api.alert({ msg: JSON.stringify(err) });
+				    api.toast({ msg: JSON.stringify(err),location: 'middle' });
 			}
 	});
 }
-
-
 
 </script>

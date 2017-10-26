@@ -14,7 +14,6 @@
 	<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/mescroll.min.css" />
 	<link rel="stylesheet" href="../../css/prismplayer.css">
-
 	<link rel="stylesheet" href="../../css/faxian.css">
 	<link rel="stylesheet" href="../../css/gift.css">
 
@@ -32,22 +31,25 @@
 	</style>
 </head>
 
-<body  class="mescroll" id="mescroll">
+<body>
+
+	<header>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">图片包</span>
+	</header>
+	<div class="page__bd content">
 	<div class="prism-player" id="J_prismPlayer"></div>
 
 					<div class="recommendmain">
-						<div class="qd" onclick="daily()">
+						<!--<div class="qd" onclick="daily()">
 							<img src="../../mrqd1.png" id="qiandao">
 							<div style="border-radius: 5px;width:80px;height:90px;text-align:center;right:10%;top:20%;position:absolute;background:#ff5555;" onclick="clock()">
 								<div style="font-size:0.9em;height:30px;width:80px;line-height:30px;">签到</div>
 								<div class="rq"></div>
 							</div>
 						</div>
+						-->
 						<div id="recommendmain"></div>
-
 		</div>
-
-
 
 	</div>
 	<div class="gift">
@@ -63,6 +65,7 @@
 			<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金豆</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
 		</div>
 	</div>
+</div>
 </body>
 
 <!--剪贴板-->
@@ -94,6 +97,7 @@
 		<img src="../../image/play.png" class="videocontroll">
 		<img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic">
 		</div>
+
 {{??}}
 		<div class="image">
 <img src="../../image/timg.jpg" data-original="http://www.d-shang.com{{=value.image}}" class="pic"  onclick="bigImage('http://www.d-shang.com{{=value.image}}')">
@@ -114,23 +118,13 @@
 	{{?}}
 
 	<div style="border-bottom:1px #f5f5f5 solid;width:95%;margin:0 auto;height:2px;margin-bottom:10px;">
-	</div>
-
+	</div
 		<div class="tip">
 			<div class="dingwei">
 			{{?value.flower>0}}	<span class="zan_{{=value.id}}">{{=value.flower}}</span> 人点赞{{?}}
 		</div>
 		<div class="tool" style="position:relative;">
-
-		{{?value.isvideo==1}}
-		<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
-{{??}}
-<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
-{{?}}
-
-				<img src="../../image/songli.png" class="toolimage" style="right:60px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
-
-				<img src="../../image/zan{{=value.isflower}}.png" style="right:10px;" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
+				<img src="../../image/download.png" class="toolimage" style="right:60px;" onclick="i">
 
 			</div>
 		</div>
@@ -158,9 +152,6 @@
 </script>
 
 
-
-
-
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
@@ -171,7 +162,6 @@
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
 <script type="text/javascript" src="../../script/faxian.js"></script>
-
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript">
 	var OPENID;
@@ -189,8 +179,6 @@
 		loadGift();
 		dropDownRecommend("recommend");
 	}
-
-
 
 
 </script>

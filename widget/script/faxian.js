@@ -14,21 +14,21 @@ function loadAdv() {
 function switchBtn(index) {
     closePlayer();
     backSwitchBtn(index);
+    //设置frame组当前可见frame
     api.setFrameGroupIndex({
         name: 'explore',
         index: index,
         scroll: true
     });
-
 }
-
+//加样式
 function backSwitchBtn(index) {
     var navArr = $(".nav");
     navArr.each(function() {
         $(this).css({
             "color": "black"
         });
-    })
+    });
 
     $(".nav_" + index).css({
         "color": "red"
@@ -161,7 +161,6 @@ function isClock() {
 function rq() {
     loadAdv();
     isClock();
-
     var myDate = new Date();
     var month = myDate.getMonth() + 1;
     var day = myDate.getDate();
@@ -315,7 +314,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: '../active/buy.html',
+        url: '../active/luck.html',
         pageParam: {
             name: 'test'
         }
@@ -444,8 +443,6 @@ function refresh() {
 
 
 function dropDownRecommend(type) {
-
-
 
   	var	 mescroll= new MeScroll("mescroll", {
   				down: {

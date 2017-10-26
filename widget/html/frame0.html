@@ -84,11 +84,9 @@
 
 var w=api.winWidth;
 var h=api.winHeight;
-
     var exploreArr=["recommend","video","hot"];
     var framesArr=[];
 		for(var i=0;i<exploreArr.length;i++){
-
 			framesArr.push({
 				name : exploreArr[i],
 				url : './explore/' + exploreArr[i] + '.html',
@@ -97,7 +95,8 @@ var h=api.winHeight;
 			});
 		}
 
-
+//省略了设置当前页面的switchBtn()方法： api.setFrameGroupIndex();faxian.js
+//frame 组打开后，当前页面加载完成后，页面会预加载后面指定个数页面
 		api.openFrameGroup ({
 		    name: 'explore',
 		    background: '#fff',
@@ -114,10 +113,9 @@ var h=api.winHeight;
 		}, function(ret, err){
 		    if( ret ){
 					  $("#J_prismPlayer").hide();
-					backSwitchBtn(ret.index);
+					backSwitchBtn(ret.index);//加样式
 		    }
 		});
-
 		addlocation();
 	}
 
