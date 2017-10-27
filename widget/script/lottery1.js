@@ -10,6 +10,7 @@ var lottery={
 	 cycle : 1,
 	 times : 4,
 	 prize : -1,
+	 prizename:"再接再厉",
 	 btn:0,
 	run : function () {
 		var before = lottery.index == 1 ? 10 : lottery.index - 1;
@@ -52,37 +53,7 @@ var lottery={
 	showPrize:function(){
 
 		setTimeout(function(){
-						if(lottery.prize==1){
-							lottery.prize="狮子靠枕";
-						}
-						else if(lottery.prize==2){
-							lottery.prize="再接再厉";
-						}
-						else if(lottery.prize==3){
-							lottery.prize="F3取暖器";
-						}
-						else if(lottery.prize==4){
-							lottery.prize="再接再厉";
-						}
-						else if(lottery.prize==5){
-							lottery.prize="太阳炉";
-						}
-						else if(lottery.prize==8){
-							lottery.prize="再接再厉";
-						}
-						else if(lottery.prize==9){
-							lottery.prize="LED方灯";
-						}
-						else if(lottery.prize==10){
-							lottery.prize="再接再厉";
-						}
-						else if(lottery.prize==7){
-							lottery.prize="狮子靠枕";
-						}
-						else if(lottery.prize==6){
-							lottery.prize="再接再厉";
-						}
-			alert(lottery.prize);
+			alert(lottery.prizename);
 						lottery.btn.show();
 		},700);
 	},

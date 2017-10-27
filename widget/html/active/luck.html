@@ -51,7 +51,6 @@ overflow:auto;
        border-radius: 5px;
  }
  .activity ul{
-   top: -15px;
    padding: 0;
    color: #666;
    position: relative;
@@ -76,7 +75,7 @@ overflow:auto;
   <div class="table">
   <div class="tr one">
   <div class="roll roll-1 active">
-<span>狮子靠枕</span>
+<span>狮子座靠枕</span>
     </div>
   <div class="roll roll-2">
     <span>再接再厉</span>
@@ -111,7 +110,7 @@ overflow:auto;
 </div>
   <div class="roll roll-8"><span>再接再厉</span>
 </div>
-  <div class="roll roll-7"><span>狮子靠枕</span></div>
+  <div class="roll roll-7"><span>狮子座靠枕</span></div>
   <div class="roll roll-6"><span>再接再厉</span></div>
   </div>
 
@@ -167,7 +166,6 @@ loadUser();
    api.ajax({
        url: 'http://www.d-shang.com/index.php?roller/getusernum/?openid='+OPENID,
    },function(ret, err){
-     console.log(JSON.stringify(ret));
        if (ret) {
           $("#rollernum").html(ret.data);
        }
@@ -180,10 +178,10 @@ loadUser();
        url: 'http://www.d-shang.com/index.php?roller/cj/?openid='+OPENID,
    },function(ret, err){
      getRollerNum();
-
        if (ret.status) {
          var a=ret.data;
           lottery.prize=a.prize;
+            lottery.prizename=a.name;
           lottery.reset();
        } else {
          alert(ret.message);
