@@ -12,21 +12,22 @@
 <link rel="stylesheet" href="../../css/mescroll.min.css" />
 <style media="screen">
 .content{background: #311251;}
-.roll{width:23%;height:50px;text-align:center;border:4px #00208f solid; border-radius:15px;}
+.roll{width:50%;height:40px;text-align:center; border:4px #00208f solid; border-radius:15px;}
 .active{border-color:#f9fb00;}
-table{
+.table{
   width: 95%;
   margin: 0 auto;
   background:#00208f;
   border-collapse: collapse;
 }
 
-tr{display: block;
-margin: 2px;}
+.tr{
+  display: flex; align-items: center;justify-content: space-between;
+  }
 
-    .roll span{background:#f40467;display: block;height:40px;color:#fff;border-radius: 5px;line-height: 40px;font-size:0.9em;}
+    .roll span{background:#f40467;display: block; height:40px;color:#fff;border-radius: 5px;line-height: 40px;font-size:0.9em;}
 .roll img{
-  width:80%;
+  width:100%;
   margin:auto;
 }
 .panel{
@@ -34,6 +35,7 @@ margin: 2px;}
    text-align: center;
    background-color:#311251;
    border-radius: 0 0 8px 8px;
+
     }
    h2{
        color:#fff;
@@ -41,10 +43,10 @@ margin: 2px;}
    }
  .activity{
    width: 90%;
-   margin: 0 auto;
+   margin:auto;
    position: relative;
-   overflow: hidden;
-   height: 600px;
+overflow:auto;
+   height: 400px;
    background-color: #fff;
        border-radius: 5px;
  }
@@ -71,43 +73,51 @@ margin: 2px;}
 	<div class="page__bd content">
 <img src="../../image/choujiang/nami.jpg" style="width:100%;">
 
-  <table>
-  <tr>
-  <td class="roll roll-1 active">
+  <div class="table">
+  <div class="tr one">
+  <div class="roll roll-1 active">
 <span>狮子靠枕</span>
-    <td>
-  <td class="roll roll-2">
+    </div>
+  <div class="roll roll-2">
     <span>再接再厉</span>
 
-    <td>
-  <td class="roll roll-3">
+  </div>
+  <div class="roll roll-3">
     <span>F3取暖器</span>
 
-    <td>
-  <td class="roll roll-4">
+  </div>
+  <div class="roll roll-4">
     <span>再接再厉</span>
 
-    <td>
+  </div>
 
-  </tr>
-  <tr>
-  <td class="roll roll-10">
+  </div>
+
+
+
+  <div class="tr two">
+  <div class="roll roll-10">
     <span>再接再厉</span>
+</div>
+  <div class="roll" style="">
+    <a id="start" style="cursor:pointer;"><img src="../../image/choujiang/choujiang1.png" alt=""></a>
+  </div>
+  <div class="roll roll-5"><span>太阳炉</span></div>
+</div>
 
-    <td>
-  <td class="roll" colspan="3"><a id="start" style="cursor:pointer;"><img src="../../image/choujiang/choujiang1.png" alt=""></a><td>
-  <td class="roll roll-5"><span>太阳炉</span>
-<td>
-  </tr>
-  <tr>
-  <td class="roll roll-9"><span>LED方灯</span>
-<td>
-  <td class="roll roll-8"><span>再接再厉</span>
-<td>
-  <td class="roll roll-7"><span>狮子座靠枕</span><td>
-  <td class="roll roll-6"><span>再接再厉</span><td>
-  </tr>
-  </table>
+
+  <div class="tr three">
+  <div class="roll roll-9"><span>LED方灯</span>
+</div>
+  <div class="roll roll-8"><span>再接再厉</span>
+</div>
+  <div class="roll roll-7"><span>狮子靠枕</span></div>
+  <div class="roll roll-6"><span>再接再厉</span></div>
+  </div>
+
+
+</div>
+
 
  <div class="num">你的抽奖次数:<span id="rollernum"></span></div>
   <div class="panel">
@@ -117,7 +127,6 @@ margin: 2px;}
 
        </div>
      </div>
-
 </div>
 
 </body>
@@ -142,9 +151,7 @@ margin: 2px;}
 <script type="text/javascript">
 var OPENID;
  apiready=function(){
-
    setTopBar();
-
    OPENID = api.getPrefs({
      sync : true,
      key : 'openid'
@@ -160,13 +167,11 @@ loadUser();
    api.ajax({
        url: 'http://www.d-shang.com/index.php?roller/getusernum/?openid='+OPENID,
    },function(ret, err){
-
      console.log(JSON.stringify(ret));
        if (ret) {
           $("#rollernum").html(ret.data);
        }
    });
-
  }
 
  function choujiang(){
