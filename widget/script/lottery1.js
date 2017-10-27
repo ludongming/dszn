@@ -53,10 +53,10 @@ var lottery={
 
 		setTimeout(function(){
 						if(lottery.prize==1){
-							lottery.prize="抱枕被一条";
+							lottery.prize="狮子靠枕";
 						}
 						else if(lottery.prize==2){
-							lottery.prize="最大奖F3取暖空调一台";
+							lottery.prize="F3取暖器";
 						}
 						else if(lottery.prize==3){
 							lottery.prize="毛巾一条";
@@ -77,7 +77,7 @@ var lottery={
 							lottery.prize="谢谢惠顾";
 						}
 						else if(lottery.prize==7){
-							lottery.prize="谢谢惠顾";
+							lottery.prize="再接再励";
 						}
 						else if(lottery.prize==6){
 							lottery.prize="毛巾一条";
@@ -89,11 +89,8 @@ var lottery={
 
 
 	reset : function () {
-		lottery.btn=$(this);
-		lottery.btn.hide();
 		lottery.speed = 400;
 		lottery.cycle = 0;
-		lottery.prize = Math.round(Math.random() * 9) + 1;
 		lottery.run();
 	},
 	start : function () {

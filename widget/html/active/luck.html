@@ -11,21 +11,28 @@
 <link rel="stylesheet" href="../../css/header.css" />
 <link rel="stylesheet" href="../../css/mescroll.min.css" />
 <style media="screen">
-.roll{width:23%;text-align:center;border:2px #fff solid; border-radius:5px; margin: 10px; margin-bottom: 5px;}
-.active{border: 2px solid #f00;}
+.content{background: #311251;}
+.roll{width:23%;height:50px;text-align:center;border:4px #00208f solid; border-radius:15px;}
+.active{border-color:#f9fb00;}
 table{
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
+  background:#00208f;
+  border-collapse: collapse;
 }
+
+tr{display: block;
+margin: 2px;}
+
+    .roll span{background:#f40467;display: block;height:40px;color:#fff;border-radius: 5px;line-height: 40px;font-size:0.9em;}
 .roll img{
   width:80%;
   margin:auto;
 }
 .panel{
-   width:340px;
-   padding:10px;
+   width:100%;
    text-align: center;
-   background-color:#FF3C3C;
+   background-color:#311251;
    border-radius: 0 0 8px 8px;
     }
    h2{
@@ -33,11 +40,11 @@ table{
        margin: 5px;
    }
  .activity{
-   width: 300px;
+   width: 90%;
    margin: 0 auto;
    position: relative;
    overflow: hidden;
-   height: 165px;
+   height: 600px;
    background-color: #fff;
        border-radius: 5px;
  }
@@ -55,48 +62,77 @@ table{
                list-style: none;
    border-bottom: 1px dotted #d2d2d2;
  }
+ .num{background:#ffdf00;color:#8b002b;}
 </style>
 <body>
   <header>
-		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">抽奖</span>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">天猫录单抽奖</span>
 	</header>
 	<div class="page__bd content">
+<img src="../../image/choujiang/nami.jpg" style="width:100%;">
+
   <table>
   <tr>
-  <td class="roll roll-1 active"><img src="../../image/choujiang/baozhenbei.jpg" alt=""><td>
-  <td class="roll roll-2"><img src="../../image/choujiang/f3.jpg" alt=""><td>
-  <td class="roll roll-3"><img src="../../image/choujiang/mao.jpg" alt=""><td>
-  <td class="roll roll-4"><img src="../../image/choujiang/tuoba.jpg" alt=""><td>
+  <td class="roll roll-1 active">
+<span>狮子靠枕</span>
+    <td>
+  <td class="roll roll-2">
+    <span>再接再厉</span>
+
+    <td>
+  <td class="roll roll-3">
+    <span>F3取暖器</span>
+
+    <td>
+  <td class="roll roll-4">
+    <span>再接再厉</span>
+
+    <td>
+
   </tr>
   <tr>
-  <td class="roll roll-10"><img src="../../image/choujiang/thank.png" alt=""><td>
+  <td class="roll roll-10">
+    <span>再接再厉</span>
+
+    <td>
   <td class="roll" colspan="3"><a id="start" style="cursor:pointer;"><img src="../../image/choujiang/choujiang1.png" alt=""></a><td>
-  <td class="roll roll-5"><img src="../../image/choujiang/thank.png" alt=""><td>
+  <td class="roll roll-5"><span>太阳炉</span>
+<td>
   </tr>
   <tr>
-  <td class="roll roll-9"><img src="../../image/choujiang/mao.jpg" alt=""><td>
-  <td class="roll roll-8"><img src="../../image/choujiang/baozhenbei.jpg" alt=""><td>
-  <td class="roll roll-7"><img src="../../image/choujiang/thank.png" alt=""><td>
-  <td class="roll roll-6"><img src="../../image/choujiang/mao.jpg" alt=""><td>
+  <td class="roll roll-9"><span>LED方灯</span>
+<td>
+  <td class="roll roll-8"><span>再接再厉</span>
+<td>
+  <td class="roll roll-7"><span>狮子座靠枕</span><td>
+  <td class="roll roll-6"><span>再接再厉</span><td>
   </tr>
   </table>
 
+ <div class="num">你的抽奖次数:<span id="rollernum"></span></div>
   <div class="panel">
-       <h2>活动动态</h2>
-       <div class="activity" id="J_Activity">
-           <ul>
-               <li>奖励</li>
-               <li>奖励</li>
-               <li>奖励</li>
-               <li>奖励</li>
-               <li>奖励</li>
-               <li>奖励</li>
+       <h2>中奖纪录</h2>
 
-           </ul>
+       <div class="activity" id="J_Activity">
+
        </div>
      </div>
+
 </div>
+
 </body>
+
+<script id="interpolationtmpl" type="text/x-dot-template">
+<ul>
+{{~it:value:index}}
+    <li>恭喜 {{=value.real_name}} 获得 {{=value.name}}</li>
+{{~}}
+
+</ul>
+
+</script>
+
+
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
@@ -104,21 +140,71 @@ table{
 <script type="text/javascript" src="../../script/wolf.js"></script>
 <script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-$("#start").bind('click',lottery.reset);
-var listPanel = $('#J_Activity ul');
-  var z = 0;//向上滚动top值
-  function up() {//向上滚动
-      listPanel.animate({//中奖结果
-          'top': (z - 35) + 'px'
-      }, 1500, 'linear', function () {
-          listPanel.css({'top': '0px'})
-          .find("li:first").appendTo(listPanel);
-          up();
-    });
-}
-up();
-})
+var OPENID;
+ apiready=function(){
 
+   setTopBar();
+
+   OPENID = api.getPrefs({
+     sync : true,
+     key : 'openid'
+   })
+getRollerNum();
+loadUser();
+   lottery.btn=$("#start");
+   $("#start").bind('click',choujiang);
+
+ }
+
+ function getRollerNum(){
+   api.ajax({
+       url: 'http://www.d-shang.com/index.php?roller/getusernum/?openid='+OPENID,
+   },function(ret, err){
+
+     console.log(JSON.stringify(ret));
+       if (ret) {
+          $("#rollernum").html(ret.data);
+       }
+   });
+
+ }
+
+ function choujiang(){
+   lottery.btn.hide();
+   api.ajax({
+       url: 'http://www.d-shang.com/index.php?roller/cj/?openid='+OPENID,
+   },function(ret, err){
+     getRollerNum();
+
+       if (ret.status) {
+         var a=ret.data;
+          lottery.prize=a.prize;
+          lottery.reset();
+       } else {
+         alert(ret.message);
+
+            lottery.btn.show();
+       }
+   });
+
+
+
+ }
+
+
+
+//加载中奖用户
+ function loadUser(){
+   api.ajax({
+       url: 'http://www.d-shang.com/index.php?roller/getluckuser/?openid='+OPENID,
+   },function(ret, err){
+       if (ret) {
+         var arrText = doT.template($("#interpolationtmpl").text());
+         var a = arrText(ret.data);
+         $("#J_Activity").html(a);
+       }
+   });
+
+ }
 </script>
 </html>
