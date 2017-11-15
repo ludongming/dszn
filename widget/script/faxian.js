@@ -313,7 +313,11 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
+<<<<<<< HEAD
         url: '../active/daily.html',
+=======
+        url: '../active/clock.html',
+>>>>>>> 15358772f01243b0d4440f88281b1c9f17353ef2
         pageParam: {
             name: 'test'
         }
