@@ -314,7 +314,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: '../active/luck.html',
+        url: '../active/clock.html',
         pageParam: {
             name: 'test'
         }
