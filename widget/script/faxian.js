@@ -41,7 +41,7 @@ function showQDBox() {
     var c = dialogBox.raffle({
         texts: {
             mainText: '+5枚豆子',
-            subText: '喜欢这种东西，捂住嘴巴\r\n也会从眼睛里跑出来。',
+            subText: '走，我带你去逛街。',
             rightTitle: '点击签到'
         },
         styles: {
@@ -56,7 +56,7 @@ function showQDBox() {
                 marginT: 10,
                 w: 200,
                 h: 154,
-                iconPath: 'widget://image/zaoan/zaoan2.jpg'
+                iconPath: 'widget://image/zaoan/zaoan3.jpg'
             },
             main: {
                 marginT: 10,
@@ -80,7 +80,6 @@ function showQDBox() {
             }
         }
     }, function(ret, err) {
-console.log(JSON.stringify(ret));
         if (ret.eventType == 'right') {
 
             api.ajax({
@@ -314,7 +313,7 @@ function closePlayer() {
 function daily() {
     api.openWin({
         name: 'daily',
-        url: '../active/clock.html',
+        url: '../active/daily.html',
         pageParam: {
             name: 'test'
         }
