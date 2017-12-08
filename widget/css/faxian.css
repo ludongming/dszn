@@ -12,7 +12,7 @@ margin:0 auto;border-radius: 5px;max-height:500px;overflow-y: hidden;}
   min-height: 400px;
 }
 .nav{
-  font-size: 0.8em;
+  font-size: 1em;
   height:20px;
   line-height: 20px;
   width:80px;
@@ -22,15 +22,6 @@ margin:0 auto;border-radius: 5px;max-height:500px;overflow-y: hidden;}
 
 }
 
-.nav_1{
-
-  background:url(../image/backbeauty.png) no-repeat;
-  background-size: contain;
-  color: #fff!important;
-  text-shadow:1px 1px 1px #888;
-
-
-}
 
 .list {
   background: #fff;
@@ -237,7 +228,7 @@ color:#333;
 
 .qd {
   width: 100%;
-  height: 150px;
+  max-height: 500px;
   line-height: 50px;
   color: #fff;
   font-size: 1.2em;

@@ -36,12 +36,16 @@
 	<div class="prism-player" id="J_prismPlayer"></div>
 
 					<div class="recommendmain">
-						<div class="qd" onclick="daily()">
-							<img src="../../mrqd1.png" id="qiandao">
-							<div style="border-radius: 5px;width:80px;height:90px;text-align:center;right:10%;top:20%;position:absolute;background:#ff5555;" onclick="clock()">
-								<div style="font-size:0.9em;height:30px;width:80px;line-height:30px;">签到</div>
-								<div class="rq"></div>
+						<div class="qd">
+							<div class="image" onclick="playVideo(this)" data-source="" id="recommendvideo">
+								<div style="width:50px;position:absolute;top:5px;left:10px;background:red;color:#fff;height:24px;font-size:0.8em;line-height:25px;border-radius:3px;">精选</div>
+								<div style="width:80%;left:10px;position:absolute;bottom:30px;color:#fff;font-size:1em;text-align:left;font-weight:700;">选择顶上，选择成功</div>
+							<img src="../../image/play.png"  style="width:25px;height:25px;position:absolute;bottom:10px;left:10px;">
+							<span  style="display:block;width:50px;height:30px;position:absolute;bottom:10px;right:10px;font-size:0.8em;" id="recommendvideozan">99赞</span>
+							<img src="../../image/timg.jpg" id="recommendvideoimage" class="pic">
 							</div>
+
+
 						</div>
 						<div id="recommendmain"></div>
 
@@ -123,7 +127,6 @@
 		<div class="tool" style="position:relative;">
 
 		{{?value.isvideo==1}}
-		<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
 {{??}}
 <img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
 {{?}}

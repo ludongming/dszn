@@ -14,23 +14,69 @@
 	<link rel="stylesheet" href="../../css/dropload.css">
 
 	<style>
-	html,body{height:100%;}
-  .prism-controlbar	{display: block!important;}
+		html,
+		body {
+			height: 100%;
+		}
+
+		.prism-controlbar {
+			display: block!important;
+		}
 
 		#J_prismPlayer {
 			display: none;
 		}
-.list{padding-top:5px; }
-.image{position:relative;}
-.pic{height:250px!important;}
+
+		.list {
+			padding-top: 5px;
+		}
+
+		.image {
+			position: relative;
+		}
+
+		.pic {
+			height: 250px!important;
+		}
+
 		.stopplayer {
 			display: none;
 		}
-		.videotitle{position: absolute;font-size:1.1em;left:5px;top:5px;color:#fff;font-size: 700;}
-		#main{margin-bottom:50px;}
-		.duration{font-size:0.8em;right:5px;bottom:10px;background:#0c1617;opacity: 0.8;width:50px;border-radius: 10px;position: absolute;color:#fff;}
-.menu{display: inline-block;font-size:0.9em;margin-right:10px;}
-.active{color:red;}
+
+		.videotitle {
+			position: absolute;
+			font-size: 1.1em;
+			left: 5px;
+			top: 5px;
+			color: #fff;
+			font-size: 700;
+		}
+
+		#main {
+			margin-bottom: 50px;
+		}
+
+		.duration {
+			font-size: 0.8em;
+			right: 5px;
+			bottom: 10px;
+			background: #0c1617;
+			opacity: 0.8;
+			width: 50px;
+			border-radius: 10px;
+			position: absolute;
+			color: #fff;
+		}
+
+		.menu {
+			display: inline-block;
+			font-size: 0.9em;
+			margin-right: 10px;
+		}
+
+		.active {
+			color: red;
+		}
 	</style>
 </head>
 
@@ -45,7 +91,7 @@
 	{{~it:value:index}}
 	<div class="list" id="list_{{=value.VideoId}}">
 		<div class="image" onclick="setVideo('{{=value.VideoId}}',this)">
-<span class="videotitle"></span>
+			<span class="videotitle"></span>
 			<img src="../../image/play.png" class="videocontroll startplayer" id="start{{=value.VideoId}}">
 			<img src="../../image/stop1.png" class="videocontroll stopplayer" id="stop{{=value.VideoId}}">
 			<img src="../../image/timg.jpg" data-original="{{=value.CoverURL}}" class="pic">
@@ -56,10 +102,13 @@
 
 		<div class="tip">
 			<div class="dingwei" style="font-size:1em;">
-			{{=value.Title}}
+				{{=value.Title}}
 			</div>
 			<div class="tool" style="position:relative;float:right;">
-			<span style="display:inline-block;width:80px;text-align:right;font-size:0.8em;position:absolute;right:0px;">
+				<img src="../../image/share1.png" class="toolimage" style="right:80px;" onclick="shareLongVideo('{{=value.VideoId}}')">
+
+				<span style="display:inline-block;width:80px;text-align:right;font-size:0.8em;position:absolute;right:0px;">
+
       {{?value.money==0}}
 			限时免费
 			{{??}}
@@ -75,6 +124,7 @@
 <script type="text/javascript" src="../../script/wolf.js"></script>
 <script type="text/javascript" src="../../script/zepto.min.js"></script>
 <script type="text/javascript" src="../../script/fx.js"></script>
+<script type="text/javascript" src="../../script/faxian.js"></script>
 
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/weui.min.js"></script>
@@ -88,7 +138,7 @@
 	var page = 1;
 	var REPLYID = 0;
 	var player;
-	var currentVideoId=0;
+	var currentVideoId = 0;
 	apiready = function() {
 		setTopBar();
 		OPENID = api.getPrefs({
@@ -102,11 +152,31 @@
 		loadData(cid);
 	};
 
+	function shareLongVideo(videoid) {
+		//获取凭证
+		var url = 'http://www.d-shang.com/index.php?aliyun/getvideobyid/?openid=' + OPENID + "&videoid=" + videoid;
+		api.ajax({
+			url: url
+		}, function(ret, err) {
+			if (ret.status == false) {
+
+			} else {
+				var d = ret.data;
+				//d.PlayInfoList.PlayInfo[0].PlayURL;
+				console.log(JSON.stringify(d.PlayInfoList.PlayInfo[1].PlayURL));
+				shareWxVideo(d.VideoBase.CoverURL,d.PlayInfoList.PlayInfo[1].PlayURL,d.VideoBase.Title);
+			}
+
+		});
+
+
+
+	}
 
 	//获取视频地址
 	function setVideo(videoid, obj) {
 
-		if(currentVideoId==videoid){
+		if (currentVideoId == videoid) {
 			$("#start" + videoid).hide();
 			player.play();
 			return false;
@@ -115,7 +185,7 @@
 		$("#start" + currentVideoId).show();
 
 
-		currentVideoId=videoid;
+		currentVideoId = videoid;
 		//先要暂停其他正在播放的视频
 		player.pause();
 		$("#start" + videoid).hide();
@@ -132,15 +202,15 @@
 			"top": top
 		});
 
-			$("#J_prismPlayer").on("click", function() {
+		$("#J_prismPlayer").on("click", function() {
 			$("#stop" + currentVideoId).show();
-			setTimeout(function(){
+			setTimeout(function() {
 				$("#stop" + currentVideoId).hide();
-			},3000);
+			}, 3000);
 		})
 
-    //播放结束后隐藏播放器
-	  player.on("ended", function() {
+		//播放结束后隐藏播放器
+		player.on("ended", function() {
 			$("#J_prismPlayer").hide();
 		})
 
@@ -151,14 +221,13 @@
 		api.ajax({
 			url: url
 		}, function(ret, err) {
-		  if(ret.status==false){
+			if (ret.status == false) {
 				api.alert({
-				    title: '提示',
-				    msg: ret.message,
-				}, function(ret, err){
-				});
+					title: '提示',
+					msg: ret.message,
+				}, function(ret, err) {});
 
-			}else{
+			} else {
 				var d = ret.data;
 				startPlay(d.PlayInfoList.PlayInfo[0].PlayURL);
 			}
@@ -172,7 +241,7 @@
 			autoplay: false,
 			isLive: false,
 			playsinline: true,
-			showBuffer:true,
+			showBuffer: true,
 			width: "100%",
 			height: "250px",
 			controlBarVisibility: "click",
@@ -224,10 +293,10 @@
 	}
 
 	function loadData(cid) {
-    	player.pause();
-      $("#J_prismPlayer").hide();
+		player.pause();
+		$("#J_prismPlayer").hide();
 
-		var loading=weui.loading("奋力加载中");
+		var loading = weui.loading("奋力加载中");
 		var url = 'http://www.d-shang.com/index.php?aliyun/getvideolistbycate/?p=' + page + '&openid=' + OPENID + "&cid=" + cid;
 
 		api.ajax({
