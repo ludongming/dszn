@@ -255,7 +255,7 @@
 	function pic() {
 		api.actionSheet({
 			cancelTitle: '取消',
-			buttons: ['拍摄照片', '从手机相册选择', '上传短视频(10s)']
+			buttons: ['拍摄照片', '从手机相册选择', '上传短视频(15s)']
 		}, function(ret, err) {
 			if (ret.buttonIndex == 4) {
 				return false;
@@ -362,10 +362,10 @@
 		}, function(ret, err) {
 					console.log(JSON.stringify(ret));
 			//判断视频是否超过10s
-			if (type == 'video' && ret.duration > 10) {
+			if (type == 'video' && ret.duration > 20) {
 
 				api.toast({
-					msg: '视频不能超过10s',
+					msg: '视频不能超过20s',
 					duration: 2000,
 					location: 'middle'
 				});
