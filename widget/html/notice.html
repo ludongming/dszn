@@ -32,6 +32,15 @@
 	</body>
 	<script id="interpolationtmpl" type="text/x-dot-template">
 		<div class="weui-cells" style="margin-top:0px;background:#fff;">
+		<a class="weui-cell" href="javascript:daily()">
+		<div class="weui-cell__bd">
+		<p class="desc" style="word-wrap:break-word;">
+	每日精选方案 </p>
+		</div>
+		<div class="weui-cell__ft">点击查看</div>
+		</a>
+
+
 		{{~it:value:index}}
 		<a class="weui-cell" href="javascript:;" id="del_{{=value.id}}">
 		<div class="weui-cell__bd">
@@ -74,6 +83,17 @@
 		function goback() {
 			api.closeWin({
 			});
+		}
+
+		function daily() {
+		    api.openWin({
+		        name: 'daily',
+		        url: './active/daily.html',
+		        pageParam: {
+		            name: 'test'
+		        }
+		    });
+
 		}
 
 		function loadData() {

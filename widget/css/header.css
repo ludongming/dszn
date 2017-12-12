@@ -22,7 +22,7 @@ header{
 	width: 100px;
 	height: 100%;
 	position: absolute;
-	top: 0; left: 0;
+	top: 10px; left: 0;
 	display: block;
 	z-index: 999;
 }
