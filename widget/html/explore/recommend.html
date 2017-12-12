@@ -29,6 +29,22 @@
 		}
 			/*避免mescroll设置padding的时候出现两个滚动条*/
 
+.qd_label{
+	width:50px;position:absolute;top:5px;left:10px;background:red;color:#fff;height:24px;font-size:0.8em;line-height:25px;border-radius:3px;
+}
+.qd_title{
+	width:80%;left:10px;position:absolute;bottom:30px;color:#fff;font-size:1em;text-align:left;font-weight:700;
+}
+#qd_player{
+	width:25px;height:25px;position:absolute;bottom:10px;left:10px;
+}
+.qd_zan{
+	display:block;position:absolute;bottom:10px;right:60px;font-size:0.8em;
+	z-index:2;
+}
+#qd_zannum{
+	display:block;width:50px;height:30px;position:absolute;bottom:15px;right:10px;font-size:0.8em;
+}
 	</style>
 </head>
 
@@ -36,17 +52,9 @@
 	<div class="prism-player" id="J_prismPlayer"></div>
 
 					<div class="recommendmain">
-						<div class="qd">
-							<div class="image" onclick="playVideo(this)" data-source="" id="recommendvideo">
-								<div style="width:50px;position:absolute;top:5px;left:10px;background:red;color:#fff;height:24px;font-size:0.8em;line-height:25px;border-radius:3px;">精选</div>
-								<div style="width:80%;left:10px;position:absolute;bottom:30px;color:#fff;font-size:1em;text-align:left;font-weight:700;">选择顶上，选择成功</div>
-							<img src="../../image/play.png"  style="width:25px;height:25px;position:absolute;bottom:10px;left:10px;">
-							<span  style="display:block;width:50px;height:30px;position:absolute;bottom:10px;right:10px;font-size:0.8em;" id="recommendvideozan">99赞</span>
-							<img src="../../image/timg.jpg" id="recommendvideoimage" class="pic">
-							</div>
+						<div id="qdmain"></div>
 
-
-						</div>
+						<!--首页推荐视频-->
 						<div id="recommendmain"></div>
 
 		</div>
@@ -76,6 +84,25 @@
 	复制
 </div>
 </div>
+
+<script  id="qdvideo" type="text/x-dot-template">
+<div class="qd">
+<div style="position:absolute;right:0px;width:50%;height:60px;bottom:0px;z-index:666;">
+<img src="../../image/zan{{?it.isflower==0}}3{{??}}1{{?}}.png" class="qd_zan" id="zanimage{{=it.nid}}" style="width:30px!important;height:30px!important;;" data="{{=it.isflower}}" data-id="{{=it.nid}}"   ontouchend="zan({{=it.nid}})">
+<span id="qd_zannum" class="zan_{{=it.nid}}" >{{=it.flower}}</span>
+</div>
+<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com/{{=it.video}}" id="recommendvideo">
+	<div class="qd_label">精选</div>
+	<div class="qd_title">{{=it.content}}</div>
+	<img src="../../image/play.png"  id="qd_player" >
+
+<img src="../../image/timg.jpg" id="recommendvideoimage" data-original="http://www.d-shang.com/{{=it.source}}" class="pic">
+</div>
+</div>
+</script>
+
+
+
 <!--地址模板-->
 <script id="interpolationtmpl" type="text/x-dot-template">
 	{{~it:value:index}}

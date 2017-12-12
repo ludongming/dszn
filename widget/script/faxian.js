@@ -6,11 +6,10 @@ function loadAdv() {
             weui.alert("推荐图加载失败");
             return false;
         }
-        //coding...
-        $("#recommendvideo").attr("data-source", "http://www.d-shang.com/" + ret.data.video);
-        $("#recommendvideoimage").attr("src", "http://www.d-shang.com/" + ret.data.source);
-        $("#recommendvideozan").html(ret.data.flower+"赞");
 
+        var d = ret.data;
+        var arrText = doT.template($("#qdvideo").text());
+        $("#qdmain").html(arrText(d));
     });
 }
 
@@ -162,11 +161,11 @@ function isClock() {
 
 function rq() {
     loadAdv();
-    isClock();
-    var myDate = new Date();
-    var month = myDate.getMonth() + 1;
-    var day = myDate.getDate();
-    $(".rq").html(day);
+  //  isClock();
+    // var myDate = new Date();
+    // var month = myDate.getMonth() + 1;
+    // var day = myDate.getDate();
+    // $(".rq").html(day);
 }
 
 
@@ -406,9 +405,13 @@ function zan(nid) {
         flower = 0;
     }
     if (isZan == 1) {
-        flower = parseInt(flower) - 1;
-        $("#zanimage" + nid).attr("data", 0);
-        $("#zanimage" + nid).attr("src", "../../image/zan0.png");
+      api.toast({
+          msg: '你已点过赞了',
+          duration: 2000,
+          location: 'middle'
+      });
+      return false;
+
     } else {
         flower = parseInt(flower) + 1;
         $("#zanimage" + nid).attr("data", 1);
