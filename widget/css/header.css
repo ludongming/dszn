@@ -16,11 +16,9 @@ header{
 	width: 30px;
 	height: 30px;
 	position: absolute;
-	top: 5px; left: 12px;
+	top: 10px; left: 12px;
 }
 .backBtn{
-	width: 100px;
-	height: 100%;
 	position: absolute;
 	top: 10px; left: 0;
 	display: block;
