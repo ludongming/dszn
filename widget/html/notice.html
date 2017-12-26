@@ -57,6 +57,8 @@
 	<script type="text/javascript" src="../script/doT.min.js"></script>
 	<script type="text/javascript" src="../script/jpush.js"></script>
 	<script type="text/javascript" src="../script/wolf.js"></script>
+	<script type="text/javascript" src="../script/weui.min.js"></script>
+
 	<script type="text/javascript" src="../script/zepto.min.js"></script>
 	<script type="text/javascript">
 		var OPENID;
@@ -97,9 +99,11 @@
 		}
 
 		function loadData() {
+			var loading=weui.loading();
 			api.ajax({
 				url : 'http://www.d-shang.com/index.php?app/getpushlog/?p=' + page + "&openid=" + OPENID
 			}, function(ret, err) {
+				loading.hide();
 				var d=ret.data;
 					var arrText = doT.template($("#interpolationtmpl").text());
 					$("#main").html(arrText(d));

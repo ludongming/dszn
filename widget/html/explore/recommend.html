@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
 	<meta name="full-screen" content="yes">
 	<meta name="x5-fullscreen" content="true">
 	<title>title</title>
@@ -91,10 +92,10 @@
 <img src="../../image/zan{{?it.isflower==0}}3{{??}}1{{?}}.png" class="qd_zan" id="zanimage{{=it.nid}}" style="width:30px!important;height:30px!important;;" data="{{=it.isflower}}" data-id="{{=it.nid}}"   ontouchend="zan({{=it.nid}})">
 <span id="qd_zannum" class="zan_{{=it.nid}}" >{{=it.flower}}</span>
 </div>
-<div class="image" onclick="playVideo(this)" data-source="http://www.d-shang.com/{{=it.video}}" id="recommendvideo">
+<div class="image" {{?it.isvideo==1}}onclick="playVideo(this)"{{?}}data-source="http://www.d-shang.com/{{=it.video}}" id="recommendvideo">
 	<div class="qd_label">精选</div>
-	<div class="qd_title">{{=it.content}}</div>
-	<img src="../../image/play.png"  id="qd_player" >
+	<div class="qd_title" {{?it.isvideo==0}}style="bottom:0px!important;"{{?}}>{{=it.content}}</div>
+	{{?it.isvideo==1}}<img src="../../image/play.png"  id="qd_player" >{{?}}
 
 <img src="../../image/timg.jpg" id="recommendvideoimage" data-original="http://www.d-shang.com/{{=it.source}}" class="pic">
 </div>

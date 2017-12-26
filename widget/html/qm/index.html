@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="../../css/buygoods.css">
 	<style>
 		.footer .share {
-			width: 15%!important
+			width: 20%!important
 		}
 		.tcmain{bottom:50px!important;}
 	</style>
@@ -41,8 +41,6 @@
 		<div class="share" onclick="openPaint()"><img src="../../image/newPro.png">定制画
 		</div>
 		<div class="share" onclick="fenlei()"><img src="../../image/fenlei1.png" />分类
-		</div>
-		<div class="share" onclick="fangan()"><img src="../../image/fangan.png" />方案
 		</div>
 		<div class="share" onclick="order()"><img src="../../image/order1.png" />订单
 		</div>
@@ -126,7 +124,7 @@
 	}
 
 	function order() {
-		api.openFrame({
+		api.openWin({
 			name: 'order',
 			url: './order.html'
 		});
