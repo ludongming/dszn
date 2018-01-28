@@ -20,6 +20,8 @@
 		}
 .list{padding-top:5px; }
 .image{position:relative;}
+.videocontroll{width:40px;height:40px;}
+
 .pic{height:250px!important;}
 		.stopplayer {
 			display: none;
@@ -27,59 +29,34 @@
 		.videotitle{position: absolute;font-size:1.1em;left:5px;top:5px;color:#fff;font-size: 700;}
 		#main{margin-bottom:50px;}
 		.duration{font-size:0.8em;right:5px;bottom:10px;background:#0c1617;opacity: 0.8;width:50px;border-radius: 10px;position: absolute;color:#fff;}
-.menu{display: inline-block;font-size:0.9em;margin-right:10px;}
+.menu{display: inline-block;width:60px;font-size:1em;text-align: center;}
 .active{color:red;}
 	</style>
 </head>
 
 <body>
 	<header style="position: fixed;">
-		<span class="menu active" data-cid="893212592">智慧堂</span>
-	<span class="menu" data-cid="474624369">产品解说</span>
-	<span class="menu" data-cid="99749893">现场安装</span>
-	<span class="menu" data-cid="811264942">云设计</span>
 
 
-		<span ontouchend="alert('更多惊喜即将开放')"  style="position:absolute;color:000;font-size:0.9em;display:inline-block;right:10px; vertical-align:middle;float:right;">
-		 <img src="../image/liwu.png" style="width:25px;height:25px;vertical-align:middle;">
+
+				<span onclick="showSearch()"  style="position:absolute;color:000;font-size:0.9em;display:inline-block;left:10px; vertical-align:middle;float:right;">
+				 <img src="../image/search1.png" style="width:25px;height:25px;vertical-align:middle;">
+		</span>
+		<span class="menu active" onclick="switchMenu('recommend')" id="recommend">最新</span>
+		<span class="menu" onclick="switchMenu('hot')" id="hot">热门</span>
+
+
+
+		<span onclick="fenlei()"  style="position:absolute;color:000;font-size:1em;display:inline-block;right:10px; vertical-align:middle;">
+		分类
 </span>
 	</header>
 	<div>
 		<div id="main"></div>
-		<div class="prism-player" id="J_prismPlayer" style="position: absolute;left:0%;"></div>
 	</div>
 </body>
-<!--地址模板-->
-<script id="interpolationtmpl" type="text/x-dot-template">
-	{{~it:value:index}}
-	<div class="list" id="list_{{=value.VideoId}}">
-		<div class="image" onclick="setVideo('{{=value.VideoId}}',this)">
-<span class="videotitle"></span>
-			<img src="../image/play.png" class="videocontroll startplayer" id="start{{=value.VideoId}}">
-			<img src="../image/stop1.png" class="videocontroll stopplayer" id="stop{{=value.VideoId}}">
-			<img src="../image/timg.jpg" data-original="{{=value.CoverURL}}" class="pic">
-			<span class="duration">{{=value.time}}</span>
-
-		</div>
 
 
-		<div class="tip">
-			<div class="dingwei" style="font-size:1em;">
-			{{=value.Title}}
-			</div>
-			<div class="tool" style="position:relative;float:right;">
-			<span style="display:inline-block;width:80px;text-align:right;font-size:0.8em;position:absolute;right:0px;">
-      {{?value.money==0}}
-			限时免费
-			{{??}}
-	{{=value.money}}豆/天
-			{{?}}
-		</span>
-			</div>
-		</div>
-	</div>
-	{{~}}
-</script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/wolf.js"></script>
 <script type="text/javascript" src="../script/zepto.min.js"></script>
@@ -92,11 +69,6 @@
 
 <script type="text/javascript">
 	var OPENID;
-	var isDrop = false;
-	var me;
-	var page = 1;
-	var REPLYID = 0;
-	var CID = "893212592";
 	var player;
 	var currentVideoId=0;
 	apiready = function() {
@@ -105,56 +77,91 @@
 			sync: true,
 			key: 'openid'
 		});
-		loadVideoList(CID);
-		$(".menu").bind("click",switchMenu);
+		loadRecommendVideo("recommend");
 	};
 
-   function switchMenu(){
-		  var obj=$(this);
-	var	cid=$(this).attr("data-cid");
-		  var arr= $(".menu");
-			 arr.each(function(){
-			 $(this).removeClass("active");
-		 })
-		 obj.addClass("active");
-		 changeCid(cid);
+   function switchMenu(cid){
+		  if(cid=="recommend"){
+				$("#recommend").addClass("active");
+				$("#hot").removeClass("active");
+
+        api.execScript({
+            name: 'home',
+            frameName: 'videolist',
+            script: 'loadVideoByRecommend();'
+        });
+
+
+			}else{
+				$("#hot").addClass("active");
+				$("#recommend").removeClass("active");
+
+				api.execScript({
+						name: 'home',
+						frameName: 'videolist',
+						script: 'loadVideoByViews();'
+				});
+			}
+
+
 	 }
 
-   //操作videolist.html 执行里面的方法
-	 function changeCid(cid){
-   api.execScript({
-       name: 'home',
-       frameName: 'videolist',
-       script: 'loadData('+cid+');'
+	 function fenlei(){
+
+   api.openWin({
+       name: 'fenlei',
+       url: './classroom/fenlei.html'
    });
 
+
 	 }
 
 
-	 function loadVideoList(cid){
-
-		 var width=api.winWidth;
-		 var height=api.winHeight;
-     api.openFrame({
-         name: 'videolist',
-         url: './classroom/videolist.html',
-         rect: {
-             x: 0,
-             y: 61,
-             w: width,
-             h: height-61-51
-         },
-         pageParam: {
-             cid: cid
-         },
-         bounces: true,
-         bgColor: 'rgba(255,255,255,0)',
-         vScrollBarEnabled: false,
-         hScrollBarEnabled: false
-     });
+	 function showSearch() {
+		 api.prompt({
+			 title: "请输入产品名称",
+			 buttons: ['取消', '确定']
+		 }, function(ret, err) {
+			 if (ret.buttonIndex == 2) {
+				 search(ret.text);
+			 }
+		 });
 
 
 	 }
+
+	 function search(title) {
+		  api.execScript({
+		      name: 'home',
+		      frameName: 'videolist',
+		      script: 'search("'+title+'");'
+		  });
+
+	 }
+
+
+	 	function loadRecommendVideo(cid){
+	 		var width=api.winWidth;
+	 		var height=api.winHeight;
+	 		 api.openFrame({
+	 				 name: 'videolist',
+	 				 url: './classroom/videolist.html',
+	 				 rect: {
+	 						 x: 0,
+	 						 y: 61,
+	 						 w: width,
+	 						 h: height-61-51
+	 				 },
+	 				 pageParam: {
+	 						 cid: cid
+	 				 },
+	 				 bounces: true,
+	 				 bgColor: 'rgba(255,255,255,0)',
+	 				 vScrollBarEnabled: false,
+	 				 hScrollBarEnabled: false
+	 		 });
+	 	}
+
 
 </script>
 

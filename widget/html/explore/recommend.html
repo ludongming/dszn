@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
 	<meta name="full-screen" content="yes">
 	<meta name="x5-fullscreen" content="true">
 	<title>title</title>
@@ -29,6 +30,22 @@
 		}
 			/*避免mescroll设置padding的时候出现两个滚动条*/
 
+.qd_label{
+	width:50px;position:absolute;top:5px;left:10px;background:red;color:#fff;height:24px;font-size:0.8em;line-height:25px;border-radius:3px;
+}
+.qd_title{
+	width:80%;left:10px;position:absolute;bottom:30px;color:#fff;font-size:1em;text-align:left;font-weight:700;
+}
+#qd_player{
+	width:25px;height:25px;position:absolute;bottom:10px;left:10px;
+}
+.qd_zan{
+	display:block;position:absolute;bottom:10px;right:60px;font-size:0.8em;
+	z-index:2;
+}
+#qd_zannum{
+	display:block;width:50px;height:30px;position:absolute;bottom:15px;right:10px;font-size:0.8em;
+}
 	</style>
 </head>
 
@@ -36,14 +53,12 @@
 	<div class="prism-player" id="J_prismPlayer"></div>
 
 					<div class="recommendmain">
-						<div class="qd" onclick="daily()">
-							<img src="../../mrqd1.png" id="qiandao">
-							<div style="border-radius: 5px;width:80px;height:90px;text-align:center;right:10%;top:20%;position:absolute;background:#ff5555;" onclick="clock()">
-								<div style="font-size:0.9em;height:30px;width:80px;line-height:30px;">签到</div>
-								<div class="rq"></div>
-							</div>
+						<div id="qdmain"></div>
+
+						<!--首页推荐视频-->
+						<div id="recommendmain">
+							当你看到这句话，说明网络连接异常，点击<a href="javascript:location.reload()">刷新</a>看下哦
 						</div>
-						<div id="recommendmain"></div>
 
 		</div>
 
@@ -72,6 +87,25 @@
 	复制
 </div>
 </div>
+
+<script  id="qdvideo" type="text/x-dot-template">
+<div class="qd">
+<div style="position:absolute;right:0px;width:50%;height:60px;bottom:0px;z-index:666;">
+<img src="../../image/zan{{?it.isflower==0}}3{{??}}1{{?}}.png" class="qd_zan" id="zanimage{{=it.nid}}" style="width:30px!important;height:30px!important;;" data="{{=it.isflower}}" data-id="{{=it.nid}}"   ontouchend="zan({{=it.nid}})">
+<span id="qd_zannum" class="zan_{{=it.nid}}" >{{=it.flower}}</span>
+</div>
+<div class="image" {{?it.isvideo==1}}onclick="playVideo(this)"{{?}}data-source="http://www.d-shang.com/{{=it.video}}" id="recommendvideo">
+	<div class="qd_label">精选</div>
+	<div class="qd_title" {{?it.isvideo==0}}style="bottom:0px!important;"{{?}}>{{=it.content}}</div>
+	{{?it.isvideo==1}}<img src="../../image/play.png"  id="qd_player" >{{?}}
+
+<img src="../../image/timg.jpg" id="recommendvideoimage" data-original="http://www.d-shang.com/{{=it.source}}" class="pic">
+</div>
+</div>
+</script>
+
+
+
 <!--地址模板-->
 <script id="interpolationtmpl" type="text/x-dot-template">
 	{{~it:value:index}}
@@ -123,12 +157,11 @@
 		<div class="tool" style="position:relative;">
 
 		{{?value.isvideo==1}}
-		<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
-{{??}}
-<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
-{{?}}
+		<img src="../../image/share1.png" class="toolimage" style="right:60px;" onclick="shareWxVideo('http://www.d-shang.com{{=value.image}}','http://www.d-shang.com{{=value.video}}','{{=value.content}}')">
 
-				<img src="../../image/songli.png" class="toolimage" style="right:60px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
+{{??}}
+<img src="../../image/share1.png" class="toolimage" style="right:60px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
+{{?}}
 
 				<img src="../../image/zan{{=value.isflower}}.png" style="right:10px;" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
 
@@ -146,16 +179,7 @@
 	</div>
 	{{~}}
 </script>
-<!--礼物-->
-<script id="giftlist" type="text/x-dot-template">
-	{{~it:value:index}}
-	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
-		<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
-		<span class="boxname">{{=value.name}}</span>
-		<span class="boxmoney">{{=value.money}}金豆</span>
-	</div>
-	{{~}}
-</script>
+
 
 
 
@@ -186,7 +210,6 @@
 			key: 'openid'
 		});
   initPlayer();
-		loadGift();
 		dropDownRecommend("recommend");
 	}
 

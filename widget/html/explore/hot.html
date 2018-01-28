@@ -37,7 +37,9 @@
 
 					<div class="recommendmain">
 
-						<div id="recommendmain"></div>
+						<div id="recommendmain">
+							当你看到这句话，说明网络连接异常，点击<a href="javascript:location.reload()">刷新</a>看下哦
+						</div>
 
 		</div>
 
@@ -118,13 +120,11 @@
 		<div class="tool" style="position:relative;">
 
 		{{?value.isvideo==1}}
-		<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxVideo('{{=value.image}}','{{=value.video}}','{{=value.content}}')">
+		<img src="../../image/share1.png" class="toolimage" style="right:60px;" onclick="shareWxVideo('http://www.d-shang.com{{=value.image}}','http://www.d-shang.com{{=value.video}}','{{=value.content}}')">
+
 {{??}}
-<img src="../../image/share1.png" class="toolimage" style="right:110px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
+<img src="../../image/share1.png" class="toolimage" style="right:60px;" onclick="shareWxImg('{{=value.image}}',{{=value.id}})">
 {{?}}
-
-				<img src="../../image/songli.png" class="toolimage" style="right:60px;" onclick="gift({{=value.uid}},'{{=value.real_name}}',{{=value.id}})">
-
 				<img src="../../image/zan{{=value.isflower}}.png" style="right:10px;" id="zanimage{{=value.id}}" data="{{=value.isflower}}" class="toolimage" ontouchend="zan({{=value.id}})">
 
 			</div>
@@ -141,16 +141,6 @@
 		{{?}}
 
 
-	</div>
-	{{~}}
-</script>
-<!--礼物-->
-<script id="giftlist" type="text/x-dot-template">
-	{{~it:value:index}}
-	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
-		<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
-		<span class="boxname">{{=value.name}}</span>
-		<span class="boxmoney">{{=value.money}}金豆</span>
 	</div>
 	{{~}}
 </script>
@@ -185,7 +175,6 @@
 		});
 
     initPlayer();
-		loadGift();
 		dropDownRecommend("all");
 	}
 

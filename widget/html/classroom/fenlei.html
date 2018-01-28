@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+		<link rel="stylesheet" href="../../css/faxian.css">
+		<link rel="stylesheet" href="../../css/prismplayer.css">
+		<style>
+		.catemenu{display: inline-block;width:33%;height:40px;line-height: 40px;text-align: center;color:#000;border:1px }
+		</style>
+	</head>
+	<body>
+		<header style="position: fixed;">
+			<i class="backBtn" ontouchend="back()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">分类</span>
+		</header>
+		<div class="page__bd content">
+			<div id="main">
+
+
+
+
+			</div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+
+	<div class="weui-grids">
+	{{~it:value:index}}
+
+        <a href="javascript:loadVideoList({{=value.CateId}})" class="weui-grid">
+
+            <p class="weui-grid__label">{{=value.CateName}}</p>
+        </a>
+				{{~}}
+
+    </div>
+
+	</script>
+
+
+
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+
+	<script type="text/javascript" src="../../script/dropload.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.picLazyLoad.min.js"></script>
+	<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		var ISOPEN=0;
+		apiready = function() {
+			setTopBar();
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+
+			loadVideoCate();
+		};
+
+
+
+  function back(){
+
+    if(ISOPEN==0){
+			api.closeWin({
+			});
+		}else{
+			ISOPEN=0;
+			api.closeFrame({
+			    name: 'videolist'
+			});
+
+		}
+
+	}
+
+
+
+  function loadVideoCate(){
+     var loading=weui.loading();
+     api.ajax({
+         url: 'http://www.d-shang.com/index.php?aliyun/getvideocate/?openid='+OPENID,
+     },function(ret, err){
+			 loading.hide();
+         if (ret) {
+						 var d = ret.data;
+				 		var arrText = doT.template($("#interpolationtmpl").text());
+				 		$("#main").html(arrText(d));
+         } else {
+             alert( JSON.stringify( err ) );
+         }
+     });
+
+
+
+	}
+
+
+	function loadVideoList(cid){
+		ISOPEN=1;
+		var width=api.winWidth;
+		var height=api.winHeight;
+		 api.openFrame({
+				 name: 'videolist',
+				 url: './videolist.html',
+				 rect: {
+						 x: 0,
+						 y: 61,
+						 w: width,
+						 h: height-61
+				 },
+				 pageParam: {
+						 cid: cid
+				 },
+				 bounces: true,
+				 bgColor: 'rgba(255,255,255,0)',
+				 vScrollBarEnabled: false,
+				 hScrollBarEnabled: false
+		 });
+	}
+
+	</script>
+</html>

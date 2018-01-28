@@ -80,41 +80,27 @@
 	</header>
 	<div class="page__bd content">
 		<div class="clock">
-			<a style="background: #000;color: #fff;" href="javascript:;" ontouchend="bean()">
-				<img src="../../image/jindou.png" style="width:25px;vertical-align:middle"> 我的金豆
-			</a>
-			<a style="background: #f03c57;color: #fff;" href="javascript:;" ontouchend="clock()">打卡签到</a>
-			<a style="background: #10AEFF;color: #fff;" href="javascript:;" ontouchend="car()">
-				<img src="../../image/car.png" style="width:25px;vertical-align:middle"> 4S店
 
-			</a>
 			<a style="background: #27ae61;color: #fff;" href="javascript:;" ontouchend="guize()">金豆规则</a>
+
+			<a style="background: #f03c57;color: #fff;" href="javascript:;" ontouchend="clock()">打卡签到</a>
+
+			<a   style="background: #10AEFF;color: #fff;" href="javascript:;"  ontouchend="ranking()">总签到</a>
+			<a style="background: orange;color: #fff;" href="javascript:location.reload()">
+				今日签到
+			</a>
 		</div>
 
-		<div class="parking" onclick="flappybird();">
-			<img src="../../image/touzi.png" width="100%;">
-		</div>
+
 <div class="mescroll">
 		<div id="main"></div>
 		<div id="main2"></div>
-		<div class="gift">
-			<div class="topbar">
-				<a href="javascript:;" class="nav active">礼物</a>
-				<span class="zf">送给 <span id="zfname"></span></span>
 
-				<a href="javascript:;" class="nav" ontouchend="closeGift()" style="float:right;margin-right:10px;font-size:1.2em;">X</a>
-
-			</div>
-			<div id="giftcon"></div>
-			<div class="tools">
-				<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金豆</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
-			</div>
-		</div>
 	</div>
 </div>
 </body>
 <script id="interpolationtmpl" type="text/x-dot-template">
-	<div class="weui-cells__title">今日签到 |<a href="javascript:;" style="color:#000;" ontouchend="ranking()">总排名</a> </div>
+	<div class="weui-cells__title">今日签到</div>
 	{{~it:value:index}}
 	<div class="weui-cell">
 		<div class="weui-cell__hd" style="position:relative;">
@@ -141,7 +127,6 @@
 		<div class="weui-cell__ft">
 			<p id="flower{{=value.id}}">
 
-				<img src="../../image/songli.png" style="width:25px;vertical-align: middle" ontouchend="gift({{=value.uid}},'{{=value.real_name}}',0)">
 			</p>
 			<p style="font-size:0.8em;">{{=value.rq}}</p>
 		</div>
@@ -167,27 +152,7 @@
 	</div>
 	{{~}}
 </script>
-<script id="giftlist" type="text/x-dot-template">
-	{{~it:value:index}}
-	<div class="box  {{? index==0}}xz{{?}}" id="box_{{=value.id}}" data-id="{{=value.id}}" data-money="{{=value.money}}" ontouchend="xuanzhong({{=value.id}})">
-		<img src="../../image/defualt.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}">
-		<span class="boxname">{{=value.name}}</span>
-		<span class="boxmoney">{{=value.money}}金豆</span>
-	</div>
-	{{~}}
-</script>
 
-
-<script id="parking" type="text/x-dot-template">
-	{{~it:value:index}}
-	<div class="swiper-slide" style="z-index:-999!important">
-		<div class="carimg">
-			<img src="../../image/defaultimage.png" class="pic" data-original="http://www.d-shang.com/{{=value.image}}" style="width:160px;"></div>
-		<div class="cartitle">{{=value.real_name}}<span style="font-size:0.8em;color:#9a4505">({{=value.address}})</span> <span style="color:#666">开着 {{=value.name}} 来了</span></div>
-
-	</div>
-	{{~}}
-</script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/weui.min.js"></script>
 <script type="text/javascript" src="../../script/wolf.js"></script>
@@ -205,7 +170,6 @@
 			key: 'openid'
 		});
 		setTopBar();
-		loadGift();
 		//载入汽车
 		//	getLastCar();
 		//载入当前金额

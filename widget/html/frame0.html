@@ -46,11 +46,16 @@
 			<a class="nav  nav_0" href="javascript:void(0)" style="color:red;" ontouchend="switchBtn(0)">
 推荐
 		</a>
+<<<<<<< HEAD
 		<a class="nav nav_1" href="javascript:void(0)" ontouchend="switchBtn(1)">
 热门
 	</a>
 	<a class="nav nav_2" href="javascript:void(0)" ontouchend="switchBtn(2)">
 视频
+=======
+	<a class="nav nav_1" href="javascript:void(0)" ontouchend="switchBtn(1)">
+热门
+>>>>>>> 891baaa067c2c7d17af0aa9883e381b2fa85ab78
 </a>
 		  </span>
 
@@ -86,7 +91,7 @@
 
 var w=api.winWidth;
 var h=api.winHeight;
-    var exploreArr=["recommend","video","hot"];
+    var exploreArr=["recommend","hot"];
     var framesArr=[];
 		for(var i=0;i<exploreArr.length;i++){
 			framesArr.push({
@@ -110,7 +115,7 @@ var h=api.winHeight;
 		         h: h-61-51
 		    },
 		    index: 0,
-				preload:2,
+				preload:0,
 		    frames: framesArr
 		}, function(ret, err){
 		    if( ret ){

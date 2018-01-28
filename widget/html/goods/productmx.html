@@ -1,348 +1,262 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
-		<link rel="stylesheet" href="../../css/dropload.css">
-		<link rel="stylesheet" href="../../css/goods.css">
-		<link rel="stylesheet" href="../../css/header.css">
-		<style>
-			html, body {
-				background-color: #f5f5f5;
-			}
-			.main {
-				text-indent: 32px;
-				width: 100%;
-				overflow-x: hidden;
-			}
-			.main img {
-				display: block;
-				margin: 0 auto;
-				width: 100%;
-			}
-			.title {
-				width: 100%;
-				text-indent: 0 !important;
-			}
-			.tit {
-				text-indent: 0;
-				margin-bottom: 20px;
-				font-size: 20px;
-				padding-left: 2px;
-			}
-			header {
-				width: 100%;
-				height: 40px;
-				background-color: #f3f3f3;
-				position: absolute;
-				top: 0;
-				border-bottom: 1px solid #ccc;
-				text-align: center;
-				line-height: 35px;
-				font-size: 18px;
-			}
-			.back {
-				width: 25px;
-				height: 25px;
-				position: absolute;
-				top: 8px;
-				left: 10px;
-			}
-			.footer {
-				width: 100%;
-				height: 50px;
-				position: fixed;
-				bottom: 0;
-				background-color: white;
-			}
-			.footer div {
-				width: 50%;
-				height: 100%;
-				text-align: center;
-				position: relative;
-				line-height: 50px;
-				color: white;
-				border: none;
-				float: left;
-			}
-			.footer div img {
-				width: 20px;
-				height: 20px;
-				position: relative;
-				top: 5px;
-				right: 2px;
-			}
-			.footer .share {
-				background-color: #10AEFF;
-			}
-			.footer .friend {
-				background-color: orange;
-			}
-			.audio {
-				width: 100%;
-				display: none;
-			}
-			.arm {
-				margin-left: 20px;
-				margin-top: 70px;
-				padding: 5px;
-				width: 90%;
-				height: 40px;
-				border: 1px #ccc solid;
-				line-height: 40px;
-				color: #000;
-				font-size: 1.2em;
-			}
-			.arm {
-				color: #000;
-				background: #fff;
-			}
-			.time {
-				color: #000 !important;
-			}
-			.stoprecord {
-				display: none;
-			}
-			.stopplay {
-				display: none;
-			}
-			.author{float:right;margin-right:5px;font-size:0.8em;color:#777;}
-		</style>
-	</head>
-	<body>
-		<header style="position: fixed;">
-			<i><img src="../../image/back.png" class="back" ontouchend="goback()" /></i><span class="tit" style="text-align: center;">活动</span>
-		</header>
-		<div class="page__bd content" id="content">
-			<div class="audio">
-				<div class="arm">
-					<img src="../../image/luyin.png" style="width:40px;vertical-align:middle;">&nbsp;&nbsp;<span class="time">00:00</span>
-					<span class="author">音乐人</span>
-				</div>
-				<div style="width:300px;margin:0 auto;">
-					<span style="font-size:0.8em;">贴士:录制声音时，请带上耳麦，效果更佳哦！</span>
-					<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default startrecord" ontouchend="record()">录制</a>
-					<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default stoprecord" ontouchend="stopRecord()">结束录制</a>
-					<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default play" ontouchend="play()">播放</a>
-					<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default stopplay" ontouchend="stop()">暂停播放</a>
-				</div>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" href="../../css/dropload.css">
+	<link rel="stylesheet" href="../../css/goods.css">
+	<link rel="stylesheet" href="../../css/header.css">
+	<style>
+		html,
+		body {
+			background-color: #f5f5f5;
+		}
+
+		.main {
+			text-indent: 32px;
+			width: 100%;
+			overflow-x: hidden;
+		}
+
+		.main img {
+			display: block;
+			margin: 0 auto;
+			width: 100%;
+		}
+
+		.title {
+			width: 100%;
+			text-indent: 0 !important;
+		}
+
+		.tit {
+			text-indent: 0;
+			margin-bottom: 20px;
+			font-size: 20px;
+			padding-left: 2px;
+		}
+
+		header {
+			width: 100%;
+			height: 40px;
+			background-color: #f3f3f3;
+			position: absolute;
+			top: 0;
+			border-bottom: 1px solid #ccc;
+			text-align: center;
+			line-height: 35px;
+			font-size: 18px;
+		}
+
+		.back {
+			width: 25px;
+			height: 25px;
+			position: absolute;
+			top: 8px;
+			left: 10px;
+		}
+
+		.footer {
+			width: 100%;
+			height: 50px;
+			position: fixed;
+			bottom: 0;
+			background-color: white;
+		}
+
+		.footer div {
+			width: 50%;
+			height: 100%;
+			text-align: center;
+			position: relative;
+			line-height: 50px;
+			color: white;
+			border: none;
+			float: left;
+		}
+
+		.footer div img {
+			width: 20px;
+			height: 20px;
+			position: relative;
+			top: 5px;
+			right: 2px;
+		}
+
+		.footer .share {
+			background-color: #10AEFF;
+		}
+
+		.footer .friend {
+			background-color: orange;
+		}
+
+		.audio {
+			width: 100%;
+			display: none;
+		}
+
+		.arm {
+			margin-left: 20px;
+			margin-top: 70px;
+			padding: 5px;
+			width: 90%;
+			height: 40px;
+			border: 1px #ccc solid;
+			line-height: 40px;
+			color: #000;
+			font-size: 1.2em;
+		}
+
+		.arm {
+			color: #000;
+			background: #fff;
+		}
+
+		.time {
+			color: #000 !important;
+		}
+
+		.stoprecord {
+			display: none;
+		}
+
+		.stopplay {
+			display: none;
+		}
+
+		.author {
+			float: right;
+			margin-right: 5px;
+			font-size: 0.8em;
+			color: #777;
+		}
+	</style>
+</head>
+
+<body>
+	<header style="position: fixed;">
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i>
+		<span class="tit" style="text-align: center;">活动</span>
+	</header>
+	<div class="page__bd content" id="content">
+		<div class="audio">
+			<div class="arm">
+				<img src="../../image/luyin.png" style="width:40px;vertical-align:middle;">&nbsp;&nbsp;<span class="time">00:00</span>
+				<span class="author">音乐人</span>
 			</div>
-			<div class="main" id="main"></div>
-			<div class="footer">
-				<div class="share" ontouchend="share(1)"><img src="../../image/share.png"  />分享给朋友
-				</div>
-				<div class="friend"  ontouchend="share(2)"><img src="../../image/friend.png" />分享到朋友圈
-				</div>
+			<div style="width:300px;margin:0 auto;">
+				<span style="font-size:0.8em;">贴士:录制声音时，请带上耳麦，效果更佳哦！</span>
+				<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default startrecord" ontouchend="record()">录制</a>
+				<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default stoprecord" ontouchend="stopRecord()">结束录制</a>
+				<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default play" ontouchend="play()">播放</a>
+				<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default stopplay" ontouchend="stop()">暂停播放</a>
 			</div>
 		</div>
+		<div class="main" id="main"></div>
+		<div class="footer">
+			<div class="share" ontouchend="share(1)"><img src="../../image/share.png" />分享给朋友
+			</div>
+			<div class="friend" ontouchend="share(2)"><img src="../../image/friend.png" />分享到朋友圈
+			</div>
 		</div>
-	</body>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript" src="../../script/weui.min.js"></script>
-	<script type="text/javascript" src="../../script/wolf.js"></script>
-	<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		var CONID;
-		var INTER;
-		var TIME = 1;
-		var TOTAL;
-		apiready = function() {
-			setTopBar();
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			})
-			var params = api.pageParam;
-			CONID = params.id;
-			loadData(params.id, params.name);
-			loadVoice();
-		};
-		function goback() {
-			api.closeWin({
-			});
-		}
+	</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	var CONID;
+	var INTER;
+	var TIME = 1;
+	var TOTAL;
+	var SHAREIMG;
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		})
+		var params = api.pageParam;
+		CONID = params.id;
+		loadData(params.id, params.name);
+	};
 
-		function upload() {
-			var url = 'fs://' + CONID + '.amr';
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?appvoice/upload/?openid=' + OPENID,
-				method : 'post',
-				data : {
-					values : {
-						nid : CONID,
-						time : TOTAL
-					},
-					files : {
-						voice : url
-					}
-				}
-			}, function(ret, err) {
-				alert(ret.message);
-			});
-		}
+	function goback() {
+		api.closeWin({});
+	}
 
-		function loadVoice(){
-		  api.ajax({
-	          url:'http://www.d-shang.com/index.php?appvoice/getvoicebynid/?nid='+CONID+'&openid='+OPENID
-          },function(ret,err){
-             if(!ret.status){
-               $(".time").html(ret.message);
-             }else{
-             var d=ret.data
-             var time=parseTime(d.time);
-              $(".time").html(time);
-              $(".author").html(d.real_name);
-             }
 
-          });
+	function loadData(id, name) {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?app/getnewsconbyid/?id=' + id + '&openid=' + OPENID
+		}, function(ret, err) {
+			SHAREIMG=ret.data.thumb;
+			var title = ret.data.title;
+			title = title.replace(/[0-9]+$/g, "");
+			$(".tit").html(name);
+			var a = replaceImage(ret.data.content);
+			$("#main").html(a);
+			$('.pic').picLazyLoad();
+		});
+	}
 
-		}
+	function replaceImage(con) {
+		var reg = /src=\"(.*?)\"/g;
+		var a = con.replace(reg, "src=\"../../image/defaultimage.png\" class=\"pic\" data-original=\"$1\"");
+		return a;
+	}
 
-		function parseTime(totaltime){
+	function share(type) {
+		var params = api.pageParam;
+		var url = "http://www.d-shang.com/"+SHAREIMG;
+		var savename = "fs://shareimg" + params.id + ".jpg";
+		api.download({
+			url: url,
+			savePath: savename,
+			report: true,
+			cache: true,
+			allowResume: true
+		}, function(ret, err) {
+			if (ret.state == 1) {
+        shareWxProduct(type,savename,params);
+			}
+		});
 
-		var min = parseInt(totaltime / 60);
-				var time;
-				var sec;
-				if (min >= 1) {
-					sec = totaltime - min * 60;
-					sec = sec > 9 ? sec : '0' + sec;
-					time = "0" + min + ":" + sec;
-				} else {
-					sec = totaltime > 9 ? totaltime : '0' + totaltime;
-					time = "00:" + sec;
-				}
-				return time;
-		}
+	}
 
-		function setTime() {
-			INTER = setInterval(function() {
-				TIME++;
-				var min = parseInt(TIME / 60);
-				var time;
-				var sec;
-				if (min >= 1) {
-					sec = TIME - min * 60;
-					sec = sec > 9 ? sec : '0' + sec;
-					time = "0" + min + ":" + sec;
-				} else {
-					sec = TIME > 9 ? TIME : '0' + TIME;
-					time = "00:" + sec;
-				}
-				$(".time").html(time);
-			}, 1000);
-		}
+	function shareWxProduct(type, thumb,params) {
+		var scene = type == 1 ? "session" : "timeline";
+		var link = "http://www.d-shang.com/index.php?appanonymous/product/?id=" + params.id;
+		var wx = api.require('wx');
+		wx.shareWebpage({
+			apiKey: 'wx062395c72d4d0732',
+			scene: scene,
+			title: params.name,
+			description: params.name,
+			thumb:thumb,
+			contentUrl: link
+		}, function(ret, err) {
+			if (ret.status) {
+				api.toast({
+				    msg: '分享成功',
+				    duration: 2000,
+				    location: 'middle'
+				});
 
-		function record() {
-			$(".startrecord").hide();
-			$(".stoprecord").show();
-			setTime();
-			var url = 'fs://' + CONID + '.amr';
-			api.startRecord({
-				path : url
-			});
-		}
+			}
+		});
+	}
+</script>
 
-		function stopRecord() {
-			$(".startrecord").show();
-			$(".stoprecord").hide();
-			TOTAL = TIME;
-			clearInterval(INTER);
-			api.stopRecord(function(ret, err) {
-				if (ret) {
-					var path = ret.path;
-					var duration = ret.duration;
-					TIME = 0;
-					weui.confirm('完成录制，是否上传', function() {
-						upload();
-					}, function() {
-					}, {
-						title : '提示'
-					});
-				}
-			});
-		}
-
-		function play() {
-			setTime();
-			$(".play").hide();
-			$(".stopplay").show();
-			var url = 'http://www.d-shang.com/static/attached/voice/' + CONID + '.amr';
-			var localurl = 'fs://' + CONID + '.amr';
-			api.download({
-				url : url,
-				savePath : localurl,
-				report : true,
-				cache : true,
-				allowResume : true
-			}, function(ret, err) {
-				if (ret.state == 1) {
-					api.startPlay({
-						path : localurl
-					}, function(ret, err) {
-						if (ret) {
-							clearInterval(INTER);
-						} else {
-							clearInterval(INTER);
-							alert("此产品还未有语音介绍哦，等待录制中");
-						}
-					});
-				}
-			});
-		}
-
-		function stop() {
-			clearInterval(INTER);
-			$(".play").show();
-			$(".stopplay").hide();
-			TIME = 0;
-			api.stopPlay();
-		}
-
-		function loadData(id, name) {
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/getnewsconbyid/?id=' + id + '&openid=' + OPENID
-			}, function(ret, err) {
-				var title = ret.data.title;
-				title = title.replace(/[0-9]+$/g, "");
-				$(".tit").html(name);
-				var a = replaceImage(ret.data.content);
-				$("#main").html(a);
-				$('.pic').picLazyLoad();
-			});
-		}
-
-		function replaceImage(con) {
-			var reg = /src=\"(.*?)\"/g;
-			var a = con.replace(reg, "src=\"../../image/defaultimage.png\" class=\"pic\" data-original=\"$1\"");
-			return a;
-		}
-
-		function share(type) {
-			var params = api.pageParam;
-			var title = "您好，这里有一个礼物，还未打开哦，赶紧拆开看一看吧。";
-			var scene = type == 1 ? "session" : "timeline";
-			var link = "http://www.d-shang.com/index.php?appanonymous/product/?id=" + params.id;
-			var wx = api.require('wx');
-			wx.shareWebpage({
-				apiKey : 'wx062395c72d4d0732',
-				scene : scene,
-				title : title,
-				description : params.name,
-				thumb : 'widget://image/gift.png',
-				contentUrl : link
-			}, function(ret, err) {
-				if (ret.status) {
-					alert('分享成功');
-				} else {
-				}
-			});
-		}
-	</script>
 </html>

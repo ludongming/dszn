@@ -1,13 +1,15 @@
 function loadAdv() {
     api.ajax({
-        url: 'http://www.d-shang.com/index.php?app/getadv/?id=123&openid=' + OPENID
+        url: 'http://www.d-shang.com/index.php?blog/getblogvideobyproject/?&openid=' + OPENID
     }, function(ret, err) {
         if (typeof(err) == "object") {
             weui.alert("推荐图加载失败");
             return false;
         }
-        //coding...
-        $("#qiandao").attr("src", "http://www.d-shang.com/" + ret.data.image);
+
+        var d = ret.data;
+        var arrText = doT.template($("#qdvideo").text());
+        $("#qdmain").html(arrText(d));
     });
 }
 
@@ -159,11 +161,6 @@ function isClock() {
 
 function rq() {
     loadAdv();
-    isClock();
-    var myDate = new Date();
-    var month = myDate.getMonth() + 1;
-    var day = myDate.getDate();
-    $(".rq").html(day);
 }
 
 
@@ -403,9 +400,13 @@ function zan(nid) {
         flower = 0;
     }
     if (isZan == 1) {
-        flower = parseInt(flower) - 1;
-        $("#zanimage" + nid).attr("data", 0);
-        $("#zanimage" + nid).attr("src", "../../image/zan0.png");
+      api.toast({
+          msg: '你已点过赞了',
+          duration: 2000,
+          location: 'middle'
+      });
+      return false;
+
     } else {
         flower = parseInt(flower) + 1;
         $("#zanimage" + nid).attr("data", 1);
@@ -455,7 +456,9 @@ function dropDownRecommend(type) {
   			});
 }
 
+//发现中加载
 function loadRecommendData(mescroll,type) {
+
 
    if(type=="recommend"){
        rq();
@@ -463,7 +466,7 @@ function loadRecommendData(mescroll,type) {
 
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
-        timeout: 15,
+        timeout: 30,
         report: false
     }, function(ret, err) {
        mescroll.endSuccess();
@@ -491,7 +494,6 @@ function loadRecommendData(mescroll,type) {
         if(type=="rank"){
           $("#recommendmain").html(arrText(d.rank));
         }
-
         $('.pic').picLazyLoad({
             threshold: 300
         });
@@ -657,9 +659,8 @@ function shareWxVideo(image, video, desc) {
 
 function downloadShareVideo(type, image, video, desc) {
 
-    var url = "http://www.d-shang.com" + image;
-    var img = image.match(/\w+\.jpg/g);
-
+    var url = image;
+    var img = image.match(/\w+\.png/g);
     api.download({
         url: url,
         savePath: 'fs://' + img,
@@ -691,7 +692,7 @@ function downloadShareImage(image, type, id) {
 }
 
 function shareVideo(img, video, type, desc) {
-    var videoUrl = "http://www.d-shang.com" + video;
+    var videoUrl =video;
     var wx = api.require('wx');
     wx.shareVideo({
         apiKey: 'wx062395c72d4d0732',
