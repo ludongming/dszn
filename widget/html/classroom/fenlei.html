@@ -16,7 +16,7 @@
 	</head>
 	<body>
 		<header style="position: fixed;">
-			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">分类</span>
+			<i class="backBtn" ontouchend="back()" ><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">分类</span>
 		</header>
 		<div class="page__bd content">
 			<div id="main">
@@ -55,6 +55,7 @@
 	<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.9.9/prism-min.js"></script>
 	<script type="text/javascript">
 		var OPENID;
+		var ISOPEN=0;
 		apiready = function() {
 			setTopBar();
 			OPENID = api.getPrefs({
@@ -67,11 +68,24 @@
 
 
 
+  function back(){
+
+    if(ISOPEN==0){
+			api.closeWin({
+			});
+		}else{
+			ISOPEN=0;
+			api.closeFrame({
+			    name: 'videolist'
+			});
+
+		}
+
+	}
 
 
 
   function loadVideoCate(){
-
      var loading=weui.loading();
      api.ajax({
          url: 'http://www.d-shang.com/index.php?aliyun/getvideocate/?openid='+OPENID,
@@ -81,8 +95,6 @@
 						 var d = ret.data;
 				 		var arrText = doT.template($("#interpolationtmpl").text());
 				 		$("#main").html(arrText(d));
-
-
          } else {
              alert( JSON.stringify( err ) );
          }
@@ -94,6 +106,7 @@
 
 
 	function loadVideoList(cid){
+		ISOPEN=1;
 		var width=api.winWidth;
 		var height=api.winHeight;
 		 api.openFrame({
