@@ -104,7 +104,7 @@
 		}
 
 		.menu {
-			width: 33%;
+			width: 49%;
 			float: left;
 			height: 50px;
 			text-align: center;
@@ -142,15 +142,6 @@
 	<!--选择器-->
 
 	<div class="footer">
-
-		<div class="menu" onclick="bag()">
-			<div class="img">
-				<img src="../../image/baobao.png" width="30px;">
-			</div>
-			我的包包
-		</div>
-
-
 		<div class="menu" onclick="fensi()">
 			<div class="img">
 				<img src="../../image/souchang.png" width="30px;">
@@ -342,7 +333,7 @@
 				user();
 			} else {
 				api.hideProgress();
-				weui.alert(JSON.stringify(ret.msg));
+				weui.alert(ret.message);
 			}
 		});
 

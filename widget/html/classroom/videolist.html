@@ -55,6 +55,7 @@
 		#main {
 			margin-bottom: 50px;
 		}
+		.videocontroll{width:40px;height:40px;}
 
 		.duration {
 			font-size: 0.8em;
@@ -105,16 +106,9 @@
 				{{=value.Title}}
 			</div>
 			<div class="tool" style="position:relative;float:right;">
-				<img src="../../image/share1.png" class="toolimage" style="right:80px;" onclick="shareLongVideo('{{=value.VideoId}}')">
+				<img src="../../image/share1.png" class="toolimage" style="right:20px;" onclick="shareLongVideo('{{=value.VideoId}}')">
 
-				<span style="display:inline-block;width:80px;text-align:right;font-size:0.8em;position:absolute;right:0px;">
 
-      {{?value.money==0}}
-			限时免费
-			{{??}}
-	{{=value.money}}豆/天
-			{{?}}
-		</span>
 			</div>
 		</div>
 	</div>
@@ -146,10 +140,16 @@
 			key: 'openid'
 		});
 
+		loadPlayer();
+
 		var params = api.pageParam;
 		var cid = params.cid;
-		loadPlayer();
-		loadData(cid);
+		console.log(cid);
+		if(cid=="recommend"){
+			loadVideoByRecommend();
+		}else{
+			loadData(cid);
+		}
 	};
 
 	function shareLongVideo(videoid) {
@@ -162,15 +162,10 @@
 
 			} else {
 				var d = ret.data;
-				//d.PlayInfoList.PlayInfo[0].PlayURL;
-				console.log(JSON.stringify(d.PlayInfoList.PlayInfo[1].PlayURL));
-				shareWxVideo(d.VideoBase.CoverURL,d.PlayInfoList.PlayInfo[1].PlayURL,d.VideoBase.Title);
+				shareWxVideo("http://www.d-shang.com/static/adv/player.jpg",d.PlayInfoList.PlayInfo[1].PlayURL,d.VideoBase.Title);
 			}
 
 		});
-
-
-
 	}
 
 	//获取视频地址
@@ -306,6 +301,56 @@
 			var d = ret.data;
 			var arrText = doT.template($("#interpolationtmpl").text());
 			$("#main").html(arrText(d));
+			$('.pic').picLazyLoad();
+		});
+	}
+
+
+	function loadVideoByViews() {
+		 var loading=weui.loading();
+		api.ajax({
+			url: "http://www.d-shang.com/index.php?aliyun/getvideoorderbyviews/?openid=" + OPENID
+		}, function(ret, err) {
+			loading.hide();
+			var arrText = doT.template($("#interpolationtmpl").text());
+			$("#main").html(arrText(ret.data));
+			$('.pic').picLazyLoad();
+		});
+	}
+
+
+	function loadVideoByRecommend() {
+		 var loading=weui.loading();
+		api.ajax({
+			url: "http://www.d-shang.com/index.php?aliyun/getvideoorderbyrecommend/?openid=" + OPENID
+		}, function(ret, err) {
+			loading.hide();
+			var arrText = doT.template($("#interpolationtmpl").text());
+			$("#main").html(arrText(ret.data));
+			$('.pic').picLazyLoad();
+		});
+	}
+
+	function search(title) {
+		if (title == "") {
+			return;
+		}
+		var loading=weui.loading("正在搜索");
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?aliyun/getvideolikename/?name=' + title + "&openid=" + OPENID
+		}, function(ret, err) {
+loading.hide();
+			 if(ret.data.length<1){
+				 api.toast({
+						 msg: '没有找到相关视频',
+						 duration: 2000,
+						 location: 'middle'
+				 });
+				 return false;
+			 }
+
+			var arrText = doT.template($("#interpolationtmpl").text());
+			$("#main").html(arrText(ret.data));
 			$('.pic').picLazyLoad();
 		});
 	}

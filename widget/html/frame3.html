@@ -25,61 +25,53 @@
 	<body>
 		<header>
 			<span style="text-align: center;">服务</span>
+			<span style="position:absolute;right:10px;width:80px;text-align:right;"	 ontouchend="guize()">门票</span>
+
 		</header>
 		<div class="page__bd content">
 
 			<div class="list" data-url="./dszp/index.html" data-name="dszp" data-vip="1">
 						<img src="../image/dszp.png">
-						<span class="mp">门票:20金豆/天</span>
 			</div>
 
 			<div class="list" data-url="./crm/index.html" data-name="classroom" data-vip="1">
 					<img src="../image/like.png">
-					<span class="mp">门票:顶上专享</span>
 		</div>
 
 				<div class="list" data-url="./3D/index.html" data-name="3D" data-vip="1">
 						<img src="../image/quanjing.jpg">
-						<span class="mp">门票:15金豆/天</span>
 			</div>
 
 
 				<div class="list" data-url="./goods/index.html" data-name="product" data-vip="1">
 						<img src="../image/chanpinku.png">
-						<span class="mp">门票:10金豆/天</span>
 				</div>
 
 
 			<div class="list" data-url="./design/choose.html" data-name="design" data-vip="1">
 						<img src="../image/diaodingqiangmian.png">
-						<span class="mp">门票:15金豆/天</span>
 				</div>
 
 				<div class="list"  data-url="./paint/serviceindex.html" data-name="program" data-vip="1">
 						<img src="../image/qiangmianhua.png">
-						<span class="mp">门票:5金豆/天</span>
 				</div>
 
 					<div class="list" data-url="./sellpoint/hot.html" data-name="sellpoint" data-vip="1">
 						<img src="../image/zhinengxiaod.png">
-						<span class="mp">门票:5金豆/天</span>
 				</div>
 
 
 					<div class="list" data-url="./pdf/index.html" data-name="pdf" data-vip="1">
 						<img src="../image/chuyang.png">
-						<span class="mp">门票:5金豆/天</span>
 				</div>
 
 								<div class="list" data-url="./mtv/index.html" data-name="mtv" data-vip="1">
 										<img src="../image/iebook.jpg">
-										<span class="mp">门票:10金豆/天</span>
 								</div>
 
 
 				<div class="list" data-url="./news/newslist.html" data-name="news" data-vip="1">
 						<img src="../image/dingshangxinwen.jpg">
-						<span class="mp">门票:免费开放</span>
 </div>
 		</div>
 	</body>
@@ -111,6 +103,16 @@
 		} else {
 		  isVip(name,url);
 		}
+	}
+
+	function guize() {
+		api.openWin({
+			name: 'content',
+			url: './me/content.html',
+			pageParam: {
+				id: 37748
+			}
+		});
 	}
 
 	function isVip(name,url) {

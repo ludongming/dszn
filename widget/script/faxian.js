@@ -161,11 +161,6 @@ function isClock() {
 
 function rq() {
     loadAdv();
-  //  isClock();
-    // var myDate = new Date();
-    // var month = myDate.getMonth() + 1;
-    // var day = myDate.getDate();
-    // $(".rq").html(day);
 }
 
 
@@ -465,7 +460,6 @@ function dropDownRecommend(type) {
 function loadRecommendData(mescroll,type) {
 
 
-   var loading=weui.loading("正在获取数据");
    if(type=="recommend"){
        rq();
    }
@@ -475,7 +469,6 @@ function loadRecommendData(mescroll,type) {
         timeout: 30,
         report: false
     }, function(ret, err) {
-      loading.hide();
        mescroll.endSuccess();
         if (typeof(err) == "object") {
             weui.alert("网络请求超时，请稍后再试");
