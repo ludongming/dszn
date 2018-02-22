@@ -5,9 +5,9 @@
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/header.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
 		<style>
 			body {
 			}
@@ -22,12 +22,16 @@
 			}
 
 
+      .tmall{text-align: center;}
+			.tmall img{width:200px;}
+			.tmallimg{width:30px;vertical-align: middle;}
+			.process{display: block;font-size:0.8em;color:orange;}
 		</style>
 	</head>
 	<body>
 		<header>
-			<i class="backBtn" ontouchend="goback()" ><img src="../image/back.png" class="back" /></i>
-			<span style="text-align: center;">消息</span>
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i>
+			<span class="tmall"><img src="../../image/tmall1.png"></span>
 		</header>
 		<div class="page__bd content">
 			<div id="main"></div>
@@ -40,20 +44,23 @@
 		<div class="weui-cell__bd">
 		<p class="desc" style="word-wrap:break-word;">
 		{{?value.status==0}}<span class="weui-badge">新</span> {{?}}
+		<img src="../../image/tmall2.png" class="tmallimg">
 		{{=value.message}}</p>
 		</div>
-		<div class="weui-cell__ft">{{=value.rq}}</div>
+		<div class="weui-cell__ft">{{=value.rq}}
+<span class="process">{{=value.process}}</span>
+		</div>
 		</a>
 		{{~}}
 		</div>
 	</script>
-	<script type="text/javascript" src="../script/api.js"></script>
-	<script type="text/javascript" src="../script/doT.min.js"></script>
-	<script type="text/javascript" src="../script/jpush.js"></script>
-	<script type="text/javascript" src="../script/wolf.js"></script>
-	<script type="text/javascript" src="../script/weui.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/jpush.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
 
-	<script type="text/javascript" src="../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript">
 		var OPENID;
 		var page = 1;
@@ -95,7 +102,7 @@
 		function loadData() {
 			var loading=weui.loading();
 			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/getpushlog/?p=' + page + "&openid=" + OPENID
+				url : 'http://www.d-shang.com/index.php?app/gettmallpushlog/?p=' + page + "&openid=" + OPENID
 			}, function(ret, err) {
 				loading.hide();
 				var d=ret.data;

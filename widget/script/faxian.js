@@ -1,16 +1,7 @@
 function loadAdv() {
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?blog/getblogvideobyproject/?&openid=' + OPENID
-    }, function(ret, err) {
-        if (typeof(err) == "object") {
-            weui.alert("推荐图加载失败");
-            return false;
-        }
+  var arrText = doT.template($("#qdvideo").text());
+  $("#qdmain").html(arrText());
 
-        var d = ret.data;
-        var arrText = doT.template($("#qdvideo").text());
-        $("#qdmain").html(arrText(d));
-    });
 }
 
 function switchBtn(index) {
@@ -160,7 +151,35 @@ function isClock() {
 }
 
 function rq() {
-    loadAdv();
+     loadAdv();
+    $(".blogrankimg").bind("click",caidan);
+}
+
+function tmall(){
+  console.log(123);
+  api.openWin({
+      name: 'tmall',
+      url: './active/tmall.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+
+}
+
+function caidan(){
+  var url=$(this).attr("data-url");
+  api.openWin({
+      name: 'page1',
+      url: url,
+      pageParam: {
+          "placeType":3,
+          "type":2,
+          "typename":"墙面",
+          "placename":"部分",
+      }
+  });
+
 }
 
 

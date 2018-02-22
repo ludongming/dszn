@@ -90,16 +90,23 @@
 
 <script  id="qdvideo" type="text/x-dot-template">
 <div class="qd">
-<div style="position:absolute;right:0px;width:50%;height:60px;bottom:0px;z-index:666;">
-<img src="../../image/zan{{?it.isflower==0}}3{{??}}1{{?}}.png" class="qd_zan" id="zanimage{{=it.nid}}" style="width:30px!important;height:30px!important;;" data="{{=it.isflower}}" data-id="{{=it.nid}}"   ontouchend="zan({{=it.nid}})">
-<span id="qd_zannum" class="zan_{{=it.nid}}" >{{=it.flower}}</span>
+<div class="blogrankcon">
+<div class="blogrankimg" data-url="../dszp/top.html">
+<img src="../../image/zhaipei.png"><br>
+宅配
 </div>
-<div class="image" {{?it.isvideo==1}}onclick="playVideo(this)"{{?}}data-source="http://www.d-shang.com/{{=it.video}}" id="recommendvideo">
-	<div class="qd_label">精选</div>
-	<div class="qd_title" {{?it.isvideo==0}}style="bottom:0px!important;"{{?}}>{{=it.content}}</div>
-	{{?it.isvideo==1}}<img src="../../image/play.png"  id="qd_player" >{{?}}
-
-<img src="../../image/timg.jpg" id="recommendvideoimage" data-original="http://www.d-shang.com/{{=it.source}}" class="pic">
+<div class="blogrankimg" data-url="../design/programme.html">
+<img src="../../image/qiangmian.png"><br>
+墙面
+</div>
+<div class="blogrankimg" data-url="../3D/index.html">
+<img src="../../image/3d.png"><br>
+全景
+</div>
+<div class="blogrankimg" data-url="../active/clock.html">
+<img src="../../image/qiandao2.png"><br>
+签到
+</div>
 </div>
 </div>
 </script>
@@ -212,9 +219,6 @@
   initPlayer();
 		dropDownRecommend("recommend");
 	}
-
-
-
 
 </script>
 
