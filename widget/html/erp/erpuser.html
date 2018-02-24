@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/weui.min.css" />
+
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="../../css/datatables.min.css" />
+    <style>
+        #main {
+            text-align: center
+        }
+
+        #tj {
+            display: inline-block;
+            right: 5px;
+            position: absolute;
+            color: #000;
+            text-decoration: none;
+        }
+
+        #yue {
+            display: inline-block;
+            right: 100px;
+            position: absolute;
+            color: #000;
+            text-decoration: none;
+        }
+        .page__bd{top:0px!important;}
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">客户</span>
+        <a href="javascript:tj()" id="tj">回款汇总</a>
+        <a href="javascript:batch()" id="yue">余额汇总</a>
+
+    </header>
+    <div class="page__bd" id="main">
+    </div>
+</body>
+
+</html>
+
+<script id="kehu" type="text/x-dot-template">
+
+    <table id="example" class="display dataTable cell-border row-border" cellspacing="0" width="100%">
+        <thead>
+
+            <tr>
+
+                <th style="width:20%">名字</th>
+                <th>回款</th>
+                <th>订单</th>
+                <th>任务</th>
+                <th>余额</th>
+                <th>操作</th>
+
+                </tr>
+            </thead>
+
+        <tfoot>
+
+            <tr>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+
+            </tr>
+            </tfoot>
+
+        <tbody>
+
+            {{~it:value:index}}
+            <tr>
+                <td> {{=value.khmc}} {{?value.isvip==1}}<span class="vip">vip</span>{{?}}</td>
+
+                <td class="hk">{{=value.money.srje}}</td>
+                <td class="dd">{{=value.order.xsje}}</td>
+                <td class="taskmoney{{=value.uid}}">{{=value.taskmoney}}</td>
+                <td id="balance_{{=value.khbh}}"></td>
+                <td>
+                    <a href="javascript:balance('{{=value.khbh}}')" class="btn btn-default">余额</a>
+                    <a href="javascript:task('{{=value.uid}}');" class="btn btn-default">任务</a>
+                </td>
+
+            </tr>        {{~}}
+        </tbody>
+    </table>
+</script>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/jquery-1.12.4.js"></script>
+
+<script type="text/javascript" src="../../script/datatables.min.js"></script>
+
+
+<script type="text/javascript">
+    var junquArr = 0;
+    var OPENID;
+    apiready = function() {
+        setTopBar();
+        OPENID = api.getPrefs({
+            sync: true,
+            key: 'openid'
+        });
+        api.setScreenOrientation({
+            orientation: 'landscape_left'
+        });
+
+        var junqu = api.pageParam;
+        $(".tit").html(junqu.name);
+        loadUser(junqu.id);
+    }
+
+    function goback() {
+        api.setScreenOrientation({
+            orientation: 'auto_portrait'
+        });
+        api.setStatusBarStyle({
+            style: 'dark',
+            color: '#6ab494'
+        });
+        api.closeWin();
+    }
+
+    var kehuArr = new Array();
+    var totalBalance = 0;
+    var userArr;
+
+    function batch() {
+
+        for (var i = 0; i < userArr.length; i++) {
+            kehuArr.push(userArr[i].khbh);
+        }
+        oneThread(0);
+    }
+
+    function task(id) {
+       api.prompt({
+           title:"设置当月任务",
+           msg:"设置后，经销商可以查看自己的回款和账面余额",
+           type:"number",
+           buttons: ['确定', '取消']
+       }, function(ret, err){
+           if( ret.buttonIndex==1){
+                saveTask(id,ret.text);
+           }
+       });
+
+    }
+
+    function saveTask(uid,money) {
+
+        if(Math.round(money)<1){
+          api.toast({
+              msg: '任务不能小于1元',
+              duration: 2000,
+              location: 'middle'
+          });
+          return false;
+        }
+
+
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?appoa/savetaskmoney/?' + "openid=" + OPENID,
+            data: {
+                values: {
+                    uid: uid,
+                    money: money
+                }
+            }
+        }, function(ret, err) {
+            if (ret.status) {
+                $(".taskmoney" + uid).html(money);
+                api.toast({
+                    msg: '设置成功',
+                    duration: 2000,
+                    location: 'middle'
+                });
+
+            }
+        });
+
+
+
+    }
+
+    function oneThread(index) {
+
+        var process = index + "/" + kehuArr.length;
+        $("#yue").html(process);
+
+        if (index > kehuArr.length) {
+
+            var con = "总余额:" + totalBalance / 100;
+            $("#yue").html("余额汇总");
+            api.alert({
+                title: '提示',
+                msg: con,
+            }, function(ret, err) {
+
+            });
+
+            return false;
+        }
+
+        var id = kehuArr[index];
+
+        $("#balance_" + id).html("<img src='../../image/wait.gif'>");
+
+
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?appoa/balance/?khbh=' + id + "&openid=" + OPENID
+        }, function(ret, err) {
+            if (ret.status == true) {
+                $("#balance_" + id).html(ret.data);
+                totalBalance += ret.data * 100;
+                index += 1;
+                oneThread(index);
+            } else {
+                alert(ret.message);
+            }
+        });
+
+
+
+    }
+
+    function tj() {
+        var hk = $(".hk");
+        var dd = $(".dd");
+        var hkTotal = 0,
+            ddTotal = 0;
+        hk.each(function() {
+            var money = $(this).html();
+            hkTotal += money * 100;
+        })
+
+        dd.each(function() {
+            var dd = $(this).html();
+            ddTotal += dd * 100;
+        })
+
+        hkTotal = Math.round(hkTotal / 100);
+        ddTotal = Math.round(ddTotal / 100);
+        var con = "回款￥" + hkTotal + " 订单¥" + ddTotal;
+        api.alert({
+            title: '提示',
+            msg: con,
+        }, function(ret, err) {
+
+        });
+    }
+
+    function loadUser(junquid) {
+        var loading = weui.loading('正在获取');
+
+        api.ajax({
+            url: "http://www.d-shang.com/index.php?appoa/erp/?junqu=" + junquid + "&openid=" + OPENID
+        }, function(data, err) {
+            loading.hide();
+            var d = data.data;
+            var arrText = doT.template($("#kehu").text());
+            userArr = d.user;
+            $("#main").html(arrText(d.user));
+            loadTable();
+        });
+    }
+
+    function loadTable() {
+        TABLE = $('#example').DataTable({
+                fixedColumns: true,
+                "pageLength": 25,
+                "order": [
+                    [1, 'desc']
+                ],
+                language: {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                }
+            }
+
+        );
+    }
+
+
+    function balance(id) {
+
+        $("#balance_" + id).html("<img src='../../image/wait.gif'>");
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?appoa/balance/?khbh=' + id + "&openid=" + OPENID
+        }, function(data, err) {
+            if (data.status == true) {
+                $("#balance_" + id).html(data.data);
+            } else {
+                api.alert(data.message);
+            }
+        });
+
+
+    }
+</script>

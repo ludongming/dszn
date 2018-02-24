@@ -1,6 +1,7 @@
 body {
   background: #f5f5f5!important;
 }
+.loading{width:100%;}
 .prism-controlbar	{display: none!important;}
 .prism-player{z-index:1;position: absolute;left:0%;display:none;}
 .image{position: relative;background:#000;text-align:center;width:100%;

@@ -82,10 +82,9 @@
 		<div class="clock">
 
 			<a style="background: #27ae61;color: #fff;" href="javascript:;" ontouchend="guize()">金豆规则</a>
-
-			<a style="background: #f03c57;color: #fff;" href="javascript:;" ontouchend="clock()">打卡签到</a>
-
 			<a   style="background: #10AEFF;color: #fff;" href="javascript:;"  ontouchend="ranking()">总签到</a>
+			<a style="background: red;color: #fff;" href="javascript:;" ontouchend="winRank()">富豪榜</a>
+
 			<a style="background: orange;color: #fff;" href="javascript:location.reload()">
 				今日签到
 			</a>
@@ -94,7 +93,6 @@
 
 <div class="mescroll">
 		<div id="main"></div>
-		<div id="main2"></div>
 
 	</div>
 </div>
@@ -104,22 +102,15 @@
 	{{~it:value:index}}
 	<div class="weui-cell">
 		<div class="weui-cell__hd" style="position:relative;">
-			{{?value.car==0}}
-			<div class="zb"><img src="../../image/park.png" style="top:-15px;position:absolute;left:200px;width:80px;height:80px;"></div>
-			{{??}}
-			<div class="zb"><img src="../../image/park.png" class="pic" data-original="http://www.d-shang.com/{{=value.carinfo.image}}" style="top:0px;position:absolute;left:200px;width:100px;">
-			</div>
-
-			{{?}} {{?index
+		 {{?index
 			<3}} <img src="../../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
 				{{??}}
 				<span class="rank">{{=index+1}}</span> {{?}}
 				<img src="../../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block">
-				<span class="level" id="level{{=value.id}}">
-		{{?value.flower>0}} x{{=value.flower}}{{?}}</span>
+
 		</div>
 		<div class="weui-cell__bd">
-			<p style="display:inline-block;width:60px;height:20px;overflow:hidden;word-break:none;">{{=value.real_name}} </p>
+			<p style="display:inline-block;width:100px;height:20px;overflow:hidden;word-break:none;">{{=value.real_name}} </p>
 			<p class="address">{{=value.address}}</p>
 
 
@@ -143,14 +134,36 @@
 				<span class="rank">{{=index+1}}</span> {{?}}
 				<img src="../../image/defaulthead.png" class="pic" data-original="{{=value.headimgurl}}" alt="" style="width:60px;height:60px;border-radius:60px;margin-right:5px;display:block"></div>
 		<div class="weui-cell__bd">
-			<p>{{=value.real_name}}</p>
+		<p style="display:inline-block;width:100px;height:20px;overflow:hidden;word-break:none;">{{=value.real_name}} </p>
 			<p class="address">{{=value.address}}</p>
 		</div>
 		<div class="weui-cell__ft">
-			<p style="font-size:0.8em;">{{?value.flower>0}}<img src="../../image/flower2.png" style="width:25px;vertical-align: middle">x{{=value.flower}}{{?}}</p>
 			<span style="font-size:0.8em;">{{=value.lx}}/{{=value.days}}</span></div>
 	</div>
 	{{~}}
+</script>
+
+
+<script type="text/javascript" id="winrank">
+{{~it:value:index}}
+<div class="weui-cell">
+	<div class="weui-cell__hd">
+	{{?index<3}} <img src="../../image/rank{{=index+1}}.png" style="width:40px;vertical-align: middle;float:left;margin-right:10px;margin-top:10px;">
+		{{??}}
+		<span class="rank">{{=index+1}}</span> {{?}}
+	<img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png" class="pic" style="border-radius:64px;  width:64px;"></div>
+	<div class="weui-cell__bd">
+	<p style="display:inline-block;width:100px;height:20px;overflow:hidden;word-break:none;">{{=value.real_name}} </p>
+
+	<p class="address">{{=value.level}}</p></div>
+
+	<div class="weui-cell__ft">
+
+		<p style="color: red; font-style: bold;">{{=value.money}}豆</p>
+		<div class="detial"></div>
+	</div>
+</div>
+{{~}}
 </script>
 
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -206,24 +219,7 @@ function flappybird(){
 	}
 
 
-	function getLastCar() {
 
-		api.ajax({
-			url: 'http://www.d-shang.com/index.php?appgift/getlastcar/?openid=' + OPENID,
-		}, function(ret, err) {
-			if (ret) {
-				var arrText = doT.template($("#parking").text());
-				var a = arrText(ret.data);
-				$(".swiper-wrapper").html(a);
-				$('.pic').picLazyLoad();
-				lunbo();
-			} else {
-				alert(JSON.stringify(err));
-			}
-		});
-
-
-	}
 
 	function guize() {
 		api.openWin({
@@ -297,7 +293,7 @@ function flappybird(){
 			var arrText = doT.template($("#interpolationtmpl2").text());
 			var a = arrText(ret.data);
 			var c = a.replace(/\/0/g, "/132");
-			$("#main2").html(c);
+			$("#main").html(c);
 			$('.pic').picLazyLoad();
 			api.refreshHeaderLoadDone();
 		});
@@ -334,7 +330,6 @@ function flappybird(){
 
 	function getData() {
 		var loading = weui.loading("正在拼命加载中...")
-		$("#main2").html("");
 		api.ajax({
 			url: 'http://www.d-shang.com/index.php?appclock/gettodayuser/?openid=' + OPENID
 		}, function(ret, err) {
@@ -346,6 +341,28 @@ function flappybird(){
 			$('.pic').picLazyLoad();
 			api.refreshHeaderLoadDone();
 		});
+	}
+
+	function winRank(){
+		var loading = weui.loading("拼命加载中...");
+		api.ajax({
+		    url: 'http://www.d-shang.com/index.php?appdice/getalldicebystatus/?openid='+OPENID,
+		    method: 'post',
+
+		}, function(ret, err) {
+				loading.hide();
+		    if (ret) {
+					var data=ret.data;
+
+					var arrText = doT.template($("#winrank").text());
+					$("#main").html(arrText(data));
+		$('.pic').picLazyLoad();
+
+		    } else {
+		        api.alert({ msg: JSON.stringify(err) });
+		    }
+		});
+
 	}
 </script>
 
