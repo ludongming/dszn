@@ -73,7 +73,6 @@ function getJunqu(){
   api.ajax({
       url: 'http://www.d-shang.com/index.php?appoa/getuserarea/?openid='+OPENID
   },function(ret, err){
-
     var arrText = doT.template($("#junqu").text());
     $("#main").html(arrText(ret.data));
     $(".qy").bind("click",users);

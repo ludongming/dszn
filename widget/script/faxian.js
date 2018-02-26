@@ -70,21 +70,33 @@ function isClock() {
           }
       }
   }, function(ret, err) {
+console.log(JSON.stringify(ret));
+    if(ret.status){
+      api.alert({
+          msg: ret.message,
+          title: "提示"
+      },function(){
+        api.openWin({
+            name: 'clock',
+            url: '../active/clock.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
 
-api.alert({
-    msg: ret.message,
-    title: "提示"
-},function(){
-  api.openWin({
-      name: 'clock',
-      url: '../active/clock.html',
-      pageParam: {
-          name: 'test'
-      }
-  });
+      });
 
-});
 
+    }else{
+      api.openWin({
+          name: 'clock',
+          url: '../active/clock.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+
+    }
 
 
 

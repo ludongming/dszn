@@ -79,7 +79,7 @@
 <script  id="qdvideo" type="text/x-dot-template">
 <div class="qd">
 <div class="blogrankcon">
-<div class="blogrankimg" data-url="../dszp/top.html">
+<div class="blogrankimg" data-url="../dszp/recommend.html">
 <img src="../../image/zhaipei.png"><br>
 宅配
 </div>
@@ -108,9 +108,7 @@
 		<div class="info">
 			<div class="head" onclick="user({{=value.uid}})">
 				<img src="../../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
-{{?value.global!=""}}
-<div class="global">{{=value.global}}</div>
-{{?}}
+<div class="global">Lv.{{=value.level}}</div>
 			</div>
 			<div class="username">{{=value.real_name}}
 				<span class="mp">{{=value.rq}} {{=value.address}}</span>
