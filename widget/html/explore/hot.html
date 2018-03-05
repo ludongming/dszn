@@ -62,12 +62,10 @@
 		<div class="info">
 			<div class="head" onclick="user({{=value.uid}})">
 				<img src="../../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
-{{?value.global!=""}}
-<div class="global">{{=value.global}}</div>
-{{?}}
+				<div class="global" style="background:{{=value.level.color}}">{{=value.level.name}}</div>
 			</div>
 			<div class="username">{{=value.real_name}}
-				<span class="mp">{{=value.rq}} {{=value.address}}</span>
+				<span class="mp">{{=value.address}}</span>
 			</div>
 			<div class="pub_time" onclick="fans({{=value.uid}},{{=value.id}})" id="fans_{{=value.id}}">{{=value.fans}}</div>
 		</div>

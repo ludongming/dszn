@@ -1,115 +1,200 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
-		<style>
-			body {
-			}
-			.title {
-				font-size: 0.9em;
-			}
-			.desc {
-				color: #666;
-				font-size: 0.8em;
-			}
-			.dels {
-			}
 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/header.css" />
+	<style>
+		body {}
 
-      .tmall{text-align: center;}
-			.tmall img{width:200px;}
-			.tmallimg{width:30px;vertical-align: middle;}
-			.process{display: block;font-size:0.8em;color:orange;}
-		</style>
-	</head>
-	<body>
-		<header>
-			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i>
-			<span class="tmall"><img src="../../image/tmall1.png"></span>
-		</header>
-		<div class="page__bd content">
-			<div id="main"></div>
-		</div>
-	</body>
-	<script id="interpolationtmpl" type="text/x-dot-template">
-		<div class="weui-cells" style="margin-top:0px;background:#fff;">
-		{{~it:value:index}}
-		<a class="weui-cell" href="javascript:;" id="del_{{=value.id}}">
-		<div class="weui-cell__bd">
-		<p class="desc" style="word-wrap:break-word;">
-		{{?value.status==0}}<span class="weui-badge">新</span> {{?}}
-		<img src="../../image/tmall2.png" class="tmallimg">
-		{{=value.message}}</p>
-		</div>
-		<div class="weui-cell__ft">{{=value.rq}}
-<span class="process">{{=value.process}}</span>
-		</div>
-		</a>
-		{{~}}
-		</div>
-	</script>
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript" src="../../script/doT.min.js"></script>
-	<script type="text/javascript" src="../../script/jpush.js"></script>
-	<script type="text/javascript" src="../../script/wolf.js"></script>
-	<script type="text/javascript" src="../../script/weui.min.js"></script>
-
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
-	<script type="text/javascript">
-		var OPENID;
-		var page = 1;
-		var me;
-		var isDrop = false;
-		apiready = function() {
-			setTopBar();
-			//清除小红点
-			OPENID = api.getPrefs({
-				sync : true,
-				key : 'openid'
-			});
-			loadData();
-
-			api.execScript({
-				name : 'home', //这里root代表index.html
-				frameName : 'frame0',
-				script : 'cleanBadge();'
-			});
-			cleanJPushBadge();
-		};
-
-		function goback() {
-			api.closeWin({
-			});
+		.title {
+			font-size: 0.9em;
 		}
 
-		function daily() {
-		    api.openWin({
-		        name: 'daily',
-		        url: './active/daily.html',
-		        pageParam: {
-		            name: 'test'
-		        }
-		    });
-
+		.desc {
+			color: #666;
+			font-size: 0.8em;
 		}
 
-		function loadData() {
-			var loading=weui.loading();
-			api.ajax({
-				url : 'http://www.d-shang.com/index.php?app/gettmallpushlog/?p=' + page + "&openid=" + OPENID
-			}, function(ret, err) {
-				loading.hide();
-				var d=ret.data;
-					var arrText = doT.template($("#interpolationtmpl").text());
-					$("#main").html(arrText(d));
-				}
-				)
+		.dels {}
+
+		.tmall {
+			text-align: center;
 		}
-	</script>
+
+		.tmall img {
+			width: 160px;
+		}
+
+		.tmallimg {
+			width: 30px;
+			vertical-align: middle;
+		}
+
+		.process {
+			display: block;
+			font-size: 0.8em;
+			color: orange;
+		}
+
+		.tibao {
+			position: absolute;
+			right: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i>
+		<span class="tmall"><img src="../../image/tmall1.png"></span>
+		<span class="tibao" onclick="tibao()">提报</span>
+	</header>
+	<div class="page__bd content">
+
+		<div id="main">
+
+
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href="javascript:tmallorder();">
+					<div class="weui-cell__hd"><img src="../../image/tmall/cash.png" alt="" style="width:30px;margin-right:5px;display:block"></div>
+					<div class="weui-cell__bd">
+						<p>总收入</p>
+					</div>
+					<div class="weui-cell__ft" id="sr">982.12 元</div>
+				</a>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><img src="../../image/tmall/tixian.png" alt="" style="width:30px;margin-right:5px;display:block"></div>
+					<div class="weui-cell__bd">
+						<p>已提现</p>
+					</div>
+					<div class="weui-cell__ft" id="tx">524.66 元</div>
+				</div>
+
+			</div>
+
+
+
+			<div class="weui-cells__tips" id="remark">
+
+			</div>
+
+
+			<a class="weui-cell weui-cell_access" href="javascript:tmalluser();">
+				<div class="weui-cell__hd"><img src="../../image/tmall/yezhu.png" alt="" style="width:30px;margin-right:5px;display:block"></div>
+				<div class="weui-cell__bd">
+					<p>业主信息</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a>
+
+
+		</div>
+
+
+
+
+	</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/jpush.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		//清除小红点
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+		getMoney();
+	};
+
+	function goback() {
+		api.closeWin({});
+	}
+
+	function tibao() {
+	  api.prompt({
+			  title:"天猫订单号",
+				msg:"输入或复制",
+				type:"number",
+	      buttons: ['确定', '取消']
+	  }, function(ret, err){
+	      if( ret.buttonIndex==1 ){
+	           uploadData(ret.text);
+	      }
+	  });
+
+	}
+
+	function getMoney(){
+
+		api.ajax({
+		    url: 'httpp://www.d-shang.com/index.php?tmallorder/getmoneybyuid/?openid='+OPENID,
+		},function(ret, err){
+			var d=ret.data;
+		  $("#sr").html(d.sr+" 元");
+			$("#tx").html(d.tx+" 元");
+			$("#remark").html(d.remark);
+		});
+
+	}
+
+function uploadData(sno){
+
+   api.ajax({
+       url: 'http://www.d-shang.com/index.php?tmallorder/addorder/?openid='+OPENID,
+       method: 'post',
+       data: {
+           values: {
+               sno: sno
+           }
+       }
+   },function(ret, err){
+		 api.toast({
+		     msg: ret.message,
+		     duration: 2000,
+		     location: 'middle'
+		 });
+
+
+   });
+}
+
+
+	function tmallorder() {
+		api.openWin({
+			name: 'tmallorder',
+			url: './tmallorder.html',
+			pageParam: {
+				name: 'test'
+			}
+		});
+
+	}
+
+	function tmalluser() {
+		api.openWin({
+			name: 'tmalluser',
+			url: './tmalluser.html',
+			pageParam: {
+				name: 'test'
+			}
+		});
+
+	}
+</script>
+
 </html>

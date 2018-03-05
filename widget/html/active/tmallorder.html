@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/header.css"/>
+		<style>
+			body {
+			}
+			.title {
+				font-size: 0.9em;
+			}
+			.desc {
+				color: #666;
+				font-size: 0.8em;
+			}
+			.dels {
+			}
+
+
+      .tmall{text-align: center;}
+			.tmall img{width:200px;}
+			.tmallimg{width:30px;vertical-align: middle;}
+			.process{display: block;font-size:0.8em;color:#000;}
+			.weui-cell__bd{color:#666;}
+			.money{color:orange;}
+		</style>
+	</head>
+	<body>
+		<header>
+			<i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i>
+			<span class="tmall">天猫订单</span>
+		</header>
+		<div class="page__bd content">
+
+			<div id="main">
+
+
+
+			</div>
+		</div>
+	</body>
+	<script id="interpolationtmpl" type="text/x-dot-template">
+		<div class="weui-cells" style="margin-top:0px;background:#fff;">
+		{{~it:value:index}}
+		<div class="weui-cell" href="javascript:;" id="del_{{=value.id}}">
+		<div class="weui-cell__bd">
+		<p>{{=value.sno}}<br>
+		{{=value.rq}}
+		</p>
+		</div>
+		<div class="weui-cell__ft">
+		{{? value.status>=1}}<span class="money">+{{=value.money}}</span>{{?}}
+    <span class="process">{{=value.status_name}}</span>
+		</div>
+		</div>
+		{{~}}
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/jpush.js"></script>
+	<script type="text/javascript" src="../../script/wolf.js"></script>
+	<script type="text/javascript" src="../../script/weui.min.js"></script>
+
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript">
+		var OPENID;
+		apiready = function() {
+			setTopBar();
+			//清除小红点
+			OPENID = api.getPrefs({
+				sync : true,
+				key : 'openid'
+			});
+			loadData();
+
+
+		};
+
+		function goback() {
+			api.closeWin({
+			});
+		}
+
+
+		function loadData() {
+			var loading=weui.loading();
+			api.ajax({
+				url : 'http://www.d-shang.com/index.php?tmallorder/getorderbyuid/?openid=' + OPENID
+			}, function(ret, err) {
+				loading.hide();
+				var d=ret.data;
+					var arrText = doT.template($("#interpolationtmpl").text());
+					$("#main").html(arrText(d));
+				}
+				)
+		}
+	</script>
+</html>
