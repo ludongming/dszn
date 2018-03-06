@@ -59,51 +59,6 @@ function locationAddress() {
     });
 }
 
-function isClock() {
-
-  api.ajax({
-      url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
-      method: 'post',
-      data: {
-          values: {
-              address: ADDRESS
-          }
-      }
-  }, function(ret, err) {
-console.log(JSON.stringify(ret));
-    if(ret.status){
-      api.alert({
-          msg: ret.message,
-          title: "提示"
-      },function(){
-        api.openWin({
-            name: 'clock',
-            url: '../active/clock.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
-
-      });
-
-
-    }else{
-      api.openWin({
-          name: 'clock',
-          url: '../active/clock.html',
-          pageParam: {
-              name: 'test'
-          }
-      });
-
-    }
-
-
-
-  });
-}
-
-
 
 function rq() {
      loadAdv();
@@ -125,9 +80,6 @@ function tmall(){
 function caidan(){
   var url=$(this).attr("data-url");
 
-if(url=="../active/clock.html"){
-    isClock();
-}else{
   api.openWin({
       name: 'page1',
       url: url,
@@ -138,7 +90,7 @@ if(url=="../active/clock.html"){
           "placename":"部分",
       }
   });
-}
+
 }
 
 

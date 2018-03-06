@@ -17,21 +17,6 @@
 			background: #fff;
 		}
 
-		.clock {
-			width: 100%;
-			height: 40px;
-			background: #f0f5f9;
-		}
-
-		.clock a {
-			float: right;
-			display: inline-block;
-			width: 25%;
-			height: 40px;
-			line-height: 40px;
-			text-align: center;
-		}
-
 		.address {
 			color: #ccc;
 		}
@@ -79,16 +64,6 @@
 		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">签到</span>
 	</header>
 	<div class="page__bd content">
-		<div class="clock">
-
-			<a style="background: #27ae61;color: #fff;" href="javascript:;" ontouchend="guize()">金豆规则</a>
-			<a   style="background: #10AEFF;color: #fff;" href="javascript:;"  ontouchend="ranking()">总签到</a>
-			<a style="background: red;color: #fff;" href="javascript:;" ontouchend="winRank()">富豪榜</a>
-
-			<a style="background: orange;color: #fff;" href="javascript:location.reload()">
-				今日签到
-			</a>
-		</div>
 
 
 <div class="mescroll">
@@ -183,105 +158,25 @@
 			key: 'openid'
 		});
 		setTopBar();
-		//载入汽车
-		//	getLastCar();
-		//载入当前金额
-		getData();
-		addlocation();
-		api.setRefreshHeaderInfo({
-			loadingImg: 'widget://image/refresh.png',
-			bgColor: '#ccc',
-			textColor: '#fff',
-			textDown: '下拉刷新...',
-			textUp: '松开刷新...'
-		}, function(ret, err) {
-			getData();
-		});
+
+
+   var params=api.pageParam;
+	 var id=params.id;
+	 if(id==0){
+		 getData();
+	 }
+	 if(id==1){
+		 winRank();
+	 }
+
+	 if(id==2){
+		 ranking();
+	 }
+
 	};
 
 
-function flappybird(){
-	api.openWin({
-	    name: 'dice',
-	    url: './newdice.html'
-	});
 
-}
-
-	function lunbo() {
-		var mySwiper = new Swiper('.swiper-container', {
-			autoplay: 1000,
-			loop: true,
-			direction: 'horizontal',
-			simulateTouch: false
-		})
-
-	}
-
-
-
-
-	function guize() {
-		api.openWin({
-			name: 'content',
-			url: '../me/content.html',
-			pageParam: {
-				id: 37748
-			}
-		});
-	}
-
-	function addFlower(uid, id) {
-		var con = "<img src=\"../../image/flower1.png\" style=\"width:25px;vertical-align: middle\">";
-		$("#flower" + id).html(con);
-		var num = $("#level" + id).html();
-		num = num.match(/\d+/);
-		num = num == null ? 0 : num;
-		num = parseInt(num) + 1;
-		api.ajax({
-			url: 'http://www.d-shang.com/index.php?appclock/addflower/?openid=' + OPENID + "&touid=" + uid
-		}, function(ret, err) {
-			weui.alert(ret.message);
-			if (ret.status) {
-				$("#level" + id).html("x" + num);
-			}
-		});
-	}
-
-	function bean() {
-		api.openWin({
-			name: 'bean',
-			url: './bean.html'
-		});
-	}
-
-	function clock() {
-		api.ajax({
-			url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
-			method: 'post',
-			data: {
-				values: {
-					address: ADDRESS
-				}
-			}
-		}, function(ret, err) {
-			weui.toast(ret.message, {
-				duration: 3000,
-				className: "bears"
-			});
-			getData();
-		});
-	}
-
-	function car() {
-
-		api.openWin({
-			name: 'car',
-			url: './car.html'
-		});
-
-
-	}
 
 	function ranking() {
 		var loading = weui.loading("拼命加载中...");
@@ -295,7 +190,6 @@ function flappybird(){
 			var c = a.replace(/\/0/g, "/132");
 			$("#main").html(c);
 			$('.pic').picLazyLoad();
-			api.refreshHeaderLoadDone();
 		});
 	}
 
@@ -303,30 +197,6 @@ function flappybird(){
 		api.closeWin({});
 	}
 
-	function addlocation() {
-		var aMapLBS = api.require('aMapLBS');
-		aMapLBS.configManager({
-			accuracy: 'hundredMeters',
-			filter: 1
-		}, function(ret, err) {
-			if (ret.status) {
-				//alert('定位管理器初始化成功！');
-				locationAddress();
-			}
-		});
-	}
-
-	function locationAddress() {
-		var aMapLBS = api.require('aMapLBS');
-		aMapLBS.singleAddress({
-			timeout: 10
-		}, function(ret, err) {
-			if (ret.status) {
-				var d = ret.address;
-				ADDRESS = d.province + " " + d.city;
-			}
-		});
-	}
 
 	function getData() {
 		var loading = weui.loading("正在拼命加载中...")

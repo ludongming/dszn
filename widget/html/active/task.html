@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/header.css" />
+	<style>
+		body {}
+
+					.clock {
+						width: 100%;
+						height: 40px;
+						background: #f0f5f9;
+					}
+
+					.clock a {
+						float: right;
+						display: inline-block;
+						width: 25%;
+						height: 40px;
+						line-height: 40px;
+						text-align: center;
+					}
+
+		.title {
+			font-size: 0.9em;
+		}
+
+		.desc {
+			color: #666;
+			font-size: 0.8em;
+		}
+
+		.dels {}
+
+		.tmall {
+			text-align: center;
+		}
+
+		.tmall img {
+			width: 160px;
+		}
+
+		.tmallimg {
+			width: 30px;
+			vertical-align: middle;
+		}
+
+		.process {
+			display: block;
+			font-size: 0.8em;
+			color: orange;
+		}
+
+		.tibao {
+			position: absolute;
+			right: 10px;
+		}
+		.gold{width:20px;height:20px;vertical-align: middle;}
+		.btn{padding:4px;border-radius: 4px;text-align: center;width:80px;font-size: 0.8em;}
+		.success{
+			background: #f39c12;color:#fff;
+		}
+		.wait{
+			background:#3498db;color:#fff;
+		}
+		.ok{
+			background:#ccc;color:#666;
+		}
+		.small{color:#666;}
+	</style>
+</head>
+
+<body>
+	<header>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">成长指引</span>
+	</header>
+	<div class="page__bd content">
+		<div class="clock">
+
+			<a style="background: #f5f5f5;color: #666;" href="javascript:;" ontouchend="guize()">金豆规则</a>
+			<a   style="background: #f5f5f5;color: #666;" href="javascript:;"  ontouchend="qiandao(2)">总签到</a>
+			<a style="background: #f5f5f5;color: #666;" href="javascript:;" ontouchend="qiandao(1)">富豪榜</a>
+
+			<a style="background: #f5f5f5;color: #666;" href="javascript:qiandao(0)">
+				今日签到
+			</a>
+		</div>
+
+		<div id="main">
+
+
+
+
+		</div>
+
+
+	</div>
+</body>
+
+<script id="interpolationtmpl" type="text/x-dot-template">
+	<div class="weui-cells" style="margin-top:0px;background:#fff;">
+	{{~it:value:index}}
+	<div class="weui-cell" href="javascript:;" id="del_{{=value.id}}">
+	<div class="weui-cell__hd"><img src="http://www.d-shang.com/static/blog/image/{{=value.image}}" alt="" style="width:50px;margin-right:5px;display:block"></div>
+
+	<div class="weui-cell__bd">
+	<p>{{=value.name}}<br>
+	<img src="../../image/tmall/gold.png" class="gold"> <small>金豆 x{{=value.coupons}}</small>
+	</p>
+	</div>
+	<div class="weui-cell__ft">
+	<a class="btn {{? value.status==0}}wait{{?}} {{? value.status==1}}success{{?}} {{? value.status==-1}}ok{{?}}"
+{{? value.status==1}}href="javascript:bean({{=value.id}})"{{??}}
+	href="javascript:void(0)" {{?}}>{{=value.status_name}}</a><br>
+	<small>{{=value.process}}</small>
+	</div>
+	</div>
+	{{~}}
+	</div>
+</script>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/jpush.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript">
+	var OPENID;
+	apiready = function() {
+		setTopBar();
+		//清除小红点
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+		getTask();
+	};
+
+	function goback() {
+		api.closeWin({});
+	}
+
+
+	function guize() {
+		api.openWin({
+			name: 'content',
+			url: '../me/content.html',
+			pageParam: {
+				id: 37748
+			}
+		});
+	}
+
+ function qiandao(id){
+	 api.openWin({
+	     name: 'clock',
+	     url: './clock.html',
+	     pageParam: {
+	         id: id
+	     }
+	 });
+
+ }
+
+
+
+	function bean(id){
+   api.ajax({
+       url: 'http://www.d-shang.com/index.php?apptask/bean/?openid='+OPENID,
+       method: 'post',
+       data: {
+           values: {
+               id: id
+           }
+       }
+   },function(ret, err){
+		 api.toast({
+		     msg: ret.message,
+		     duration: 2000,
+		     location: 'top'
+		 });
+
+      if(ret.status){
+				getTask();
+			}
+   });
+
+
+	}
+
+	function getTask(){
+		api.ajax({
+		    url: 'http://www.d-shang.com/index.php?apptask/gettask/?openid='+OPENID,
+		},function(ret, err){
+			var d=ret.data;
+				var arrText = doT.template($("#interpolationtmpl").text());
+				$("#main").html(arrText(d));
+		});
+
+	}
+</script>
+
+</html>

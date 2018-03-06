@@ -66,14 +66,14 @@
 					<div class="weui-cell__bd">
 						<p>总收入</p>
 					</div>
-					<div class="weui-cell__ft" id="sr">982.12 元</div>
+					<div class="weui-cell__ft" id="sr">0 元</div>
 				</a>
 				<div class="weui-cell">
 					<div class="weui-cell__hd"><img src="../../image/tmall/tixian.png" alt="" style="width:30px;margin-right:5px;display:block"></div>
 					<div class="weui-cell__bd">
-						<p>已提现</p>
+						<p>已转货款</p>
 					</div>
-					<div class="weui-cell__ft" id="tx">524.66 元</div>
+					<div class="weui-cell__ft" id="tx">0 元</div>
 				</div>
 
 			</div>
@@ -142,7 +142,7 @@
 	function getMoney(){
 
 		api.ajax({
-		    url: 'httpp://www.d-shang.com/index.php?tmallorder/getmoneybyuid/?openid='+OPENID,
+		    url: 'http://www.d-shang.com/index.php?tmallorder/getmoneybyuid/?openid='+OPENID,
 		},function(ret, err){
 			var d=ret.data;
 		  $("#sr").html(d.sr+" 元");
