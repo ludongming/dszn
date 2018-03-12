@@ -114,7 +114,7 @@
 			<div class="username">
 
 			{{=value.real_name}}
-				<span class="mp">{{=value.rq}} {{=value.address}}</span>
+				<span class="mp">{{=value.address}}</span>
 			</div>
 			<div class="pub_time" onclick="fans({{=value.uid}},{{=value.id}})" id="fans_{{=value.id}}">{{=value.fans}}</div>
 		</div>
@@ -134,12 +134,7 @@
 <!--礼物-->
 		{{?value.giftnum>0}}
 		<div class="reply">
-			{{ for(var i=0, catlen=value.giftnum; i
-			<catlen; i++) { }} <div class="replylist">
 
-				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}豆子
-		</div>
-		{{ } }}
 	</div>
 	{{?}}
 

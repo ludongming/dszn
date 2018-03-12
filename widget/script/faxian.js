@@ -66,7 +66,6 @@ function rq() {
 }
 
 function tmall(){
-  console.log(123);
   api.openWin({
       name: 'tmall',
       url: './active/tmall.html',
