@@ -118,6 +118,7 @@
 			text-align: center;
 			padding-top: 2px;
 		}
+		.nowlevel{font-size:0.8em;color:#666;width:95%;margin:0 auto;margin-top:60px;color:#666;border-radius: 4px;padding:5px;}
 	</style>
 </head>
 
@@ -135,6 +136,11 @@
 			<div class="dingwei" style="position:absolute;bottom:-30px;height:20px;">
 				<img src="../../image/dingwei.png" style="vertical-align:middle;width:30px;"><span class="address" ontouchend="addlocation()">点击获取位置</span>
 			</div>
+
+		</div>
+
+		<div class="nowlevel" id="level">
+
 		</div>
 	</div>
 
@@ -179,6 +185,7 @@
 			sync: true,
 			key: 'openid'
 		});
+		loadUserLevel();
 		loadUser();
 		addlocation();
 	};
@@ -234,8 +241,17 @@
 		}, function(ret, err) {
 			UID = ret.data.uid;
 		});
-
 	}
+
+ function loadUserLevel(){
+	 api.ajax({
+	     url: 'http://www.d-shang.com/index.php?blog/getbloglevel/?openid='+OPENID
+	 },function(ret, err){
+	    $("#level").html(ret.message);
+	 });
+
+ }
+
 
 
 	function goback() {

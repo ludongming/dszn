@@ -57,7 +57,7 @@
 
 						<!--首页推荐视频-->
 						<div id="recommendmain">
-							当你看到这句话，说明网络连接异常，点击<a href="javascript:location.reload()">刷新</a>看下哦
+						   <img src="../../image/loading2.gif" class="loading">
 						</div>
 
 		</div>
@@ -65,19 +65,7 @@
 
 
 	</div>
-	<div class="gift">
-		<div class="topbar">
-			<a href="javascript:;" class="nav active">礼物</a>
-			<span class="zf">送给 <span id="zfname"></span></span>
 
-			<a href="javascript:;" class="nav" onclick="closeGift()" style="float:right;margin-right:10px;font-size:1.2em;">X</a>
-
-		</div>
-		<div id="giftcon"></div>
-		<div class="tools">
-			<span style="float:left;margin-left:20px;color:#">钱包 <span class="money">100</span> 金豆</span><a href="javascript:;" ontouchend="send()" class="sendBtn">送出礼物</a>
-		</div>
-	</div>
 </body>
 
 <!--剪贴板-->
@@ -90,16 +78,23 @@
 
 <script  id="qdvideo" type="text/x-dot-template">
 <div class="qd">
-<div style="position:absolute;right:0px;width:50%;height:60px;bottom:0px;z-index:666;">
-<img src="../../image/zan{{?it.isflower==0}}3{{??}}1{{?}}.png" class="qd_zan" id="zanimage{{=it.nid}}" style="width:30px!important;height:30px!important;;" data="{{=it.isflower}}" data-id="{{=it.nid}}"   ontouchend="zan({{=it.nid}})">
-<span id="qd_zannum" class="zan_{{=it.nid}}" >{{=it.flower}}</span>
+<div class="blogrankcon">
+<div class="blogrankimg" data-url="../dszp/recommend.html">
+<img src="../../image/zhaipei.png"><br>
+宅配
 </div>
-<div class="image" {{?it.isvideo==1}}onclick="playVideo(this)"{{?}}data-source="http://www.d-shang.com/{{=it.video}}" id="recommendvideo">
-	<div class="qd_label">精选</div>
-	<div class="qd_title" {{?it.isvideo==0}}style="bottom:0px!important;"{{?}}>{{=it.content}}</div>
-	{{?it.isvideo==1}}<img src="../../image/play.png"  id="qd_player" >{{?}}
-
-<img src="../../image/timg.jpg" id="recommendvideoimage" data-original="http://www.d-shang.com/{{=it.source}}" class="pic">
+<div class="blogrankimg" data-url="../design/programme.html">
+<img src="../../image/qiangmian.png"><br>
+墙面
+</div>
+<div class="blogrankimg" data-url="../3D/index.html">
+<img src="../../image/3d.png"><br>
+全景
+</div>
+<div class="blogrankimg" data-url="../active/task.html">
+<img src="../../image/cash.png"><br>
+签到
+</div>
 </div>
 </div>
 </script>
@@ -113,12 +108,13 @@
 		<div class="info">
 			<div class="head" onclick="user({{=value.uid}})">
 				<img src="../../image/default.png" data-original="{{=value.headimgurl}}" class="pic" style="vertical-align:middle;">
-{{?value.global!=""}}
-<div class="global">{{=value.global}}</div>
-{{?}}
+				<div class="global" style="background:{{=value.level.color}}">{{=value.level.name}}</div>
+
 			</div>
-			<div class="username">{{=value.real_name}}
-				<span class="mp">{{=value.rq}} {{=value.address}}</span>
+			<div class="username">
+
+			{{=value.real_name}}
+				<span class="mp">{{=value.address}}</span>
 			</div>
 			<div class="pub_time" onclick="fans({{=value.uid}},{{=value.id}})" id="fans_{{=value.id}}">{{=value.fans}}</div>
 		</div>
@@ -138,12 +134,7 @@
 <!--礼物-->
 		{{?value.giftnum>0}}
 		<div class="reply">
-			{{ for(var i=0, catlen=value.giftnum; i
-			<catlen; i++) { }} <div class="replylist">
 
-				<span class="replyname">{{=value.gift[i].real_name}}:</span> 送了 {{=value.gift[i].name}}{{=value.gift[i].emoji}} + {{=value.gift[i].money}}豆子
-		</div>
-		{{ } }}
 	</div>
 	{{?}}
 
@@ -212,9 +203,6 @@
   initPlayer();
 		dropDownRecommend("recommend");
 	}
-
-
-
 
 </script>
 

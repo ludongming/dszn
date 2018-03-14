@@ -1,16 +1,7 @@
 function loadAdv() {
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?blog/getblogvideobyproject/?&openid=' + OPENID
-    }, function(ret, err) {
-        if (typeof(err) == "object") {
-            weui.alert("推荐图加载失败");
-            return false;
-        }
+  var arrText = doT.template($("#qdvideo").text());
+  $("#qdmain").html(arrText());
 
-        var d = ret.data;
-        var arrText = doT.template($("#qdvideo").text());
-        $("#qdmain").html(arrText(d));
-    });
 }
 
 function switchBtn(index) {
@@ -37,80 +28,6 @@ function backSwitchBtn(index) {
     });
 }
 
-
-function showQDBox() {
-    var dialogBox = api.require('dialogBox');
-    var c = dialogBox.raffle({
-        texts: {
-            mainText: '+5枚豆子',
-            subText: '走，我带你去逛街。',
-            rightTitle: '点击签到'
-        },
-        styles: {
-            bg: '#fff',
-            w: 300,
-            corner: 12,
-            title: {
-                size: 14,
-                color: '#000'
-            },
-            icon: {
-                marginT: 10,
-                w: 200,
-                h: 154,
-                iconPath: 'widget://image/zaoan/zaoan3.jpg'
-            },
-            main: {
-                marginT: 10,
-                color: '#636363',
-                size: 13
-            },
-            sub: {
-                marginT: 0,
-                color: '#999999',
-                size: 12
-            },
-            right: {
-                marginB: 20,
-                marginL: 50,
-                w: 200,
-                h: 35,
-                corner: 6,
-                bg: '#ff5555',
-                color: '#fff',
-                size: 18
-            }
-        }
-    }, function(ret, err) {
-        if (ret.eventType == 'right') {
-
-            api.ajax({
-                url: 'http://www.d-shang.com/index.php?appclock/clock/?openid=' + OPENID,
-                method: 'post',
-                data: {
-                    values: {
-                        address: ADDRESS
-                    }
-                }
-            }, function(ret, err) {
-                daily();
-            });
-
-            var dialogBox = api.require('dialogBox');
-            dialogBox.close({
-                dialogName: 'raffle'
-            });
-            api.toast({
-                msg: '签到成功',
-                duration: 2000,
-                location: 'middle'
-            });
-
-
-        }
-    });
-
-}
 
 function addlocation() {
     var aMapLBS = api.require('aMapLBS');
@@ -142,25 +59,37 @@ function locationAddress() {
     });
 }
 
-function isClock() {
 
-    api.ajax({
-        url: 'http://www.d-shang.com/index.php?appclock/checkuserclock/?openid=' + OPENID
-    }, function(ret, err) {
-        if (typeof(err) == "object") {
-            weui.alert("推荐图加载失败");
-            return false;
-        }
+function rq() {
+     loadAdv();
+    $(".blogrankimg").bind("click",caidan);
+}
 
-        if (ret.data == false) {
-            showQDBox();
-        }
-    });
+function tmall(){
+  api.openWin({
+      name: 'tmall',
+      url: './active/tmall.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
 
 }
 
-function rq() {
-    loadAdv();
+function caidan(){
+  var url=$(this).attr("data-url");
+
+  api.openWin({
+      name: 'page1',
+      url: url,
+      pageParam: {
+          "placeType":3,
+          "type":2,
+          "typename":"墙面",
+          "placename":"部分",
+      }
+  });
+
 }
 
 
@@ -466,12 +395,13 @@ function loadRecommendData(mescroll,type) {
 
     api.ajax({
         url: 'http://www.d-shang.com/index.php?blog/getblogdata/?p=1&openid=' + OPENID,
-        timeout: 30,
+        timeout: 15,
         report: false
     }, function(ret, err) {
        mescroll.endSuccess();
         if (typeof(err) == "object") {
-            weui.alert("网络请求超时，请稍后再试");
+            var con="网络请求超时，点击<a href=\"javascript:location.reload()\">刷新</a>看下哦";
+            $("#recommendmain").html(con);
             return false;
         }
 
