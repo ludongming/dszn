@@ -51,15 +51,12 @@
             <div class="picarr"></div>
         </div>
         <script id="interpolationtmpl" type="text/x-dot-template">
-
-
-
             {{~it:value:index}}
             <div class="picbox">
             <a href="javascript:;" onclick="jump('{{=value.subtitle}}')"><img src="../../image/defaultimage.png" data-original="http://www.d-shang.com/{{=value.thumb}}" class="pic"></a>
             <div class="picname" style="">
             {{=value.title}}
-            <img src="../../image/share1.png" alt=""onclick="shareWxImg('{{=value.thumb}}')"/>
+            <img src="../../image/share1.png" alt=""onclick="shareWxImg('{{=value.subtitle}}','{{=value.title}}')"/>
             </div>
             </div>
             {{~}}
@@ -196,7 +193,7 @@
         }
 
 
-        function shareWxImg(image, id) {
+        function shareWxImg(url,title) {
             var dialogBox = api.require('dialogBox');
             dialogBox.actionMenu({
                 rect: {
@@ -235,7 +232,6 @@
                     }
                 }
             }, function(ret) {
-
                 var dialogBox = api.require('dialogBox');
                 dialogBox.close({
                     dialogName: 'actionMenu'
@@ -243,53 +239,35 @@
                 if (ret.eventType == "cancel") {
                     return false;
                 }
-
                 var index = ret.index;
                 var type = index == 1 ? "session" : "timeline";
-                downloadShareImage(image, type);
-            });
-
-
-        }
-
-
-
-        function downloadShareImage(image, type) {
-            var url = "http://www.d-shang.com" + image;
-            var img = image.match(/\w+\.jpg/g);
-            api.download({
-                url: url,
-                savePath: 'fs://' + img,
-                report: true,
-                cache: true,
-                allowResume: true
-            }, function(ret, err) {
-                if (ret.state == 1) {
-                    shareImage(img,url, type);
-
-                }
+                shareImage(url,type,title);
             });
         }
 
 
 
-        function shareImage(img,url, type) {
-        console.log(type);
+        function shareImage(url,type,title) {
+
             var wx = api.require('wx');
-            wx.shareImage({
+            wx.shareWebpage({
                 apiKey: 'wx062395c72d4d0732',
                 scene: type,
-                thumb: 'widget://'+img,
-                contentUrl: url
+                title: title,
+                thumb: 'widget://image/redpack.png',
+                contentUrl:url
             }, function(ret, err) {
                 if (ret.status) {
-
+                  console.log("2");
                     api.toast({
                         msg: '分享成功',
                         duration: 2000,
                         location: 'middle'
                     });
 
+                }
+                else{
+                  console.log(err.code);
                 }
             });
 
