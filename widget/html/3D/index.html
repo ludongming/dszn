@@ -29,6 +29,15 @@
             }
             .picname {
                 font-size: 15px;
+              border-bottom: 1px solid #ccc;
+                text-align: left;
+                display: flex;
+                align-items: center;
+                justify-content:  space-between;
+            }
+            .picname img{
+              width: 30px;
+            margin-right: 50px;
             }
         </style>
     </head>
@@ -42,11 +51,15 @@
             <div class="picarr"></div>
         </div>
         <script id="interpolationtmpl" type="text/x-dot-template">
+
+
+
             {{~it:value:index}}
             <div class="picbox">
             <a href="javascript:;" onclick="jump('{{=value.subtitle}}')"><img src="../../image/defaultimage.png" data-original="http://www.d-shang.com/{{=value.thumb}}" class="pic"></a>
             <div class="picname" style="">
             {{=value.title}}
+            <img src="../../image/share1.png" alt=""onclick="shareWxImg('{{=value.thumb}}')"/>
             </div>
             </div>
             {{~}}
@@ -141,6 +154,8 @@
             api.closeWin();
         }
 
+
+
         function jump(url) {
             api.openWin({
                 name : "img",
@@ -179,5 +194,111 @@
                 $('.pic').picLazyLoad();
             });
         }
+
+
+        function shareWxImg(image, id) {
+            var dialogBox = api.require('dialogBox');
+            dialogBox.actionMenu({
+                rect: {
+                    h: 150
+                },
+                texts: {
+                    cancel: '取消'
+                },
+                items: [{
+                        text: '微信朋友圈',
+                        icon: 'widget://image/timeline.png'
+                    }, {
+                        text: '微信好友',
+                        icon: 'widget://image/friends.png'
+                    }
+
+                ],
+                tapClose: true,
+                isCuttingLine: true,
+                styles: {
+                    bg: '#FFF',
+                    column: 2,
+                    itemText: {
+                        color: '#000',
+                        size: 12,
+                        marginT: 8
+                    },
+                    itemIcon: {
+                        size: 60
+                    },
+                    cancel: {
+                        bg: 'fs://icon.png',
+                        color: '#000',
+                        h: 50,
+                        size: 14
+                    }
+                }
+            }, function(ret) {
+
+                var dialogBox = api.require('dialogBox');
+                dialogBox.close({
+                    dialogName: 'actionMenu'
+                });
+                if (ret.eventType == "cancel") {
+                    return false;
+                }
+
+                var index = ret.index;
+                var type = index == 1 ? "session" : "timeline";
+                downloadShareImage(image, type);
+            });
+
+
+        }
+
+
+
+        function downloadShareImage(image, type) {
+            var url = "http://www.d-shang.com" + image;
+            var img = image.match(/\w+\.jpg/g);
+            api.download({
+                url: url,
+                savePath: 'fs://' + img,
+                report: true,
+                cache: true,
+                allowResume: true
+            }, function(ret, err) {
+                if (ret.state == 1) {
+                    shareImage(img,url, type);
+
+                }
+            });
+        }
+
+
+
+        function shareImage(img,url, type) {
+        console.log(type);
+            var wx = api.require('wx');
+            wx.shareImage({
+                apiKey: 'wx062395c72d4d0732',
+                scene: type,
+                thumb: 'widget://'+img,
+                contentUrl: url
+            }, function(ret, err) {
+                if (ret.status) {
+
+                    api.toast({
+                        msg: '分享成功',
+                        duration: 2000,
+                        location: 'middle'
+                    });
+
+                }
+            });
+
+        }
+
+
+
+
+
+
     </script>
 </html>
