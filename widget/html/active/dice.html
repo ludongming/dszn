@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" href="../../css/weui.min.css">
+	<link rel="stylesheet" href="../../css/header.css" />
+	<style>
+		body {
+			background: #fff;
+		}
+
+		.desk {
+			border-top: 6px solid #855124;
+			border-bottom: 6px solid #855124;
+			background: #075639;
+			width: 100%;
+			margin: 0 auto;
+			height: 420px;
+			text-align: center;
+			position: relative;
+		}
+
+
+		.kuai {
+			border-radius: 10px;
+			width: 95%;
+			margin: 0 auto;
+			border: 2px solid #649a67;
+			height: 200px;
+			text-align: center;
+		}
+			.box{
+				margin-left:10px;
+				margin-top:5px;
+				width: 40px;
+				height:80px;
+				line-height: 40px;
+				border:1px solid #fff;
+				float:left;
+			}
+			.sz{width:100%;text-align: center;color:#fff;font-size:1.3em;font-weight: 700}
+			.bl{color:yellow!important;}
+		.titlebtn{
+			width: 100%;
+text-align: center;
+margin: auto;
+line-height: 30px;
+
+		}
+		.titlebtn a{
+			float: left;
+			color:#000;
+			margin: 5px;
+			font-size: 1.2em;
+			line-height:30px;
+
+
+		}
+		.clear{
+			clear: both;
+		}
+		.detial{
+			font-size: 0.7em;
+			color: #626262;
+		}
+		.checked{
+			color:#f00 !important;
+		}
+		.beanall{
+			position:absolute;top:5px; right:0px; z-index:99; color:#fff; padding:3px 15px 3px 15px;font-size:1.1em;
+					border:1px solid #cb885e;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+		}
+		.beancount{
+
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;">押宝房</span>
+	</header>
+	<div class="page__bd content">
+		<div id="main">
+			<div class="desk">
+				<div class="beanall">
+					<img src="../../image/num/chouma.png" style="width:25px; "><div class="beancount"></div>个</div>
+				<img src="../../image/shaizi.png" style="width:170px; margin-top:30px;">
+				<div class="kuai">
+						<div class="box">
+							<span class="sz">4</span>
+             <span class="bl">1:50</span>
+					 </div>
+					 <div class="box">
+						<span class="sz">5</span>
+						<span class="bl">1:18</span>
+					</div>
+					<div class="box">
+						<span class="sz">6</span>
+					 <span class="bl">1:14</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">7</span>
+					 <span class="bl">1:12</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">8</span>
+					 <span class="bl">1:8</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">9</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">10</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">11</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">12</span>
+					 <span class="bl">1:6</span>
+				 </div>
+				 <div class="box">
+						<span class="sz">13</span>
+					 <span class="bl">1:8</span>
+				 </div>
+				 <div class="box">
+					 <span class="sz">14</span>
+					<span class="bl">1:12</span>
+				</div>
+				<div class="box">
+					 <span class="sz">15</span>
+					<span class="bl">1:14</span>
+				</div>
+				<div class="box">
+					 <span class="sz">16</span>
+					<span class="bl">1:18</span>
+				</div>
+				<div class="box">
+					 <span class="sz">17</span>
+					<span class="bl">1:50</span>
+				</div>
+
+				</div>
+			</div>
+			<div class="explain" style="border-bottom: 1px solid #888;">
+				1、你压的和三个骰子的和比较<br>
+				2、相同则按照点数下方的赔率给你<br>
+				3、如你压了30金豆17点，三个筛子的和是17点，那么将赔付给你1500金豆<br>
+				4、每10人开奖<br>
+				5、金豆必须要大于50才能玩<br>
+
+			</div>
+			<div class="titlebtn" style="margin-top:10px;">
+				<a href="javascript:newRank();" class="select checked" onclick="addBorder(this)">最新押注</a>
+					<a href="javascript:selfRank();" class="select" onclick="addBorder(this)">我的押注</a>
+				<a href="javascript:winRank();" class="select" onclick="addBorder(this)">赌王</a>
+				<div class="clear"></div>
+			</div>
+
+			<div class="rank" style="width:100%;">
+						<div class="weui-cells">
+						</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>
+<script type="text/javascript" id="newrank">
+{{~it:value:index}}
+<div class="weui-cell">
+	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png"  class="pic" style="border-radius:64px; width:64px;"></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
+	<div class="weui-cell__ft">
+	{{?value.status=="等待开奖"}}
+		<p style="color: orange; font-style: bold;">{{=value.status}}</p>
+		{{?}}
+		{{?value.status=="中奖"}}
+			<p style="color: red; font-style: bold;">{{=value.status}}</p>
+			{{?}}
+
+			{{?value.status=="未中奖"}}
+				<p style="color: #666; font-style: bold;">{{=value.status}}</p>
+				{{?}}
+		<div class="detial"><p>{{=value.money}}金豆(押{{=value.code}})</p></div>
+	</div>
+</div>
+{{~}}
+</script>
+<script type="text/javascript" id="winrank">
+{{~it:value:index}}
+<div class="weui-cell">
+	<div class="weui-cell__hd"><img data-original="{{=value.headimgurl}}" alt="" src="../../image/defaulthead.png" class="pic" style="border-radius:64px;  width:64px;"></div>
+	<div class="weui-cell__bd"><p>{{=value.real_name}}</p></div>
+	<div class="weui-cell__ft">
+		<p style="color: red; font-style: bold;">{{=value.money}}豆</p>
+		<div class="detial"><p>第{{=index+1}}名</p></div>
+	</div>
+</div>
+{{~}}
+</script>
+
+{{~}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/swiper-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../script/dropload.js"></script>
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
+<script>
+	var OPENID;
+
+	apiready = function() {
+		setTopBar();
+		OPENID = api.getPrefs({
+			sync: true,
+			key: 'openid'
+		});
+
+
+newRank();
+nowbean();
+	}
+
+	function confirmScore(code,money) {
+		api.confirm({
+			title: '买定离手',
+			msg: '确认下押'+code+',押'+money+'金豆？',
+			buttons: ['确定', '取消']
+		}, function(ret, err) {
+			var index = ret.buttonIndex;
+			if(index==1){
+				api.ajax({
+					url: 'http://www.d-shang.com/index.php?appdice/addnewtickets/?openid='+OPENID,
+					method: "post",
+					data: {
+						values: {
+							openid:OPENID,
+							code: code,
+							money: money
+						}
+					}
+				}, function(ret) {
+
+				api.toast({msg:ret.message});
+				newRank();
+				nowbean();
+				});
+			}
+		});
+	}
+
+
+	$(".box").bind("click", function(){
+      var code=$(this).children(".sz").text()
+	var dialogBox = api.require('dialogBox');
+dialogBox.share({
+    rect: {
+        w: 250,
+        h: 150
+    },
+    items: [{
+        text: '押10金豆',
+        icon: 'widget://image/num/1.png'
+    }, {
+        text: '押20金豆',
+        icon: 'widget://image/num/21.png'
+    }, {
+        text: '押30金豆',
+        icon: 'widget://image/num/31.png'
+    }],
+		tapClose:true,
+    styles: {
+        bg: '#fff',
+        column: 3,
+        horizontalSpace: 15,
+        verticalSpace: 30,
+        itemText: {
+            color: '#000',
+            size: 15,
+            marginT: 5
+        },
+        itemIcon: {
+            size: 60
+        }
+    }
+}, function(ret) {
+	var bean=ret.index+1;
+
+	if(bean==1){
+		 var money=10;
+	}else if(bean==2){
+	 var	money=20;
+	}
+	else{
+	 var	money=30;
+	}
+		confirmScore(code,money);
+
+		dialogBox.close();
+
+});
+});
+
+
+//最新排行
+function newRank(){
+	var loading = weui.loading("拼命加载中...");
+api.ajax({
+    url: 'http://www.d-shang.com/index.php?appdice/getlastdice/?openid='+OPENID,
+    method: 'post',
+
+}, function(ret, err) {
+		loading.hide();
+    if (ret) {
+					var data=ret.data;
+		for(var i=0;i<data.length;i++){
+				if(data[i].code==1){
+					data[i].code="小";
+				}else{
+						data[i].code="大";
+				}
+				data[i].money=parseInt(data[i].money);
+		}
+		var arrText = doT.template($("#newrank").text());
+		$(".weui-cells").html(arrText(data));
+	$('.pic').picLazyLoad();
+    } else {
+        api.alert({ msg: JSON.stringify(err) });
+    }
+});
+}
+
+function winRank(){
+	var loading = weui.loading("拼命加载中...");
+	api.ajax({
+	    url: 'http://www.d-shang.com/index.php?appdice/getalldicebystatus/?openid='+OPENID,
+	    method: 'post',
+
+	}, function(ret, err) {
+			loading.hide();
+	    if (ret) {
+				var data=ret.data;
+				for(var i=0;i<data.length;i++){
+				if(data[i].code==1){
+				data[i].code="小";
+				}else{
+					data[i].code="大";
+				}
+				}
+				var arrText = doT.template($("#winrank").text());
+				$(".weui-cells").html(arrText(data));
+				$('.pic').picLazyLoad();
+
+	    } else {
+	        api.alert({ msg: JSON.stringify(err) });
+	    }
+	});
+
+}
+function selfRank(){
+	var loading = weui.loading("拼命加载中...");
+	api.ajax({
+	    url: 'http://www.d-shang.com/index.php?appdice/getalldicebyuid/?openid='+OPENID,
+	    method: 'post',
+	}, function(ret, err) {
+			loading.hide();
+	    if (ret) {
+				var data=ret.data;
+				for(var i=0;i<data.length;i++){
+				if(data[i].code==1){
+				data[i].code="小";
+				}else{
+					data[i].code="大";
+				}
+					data[i].money=parseInt(data[i].money);
+				}
+				var arrText = doT.template($("#newrank").text());
+				$(".weui-cells").html(arrText(data));
+				$('.pic').picLazyLoad();
+
+	    } else {
+	        api.alert({ msg: JSON.stringify(err) });
+	    }
+	});
+}
+function addBorder(obj) {
+		var a = $(".select");
+		$.each(a, function() {
+				$(this).removeClass("checked");
+		});
+		$(obj).addClass("checked");
+}
+function nowbean(){
+	api.ajax({
+		url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+	}, function(ret, err) {
+		var user = ret.data;
+		var  coupons = parseInt(user.coupons);
+		$(".beancount").html(coupons);
+	});
+}
+
+
+</script>
