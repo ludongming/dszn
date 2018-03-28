@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    <link rel="stylesheet" href="../../css/weui.min.css" />
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style>
+    .czbox{width:30%;height:50px;border:1px #eee solid;margin-left:5px;margin-right:5px;line-height: 25px;
+      border-radius: 4px;padding-top:5px;padding-bottom: 5px;float:left;text-align: center;font-size:1.1em;}
+    .small{font-size:0.9em;}
+    .active{background:orange;color:#fff;border-color:orange;}
+    .title{background: #383838;text-align: center;}
+    .tb{width:160px;}
+    .chongzhi{display:inline-block;;width:95%;margin:0 auto;margin-top:30px;border-radius: 4px;text-align: center;
+      background:#e74c3c;color:#fff;line-height: 50px;height:50px;}
+      .content{text-align: center;}
+      .mobile{height:50px;font-size: 1.2em;font-weight: 700;line-height: 50px;}
+      .pay{width:90%;height:60px;margin-top:10px;margin-bottom: 10px;text-align: left;line-height: 60px;padding-left:10px;}
+      .mb{color:#666;}
+      .payicon{width:120px;}
+    </style>
+</head>
+
+<body>
+
+    <header style="position: fixed;">
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back"/></i><span class="tit" style="text-align: center;">金豆充值</span>
+    </header>
+    <div class="page__bd content" id="main">
+
+<div class="title">
+  <img src="../../image/czvip.png" class="tb">
+</div>
+
+<div class="mobile">
+  充值号码  <span class="mb"></span>
+</div>
+
+<div>
+
+  <div class="czbox" data-money="20">
+<b>20元</b><br>
+  <small>金豆:1000</small>
+  </div>
+
+
+<div  class="czbox active" data-money="50">
+  <b>50元</b><br>
+<small>金豆:3000</small>
+</div>
+
+<div  class="czbox" data-money="100">
+<b>100元</b><br>
+<small>金豆:7000</small>
+</div>
+
+</div>
+
+<div class="pay">
+<img src="../../image/wxpay.jpg" class="payicon">
+</div>
+
+
+<a href="javascript:vip()" class="chongzhi">立即充值</a>
+<span style="color:#777;">(支付成功后，立即到账)</span>
+
+<div>
+
+</div>
+</div>
+
+
+</body>
+</html>
+
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/weui.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/zepto.min.js"></script>
+
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+
+
+
+<script type="text/javascript">
+    var junqu = 0;
+    var junquArr = 0;
+     var OPENID;
+  apiready=function(){
+    setTopBar();
+
+    OPENID = api.getPrefs({
+      sync : true,
+      key : 'openid'
+    });
+getUserInfo();
+  $(".czbox").bind("touchend",active);
+
+  }
+
+
+  function active(){
+var obj=$(this);
+   var arr=$(".czbox");
+   arr.each(function(){
+     $(this).removeClass("active");
+   })
+
+obj.addClass("active");
+  }
+
+  function getUserInfo() {
+		api.ajax({
+			url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
+		}, function(ret, err) {
+			var user = ret.data;
+
+
+			$(".mb").html(user.mobile_phone);
+	//		$(".clock").html("金豆" + coupons + "个");
+		});
+	}
+
+
+
+
+function vip() {
+
+  var money=$(".active").attr("data-money");
+  if(money<1){
+    api.toast({
+        msg: '请选择金额',
+        duration: 2000,
+        location: 'middle'
+    });
+    return false;
+  }
+
+  api.confirm({
+      title: '确认充值',
+      msg: '你将充值'+money+"元",
+      buttons: ['确定', '取消']
+  }, function(ret, err){
+
+
+
+      if( ret.buttonIndex==1 ){
+          parseOrder(money);
+      }
+  });
+
+
+
+
+  }
+
+
+function parseOrder(money){
+  api.ajax({
+    url : 'http://www.d-shang.com/index.php?apporder/addvip/?money='+money+'&openid=' + OPENID
+  }, function(ret, err) {
+      wxpayConfig(ret.data);
+  });
+}
+
+
+function payOrder(order){
+  var wxPay = api.require('wxPay');
+wxPay.payOrder({
+    apiKey: "wx062395c72d4d0732",
+    orderId: order.prepay_id,
+    mchId: "1467789402",
+    nonceStr: "order.nonceStr",
+    timeStamp: "order.timeStamp",
+    package: "123",
+    sign: "order.sign"
+}, function(ret, err) {
+
+    if (ret.status) {
+        //支付成功
+    } else {
+        alert(err.code);
+    }
+});
+}
+
+
+
+
+
+function wxpayConfig(order) {
+    var wxPay = api.require('wxPay');
+    wxPay.config({
+      apiKey : 'wx062395c72d4d0732',
+      mchId : '1467789402',
+      partnerKey : 'dmBk0YmfxhEGZPFJMMBVa6ylHad9UQLe',
+      notifyUrl : 'http://www.d-shang.com/static/wxapppay/notify.php'
+    }, function(ret, err) {
+
+      if (ret.status) {
+        pay(order);
+      } else {
+        alert(err.code);
+      }
+    });
+  }
+
+  function pay(order) {
+    console.log(order);
+    var wxPay = api.require('wxPay');
+    wxPay.pay({
+      description : order.remark,
+      totalFee : order.coupons * 100,
+      tradeNo : order.orderno,
+      spbillCreateIP : '196.168.1.1',
+      deviceInfo : '013467007045764',
+      detail : order.remark,
+      attach : order.remark,
+      feeType : 'CNY',
+      goodsTag : 'WXG',
+      productId : '12235413214070356458058'
+    }, function(ret, err) {
+      alert(JSON.stringify(err));
+      if (ret.status) {
+        alert("恭喜您，支付成功");
+      } else {
+        alert(err.msg);
+      }
+    })
+  }
+</script>

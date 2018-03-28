@@ -1,282 +1,283 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-        <title>吊顶&墙面搭配方案</title>
-        <link rel="stylesheet" href="../../css/weui.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-        <link rel="stylesheet" href="../../css/dropload.css">
-        <link rel="stylesheet" href="../../css/header.css" />
-        <style>
-            body {
-                background-color: white;
-                overflow-x: hidden;
-                background: #f5f5f5;
-            }
-            .picbox {
-                background: #fff;
-                border-color: #f5f5f5;
-                width: 100%;
-                text-align: center;
-                margin-bottom: 10px;
-            }
-            .picbox img {
-                width: 100%;
-                height:100%;
-                max-height:500px;
-            }
-            .picname {
-                font-size: 15px;
-              border-bottom: 1px solid #ccc;
-                text-align: left;
-                display: flex;
-                align-items: center;
-                justify-content:  space-between;
-            }
-            .picname img{
-              width: 30px;
-            margin-right: 50px;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <i class="backBtn" ontouchend="goback()" ><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">3D全景</span>
-         <span    id="showPicker"  style="width:40px; margin-right:10px; float:right;">场景</span>
 
-        </header>
-        <div class="page__bd content" id="contents">
-            <div class="picarr"></div>
-        </div>
-        <script id="interpolationtmpl" type="text/x-dot-template">
-            {{~it:value:index}}
-            <div class="picbox">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>吊顶&墙面搭配方案</title>
+    <link rel="stylesheet" href="../../css/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" href="../../css/dropload.css">
+    <link rel="stylesheet" href="../../css/header.css" />
+    <style>
+        body {
+            background-color: white;
+            overflow-x: hidden;
+            background: #ccc;
+        }
+
+        .picbox {
+            background: #fff;
+            border-color: #f5f5f5;
+            width: 100%;
+            text-align: center;
+        }
+
+        .picbox img {
+            margin-bottom: 10px;
+            width: 100%;
+            height: 100%;
+            max-height: 500px;
+        }
+
+        .picname {
+            font-size: 15px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .picname img {
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <i class="backBtn" ontouchend="goback()"><img src="../../image/back.png" class="back" /></i><span style="text-align: center;" id="title" class="title">3D全景</span>
+        <span id="showPicker" style="width:40px; margin-right:10px; float:right;">场景</span>
+
+    </header>
+    <div class="page__bd content" id="contents">
+        <div class="picarr"></div>
+    </div>
+    <script id="interpolationtmpl" type="text/x-dot-template">
+        {{~it:value:index}}
+        <div class="picbox">
             <a href="javascript:;" onclick="jump('{{=value.subtitle}}')"><img src="../../image/defaultimage.png" data-original="http://www.d-shang.com/{{=value.thumb}}" class="pic"></a>
             <div class="picname" style="">
-            {{=value.title}}
-            <img src="../../image/share1.png" alt=""onclick="shareWxImg('{{=value.subtitle}}','{{=value.title}}')"/>
+                {{=value.title}}
+                <div style="border:1px #ccc soild;width:40px;height:30px;float:right;">
+                    <img src="../../image/share1.png" alt="" onclick="shareWxImg('{{=value.subtitle}}','{{=value.title}}')" />
+                </div>
             </div>
-            </div>
-            {{~}}
-        </script>
-    </body>
-    <script type="text/javascript" src="../../script/api.js"></script>
-    <script src="../../script/zepto.min.js"></script>
-    <script src="../../script/doT.min.js"></script>
-    <script src="../../script/weui.min.js"></script>
-    <script src="../../script/wolf.js"></script>
-    <script type="text/javascript" src="../../script/dropload.min.js"></script>
-    <script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
-    <script type="text/javascript">
-        var OPENID;
-        var isDrop = false;
-        var PAGE = 1;
-        var CID = 2209;
-        var me;
-        apiready = function() {
-            setTopBar();
-            //setDrop();
-            isDrop = true;
-            OPENID = api.getPrefs({
-                sync : true,
-                key : 'openid'
-            });
-            initPicker();
-            loadLastPic();
-        }
+        </div>
+        {{~}}
+    </script>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/zepto.min.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/weui.min.js"></script>
+<script src="../../script/wolf.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../script/wolf.picLazyLoad.min.js"></script>
+<script type="text/javascript">
+    var OPENID;
+    var isDrop = false;
+    var PAGE = 1;
+    var CID = 2209;
+    var me;
+    apiready = function() {
+        setTopBar();
+        //setDrop();
+        isDrop = true;
+        OPENID = api.getPrefs({
+            sync: true,
+            key: 'openid'
+        });
+        initPicker();
+        loadLastPic();
+    }
 
 
-        function initPicker() {
-            $('#showPicker').on('click', function() {
-                var pickerArr = [{
-                    label : '厨房',
-                    value : 2207
-                }, {
-                    label : '卫生间',
-                    value : 2208
-                }, {
-                    label : '餐厅',
-                    value : 2209
-                }, {
-                    label : '客厅',
-                    value : 2210
-                }, {
-                    label : '工装',
-                    value : 2211
-                }, {
-                    label : '活动室',
-                    value : 2212
-                }, {
-                    label : '过道',
-                    value : 2213
-                }, {
-                    label : '书房',
-                    value : 2214
-                }, {
-                    label : '阳台',
-                    value : 2215
-                }, {
-                    label : '卧室',
-                    value : 2216
-                }];
-                weui.picker(pickerArr, {
-                    onChange : function(result) {
-                        console.log(result);
-                    },
-                    onConfirm : function(result) {
-                        setTitle(pickerArr, result);
-                        CID = result;
-                        PAGE = 1;
-                        $(".picarr").html("");
-                        $(".picarr").scrollTop("0");
-                        phoneGetPic();
-                    }
-                });
-            });
-        }
-
-        //设置标题栏
-        function setTitle(pickerArr, cid) {
-            for (var i = 0; i < pickerArr.length; i++) {
-                if (pickerArr[i].value == cid) {
-                    $("#title").html(pickerArr[i].label);
-                    return;
+    function initPicker() {
+        $('#showPicker').on('click', function() {
+            var pickerArr = [{
+                label: '厨房',
+                value: 2207
+            }, {
+                label: '卫生间',
+                value: 2208
+            }, {
+                label: '餐厅',
+                value: 2209
+            }, {
+                label: '客厅',
+                value: 2210
+            }, {
+                label: '工装',
+                value: 2211
+            }, {
+                label: '活动室',
+                value: 2212
+            }, {
+                label: '过道',
+                value: 2213
+            }, {
+                label: '书房',
+                value: 2214
+            }, {
+                label: '阳台',
+                value: 2215
+            }, {
+                label: '卧室',
+                value: 2216
+            }];
+            weui.picker(pickerArr, {
+                onChange: function(result) {
+                    console.log(result);
+                },
+                onConfirm: function(result) {
+                    setTitle(pickerArr, result);
+                    CID = result;
+                    PAGE = 1;
+                    $(".picarr").html("");
+                    $(".picarr").scrollTop("0");
+                    phoneGetPic();
                 }
+            });
+        });
+    }
+
+    //设置标题栏
+    function setTitle(pickerArr, cid) {
+        for (var i = 0; i < pickerArr.length; i++) {
+            if (pickerArr[i].value == cid) {
+                $("#title").html(pickerArr[i].label);
+                return;
             }
         }
+    }
 
-        function goback() {
-            api.closeWin();
-        }
+    function goback() {
+        api.closeWin();
+    }
 
 
 
-        function jump(url) {
-            api.openWin({
-                name : "img",
-                url : "img.html",
-                pageParam : {
-                    url : url
-                },
-                slidBackEnabled : false,
-            })
-        }
+    function jump(url) {
+        api.openWin({
+            name: "img",
+            url: "img.html",
+            pageParam: {
+                url: url
+            },
+            slidBackEnabled: false,
+        })
+    }
 
-        function loadLastPic(){
-          var loading=weui.loading("加载中");
-          api.ajax({
-              url: 'http://www.d-shang.com/index.php?app/getlastquanjing/?openid='+OPENID,
-          },function(ret, err){
+    function loadLastPic() {
+        var loading = weui.loading("加载中");
+        api.ajax({
+            url: 'http://www.d-shang.com/index.php?app/getlastquanjing/?openid=' + OPENID,
+        }, function(ret, err) {
             loading.hide();
             var arrText = doT.template($("#interpolationtmpl").text());
             $(".picarr").html(arrText(ret.data));
             $(".pic").picLazyLoad();
-          });
+        });
 
-        }
+    }
 
-        //获取图片
-        function phoneGetPic() {
-          var loading=weui.loading("加载中");
+    //获取图片
+    function phoneGetPic() {
+        var loading = weui.loading("加载中");
 
-            var url = "http://www.d-shang.com/index.php?app/getnewslist/?cid=" + CID + "&p=" + PAGE + "&openid=" + OPENID
-            api.ajax({
-                url : url
-            }, function(ret, err) {
-                loading.hide();
-                var arrText = doT.template($("#interpolationtmpl").text());
-                $(".picarr").html(arrText(ret.data));
-                $('.pic').picLazyLoad();
-            });
-        }
+        var url = "http://www.d-shang.com/index.php?app/getnewslist/?cid=" + CID + "&p=" + PAGE + "&openid=" + OPENID
+        api.ajax({
+            url: url
+        }, function(ret, err) {
+            loading.hide();
+            var arrText = doT.template($("#interpolationtmpl").text());
+            $(".picarr").html(arrText(ret.data));
+            $('.pic').picLazyLoad();
+        });
+    }
 
 
-        function shareWxImg(url,title) {
+    function shareWxImg(url, title) {
+        var dialogBox = api.require('dialogBox');
+        dialogBox.actionMenu({
+            rect: {
+                h: 150
+            },
+            texts: {
+                cancel: '取消'
+            },
+            items: [{
+                    text: '微信朋友圈',
+                    icon: 'widget://image/timeline.png'
+                }, {
+                    text: '微信好友',
+                    icon: 'widget://image/friends.png'
+                }
+
+            ],
+            tapClose: true,
+            isCuttingLine: true,
+            styles: {
+                bg: '#FFF',
+                column: 2,
+                itemText: {
+                    color: '#000',
+                    size: 12,
+                    marginT: 8
+                },
+                itemIcon: {
+                    size: 60
+                },
+                cancel: {
+                    bg: 'fs://icon.png',
+                    color: '#000',
+                    h: 50,
+                    size: 14
+                }
+            }
+        }, function(ret) {
             var dialogBox = api.require('dialogBox');
-            dialogBox.actionMenu({
-                rect: {
-                    h: 150
-                },
-                texts: {
-                    cancel: '取消'
-                },
-                items: [{
-                        text: '微信朋友圈',
-                        icon: 'widget://image/timeline.png'
-                    }, {
-                        text: '微信好友',
-                        icon: 'widget://image/friends.png'
-                    }
+            dialogBox.close({
+                dialogName: 'actionMenu'
+            });
+            if (ret.eventType == "cancel") {
+                return false;
+            }
+            var index = ret.index;
+            var type = index == 1 ? "session" : "timeline";
+            shareImage(url, type, title);
 
-                ],
-                tapClose: true,
-                isCuttingLine: true,
-                styles: {
-                    bg: '#FFF',
-                    column: 2,
-                    itemText: {
-                        color: '#000',
-                        size: 12,
-                        marginT: 8
-                    },
-                    itemIcon: {
-                        size: 60
-                    },
-                    cancel: {
-                        bg: 'fs://icon.png',
-                        color: '#000',
-                        h: 50,
-                        size: 14
-                    }
-                }
-            }, function(ret) {
-                var dialogBox = api.require('dialogBox');
-                dialogBox.close({
-                    dialogName: 'actionMenu'
+        });
+    }
+
+
+
+    function shareImage(url, type, title) {
+
+        var t = "3D全景展示(" + title + ")";
+        var wx = api.require('wx');
+        wx.shareWebpage({
+            apiKey: 'wx062395c72d4d0732',
+            scene: type,
+            title: t,
+            thumb: 'widget://image/vr.png',
+            contentUrl: url
+        }, function(ret, err) {
+            if (ret.status) {
+                api.toast({
+                    msg: '分享成功',
+                    duration: 2000,
+                    location: 'middle'
                 });
-                if (ret.eventType == "cancel") {
-                    return false;
-                }
-                var index = ret.index;
-                var type = index == 1 ? "session" : "timeline";
-                shareImage(url,type,title);
-            });
-        }
 
+            } else {
+                console.log(err.code);
+            }
+        });
 
+    }
+</script>
 
-        function shareImage(url,type,title) {
-
-            var wx = api.require('wx');
-            wx.shareWebpage({
-                apiKey: 'wx062395c72d4d0732',
-                scene: type,
-                title: title,
-                thumb: 'widget://image/redpack.png',
-                contentUrl:url
-            }, function(ret, err) {
-                if (ret.status) {
-                  console.log("2");
-                    api.toast({
-                        msg: '分享成功',
-                        duration: 2000,
-                        location: 'middle'
-                    });
-
-                }
-                else{
-                  console.log(err.code);
-                }
-            });
-
-        }
-
-
-
-
-
-
-    </script>
 </html>

@@ -12,11 +12,7 @@ body {
   min-height: 400px;
 }
 .nav{
-<<<<<<< HEAD
-  font-size: 0.9em;
-=======
   font-size: 1em;
->>>>>>> 891baaa067c2c7d17af0aa9883e381b2fa85ab78
   height:20px;
   line-height: 20px;
   width:60px;
@@ -26,10 +22,7 @@ body {
 
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 891baaa067c2c7d17af0aa9883e381b2fa85ab78
 
 .list {
   background: #fff;
