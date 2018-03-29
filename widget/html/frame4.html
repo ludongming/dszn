@@ -175,6 +175,10 @@
 					</p>
 				</div> <span class="weui-cell__ft"></span> </a>
 		</div>
+
+		<div class="buyvip">
+				<a href="javascript:;" class="weui-btn weui-btn_warn vip" onclick="vip()">开通会员 30元/月(限时优惠)</a>
+			</div>
 		<div class="buyvip">
 			感谢你的使用
 		</div>
@@ -310,7 +314,7 @@
 			url: 'http://www.d-shang.com/index.php?app/getuserinfo/?openid=' + OPENID
 		}, function(ret, err) {
 			var user = ret.data;
-			bindPush(user.mobile_phone);
+		//	bindPush(user.mobile_phone);
 
 			USERDATA = JSON.stringify(user);
 			var weixin = user.weixin;
@@ -443,6 +447,59 @@
 			}
 		});
 	}
+
+	function vip() {
+				api.ajax({
+					url : 'http://www.d-shang.com/index.php?apporder/addvip/?money=1&openid=' + OPENID
+				}, function(ret, err) {
+					if (ret.status) {
+						wxpayConfig(ret.data);
+					} else {
+						alert(ret.message);
+					}
+					//coding...
+				});
+			}
+
+
+  //
+	function wxpayConfig(order) {
+			var wxPay = api.require('wxPay');
+			wxPay.config({
+				apiKey : 'wx50a467a725a4ac0f',
+				mchId : '1389870602',
+				partnerKey : 'dmBk0YmfxhEGZPFJMMBVa6ylHad9UQLe',
+				notifyUrl : 'http://www.d-shang.com/static/wxapppay/notify.php'
+			}, function(ret, err) {
+				if (ret.status) {
+					pay(order);
+				} else {
+					alert(err.code);
+				}
+			});
+		}
+
+		function pay(order) {
+			var wxPay = api.require('wxPay');
+			wxPay.pay({
+				description : order.remark,
+				totalFee : order.coupons * 100,
+				tradeNo : order.orderno,
+				spbillCreateIP : '196.168.1.1',
+				deviceInfo : '013467007045764',
+				detail : order.remark,
+				attach : order.remark,
+				feeType : 'CNY',
+				goodsTag : 'WXG',
+				productId : '12235413214070356458058'
+			}, function(ret, err) {
+				if (ret.status) {
+					alert("恭喜您，支付成功");
+				} else {
+					alert(err.msg);
+				}
+			})
+		}
 </script>
 
 </html>

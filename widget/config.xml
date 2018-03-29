@@ -27,11 +27,7 @@
   <permission name="bootCompleted"/>
   <permission name="hardware"/>
   <access origin="*"/>
-  <feature name="wxPay">
-    <param name="urlScheme" value="wx062395c72d4d0732"/>
-    <param name="apiKey" value="wx062395c72d4d0732"/>
-    <param name="apiSecret" value="7c0dfeaddf169f74af09a522af587fbb"/>
-  </feature>
+
   <feature name="ajpush">
     <param name="app_key" value="e7d42601edde4de92d3038cb"/>
     <param name="channel" value="4b8a4ff71251195cd7bb40b9"/>
